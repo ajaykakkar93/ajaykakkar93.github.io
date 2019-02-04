@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ajay Kakkar portfolio</title>
+    <link href="css/style.css" media="all" rel="stylesheet" type="text/css">
+    <link href="css/meter.css" media="all" rel="stylesheet" type="text/css">
+
+    <link href="//fonts.googleapis.com/css?family=Karla" rel="stylesheet" type="text/css">
+    <script src="js/jquery.min.js">
+    </script>
+    <style>
+         ::-webkit-scrollbar {
+            width: 0.7em;
+        }
+        
+         ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+        }
+        
+        .grid1 {
+            background: linear-gradient(#35315a, #3a3196, #928fb1);
+        }
+        
+        .contact {
+            background: linear-gradient(#928fb1, #3a3196, #35315a);
+        }
+        
+        .skill_container {
+            width: 100%;
+            background-color: #ddd;
+            height: 38px;
+        }
+        
+        .skill_container .skills {
+            text-align: right;
+            padding: 10px;
+            color: white;
+        }
+        
+        .skill_list p {
+            margin-top: 15px;
+            margin-bottom: 2px;
+            padding: 0px;
+        }
+        
+        .skill_list {
+            margin: 10px 20px 10px 20px;
+        }
+        
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 40%;
+            margin: 5px;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .card_container {
+            padding: 0px;
+        }
+        
+        .card_container h4 {
+            font-size: 18px;
+            /* text-align: center; */
+            padding: 9px 20px;
+            background: #fff;
+        }
+        
+        .card_container p {
+            /* font-size: 13px; */
+            /* margin-top: 5px; */
+            /* margin-bottom: 5px; */
+            /* text-align: center; */
+            /* background: #d2d2d2; */
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            font-size: 14px;
+            border-color: rgb(225, 232, 237);
+            border-style: solid;
+            border-radius: 0px 0px 4px 4px;
+            border-width: 1px 0px 0px;
+            padding: 9px 20px;
+            background: #fff;
+        }
+        
+        .card_container p a {
+            color: rgb(43, 123, 185);
+        }
+        
+        twitter-widget {
+            padding-left: 5px;
+        }
+        
+        .freebirdFormviewerViewFooterFooterContainer {
+            display: none;
+        }
+        /* tooltip*/
+        
+        .custom_tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .custom_tooltip .custom_tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 20px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 118%;
+            left: 50%;
+            margin-left: -60px;
+            font-size: 16px;
+            font-weight: 100;
+        }
+        
+        .custom_tooltip .custom_tooltiptext::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent black transparent;
+        }
+        
+        .custom_tooltip:hover .custom_tooltiptext {
+            visibility: visible;
+        }
+        /*  Work List */
+        
+        ul.list_work {
+            width: 50%;
+            height: 200px;
+            border: 1px solid #DFE1E5;
+            overflow: auto;
+        }
+        
+        ul.list_work li {
+            border-top: 1px solid #DFE1E5;
+            box-sizing: border-box;
+            display: block;
+            padding: 12px 22px 12px 12px;
+            text-decoration: none;
+            width: 100%;
+            background: #fff;
+            font-weight: bold;
+        }
+        
+        ul.list_work li span {
+            float: right;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAZklEQVR4Ae3PwQ1AABQEUSUpSRE7feiADumAOBFn+fKTecnedwZJkiR9I8kKLJ3PH9faRQDzfb5hBDACuxH1jDDCCCOMKApIsr0Dkqye97znPe95z/8OmArOF0R0Pf+MqDsvSZKkE8rFRzzUb3XpAAAAAElFTkSuQmCC") right 8px center no-repeat;
+            background-size: 25px;
+            width: 30px;
+        }
+        /*  tab container  */
+        
+        .custon_tab_container {
+            box-sizing: border-box;
+            margin: 30px;
+        }
+        /* Style tab links */
+        
+        .tablink {
+            background-color: #555;
+            color: white;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 33.33%;
+        }
+        
+        .tablink:hover {
+            background-color: #777;
+        }
+        /* Style the tab content (and add height:100% for full page content) */
+        
+        .tabcontent {
+            color: white;
+            display: none;
+            padding: 60px 10px 10px 10px;
+            height: 100%;
+            background-color: #118a7f;
+        }
+        
+        .tabcontent .card_container h4 {
+            background: inherit;
+        }
+    </style>
+    <style>
+        #experiance_table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        #experiance_table td,
+        #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        #experiance_table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        #experiance_table tr:hover {
+            background-color: #ddd;
+        }
+        
+        #experiance_table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        #experiance_table td.small {
+            width: 200px;
+        }
+        
+        .twitter-tweet {
+            width: 50% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!---start-wrap=-->
+    <!---start-header=-->
+    <div class="header">
+        <div class="wrap">
+            <!---start-logo=-->
+            <div class="logo">
+                <a href="#">Ajay Kakkar</a>
+            </div>
+            <!---End-logo=-->
+            <!---start-top-nav=-->
+            <div class="top-nav">
+                <ul>
+                    <li class="active">
+                        <a class="scroll" href="#me">Me</a>
+                    </li>
+                    <li>
+                        <a class="scroll" href="#skills">Skills</a>
+                    </li>
+                    <li>
+                        <a class="scroll" href="#works">Work</a>
+                    </li>
+                    <li>
+                        <a class="scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <!---End-top-nav=-->
+        </div>
+    </div>
+    <!---End-wrap=-->
+    <div class="content">
+        <div class="grid1" id="me">
+            <a href="#"><img src="images/AJAYKAKKAR.jpg" title="name"></a>
+            <h3>Hi,I'm Ajay Kakkar</h3>
+            <p id="typing_header"></p>
+            <div class="catch-me" style="padding: 10px;">
+                <h3 style="color: #fff;">SAY HELLO</h3>
+                <ul>
+                    <li>
+                        <a href="https://twitter.com/Ajaykakkar1993" target="_blank"><img src="images/twitt.png" title="twitter"></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/ajaykakkar93/" target="_blank"><img src="images/linkdin.png" style="width: 80px;" title="linkdin"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="grid2" id="skills">
+            <h3>My Professional know-how/Skill's</h3>
+            <ul>
+                <li>
+                    <img src="images/project-management.png" title="Artdirector"> <a href="javascript:void(0);">Management</a>
+                    <div class="skills" style="width: 85%;background-color: #99c24d;height:5px;"></div>
+                </li>
+                <li>
+                    <img src="images/idea.png" title="Artdirector"> <a href="javascript:void(0);">Idea's</a>
+                    <div class="skills" style="width: 96%;background-color: #99c24d;height:5px;"></div>
+                </li>
+                <li>
+                    <img src="images/photoshop.png" title="Artdirector"> <a href="javascript:void(0);">Photoshop</a>
+                    <div class="skills" style="width: 55%;background-color: #99c24d;height:5px;"></div>
+                </li>
+                <li>
+                    <img src="images/coder.png" title="Artdirector"> <a href="javascript:void(0);">Programming</a>
+                    <div class="skills" style="width: 95%;background-color: #99c24d;height:5px;"></div>
+                </li>
+            </ul>
+
+            <div class="skill_list" style="display:flex;background: #f5f5f5;border-left: 6px solid #adadad;margin-top: 10px;border: 1px solid #989898;border-top: 0px;">
+
+
+                <table id="experiance_table">
+                    <tr>
+                        <th colspan="2" style="text-align:center;">Total Working experiance</th>
+                    </tr>
+
+                    <tr>
+                        <td class="small">HTML</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 95%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="small">CSS</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 70%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="small">JavaScript</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 85%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="small">PHP</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 60%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="small">Java</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 50%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="small">MySql</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 50%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="small">Qlik Sense Basic with API</td>
+                        <td>
+                            <div class="meter red">
+                                <span style="width: 80%"></span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tfoot>
+                        <tr>
+                            <td>Freelance</td>
+                            <td>1 Year</td>
+                        </tr>
+                        <tr>
+                            <td>Qlik Sense Api</td>
+                            <td>2 Years 4 Months</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+            <!--
+                <div class="custom_tooltip">Hover over me
+                    <span class="custom_tooltiptext">Tooltip text</span>
+                </div>
+                -->
+        </div>
+        <div class="grid3">
+            <div class="grid3-header" id="works">
+                <h3>My Work</h3>
+                <p style="border-left: 6px solid #ccc!important; background: #fff; padding: 6px; font-size: 15px;">Self-belief and hard work will always earn you success.</p>
+            </div>
+
+            <div class="custon_tab_container">
+                <button class="tablink" onclick="openPage('Qlik', this, '#118a7f')">Qlik</button>
+                <button class="tablink" id="defaultOpen" onclick="openPage('Youtube', this, '#118a7f')">Youtube</button>
+                <button class="tablink" onclick="openPage('Twitter', this, '#118a7f')">Twitter</button>
+                <div class="tabcontent" id="Qlik">
+                    <div style="display:flex;">
+                        <ul class="list_work">
+                            <li>
+                                <a href="https://community.qlik.com/t5/Qlik-Sense-Enterprise-Documents/Document-Chaining-in-Qlik-Sense/ta-p/1495402/highlight/true" target="_blank">Document Chaining in Qlik Sense <span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://community.qlik.com/t5/Qlik-Sense-Enterprise-Documents/Styling-Qlik-Sense-sheets-and-Objects/ta-p/1492388/highlight/true" target="_blank">Styling Qlik Sense sheets and Objects <span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a4498ea2b249b645b071e16" target="_blank">QlikSense Sheet Styler Lite<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5b5d47b90f5758001d378640" target="_blank">Qlik Sense Triggers<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a4488468f07a4cc5af1f697" target="_blank">Custom Qlik Sense App Overview <span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5b38aeef8a2611d457bd2e23" target="_blank">Qlik Sense Legend<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5b3854264c924850bd691e86" target="_blank">Qlik Sense KPI Object 1<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a3c6d0e77657ab4223d6782" target="_blank">Qlik Sense KPI Object 2<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a267f39c8fce420cc8bbf60" target="_blank">Qlik Sense KPI Object 3<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a267f9bc8fce420cc8bbf68" target="_blank">Qlik Sense KPI Object 4<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/584f8b2fa1ae693e5e41202a" target="_blank">Rating Chart<span>&nbsp;</span></a>
+                            </li>
+                            <li>
+                                <a href="https://developer.qlik.com/garden/5a26a0aa05b4730b41e771d8" target="_blank">Tab Container<span>&nbsp;</span></a>
+                            </li>
+                        </ul>
+                        <div style="width:50%; margin-left: 20px;">
+                            <blockquote style="border-left: 4px solid #fff;padding-left: 14px;">
+                                <h3 style="text-align: left;"><strong>All my work link is listed</strong>,<br>
+                                    <strong>feel free to view my work on Qlik Sense</strong>.<br>
+                                    <span style="color: #fff;"><em>All are open source feel free to download, edit/upgrade them as per your organization.</em></span></h3>
+                            </blockquote>
+                            <div style="margin-top: 10px;">
+                                <p>
+                                    <a href="https://community.qlik.com/t5/user/viewprofilepage/user-id/18706" style="text-decoration: none;display: inline-block;vertical-align: top;line-height: 33px;background: #fff;padding: 5px;border-radius: 30px;" target="_blank"><img alt="Qlik Community" src="https://community.qlik.com/html/assets/Qlik_logo.png" style="vertical-align: bottom;max-height: 30px;" title="Qlik Community"> <span style="font-size: 24px; color: #54565a; display: inline-block; vertical-align: middle; border-left: 1px solid #54565a; padding-left: 12px; line-height: 28px; font-family: 'source_sans_prosemibold';">Community</span></a>
+                                </p>
+                                <p><img alt="Qlik Branch" src="https://developer.qlik.com/assets/logo-qlik_branch_gray.png" style="vertical-align: bottom;max-height: 30px;background: #fff;padding: 5px;border-radius: 30px;margin-top: 10px;" title="Qlik Branch"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabcontent" id="Youtube">
+                    <div style="display: flex;">
+                        <div class="card">
+                            <iframe allowfullscreen frameborder="0" src="https://www.youtube.com/embed/videoseries?list=PLYjPUKwx_Zbf6ct3AH510CVvq14caZxYi" style="width: 100%;height: 300px;"></iframe>
+                            <div class="card_container">
+                                <h4><b>Trigger Extension</b></h4>
+                                <p><a href="https://www.youtube.com/playlist?list=PLYjPUKwx_Zbf6ct3AH510CVvq14caZxYi" target="_blank">Youtube Playlist</a></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <iframe allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?list=PLYjPUKwx_ZbfAwfRB0TjsAUAVMjyqJNH-" style="width: 100%;height: 300px;" width="560"></iframe>
+                            <div class="card_container">
+                                <h4><b>Qlik Sense Styler Extension</b></h4>
+                                <p><a href="https://www.youtube.com/playlist?list=PLYjPUKwx_ZbfAwfRB0TjsAUAVMjyqJNH-" target="_blank">Youtube Playlist</a></p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <iframe allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?list=PLYjPUKwx_ZbchXt8UybfW4WtxzqU79kac" style="width: 100%;height: 300px;" width="560"></iframe>
+                            <div class="card_container">
+                                <h4><b>Qlik Mashup Tutorial</b></h4>
+                                <p><a href="https://www.youtube.com/playlist?list=PLYjPUKwx_ZbchXt8UybfW4WtxzqU79kac" target="_blank">Youtube Playlist</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabcontent" id="Twitter">
+                    <div class="twiiter-box" style="display:flex; padding:0px">
+                        <blockquote class="twitter-tweet" data-lang="en">
+                            <p dir="ltr" lang="en">Beauty of QS sheets comes from Qlik-Sense-Lite extension &amp; New extension which works as triggers, it uses QS Field API to do action on sheet open, supports custom keyboard shortcut which can be defined as per requirement
+                                to perform actions <a href="https://twitter.com/hashtag/QlikForSwag?src=hash&amp;ref_src=twsrc%5Etfw">#QlikForSwag</a> <a href="https://twitter.com/hashtag/Qlik?src=hash&amp;ref_src=twsrc%5Etfw">#Qlik</a> <a href="https://twitter.com/hashtag/qlik_us?src=hash&amp;ref_src=twsrc%5Etfw">#qlik_us</a>                                <a href="https://t.co/iI6bmOmtaV">pic.twitter.com/iI6bmOmtaV</a></p>&mdash; Ajay Kakkar (@Ajaykakkar1993) <a href="https://twitter.com/Ajaykakkar1993/status/975785358494494721?ref_src=twsrc%5Etfw">March 19, 2018</a>
+                        </blockquote>
+                        <blockquote class="twitter-tweet" data-lang="en">
+                            <p dir="ltr" lang="en">Congratulations to our very first <a href="https://twitter.com/hashtag/QlikForSwag?src=hash&amp;ref_src=twsrc%5Etfw">#QlikForSwag</a> grand prize winner — <a href="https://twitter.com/Ajaykakkar1993?ref_src=twsrc%5Etfw">@Ajaykakkar1993</a>!
+                                Check out his entry and see how he schooled us in data: <a href="https://t.co/w91jMTzt3e">https://t.co/w91jMTzt3e</a> <a href="https://t.co/xR8j6q73BW">pic.twitter.com/xR8j6q73BW</a></p>&mdash; Qlik (@qlik) <a href="https://twitter.com/qlik/status/987375348001144840?ref_src=twsrc%5Etfw">April 20, 2018</a>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="grid3-content">
+                
+            <div id="github-projects"></div>
+
+          <script
+            src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"
+            type="text/javascript"
+          ></script>
+          <script src="./js/github.js" type="text/javascript"></script>
+          <script type="text/javascript">
+            $(function() {
+              $("#github-projects").loadRepositories("ajaykakkar93");
+              
+            });
+          </script>
+          
+        
+                <div class="clear"></div>
+            </div>
+            -->
+        </div>
+        <div class="contact" id="contact">
+            <iframe frameborder="0" height="810" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/e/1FAIpQLSciOUYEvImtyy5V5NC4neVlTKZEiXDPuKb_DUycZ1CLlqY9MA/viewform?embedded=true" width="640">Loading...</iframe>
+        </div>
+        <div class="footer">
+            <p>&copy; 2019 Portfolio . All rights Reserved | Developed by &nbsp;<a href="https://www.linkedin.com/in/ajaykakkar93/">Ajay Kakkar</a></p>
+        </div>
+    </div>
+    <script async charset="utf-8" src="https://platform.twitter.com/widgets.js">
+    </script>
+    <script async src="./js/main.js">
+    </script>
+    <script>
+        var i = 0;
+        var txt = 'Welcome visitor, I am love to learn and share my knowledge for a organization as well as an individual, feel free to connect me.';
+        var speed = 60;
+
+        function typeWriter() {
+            if (i < txt.length) {
+                document.getElementById("typing_header").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        typeWriter();
+
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+        }
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+    <script>
+        $(function() {
+            /* $(".meter > span").each(function() {
+                 $(this)
+                     .data("origWidth", $(this).width())
+                     .width(0)
+                     .animate({
+                         width: $(this).data("origWidth")
+                     }, 1200);
+             });*/
+        });
+    </script>
+</body>
+
+</html>
