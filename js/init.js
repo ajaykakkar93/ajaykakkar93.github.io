@@ -472,7 +472,7 @@ function arlo_tm_animate_text(){
 	var animateSpan			= jQuery('.arlo_tm_animation_text_word');
 	
 		animateSpan.typed({
-			strings: ["Freelancer", "Web Developer", "Qlik Consultant"],
+			strings: ["Web Developer", "Qlik Consultant", "Power BI Consultant", "Quick Learner"],
 			loop: true,
 			startDelay: 1e3,
 			backDelay: 2e3
