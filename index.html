@@ -234,9 +234,21 @@ https://www.pixelstalk.net/wp-content/uploads/2016/03/Photo-image-dark-wallpaper
 											<div class="about_title">
 												<h3>I'm Ajay Kakkar and <span class="arlo_tm_animation_text_word">Free</span><span class="typed-cursor"></span></h3>
 											</div>
+										
 											<div class="text">
-												<p>Hi! My name is <span>Ajay Kakkar</span>. I am a Web Developer, and I'm passionate & dedicated to my work. With <strong>2+</strong> years experience as a Web developer & <strong>4+</strong> years experience as Qlik Sense Consultant, I have acquired the skills and knowledge necessary to make your project a success. I enjoy every step of the design process, from discussion and collaboration.</p>
+												<p>Hi! My name is <span>Ajay Kakkar</span>. I am a Web Developer, and I'm passionate & dedicated to my work. With <strong>2+</strong> years experience as a Web developer & <strong id="experience">5.5+</strong> years experience as Qlik Sense Consultant, I have acquired the skills and knowledge necessary to make your project a success. I enjoy every step of the design process, from discussion and collaboration.</p>
+												<p>Trainer in <a href="https://www.udemy.com/user/ajay-kakkar/">Udemy</a>, have published 4 cources on Qlik Sense API learning.</p>
 											</div>
+											<script>
+												var dob = new Date("10/12/2016");
+												function _calculateAge(birthday) { // birthday is a date
+													var ageDifMs = Date.now() - birthday.getTime();
+													var ageDate = new Date(ageDifMs); // miliseconds from epoch
+													return Math.abs(ageDate.getUTCFullYear() - 1970);
+												}
+												console.log(_calculateAge(dob));
+												document.getElementById("experience").innerHTML  = _calculateAge(dob)+" +";
+											</script>
 											<div class="about_short_contact_wrap">
 												<ul>
 													<li><i class="about fas fa-birthday-cake"></i> <span><label>Birthday:</label>29/09/1993</span></li>
