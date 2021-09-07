@@ -824,7 +824,7 @@ https://www.pixelstalk.net/wp-content/uploads/2016/03/Photo-image-dark-wallpaper
 	
 	
 											<script>
-												var Exp = new Date("10/12/2016"),
+												var Exp = new Date("10/01/2016"),
 													Age = new Date("09/29/1993");
 												
 												function _calculateAge(birthday) { // birthday is a date
@@ -833,12 +833,46 @@ https://www.pixelstalk.net/wp-content/uploads/2016/03/Photo-image-dark-wallpaper
 													return Math.abs(ageDate.getUTCFullYear() - 1970);
 												}
 												//console.log(_calculateAge(dob));
-												document.getElementById("experience").innerHTML  = _calculateAge(Exp)+" +";
-												document.getElementById("Age").innerHTML  = _calculateAge(Age)+"";
 												
-												
-												
-												
+												function dateDiff(startingDate, endingDate) {
+    var startDate = new Date(new Date(startingDate).toISOString().substr(0, 10));
+    if (!endingDate) {
+        endingDate = new Date().toISOString().substr(0, 10);    // need date in YYYY-MM-DD format
+    }
+    var endDate = new Date(endingDate);
+    if (startDate > endDate) {
+        var swap = startDate;
+        startDate = endDate;
+        endDate = swap;
+    }
+    var startYear = startDate.getFullYear();
+    var february = (startYear % 4 === 0 && startYear % 100 !== 0) || startYear % 400 === 0 ? 29 : 28;
+    var daysInMonth = [31, february, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    var yearDiff = endDate.getFullYear() - startYear;
+    var monthDiff = endDate.getMonth() - startDate.getMonth();
+    if (monthDiff < 0) {
+        yearDiff--;
+        monthDiff += 12;
+    }
+    var dayDiff = endDate.getDate() - startDate.getDate();
+    if (dayDiff < 0) {
+        if (monthDiff > 0) {
+            monthDiff--;
+        } else {
+            yearDiff--;
+            monthDiff = 11;
+        }
+        dayDiff += daysInMonth[startDate.getMonth()];
+    }
+
+    return yearDiff + 'Y ' + monthDiff + 'M '; // + dayDiff + 'D'
+}
+						
+				
+								document.getElementById("experience").innerHTML  = dateDiff(new Date() , Exp)+" +";
+								document.getElementById("Age").innerHTML  = _calculateAge(Age)+"";
+																
 											</script>
 	
 </body>
