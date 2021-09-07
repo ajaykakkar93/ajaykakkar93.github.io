@@ -236,23 +236,13 @@ https://www.pixelstalk.net/wp-content/uploads/2016/03/Photo-image-dark-wallpaper
 											</div>
 										
 											<div class="text">
-												<p>Hi! My name is <span>Ajay Kakkar</span>. I am a Web Developer, and I'm passionate & dedicated to my work. With <strong>2+</strong> years experience as a Web developer & <strong id="experience">5.5+</strong> years experience as Qlik Sense Consultant, I have acquired the skills and knowledge necessary to make your project a success. I enjoy every step of the design process, from discussion and collaboration.</p>
+												<p>Hi! My name is <span>Ajay Kakkar</span>. I am a Web Developer, and I'm passionate & dedicated to my work. With <strong id="YearExp">2+</strong> years experience as a Web developer & <strong id="experience">5.5+</strong> years experience as Qlik Sense Consultant, I have acquired the skills and knowledge necessary to make your project a success. I enjoy every step of the design process, from discussion and collaboration.</p>
 												<p>Trainer in <a href="https://www.udemy.com/user/ajay-kakkar/">Udemy</a>, have published 4 cources on Qlik Sense API learning.</p>
 											</div>
-											<script>
-												var dob = new Date("10/12/2016");
-												function _calculateAge(birthday) { // birthday is a date
-													var ageDifMs = Date.now() - birthday.getTime();
-													var ageDate = new Date(ageDifMs); // miliseconds from epoch
-													return Math.abs(ageDate.getUTCFullYear() - 1970);
-												}
-												console.log(_calculateAge(dob));
-												document.getElementById("experience").innerHTML  = _calculateAge(dob)+" +";
-											</script>
 											<div class="about_short_contact_wrap">
 												<ul>
 													<li><i class="about fas fa-birthday-cake"></i> <span><label>Birthday:</label>29/09/1993</span></li>
-													<li><i class="about fas fa-calendar-alt"></i> <span><label>Age:</label>27</span></li>
+													<li><i class="about fas fa-calendar-alt"></i> <span><label>Age:</label> <span id="Age">27</span></span></li>
 													<li><i class="about fas fa-map-marker-alt"></i> <span><label>Location:</label>Mumbai</span></li>
 													<li><i class="about fas fa-puzzle-piece"></i> <span><label>Interests:</label>Cooking,Music</span></li>
 													<li><i class="about fas fa-university"></i> <span><label>Study:</label>University of Mumbai</span></li>
@@ -829,5 +819,27 @@ https://www.pixelstalk.net/wp-content/uploads/2016/03/Photo-image-dark-wallpaper
 	<div class="nicescroll-rails" id="ascrail2001-hr" style="height: 0px; z-index: 15; top: 650px; left: 60px; position: absolute; cursor: default; display: none; opacity: 0;">
 		<div style="position: relative; top: 0px; height: 0px; width: 0px; background-color: rgb(66, 66, 66); border: 0px solid rgb(238, 238, 238); background-clip: padding-box; border-radius: 5px; left: 0px;"></div>
 	</div>
+	
+	
+	
+	
+											<script>
+												var Exp = new Date("10/12/2016"),
+													Age = new Date("09/29/1993");
+												
+												function _calculateAge(birthday) { // birthday is a date
+													var ageDifMs = Date.now() - birthday.getTime();
+													var ageDate = new Date(ageDifMs); // miliseconds from epoch
+													return Math.abs(ageDate.getUTCFullYear() - 1970);
+												}
+												//console.log(_calculateAge(dob));
+												document.getElementById("experience").innerHTML  = _calculateAge(Exp)+" +";
+												document.getElementById("Age").innerHTML  = _calculateAge(Age)+"";
+												
+												
+												
+												
+											</script>
+	
 </body>
 </html>
