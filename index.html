@@ -71,7 +71,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	display:block;
 }
 
+div#home {
+    background: linear-gradient(132deg, #871930, #591BC5, #212335);
+    background-size: 400% 400%;
+    animation: Gradient 15s ease infinite;
+    position: relative;
+    /* height: 100vh; */
+    /* width: 100%; */
+    overflow: hidden;
+    padding: 0;
+    margin: 0px
+px
+;
+}
 
+
+/* Animate Background*/
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
 </style>
 
 
@@ -87,6 +123,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- banner -->
 	<div class="banner" id="home" >
+	
+	
+	
 			<div class="header">
 				<div class="w3_agile_logo">
 					<h1><a href="index.html"><img src="img/logo_dark.png" style=""></h1>
