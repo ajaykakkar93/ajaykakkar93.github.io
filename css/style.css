@@ -557,10 +557,10 @@ li.dropdown.act a.w3_icons_act {
 /*-- //works --*/
 /*-- services --*/
 .services{
-	background:#171717;
+	/*background:#171717;*/
 }
 .services h3{
-	color:#fff!important;
+	/*color:#fff!important;*/
 }
 .w3_sub_head{
 	text-align:center;
