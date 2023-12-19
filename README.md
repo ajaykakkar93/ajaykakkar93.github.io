@@ -12,7 +12,8 @@ Let's create something amazing together! 🚀
 
 
 					
-# 🚀 _Mastering Qlik Sense Upgrade: A Comprehensive Guide_
+# 🚀 _Mastering Qlik Sense Upgrade_
+### A Comprehensive Guide
 
 Hello 🌐, Today, we're diving into the intricacies of upgrading your Qlik Sense deployment, ensuring a seamless transition and unlocking the latest features.
 Below, we elaborate on two expert mode options for your Qlik Sense upgrade journey.
