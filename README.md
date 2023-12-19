@@ -9,3 +9,11 @@ I'm not just a practitioner; I'm also a dedicated educator. As a Trainer on Udem
 
 Feel free to reach out if you're looking for someone who's not only technically skilled but also passionate about innovation, design, and education.
 Let's create something amazing together! 🚀
+
+
+					
+# 🚀 _Mastering Qlik Sense Upgrade: A Comprehensive Guide_
+
+Hello 🌐, Today, we're diving into the intricacies of upgrading your Qlik Sense deployment, ensuring a seamless transition and unlocking the latest features.
+Below, we elaborate on two expert mode options for your Qlik Sense upgrade journey.
+
