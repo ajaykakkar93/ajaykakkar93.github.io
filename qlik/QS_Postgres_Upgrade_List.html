@@ -1,0 +1,749 @@
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" explore="" the="" latest="" advancements="" and="" enhancements="" in="" qlik="" sense="" release="" notes.="" stay="" informed="" about="" newest="" features,="" updates,="" optimizations="" that="" empower="" your="" data="" analytics="" journey.="" dive="" into="" detailed="" insights="" on="" improved="" functionalities,="" bug="" fixes,="" exciting="" additions="" to="" elevate="" experience.="" whether="" you're="" a="" seasoned="" user="" or="" just="" starting,="" our="" notes="" provide="" comprehensive="" overview="" of="" version,="" ensuring="" equipped="" with="" knowledge="" make="" most="" sense's="" cutting-edge="" capabilities.="" ahead="" notes,="" guiding="" you="" through="" evolution="" for="" seamless="" powerful="" experience.""="">
+    <meta name="author" content="Ajay Kakkar">
+	<meta name="language" content="English">
+	<meta name="title" content="Ajay Kakkar Qlik Sense Release Notes">
+	<meta name="keywords" content="Qlik Sense, Qlik Sense Postgres,Postgres Notes,Sense Postgres Version,Postgres Version,Qlik Postgres Version, Ajay Kakkar">
+    <title>Ajay Kakkar | QS Postgres Version List</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/cheatsheet/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+    <!-- Favicons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+
+
+
+    <style>
+
+body {
+  scroll-behavior: smooth;
+}
+
+/**
+ * Bootstrap "Journal code" icon
+ * @link https://icons.getbootstrap.com/icons/journal-code/
+ */
+.bd-heading a::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: .25rem;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%25230d6efd' viewBox='0 0 16 16'%3E%3Cpath d='M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1H2a2 2 0 0 1 2-2z'/%3E%3Cpath d='M2 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2z'/%3E%3Cpath fill-rule='evenodd' d='M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z'/%3E%3C/svg%3E");
+  background-size: 1em;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.bd-heading + div > * + * {
+  margin-top: 3rem;
+}
+
+/* Table of contents */
+.bd-aside a {
+  padding: .1875rem .5rem;
+  margin-top: .125rem;
+  margin-left: .3125rem;
+  color: rgba(0, 0, 0, .65);
+}
+
+.bd-aside a:hover,
+.bd-aside a:focus {
+  color: rgba(0, 0, 0, .85);
+  background-color: rgba(121, 82, 179, .1);
+}
+
+.bd-aside .active {
+  font-weight: 600;
+  color: rgba(0, 0, 0, .85);
+}
+
+.bd-aside .btn {
+  padding: .25rem .5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, .65);
+}
+
+.bd-aside .btn:hover,
+.bd-aside .btn:focus {
+  color: rgba(0, 0, 0, .85);
+  background-color: rgba(121, 82, 179, .1);
+}
+
+.bd-aside .btn:focus {
+  box-shadow: 0 0 0 1px rgba(121, 82, 179, .7);
+}
+
+.bd-aside .btn::before {
+  width: 1.25em;
+  line-height: 0;
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+  transition: transform .35s ease;
+
+  /* rtl:raw:
+  transform: rotate(180deg) translateX(-2px);
+  */
+  transform-origin: .5em 50%;
+}
+
+.bd-aside .btn[aria-expanded="true"]::before {
+  transform: rotate(90deg)/* rtl:ignore */;
+}
+
+
+/* Examples */
+.scrollspy-example {
+  height: 200px;
+}
+
+[id="modal"] .bd-example .btn,
+[id="buttons"] .bd-example .btn,
+[id="tooltips"] .bd-example .btn,
+[id="popovers"] .bd-example .btn,
+[id="dropdowns"] .bd-example .btn-group,
+[id="dropdowns"] .bd-example .dropdown,
+[id="dropdowns"] .bd-example .dropup,
+[id="dropdowns"] .bd-example .dropend,
+[id="dropdowns"] .bd-example .dropstart {
+  margin: 0 1rem 1rem 0;
+}
+
+/* Layout */
+@media (min-width: 1200px) {
+ 
+
+/* body {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 4fr 1fr;
+    gap: 1rem;
+  }
+  */
+
+  .bd-header {
+    position: fixed;
+    top: 0;
+    /* rtl:begin:ignore */
+    right: 0;
+    left: 0;
+    /* rtl:end:ignore */
+    z-index: 1030;
+    grid-column: 1 / span 3;
+  }
+
+  .bd-aside,
+  .bd-cheatsheet {
+    padding-top: 4rem;
+  }
+
+  /**
+   * 1. Too bad only Firefox supports subgrids ATM
+   */
+  .bd-cheatsheet,
+  .bd-cheatsheet section,
+  .bd-cheatsheet article {
+    display: inherit; /* 1 */
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 4fr;
+    grid-column: 1 / span 2;
+    gap: inherit; /* 1 */
+  }
+
+  .bd-aside {
+    grid-area: 1 / 3;
+    scroll-margin-top: 4rem;
+  }
+
+  .bd-cheatsheet section,
+  .bd-cheatsheet section > h2 {
+    top: 2rem;
+    scroll-margin-top: 2rem;
+  }
+
+  .bd-cheatsheet section > h2::before {
+    position: absolute;
+    /* rtl:begin:ignore */
+    top: 0;
+    right: 0;
+    bottom: -2rem;
+    left: 0;
+    /* rtl:end:ignore */
+    z-index: -1;
+    content: "";
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) calc(100% - 3rem), rgba(255, 255, 255, .01));
+  }
+
+  .bd-cheatsheet article,
+  .bd-cheatsheet .bd-heading {
+    top: 8rem;
+    scroll-margin-top: 8rem;
+  }
+
+  .bd-cheatsheet .bd-heading {
+    z-index: 1;
+  }
+}
+
+
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+	  
+	  header a.link-light {
+    text-decoration: none;
+}
+
+
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+ 
+      <script>
+/* global bootstrap: false */
+
+(() => {
+  'use strict'
+
+  // Tooltip and popover demos
+  document.querySelectorAll('.tooltip-demo')
+    .forEach(tooltip => {
+      new bootstrap.Tooltip(tooltip, {
+        selector: '[data-bs-toggle="tooltip"]'
+      })
+    })
+
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+    .forEach(popover => {
+      new bootstrap.Popover(popover)
+    })
+
+  document.querySelectorAll('.toast')
+    .forEach(toastNode => {
+      const toast = new bootstrap.Toast(toastNode, {
+        autohide: false
+      })
+
+      toast.show()
+    })
+
+  // Disable empty links and submit buttons
+  document.querySelectorAll('[href="#"], [type="submit"]')
+    .forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault()
+      })
+    })
+
+  function setActiveItem() {
+    const { hash } = window.location
+
+    if (hash === '') {
+      return
+    }
+
+    const link = document.querySelector(`.bd-aside a[href="${hash}"]`)
+
+    if (!link) {
+      return
+    }
+
+    const active = document.querySelector('.bd-aside .active')
+    const parent = link.parentNode.parentNode.previousElementSibling
+
+    link.classList.add('active')
+
+    if (parent.classList.contains('collapsed')) {
+      parent.click()
+    }
+
+    if (!active) {
+      return
+    }
+
+    const expanded = active.parentNode.parentNode.previousElementSibling
+
+    active.classList.remove('active')
+
+    if (expanded && parent !== expanded) {
+      expanded.click()
+    }
+  }
+
+  setActiveItem()
+  window.addEventListener('hashchange', setActiveItem)
+})()
+
+
+      </script>
+  
+
+
+<style>
+.main-timeline{ font-family: 'Libre Franklin', sans-serif; }
+.main-timeline:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.main-timeline .timeline{
+    width: calc(50% + 60px);
+    padding: 20px 0 0 60px;
+    margin: 0 5px 15px 0;
+    float: right;
+}
+.main-timeline .timeline-content{
+    color: #000;
+    border: 5px solid #54565b;
+    background: #fff;
+    text-align: center;
+    padding: 20px 20px 20px 160px;
+    display: block;
+    position: relative;
+}
+.main-timeline .timeline-content:hover{ text-decoration: none; }
+.main-timeline .timeline-content:before{
+    content: "";
+    background: #009848;
+    width: 6px;
+    height: 21px;
+    position: absolute;
+    bottom: -25px;
+    left: -5px;
+}
+.main-timeline .timeline-icon{
+    font-size: 35px;
+    line-height: 54px;
+    width: 60px;
+    height: 60px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    left: 80px;
+    top: 50%;
+}
+.main-timeline .timeline-year{
+    border: 5px solid #009848;
+    background: #fff;
+    font-size: 28px;
+    font-weight: 600;
+    /*line-height: 110px;*/
+    width: 120px;
+    height: 100%;
+    position: absolute;
+    top: -20px;
+    left: -60px;
+	display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+}
+.main-timeline .title{
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 7px 0;
+}
+.main-timeline .description{
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin: 0;
+	text-align: left;
+}
+.main-timeline .timeline:nth-child(even){
+    padding: 20px 60px 0 0;
+    float: left;
+}
+.main-timeline .timeline:nth-child(even) .timeline-content{ padding: 20px 160px 20px 20px; }
+.main-timeline .timeline:nth-child(even) .timeline-content:before{
+    transform: rotateY(180deg);
+    left: auto;
+    right: -4px;
+}
+.main-timeline .timeline:nth-child(even) .timeline-year{
+    right: -60px;
+    left: auto;
+}
+.main-timeline .timeline:nth-child(even) .timeline-icon{
+    left: auto;
+    right: 80px;
+}
+
+/*
+.main-timeline .timeline:nth-child(4n+2) .timeline-content{ background: #1862F7; }
+.main-timeline .timeline:nth-child(4n+2) .timeline-content:before{
+    background: linear-gradient(to top left, transparent 50%, #012E95 52%);
+}
+.main-timeline .timeline:nth-child(4n+2) .timeline-year{ background: #3473FF; }
+.main-timeline .timeline:nth-child(4n+3) .timeline-content{ background: #22a009; }
+.main-timeline .timeline:nth-child(4n+3) .timeline-content:before{
+    background: linear-gradient(to top left, transparent 50%, #123a0a 52%);
+}
+.main-timeline .timeline:nth-child(4n+3) .timeline-year{ background: #28b50c; }
+.main-timeline .timeline:nth-child(4n+4) .timeline-content{ background: #F61945; }
+.main-timeline .timeline:nth-child(4n+4) .timeline-content:before{
+    background: linear-gradient(to top left, transparent 50%, #95001D 52%);
+}
+
+.main-timeline .timeline:nth-child(4n+4) .timeline-year{ background: #FE3559; }
+*/
+@media screen and (max-width:990px){
+    .main-timeline .timeline{ width: calc(50% + 120px); }
+}
+@media screen and (max-width:767px){
+    .main-timeline .timeline{ width: 100%; }
+}
+@media screen and (max-width:576px){
+    .main-timeline .timeline,
+    .main-timeline .timeline:nth-child(even){
+        text-align: center;
+        padding: 42px 20px 0 0;
+        margin: 0 0 30px;
+    }
+    .main-timeline .timeline-content,
+    .main-timeline .timeline:nth-child(even) .timeline-content{
+        padding: 150px 20px 20px;
+    }
+    .main-timeline .timeline-content:before,
+    .main-timeline .timeline:nth-child(even) .timeline-content:before{
+        width: 60px;
+        transform: rotate(90deg);
+        bottom: auto;
+        top: 20px;
+        left: -20px;
+    }
+    .main-timeline .timeline-year,
+    .main-timeline .timeline:nth-child(even) .timeline-year{
+        line-height: 100px;
+        width: 100%;
+        height: 100px;
+        left: auto;
+        right: -20px;
+        top: -42px;
+    }
+    .main-timeline .timeline-icon,
+    .main-timeline .timeline:nth-child(even) .timeline-icon{
+        transform: translateX(-50%) translateY(0);
+        top: 75px;
+        left: 50%;
+        right: auto;
+    }
+    .main-timeline .title{ font-size: 20px; }
+}
+
+header a.link-light {
+	margin-left: 25px;
+}
+
+header a.active{
+    background: #009848;
+    padding: 0px 5px;
+    border-radius: 18px;
+}
+
+
+</style>
+
+
+
+  </head>
+
+
+<!--
+<header class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark">
+  <div class="container-fluid d-flex align-items-center">
+    <h1 class="d-flex align-items-center fs-4 text-white mb-0">
+      <img src="/docs/5.2/assets/brand/bootstrap-logo-white.svg" width="38" height="30" class="me-3" alt="Bootstrap">
+      QS Postgres Version List
+    </h1>
+    
+	
+	
+	
+	<a href="https://ajaykakkar93.github.io/" class="ms-auto link-light">Visit Profile</a>
+	<a class="link-light" href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads" style="margin-left: 25px;">Download Product</a>
+
+
+<a class="link-light" href="./QS_Release_Notes.html" style="margin-left: 25px;">QS Release Notes</a>
+
+<a class="link-light" href="./QS_Postgres_Upgrade_Activity.html" style="margin-left: 25px;">QS Postgres Upgrade</a>
+
+<a class="link-light" href="./QS_Upgrade_Activity.html" style="margin-left: 25px;">QS Version Upgrade Activity</a>
+
+
+	
+	</div>
+</header>
+
+-->
+
+
+
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+		 <img src="../../img/logo_dark.png" width="38" height="30" class="me-3" alt="ARK">
+	</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+		
+
+		<li class="nav-item">
+          <a class="nav-link " aria-current="page" href="https://ajaykakkar93.github.io/">Profile</a>
+        </li>
+		
+		<li class="nav-item">
+          <a class="nav-link " aria-current="page" href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads">Download Product</a>
+        </li>
+		
+		<li class="nav-item">
+          <a class="nav-link " aria-current="page" href="./QS_Release_Notes.html">QS Release Notes</a>
+        </li>
+		
+		<li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="./QS_Postgres_Upgrade_List.html">QS Postgres Version List</a>
+        </li>
+		
+		<li class="nav-item">
+          <a class="nav-link " aria-current="page" href="./QS_Upgrade_Activity.html">QS Version Upgrade Activity</a>
+        </li>
+		
+	<!--
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+     -->
+	 
+      </ul>
+      <!--<form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>-->
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-timeline">
+                
+				
+
+				
+                <div class="timeline">
+                    <span class="timeline-content">
+                        <div class="timeline-icon"><img src="./img/qlikOnlyLogo.svg" /></div>
+                        <div class="timeline-year">Nov 2020</div>
+                        <h3 class="title">Qlik Sense Nov 2020/Later</h3>
+                        
+						<table class="table table-sm table-bordered">
+						  <thead>
+						  <tr>
+							<th scope="col">#</th>
+							<th scope="col">Version</th>
+							<th scope="col">PostgreSQL</th>
+						  </tr>
+						  </thead>
+						  <tbody>
+						  
+						  <tr>
+							<th scope="row">1</th>
+							<td>3.1</td>
+							<td>9.3.x</td>
+						  </tr>
+						  
+						  <tr>
+							<th scope="row">2</th>
+							<td>3.2</td>
+							<td>9.3.x & 9.6.x</td>
+						  </tr>
+						  
+						  <tr>
+							<th scope="row">3</th>
+							<td>June 2017</td>
+							<td>9.6.x</td>
+						  </tr>
+						   <tr>
+							<th scope="row">4</th>
+							<td>September 2017</td>
+							<td>9.6.x</td>
+						  </tr>
+						  <tr>
+							<th scope="row">5</th>
+							<td>November 2019</td>
+							<td>9.6.x & 11.x</td>
+						  </tr>
+						  <tr>
+							<th scope="row">6</th>
+							<td>February to November 2020</td>
+							<td>9.6.x & 11.x</td>
+						  </tr>
+						  
+						  </tbody>
+						</table>
+						
+						<p class="description">
+							<a href="https://community.qlik.com/t5/Official-Support-Articles/How-to-manually-upgrade-the-bundled-Qlik-Sense-PostgreSQL/ta-p/1820358#:~:text=Upgrading%20Qlik%20Sense%20Enterprise%20on,PostgreSQL%20will%20remain%20on%209.6.">Source of this list</a>
+						</p>
+                    </span>
+                </div>
+				
+				<div class="timeline">
+                    <span class="timeline-content">
+                        <div class="timeline-icon"><img  src="./img/qlikOnlyLogo.svg"/></div>
+                        <div class="timeline-year">Feb 2021</div>
+                        <h3 class="title">Qlik Sense Feb 2021</h3>
+                        
+							<table class="table table-sm table-bordered">
+						  <thead>
+						  <tr>
+							<th scope="col">#</th>
+							<th scope="col">Version</th>
+							<th scope="col">Upgrade from later</th>
+							<th scope="col">Fresh Install</th>
+						  </tr>
+						  </thead>
+						  <tbody>
+						  
+						  <tr>
+							<th scope="row">1</th>
+							<td>Feb 2021</td>
+							<td>9.6.x</td>
+							<td>12.x</td>
+						  </tr>
+						  
+						  </tbody>
+						</table>
+						
+						<p class="description">
+                        The February 2021 release also includes:
+						
+						<ul style="text-align: left;">
+							
+							<li>Seven new visualization types</li>
+							<li>Improved user interface</li>
+							<li>Fixed issue with user impersonation</li>
+						</ul>
+						</p>
+                    </span>
+                </div>
+				
+				
+                <div class="timeline">
+                    <span class="timeline-content">
+                        <div class="timeline-icon"><img src="./img/qlikOnlyLogo.svg" /></div>
+                        <div class="timeline-year">May 2021</div>
+                        <h3 class="title">Qlik Sense May 2021</h3>
+                        <p class="description">
+							As of May 2021, <b>the version of PostgreSQL that comes with Qlik Sense is 12.5</b>.
+							However, upgrading Qlik Sense Enterprise on Windows doesn't automatically upgrade the bundled PostgreSQL version.
+							New versions of PostgreSQL are only deployed during a new installation. 
+							To manually upgrade the bundled Qlik Sense PostgreSQL version to 12.5, you can use the Qlik PostgreSQL Installer (QPI).
+							Using the Qlik Postgres Installer not only upgrades PostgreSQL, but it also unbundles PostgreSQL from your Qlik Sense Enterprise on Windows install.
+						   </p>
+                    </span>
+                </div>
+								
+                <div class="timeline">
+                    <span class="timeline-content">
+                        <div class="timeline-icon"><img src="./img/qlikOnlyLogo.svg" /></div>
+                        <div class="timeline-year">Aug 2023</div>
+                        <h3 class="title">Qlik Sense Aug 2023</h3>
+                        <p class="description">
+August 2023, the version of PostgreSQL that comes with Qlik Sense is 14.x. If you need to migrate from 9.6 or 12.5, you can use the Qlik Postgres Installer (QPI). However, please note that the QPI only supports Qlik Sense Enterprise on Windows February 2022 and above. It is recommended that you upgrade to the latest supported version of Qlik Sense before using the QPI to manually upgrade the bundled PostgreSQL database running on the 9.6 version to a newer version. In case you need to upgrade the PostgreSQL database, you can use the Qlik PostgreSQL Installer.                         
+						 </p>
+                    </span>
+                </div>
+				
+				
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</body>
+
+</html>
