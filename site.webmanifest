@@ -1,0 +1,21 @@
+{
+  "name": "Ajay Kakkar — Qlik Solutions Architect & AI Product Builder",
+  "short_name": "Ajay Kakkar",
+  "description": "Senior Qlik Solutions Architect and AI Product Builder with 9+ years experience. Mumbai, India.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1b2d51",
+  "background_color": "#080e1a",
+  "icons": [
+    {
+      "src": "/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

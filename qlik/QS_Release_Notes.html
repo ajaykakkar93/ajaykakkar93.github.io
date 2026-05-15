@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qlik Sense Release Notes — Ajay Kakkar</title>
+  <meta name="description" content="Complete Qlik Sense Enterprise release notes index — all 33 versions from 3.0 (2016) to Nov-23, with EOS dates and direct PDF/HTML links. By Ajay Kakkar." />
+  <meta name="keywords" content="Qlik Sense Release Notes, Qlik Sense Versions, EOS Dates, Ajay Kakkar" />
+  <meta name="author" content="Ajay Kakkar" />
+  <link rel="icon" href="../img/favicon.ico" />
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    body { background-color:#080e1a; color:#f1f5f9; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+    .card { background:rgba(30,41,59,.55); backdrop-filter:blur(10px); border:1px solid rgba(148,163,184,.1); }
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; }
+    .tag-blue  { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-amber { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-red   { background:rgba(239,68,68,.1);   border:1px solid rgba(239,68,68,.2);   color:#fca5a5; }
+    .tag-green { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-slate { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+    .year-btn { width:100%; text-align:left; padding:.5rem .75rem; border-radius:.5rem; color:#94a3b8; font-size:.8rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:all .2s; }
+    .year-btn:hover, .year-btn.active { background:rgba(59,130,246,.08); color:#93c5fd; }
+    .year-panel { display:none; }
+    .year-panel.open { display:block; }
+    .ver-link { display:block; padding:.35rem .75rem .35rem 1.5rem; font-size:.8rem; color:#64748b; border-radius:.375rem; transition:all .2s; text-decoration:none; }
+    .ver-link:hover { color:#93c5fd; background:rgba(59,130,246,.05); }
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:#080e1a; } ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:3px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 py-3 border-b border-slate-800/60" style="background:rgba(8,14,26,.93);backdrop-filter:blur(14px)">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <a href="../index.html" class="font-display font-bold text-lg" style="background:linear-gradient(135deg,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">← AK</a>
+      <span class="text-slate-600 hidden sm:block">|</span>
+      <span class="text-slate-300 font-semibold text-sm hidden sm:block">Qlik Sense Release Notes</span>
+    </div>
+    <div class="flex items-center gap-1 text-xs">
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Upgrade Tool</a>
+      <a href="./QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 font-semibold">Release Notes</a>
+      <a href="./QS_Postgres_Upgrade_List.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Postgres Versions</a>
+      <a href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Download QS</a>
+    </div>
+  </div>
+</nav>
+
+<div class="pt-20 flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="hidden lg:block w-56 shrink-0 sticky top-20 self-start h-[calc(100vh-5rem)] overflow-y-auto border-r border-slate-800/60 px-3 py-6">
+    <p class="text-slate-500 text-xs uppercase tracking-widest mb-4 px-2">QS Versions</p>
+    <div id="sidebar-nav" class="space-y-1"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 px-5 lg:px-10 py-8 pb-24">
+
+    <div class="max-w-3xl">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-2">All 33 Versions · 2016–2023</p>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mb-3">Qlik Sense <span style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Release Notes</span></h1>
+      <p class="text-slate-400 mb-10">Every Qlik Sense Enterprise on Windows release with its release date, End-of-Support date, and direct link to official release notes.</p>
+
+      <div id="content" class="space-y-10"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 py-6 text-center text-slate-600 text-sm">
+  Built by <a href="../index.html" class="text-blue-400 hover:underline">Ajay Kakkar</a> — Qlik Solutions Architect · Mumbai, India
+</footer>
+
+<script>
+const versions = [
+  { label:'3',      year:2016, released:'Jun 28', eos:'Jun 28 2018',  notes:'./ReleaseNotes/1 QlikSense30ReleaseNotes_20160620.pdf' },
+  { label:'3.1',    year:2016, released:'Sep 20', eos:'Sep 20 2018',  notes:'./ReleaseNotes/2 QlikSense3_1ReleaseNotes.pdf' },
+  { label:'3.2',    year:2017, released:'Feb 09', eos:'Feb 9 2019',   notes:'./ReleaseNotes/3 QlikSense32_SR4ReleaseNotes.pdf' },
+  { label:'Jun-17', year:2017, released:'Jun 29', eos:'Jun 29 2019',  notes:'./ReleaseNotes/4 QlikSense_June_2017_Patch1_ReleaseNotes.pdf' },
+  { label:'Sep-17', year:2017, released:'Sep 19', eos:'Sep 19 2019',  notes:'./ReleaseNotes/5 QlikSense_September_2017_ReleaseNotes.pdf' },
+  { label:'Nov-17', year:2017, released:'Nov 14', eos:'Nov 13 2019',  notes:'./ReleaseNotes/6 QlikSense_November_2017_Patch1_ReleaseNotes.pdf' },
+  { label:'Feb-18', year:2018, released:'Feb 13', eos:'Feb 13 2020',  notes:'./ReleaseNotes/7 QlikSense_February_2018_Patch2_ReleaseNotes.pdf' },
+  { label:'Apr-18', year:2018, released:'Apr 19', eos:'Apr 19 2020',  notes:'./ReleaseNotes/8 QlikSense_April_2018_ReleaseNotes.pdf' },
+  { label:'Jun-18', year:2018, released:'Jun 26', eos:'Jun 26 2020',  notes:'./ReleaseNotes/9 QlikSense_June2018_ReleaseNotes.pdf' },
+  { label:'Sep-18', year:2018, released:'Sep 11', eos:'Sep 11 2020',  notes:'./ReleaseNotes/10 QlikSense_September_2018_ ReleaseNotes.pdf' },
+  { label:'Nov-18', year:2018, released:'Nov 13', eos:'Nov 13 2020',  notes:'./ReleaseNotes/11 QlikSense_November_2018_ReleaseNotes.pdf' },
+  { label:'Feb-19', year:2019, released:'Feb 12', eos:'Feb 12 2021',  notes:'./ReleaseNotes/12 QlikSense_February_2019_ReleaseNotes.pdf' },
+  { label:'Apr-19', year:2019, released:'Apr 25', eos:'Apr 25 2021',  notes:'./ReleaseNotes/13 QlikSense_April_2019_ReleaseNotes.pdf' },
+  { label:'Jun-19', year:2019, released:'Jun 28', eos:'Jun 28 2021',  notes:'./ReleaseNotes/14 QlikSense_June_2019_ReleaseNotes.pdf' },
+  { label:'Sep-19', year:2019, released:'Sep 30', eos:'Sep 30 2021',  notes:'./ReleaseNotes/15 QlikSense_September_2019_ReleaseNotes.pdf' },
+  { label:'Nov-19', year:2019, released:'Nov 11', eos:'Nov 11 2021',  notes:'./ReleaseNotes/16 QlikSense_November_2019_Patch18_ReleaseNotes.pdf' },
+  { label:'Feb-20', year:2020, released:'Feb 25', eos:'Feb 25 2022',  notes:'./ReleaseNotes/17 QlikSense_February_2020_ReleaseNotes.pdf' },
+  { label:'Apr-20', year:2020, released:'Apr 14', eos:'Apr 14 2022',  notes:'./ReleaseNotes/18 QlikSense_April_2020_ReleaseNotes.pdf' },
+  { label:'Jun-20', year:2020, released:'Jun 10', eos:'Jun 10 2022',  notes:'./ReleaseNotes/19 QlikSense_June_2020_ReleaseNotes.pdf' },
+  { label:'Sep-20', year:2020, released:'Sep 09', eos:'Sep 9 2022',   notes:'./ReleaseNotes/20 QlikSense_September_2020_ReleaseNotes.pdf' },
+  { label:'Nov-20', year:2020, released:'Nov 10', eos:'Nov 10 2022',  notes:'./ReleaseNotes/21 QlikSense_November_2020.html' },
+  { label:'Feb-21', year:2021, released:'Feb 09', eos:'Feb 9 2023',   notes:'./ReleaseNotes/22 QlikSense_February_2021.html', pivot:true },
+  { label:'May-21', year:2021, released:'May 10', eos:'May 10 2023',  notes:'./ReleaseNotes/23 QlikSense_May_2021.html', pg:'PG 12.5' },
+  { label:'Aug-21', year:2021, released:'Aug 23', eos:'Aug 23 2023',  notes:'./ReleaseNotes/24 QlikSense_August_2021.html' },
+  { label:'Nov-21', year:2021, released:'Nov 08', eos:'Nov 8 2023',   notes:'./ReleaseNotes/25 QlikSense_November_2021.html', vuln:true },
+  { label:'Feb-22', year:2022, released:'Feb 15', eos:'Feb 15 2024',  notes:'./ReleaseNotes/26 QlikSense_February_2022.html', vuln:true },
+  { label:'May-22', year:2022, released:'May 10', eos:'May 10 2024',  notes:'./ReleaseNotes/27 QlikSense_May_2022.html', vuln:true },
+  { label:'Aug-22', year:2022, released:'Aug 23', eos:'Aug 23 2024',  notes:'./ReleaseNotes/28 QlikSense_August_2022.html', vuln:true },
+  { label:'Nov-22', year:2022, released:'Nov 08', eos:'Nov 8 2024',   notes:'./ReleaseNotes/29 QlikSense_November_2022.html', vuln:true },
+  { label:'Feb-23', year:2023, released:'Feb 16', eos:'Feb 16 2025',  notes:'./ReleaseNotes/30 QlikSense_February_2023.html', vuln:true },
+  { label:'May-23', year:2023, released:'May 16', eos:'May 16 2025',  notes:'./ReleaseNotes/31 QlikSense_May_2023.html', vuln:true },
+  { label:'Aug-23', year:2023, released:'Aug 29', eos:'Aug 29 2025',  notes:'./ReleaseNotes/32 QlikSense_August_2023.html', pg:'PG 14.x', vuln:true },
+  { label:'Nov-23', year:2023, released:'Nov 14', eos:'Nov 14 2025',  notes:'./ReleaseNotes/33 QlikSense_November_2023.html', fixed:true },
+];
+
+// Group by year
+const years = [...new Set(versions.map(v => v.year))];
+const content  = document.getElementById('content');
+const sideNav  = document.getElementById('sidebar-nav');
+
+years.forEach(year => {
+  const group = versions.filter(v => v.year === year);
+  const anchor = `y${year}`;
+
+  // Sidebar year group
+  const yid = `sp-${year}`;
+  sideNav.innerHTML += `
+    <div>
+      <button class="year-btn" onclick="toggleYear('${yid}',this)">
+        <span>${year}</span>
+        <i class="fas fa-chevron-down text-xs transition-transform" id="ic-${yid}"></i>
+      </button>
+      <div id="${yid}" class="year-panel">
+        ${group.map(v => `<a class="ver-link" href="#${anchor}-${v.label}">${v.label}</a>`).join('')}
+      </div>
+    </div>`;
+
+  // Content year section
+  content.innerHTML += `
+    <section id="${anchor}">
+      <h2 class="font-display font-bold text-2xl mb-5 text-gradient-blue pb-3 border-b border-slate-800"
+          style="background:linear-gradient(135deg,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${year}</h2>
+      <div class="space-y-3">
+        ${group.map(v => `
+          <div id="${anchor}-${v.label}" class="card rounded-xl p-5 flex flex-wrap items-center justify-between gap-4 ${v.pivot ? 'border border-amber-500/25' : ''}">
+            <div class="flex items-center gap-4">
+              <div class="w-16 text-center">
+                <p class="font-display font-bold text-lg ${v.pivot ? 'text-amber-400' : 'text-slate-200'}">${v.label}</p>
+                <p class="text-slate-600 text-xs">Released</p>
+                <p class="text-slate-400 text-xs">${v.released}</p>
+              </div>
+              <div>
+                <div class="flex flex-wrap gap-1.5 mb-1">
+                  ${v.pivot ? '<span class="tag tag-amber" style="font-size:.6rem">⚑ PG Pivot Version</span>' : ''}
+                  ${v.pg    ? `<span class="tag tag-amber" style="font-size:.6rem">${v.pg}</span>` : ''}
+                  ${v.vuln  ? '<span class="tag tag-red" style="font-size:.6rem"><i class="fas fa-shield-exclamation mr-1"></i>Vuln — patch to latest</span>' : ''}
+                  ${v.fixed ? '<span class="tag tag-green" style="font-size:.6rem">Security Fixed</span>' : ''}
+                </div>
+                <p class="text-slate-500 text-xs">EOS: <span class="text-slate-400">${v.eos}</span></p>
+              </div>
+            </div>
+            <a href="${v.notes}" target="_blank"
+               class="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-semibold transition-colors whitespace-nowrap">
+              <i class="fas fa-file-lines text-xs"></i> Release Notes
+            </a>
+          </div>`).join('')}
+      </div>
+    </section>`;
+});
+
+function toggleYear(id, btn) {
+  const panel = document.getElementById(id);
+  const icon  = document.getElementById('ic-' + id);
+  panel.classList.toggle('open');
+  icon.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : '';
+  btn.classList.toggle('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"D:\\\\AI Projects\\\\ajaykakkar93.github.io\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "PowerShell(Test-Path \"D:\\\\AI Projects\\\\ajaykakkar93.github.io\" -PathType Container; \\(Get-Item \"D:\\\\AI Projects\\\\ajaykakkar93.github.io\"\\).FullName)",
+      "PowerShell($dir = \"D:\\\\AI Projects\\\\ajaykakkar93.github.io\"; \\(Get-ChildItem $dir -Force -Attributes !ReparsePoint -ErrorAction SilentlyContinue\\) | ForEach-Object { $_.FullName })",
+      "WebFetch(domain:ajaykakkar93.github.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python -c ' *)",
+      "Bash(pip install *)",
+      "WebFetch(domain:wowizer.ai)",
+      "WebFetch(domain:kadac.ai)",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:www.udemy.com)"
+    ]
+  }
+}

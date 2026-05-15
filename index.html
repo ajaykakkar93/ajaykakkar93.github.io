@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajay Kakkar — Qlik Solutions Architect &amp; AI Product Builder</title>
+  <meta name="description" content="Senior Qlik Solutions Architect and AI Product Builder with 9+ years experience. Led R&D on 7 enterprise products at Wowizer.ai. Qlik Cloud &amp; Enterprise API expert. Available for senior roles in Mumbai and remote." />
+  <meta name="keywords" content="Qlik Solutions Architect, Qlik Cloud Expert, AI Analytics Engineer, Qlik Sense Developer Mumbai, Wowizer, KADAC, RAG Pipeline, Qlik API, enigma.js, NPrinting" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta property="og:title" content="Ajay Kakkar — Qlik Solutions Architect &amp; AI Product Builder" />
+  <meta property="og:description" content="10 years turning hard analytics problems into working solutions. Led 7 enterprise products at Wowizer.ai. Qlik Cloud &amp; Enterprise API expert. Mumbai." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #080e1a;
+      color: #f1f5f9;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    html { overflow-x: hidden; }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 55%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #60a5fa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-glow {
+      background:
+        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(59,130,246,.13), transparent),
+        radial-gradient(ellipse 50% 50% at 85% 40%,  rgba(139,92,246,.07), transparent),
+        #080e1a;
+    }
+
+    .card {
+      background: rgba(30,41,59,.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(148,163,184,.1);
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      border-color: rgba(59,130,246,.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(59,130,246,.08);
+    }
+
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; }
+    .tag-blue   { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-purple { background:rgba(139,92,246,.1);  border:1px solid rgba(139,92,246,.2);  color:#c4b5fd; }
+    .tag-amber  { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-green  { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-slate  { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+
+    .badge-live   { background:rgba(34,197,94,.1);  border:1px solid rgba(34,197,94,.25);  color:#4ade80;  font-size:.65rem; padding:.2rem .6rem; border-radius:999px; }
+    .badge-new    { background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25); color:#fbbf24;  font-size:.65rem; padding:.2rem .6rem; border-radius:999px; }
+    .badge-active { background:rgba(59,130,246,.1); border:1px solid rgba(59,130,246,.25); color:#60a5fa;  font-size:.65rem; padding:.2rem .6rem; border-radius:999px; }
+
+    .tl-line {
+      position:absolute; left:1.1rem; top:2rem; bottom:0; width:2px;
+      background:linear-gradient(to bottom, #3b82f6, #8b5cf6, #f59e0b, transparent);
+    }
+    .tl-dot {
+      position:absolute; left:0; top:.35rem;
+      width:2.25rem; height:2.25rem; border-radius:50%;
+      border:3px solid #080e1a;
+      display:flex; align-items:center; justify-content:center;
+    }
+
+    #nav { transition: background .3s, box-shadow .3s, border-color .3s; background: #1b2d51; }
+    #mob-menu { display: none; }
+    #mob-menu.is-open { display: block; }
+    #nav.scrolled {
+      background: rgba(8,14,26,0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(148,163,184,.12);
+      border-bottom: 1px solid rgba(148,163,184,.08);
+    }
+
+    .award-card {
+      background: linear-gradient(135deg, rgba(245,158,11,.07), rgba(30,41,59,.5));
+      border: 1px solid rgba(245,158,11,.15);
+      border-radius: 1rem; padding: 1.25rem;
+      transition: border-color .25s, transform .25s;
+    }
+    .award-card:hover { border-color:rgba(245,158,11,.35); transform:translateY(-2px); }
+
+    .rule { height:1px; background:linear-gradient(to right, transparent, rgba(148,163,184,.1), transparent); }
+
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:#080e1a; }
+    ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:#3b82f6; }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(1.4); }
+    }
+    .pulse-dot { animation:pulse-dot 2s ease-in-out infinite; }
+
+    .form-input {
+      width:100%; background:rgba(30,41,59,.6); border:1px solid rgba(71,85,105,.5);
+      border-radius:.75rem; padding:.75rem 1rem; font-size:.875rem;
+      color:#e2e8f0; outline:none; transition:border-color .2s;
+      font-family:'Inter',sans-serif;
+    }
+    .form-input::placeholder { color:#64748b; }
+    .form-input:focus { border-color:#3b82f6; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-50 py-4">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <a href="#home">
+      <img src="img/logo_dark.png" alt="Ajay Kakkar" class="h-8 w-auto">
+    </a>
+    <div class="hidden md:flex items-center gap-7 text-sm text-slate-400">
+      <a href="#about"      class="hover:text-white transition-colors">About</a>
+      <a href="#genai"      class="hover:text-white transition-colors">Gen AI</a>
+      <a href="#products"   class="hover:text-white transition-colors">Products</a>
+      <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+      <a href="#teaching"   class="hover:text-white transition-colors">Teaching</a>
+      <a href="#awards"     class="hover:text-white transition-colors">Awards</a>
+      <a href="#certifications" class="hover:text-white transition-colors">Certifications</a>
+      <a href="#contact"    class="hover:text-white transition-colors">Contact</a>
+      <a href="Ajay Kakkar Resume.pdf" download
+         class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg
+                transition-colors inline-flex items-center gap-2">
+        <i class="fas fa-download text-xs"></i> Download CV
+      </a>
+    </div>
+    <button id="mob-btn" type="button" onclick="toggleMobNav()"
+            class="md:hidden text-slate-300 hover:text-white text-xl p-2 -mr-2 cursor-pointer">
+      <i id="mob-icon" class="fas fa-bars pointer-events-none"></i>
+    </button>
+  </div>
+  <div id="mob-menu" class="md:hidden px-5 pt-4 pb-6 space-y-3 text-sm text-slate-400
+       bg-[#1b2d51] border-t border-slate-700/60 mt-2">
+    <a href="#about"      class="block hover:text-white">About</a>
+    <a href="#genai"      class="block hover:text-white">Gen AI</a>
+    <a href="#products"   class="block hover:text-white">Products</a>
+    <a href="#experience" class="block hover:text-white">Experience</a>
+    <a href="#teaching"   class="block hover:text-white">Teaching</a>
+    <a href="#awards"     class="block hover:text-white">Awards</a>
+    <a href="#certifications" class="block hover:text-white">Certifications</a>
+    <a href="#contact"    class="block hover:text-white">Contact</a>
+    <a href="Ajay Kakkar Resume.pdf" download
+       class="inline-block bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg mt-1">
+      Download CV
+    </a>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section id="home" class="hero-glow min-h-screen flex items-center pt-24 pb-16">
+  <div class="max-w-7xl mx-auto px-5 w-full">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <div data-aos="fade-right" data-aos-duration="700">
+        <div class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full mb-7
+             bg-green-500/10 border border-green-500/20 text-green-400">
+          <span class="w-2 h-2 rounded-full bg-green-400 pulse-dot"></span>
+          Open to Opportunities
+        </div>
+
+        <h1 class="font-display font-extrabold leading-tight mb-3"
+            style="font-size:clamp(2.8rem,6vw,4.5rem)">
+          Ajay<br /><span class="text-gradient">Kakkar</span>
+        </h1>
+
+        <p class="text-xl sm:text-2xl text-slate-300 font-medium mb-5" style="min-height:2rem">
+          <span id="typed"></span>
+        </p>
+
+        <p class="text-slate-400 text-lg leading-relaxed max-w-lg mb-9">
+          10 years turning hard analytics problems into working solutions — from enterprise
+          Qlik products to AI-powered bots and OCR document intelligence.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mb-10">
+          <a href="#products"
+             class="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold
+                    transition-all hover:shadow-lg hover:shadow-blue-600/25">
+            View Products
+          </a>
+          <a href="Ajay Kakkar Resume.pdf" download
+             class="card text-white px-7 py-3 rounded-xl font-semibold inline-flex items-center gap-2">
+            <i class="fas fa-download text-blue-400 text-sm"></i> Download CV
+          </a>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <a href="https://www.linkedin.com/in/ajaykakkar93" target="_blank" rel="noopener"
+             aria-label="LinkedIn" class="text-slate-500 hover:text-blue-400 text-2xl transition-colors">
+            <i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/ajaykakkar93" target="_blank" rel="noopener"
+             aria-label="GitHub" class="text-slate-500 hover:text-white text-2xl transition-colors">
+            <i class="fab fa-github"></i></a>
+          <a href="https://www.youtube.com/user/ajaykakkar93" target="_blank" rel="noopener"
+             aria-label="YouTube" class="text-slate-500 hover:text-red-400 text-2xl transition-colors">
+            <i class="fab fa-youtube"></i></a>
+          <a href="https://www.udemy.com/user/ajay-kakkar/" target="_blank" rel="noopener"
+             aria-label="Udemy" class="text-slate-500 hover:text-purple-400 text-2xl transition-colors">
+            <i class="fas fa-graduation-cap"></i></a>
+          <a href="https://community.qlik.com/t5/user/viewprofilepage/user-id/18706" target="_blank" rel="noopener"
+             aria-label="Qlik Community" class="text-slate-500 hover:text-green-400 text-2xl transition-colors">
+            <i class="fas fa-chart-bar"></i></a>
+        </div>
+      </div>
+
+      <div class="flex justify-center lg:justify-end"
+           data-aos="fade-left" data-aos-duration="700" data-aos-delay="150">
+        <div class="relative">
+          <div class="absolute inset-0 rounded-[2.5rem] blur-3xl scale-110
+               bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-amber-500/10"></div>
+          <img
+            src="img/AjayKakkarProfileImages/Ajay_Kakkar_2-removebg-preview.png"
+            alt="Ajay Kakkar"
+            class="relative z-10 w-64 sm:w-80 lg:w-96 object-contain drop-shadow-2xl"
+            onerror="this.src='img/Ajay Kakkar2.jpg';this.classList.add('rounded-[2rem]','object-cover','h-80')"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- IMPACT NUMBERS -->
+<section class="py-12 border-y border-slate-800/80">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+      <div data-aos="fade-up" data-aos-delay="0">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">9+</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">Years Exp.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="60">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">7</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">Products Built</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="120">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">20+</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">Engineers Trained</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="180">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">875</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">Udemy Learners</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="240">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">5</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">Qlik Awards</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <p class="font-display font-bold text-gradient-blue mb-1" style="font-size:2rem">14+</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest">OSS Extensions</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <div data-aos="fade-right">
+        <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">About</p>
+        <h2 class="font-display font-bold text-4xl leading-tight mb-6">
+          Solutions Architect.<br />Product Thinker.<br />Educator.
+        </h2>
+        <p class="text-slate-400 leading-relaxed mb-5">
+          I don't build features — I design solutions that make things genuinely easier for the people using them.
+          At <strong class="text-white">Wowizer.ai</strong> (Predoole Analytics), I lead
+          <strong class="text-white">Team Wowizer</strong> (5 engineers), building enterprise Qlik products
+          across the full platform stack: QlikView, Qlik Sense Enterprise, and Qlik Cloud.
+        </p>
+        <p class="text-slate-400 leading-relaxed mb-8">
+          From GDPR-compliance tools to AI bots to cloud migration accelerators — every product starts the same way:
+          find where technology is making someone's work harder than it needs to be, then remove that friction.
+        </p>
+        <div class="card rounded-2xl p-5 border-l-4 border-blue-500 mb-8">
+          <p class="text-slate-200 italic text-lg leading-snug">"Solution to make life easy for the user."</p>
+          <p class="text-slate-500 text-xs mt-1.5">The filter every decision runs through</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="Ajay Kakkar Resume.pdf" download
+             class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg
+                    inline-flex items-center gap-2 transition-colors">
+            <i class="fas fa-download text-xs"></i> Download CV
+          </a>
+          <a href="https://www.linkedin.com/in/ajaykakkar93" target="_blank" rel="noopener"
+             class="card text-sm text-slate-300 hover:text-white font-semibold px-5 py-2.5 rounded-lg
+                    inline-flex items-center gap-2">
+            <i class="fab fa-linkedin text-blue-400"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div data-aos="fade-left" data-aos-delay="150" class="space-y-6">
+        <div>
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">Qlik Platform</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag tag-blue">Qlik Cloud</span>
+            <span class="tag tag-blue">Qlik Sense Enterprise</span>
+            <span class="tag tag-blue">QlikView</span>
+            <span class="tag tag-blue">Engine API</span>
+            <span class="tag tag-blue">enigma.js</span>
+            <span class="tag tag-blue">Mashup API</span>
+            <span class="tag tag-blue">Extension API</span>
+            <span class="tag tag-blue">NPrinting</span>
+            <span class="tag tag-blue">QMC</span>
+            <span class="tag tag-blue">GeoAnalytics</span>
+            <span class="tag tag-blue">Section Access</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">AI &amp; Integration</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag tag-purple">RAG Pipelines</span>
+            <span class="tag tag-purple">OpenRouter / Claude API</span>
+            <span class="tag tag-purple">OCR / Document AI</span>
+            <span class="tag tag-purple">Conversational AI</span>
+            <span class="tag tag-purple">NLP</span>
+            <span class="tag tag-purple">MS Teams API</span>
+            <span class="tag tag-purple">WhatsApp API</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">Code &amp; Web</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag tag-amber">JavaScript</span>
+            <span class="tag tag-amber">Python</span>
+            <span class="tag tag-amber">jQuery</span>
+            <span class="tag tag-amber">HTML / CSS</span>
+            <span class="tag tag-amber">SQL / MySQL</span>
+            <span class="tag tag-amber">JSON / REST</span>
+          </div>
+        </div>
+        <div class="card rounded-xl p-5">
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">Enterprise Clients</p>
+          <div class="flex flex-wrap gap-x-3 gap-y-1 text-slate-400 text-sm">
+            <span>Mahindra &amp; Mahindra</span><span class="text-slate-700">·</span>
+            <span>Accenture</span><span class="text-slate-700">·</span>
+            <span>Emcure Pharma</span><span class="text-slate-700">·</span>
+            <span>Medly Pharmacy</span><span class="text-slate-700">·</span>
+            <span>Burger King</span><span class="text-slate-700">·</span>
+            <span>Oberoi Hotel</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- GEN AI -->
+<section id="genai" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">AI Work</p>
+      <h2 class="font-display font-bold text-4xl mb-4">Building with AI — Before &amp; Now</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">
+        Building retrieval-augmented architectures before RAG became the industry term.
+        Now going deeper with certified systems and production AI features.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-purple-500/10">
+            <i class="fas fa-brain text-purple-400 text-xl"></i>
+          </div>
+          <span class="badge-active">Personal Project</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">RAG Pipeline</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Built a Retrieval-Augmented Generation pipeline — grounding LLM responses in a custom knowledge
+          base for accurate, context-aware answers instead of hallucinations.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag tag-slate">Vector DB</span>
+          <span class="tag tag-slate">Embeddings</span>
+          <span class="tag tag-slate">LLM</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-amber-400">
+          <i class="fas fa-certificate"></i>
+          <span>Certified: RAG Systems in Practice — Edureka, Mar 2026</span>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="80">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-500/10">
+            <i class="fas fa-robot text-blue-400 text-xl"></i>
+          </div>
+          <span class="badge-active">Personal Project</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">OpenRouter + Claude Integration</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Integrated OpenRouter — a unified LLM gateway — using Claude as the primary model.
+          Routes queries across Claude, GPT-4, Mistral and 100+ models through a single API endpoint.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-slate">Claude API</span>
+          <span class="tag tag-slate">OpenRouter</span>
+          <span class="tag tag-slate">LLM Routing</span>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="160">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-500/10">
+            <i class="fas fa-id-card text-green-400 text-xl"></i>
+          </div>
+          <span class="badge-live">Active — 2026</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">OCR Vendor Enrollment — KADAC.ai</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Scanning PAN cards and Aadhaar cards to extract structured KYC data automatically —
+          replacing manual entry, validating vendors before enrollment, and dramatically
+          simplifying the onboarding UX.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-slate">OCR</span>
+          <span class="tag tag-slate">KYC / DPDP</span>
+          <span class="tag tag-slate">S2P</span>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-indigo-500/10">
+            <i class="fab fa-microsoft text-indigo-400 text-xl"></i>
+          </div>
+          <span class="badge-live">Live Product</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">Teams Bot — Conversational AI on Qlik</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Natural language analytics inside Microsoft Teams. Users ask data questions in plain English —
+          Qlik's Associative Engine retrieves and returns chart-level answers. RAG pattern, before RAG
+          was the term.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-slate">NLP</span>
+          <span class="tag tag-slate">Qlik Engine</span>
+          <span class="tag tag-slate">Teams API</span>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="80">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-500/10">
+            <i class="fab fa-whatsapp text-green-400 text-xl"></i>
+          </div>
+          <span class="badge-live">Live Product</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">WhatsApp Bot — Analytics on Demand</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Same conversational analytics as the Teams Bot, delivered via WhatsApp. Users query
+          Qlik data without leaving the app they're already in.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-slate">NLP</span>
+          <span class="tag tag-slate">Qlik Engine</span>
+          <span class="tag tag-slate">WhatsApp API</span>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="160">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-red-500/10">
+            <i class="fas fa-shield-halved text-red-400 text-xl"></i>
+          </div>
+          <span class="badge-live">Live Product</span>
+        </div>
+        <h3 class="font-display font-semibold text-lg mb-2">Wowizer Data Access Auditor</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          GDPR-compliance tool for Qlik — real-time auditing of who accesses what data at stream,
+          app, sheet, and row level. Precise testing evidence for Data Protection Officers.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-slate">GDPR</span>
+          <span class="tag tag-slate">Data Security</span>
+          <span class="tag tag-slate">Real-time Audit</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- WOWIZER PRODUCTS -->
+<section id="products" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Products I Architected</p>
+      <h2 class="font-display font-bold text-4xl mb-4">Wowizer.ai Product Suite</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">
+        As solutions architect and R&amp;D lead at
+        <a href="https://wowizer.ai" target="_blank" rel="noopener" class="text-blue-400 hover:underline">Wowizer.ai</a>,
+        I define the problem, design the solution, and lead Team Wowizer (5 engineers) to ship it.
+      </p>
+    </div>
+
+    <!-- TPM + CMA featured with screenshots -->
+    <div class="grid lg:grid-cols-2 gap-6 mb-6">
+
+      <div class="card rounded-2xl overflow-hidden" data-aos="fade-right">
+        <img src="img/wowizer-tpm.png" alt="Wowizer TPM — AI Command Centre"
+             class="w-full object-cover" onerror="this.style.display='none'" />
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-xl">AI Command Centre (TPM)</h3>
+            <span class="badge-live">Live</span>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            Real-time alert monitoring across all Qlik environments — hosts, apps, tasks, NPrinting —
+            with severity classification and one-click action. The ops dashboard every Qlik MSP needs.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-blue">Qlik Enterprise</span>
+            <span class="tag tag-blue">Multi-tenant</span>
+            <span class="tag tag-blue">Real-time Alerts</span>
+            <span class="tag tag-blue">NPrinting</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl overflow-hidden" data-aos="fade-left">
+        <img src="img/wowizer-cma.png" alt="Wowizer CMA — Cloud Migration Accelerator"
+             class="w-full object-cover" onerror="this.style.display='none'" />
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display font-bold text-xl">Cloud Migration Accelerator (CMA)</h3>
+            <span class="badge-live">Live · v3.2</span>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            End-to-end migration from Qlik Sense Enterprise to Qlik Cloud — tracking apps, users,
+            tasks, data connections, and licences side-by-side. UAT built in. Full audit trail.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag tag-blue">Qlik Cloud</span>
+            <span class="tag tag-blue">Migration</span>
+            <span class="tag tag-blue">UAT Workflow</span>
+            <span class="tag tag-blue">Audit Log</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 smaller products -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="card rounded-xl p-5" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-center justify-between mb-3">
+          <i class="fas fa-cloud text-blue-400 text-2xl"></i>
+          <span class="badge-live">Live</span>
+        </div>
+        <h4 class="font-semibold mb-1.5">Cloud QMC</h4>
+        <p class="text-slate-400 text-xs leading-relaxed">
+          Multi-tenant Qlik Cloud admin — complex task chaining, bulk user provisioning,
+          scheduled backups, disaster recovery.
+        </p>
+      </div>
+      <div class="card rounded-xl p-5" data-aos="fade-up" data-aos-delay="70">
+        <div class="flex items-center justify-between mb-3">
+          <i class="fas fa-right-left text-purple-400 text-2xl"></i>
+          <span class="badge-new">New</span>
+        </div>
+        <h4 class="font-semibold mb-1.5">QV2QC Extended</h4>
+        <p class="text-slate-400 text-xs leading-relaxed">
+          QlikView → Qlik Cloud migration. Handles the harder path — script compatibility,
+          object mapping, and validation.
+        </p>
+      </div>
+      <div class="card rounded-xl p-5" data-aos="fade-up" data-aos-delay="140">
+        <div class="flex items-center justify-between mb-3">
+          <i class="fas fa-pencil text-amber-400 text-2xl"></i>
+          <span class="badge-live">Live</span>
+        </div>
+        <h4 class="font-semibold mb-1.5">Writeback Extension</h4>
+        <p class="text-slate-400 text-xs leading-relaxed">
+          Write data back to source systems from within Qlik dashboards —
+          eliminating round-trips to external tools.
+        </p>
+      </div>
+      <div class="card rounded-xl p-5" data-aos="fade-up" data-aos-delay="210">
+        <div class="flex items-center justify-between mb-3">
+          <i class="fab fa-github text-green-400 text-2xl"></i>
+          <span class="text-slate-500 text-xs">14+ extensions</span>
+        </div>
+        <h4 class="font-semibold mb-1.5">Open Source Extensions</h4>
+        <p class="text-slate-400 text-xs leading-relaxed mb-3">
+          Variable Button, Popup Chart, Side Filter, KPI Objects, Date Range Picker and more —
+          used by the Qlik community globally.
+        </p>
+        <a href="https://github.com/ajaykakkar93" target="_blank" rel="noopener"
+           class="text-blue-400 text-xs font-medium hover:underline inline-flex items-center gap-1">
+          <i class="fab fa-github text-xs"></i> View on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- EXPERIENCE -->
+<section id="experience" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Career</p>
+      <h2 class="font-display font-bold text-4xl">Experience</h2>
+    </div>
+    <div class="max-w-3xl mx-auto">
+      <div class="relative pl-12">
+        <div class="tl-line"></div>
+
+        <div class="relative mb-10" data-aos="fade-up">
+          <div class="tl-dot bg-blue-600"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+          <div class="card rounded-2xl p-6">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <h3 class="font-display font-bold text-xl">Solutions Architect &amp; R&amp;D Lead</h3>
+                <p class="text-blue-400 font-semibold mt-0.5">Predoole Analytics · Wowizer.ai · KADAC.ai</p>
+              </div>
+              <span class="text-slate-500 text-sm whitespace-nowrap">Oct 2022 – Present</span>
+            </div>
+            <ul class="space-y-2 text-slate-400 text-sm">
+              <li class="flex gap-2.5"><span class="text-blue-500 mt-0.5 shrink-0">→</span>Lead Team Wowizer (5 engineers) — architecture, Qlik Cloud &amp; Enterprise API guidance, delivery</li>
+              <li class="flex gap-2.5"><span class="text-blue-500 mt-0.5 shrink-0">→</span>Architected 7 enterprise products across full Qlik stack: QlikView, Sense Enterprise, Qlik Cloud</li>
+              <li class="flex gap-2.5"><span class="text-blue-500 mt-0.5 shrink-0">→</span>Trained 20+ on-payroll developers in Qlik Sense Enterprise &amp; Cloud (2023–2024)</li>
+              <li class="flex gap-2.5"><span class="text-blue-500 mt-0.5 shrink-0">→</span>Delivered 30% operational cost reduction through process automation</li>
+              <li class="flex gap-2.5"><span class="text-blue-500 mt-0.5 shrink-0">→</span>Building OCR-powered KYC vendor enrollment at KADAC.ai (Apr 2026–present)</li>
+            </ul>
+            <div class="mt-4 pt-4 border-t border-slate-700/50">
+              <a href="Achievements_in_Predoole_2023.pdf" target="_blank"
+                 class="inline-flex items-center gap-2 text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                <i class="fas fa-file-pdf"></i> View Achievements at Predoole 2023
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative mb-10" data-aos="fade-up">
+          <div class="tl-dot bg-purple-600"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+          <div class="card rounded-2xl p-6">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <h3 class="font-display font-bold text-xl">Qlik Sense Developer</h3>
+                <p class="text-purple-400 font-semibold mt-0.5">Medly Pharmacy · Pune</p>
+              </div>
+              <span class="text-slate-500 text-sm whitespace-nowrap">Oct 2020 – Oct 2022</span>
+            </div>
+            <ul class="space-y-2 text-slate-400 text-sm">
+              <li class="flex gap-2.5"><span class="text-purple-500 mt-0.5 shrink-0">→</span>Pioneered Python-to-Qlik live data integration — real-time chart generation without full dataset load</li>
+              <li class="flex gap-2.5"><span class="text-purple-500 mt-0.5 shrink-0">→</span>Built 10+ compliance dashboards: URAC, General Compliance Audit 1 &amp; 2, NPS, DNA Apps</li>
+              <li class="flex gap-2.5"><span class="text-purple-500 mt-0.5 shrink-0">→</span>Implemented NPrinting automation for 20+ report workflows</li>
+            </ul>
+            <div class="mt-4 pt-4 border-t border-slate-700/50">
+              <a href="Achievements in Medly 2020 to 2023.pdf" target="_blank"
+                 class="inline-flex items-center gap-2 text-xs text-purple-400 hover:text-purple-300 font-semibold transition-colors">
+                <i class="fas fa-file-pdf"></i> View Achievements at Medly 2020–2023
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative mb-10" data-aos="fade-up">
+          <div class="tl-dot bg-amber-500"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+          <div class="card rounded-2xl p-6">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <h3 class="font-display font-bold text-xl">Qlik Extension &amp; App Developer</h3>
+                <p class="text-amber-400 font-semibold mt-0.5">Clay Logix Pvt. Ltd. · Mumbai</p>
+              </div>
+              <span class="text-slate-500 text-sm whitespace-nowrap">Nov 2016 – Sep 2020</span>
+            </div>
+            <ul class="space-y-2 text-slate-400 text-sm">
+              <li class="flex gap-2.5"><span class="text-amber-500 mt-0.5 shrink-0">→</span>Primary Qlik developer for Mahindra &amp; Mahindra; GeoAnalytics support for Accenture</li>
+              <li class="flex gap-2.5"><span class="text-amber-500 mt-0.5 shrink-0">→</span>Built 14+ custom extensions — open sourced on GitHub, used by the global Qlik community</li>
+              <li class="flex gap-2.5"><span class="text-amber-500 mt-0.5 shrink-0">→</span>Deep enigma.js, qsock, Qlik Engine API, and Section Access expertise built here</li>
+            </ul>
+            <div class="mt-4 pt-4 border-t border-slate-700/50">
+              <a href="Achievements in Clay Logix 2020.pdf" target="_blank"
+                 class="inline-flex items-center gap-2 text-xs text-amber-400 hover:text-amber-300 font-semibold transition-colors">
+                <i class="fas fa-file-pdf"></i> View Achievements at Clay Logix 2020
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative" data-aos="fade-up">
+          <div class="tl-dot bg-slate-600"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+          <div class="card rounded-2xl p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 class="font-display font-bold text-lg">Freelance Web Developer</h3>
+                <p class="text-slate-500 text-sm">PHP · JavaScript · MySQL</p>
+              </div>
+              <span class="text-slate-500 text-sm">2014 – 2016</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- TEACHING -->
+<section id="teaching" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Knowledge Sharing</p>
+      <h2 class="font-display font-bold text-4xl mb-3">I Don't Just Build — I Teach</h2>
+      <p class="text-slate-400">
+        875 Udemy learners &nbsp;·&nbsp; 20+ engineers trained &nbsp;·&nbsp; YouTube · Medium · Qlik Community
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+
+      <a href="https://www.udemy.com/course/qlik-sense-extension-form-scratch/" target="_blank" rel="noopener"
+         class="card rounded-2xl p-6 block" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
+            <i class="fas fa-puzzle-piece text-purple-400"></i>
+          </div>
+          <span class="tag tag-slate">Udemy</span>
+        </div>
+        <h3 class="font-semibold mb-1.5">Qlik Sense Extension from Scratch</h3>
+        <div class="flex items-center gap-2 mb-3">
+          <div class="flex text-amber-400 text-xs gap-0.5">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+          </div>
+          <span class="text-slate-400 text-xs">3.8 &#9733;</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Build custom Qlik Sense extensions from zero — Extension API, HTML/CSS, JavaScript, Qlik object model.
+        </p>
+        <p class="text-blue-400 text-xs font-semibold mt-4 inline-flex items-center gap-1">
+          View Course <i class="fas fa-arrow-right text-xs"></i>
+        </p>
+      </a>
+
+      <a href="https://www.udemy.com/course/qlik-nprinting-for-beginners/" target="_blank" rel="noopener"
+         class="card rounded-2xl p-6 block" data-aos="fade-up" data-aos-delay="80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+            <i class="fas fa-file-lines text-blue-400"></i>
+          </div>
+          <span class="tag tag-slate">Udemy</span>
+        </div>
+        <h3 class="font-semibold mb-1.5">Qlik NPrinting for Beginners</h3>
+        <div class="flex items-center gap-2 mb-3">
+          <div class="flex text-amber-400 text-xs gap-0.5">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="far fa-star"></i><i class="far fa-star"></i>
+          </div>
+          <span class="text-slate-400 text-xs">3.4 &#9733;</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Automate Qlik report generation and distribution — from basics to scheduled delivery for business users.
+        </p>
+        <p class="text-blue-400 text-xs font-semibold mt-4 inline-flex items-center gap-1">
+          View Course <i class="fas fa-arrow-right text-xs"></i>
+        </p>
+      </a>
+
+      <div class="card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="160">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center">
+            <i class="fas fa-users text-green-400"></i>
+          </div>
+          <span class="tag tag-slate">Corporate</span>
+        </div>
+        <h3 class="font-semibold mb-3">Team Training Programme</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          Took 20+ Predoole-hired freshers from zero to independently productive in Qlik Sense
+          Enterprise &amp; Cloud (2023–2024). That cohort now delivers on their own.
+        </p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="tag tag-green">Qlik Enterprise</span>
+          <span class="tag tag-green">Qlik Cloud</span>
+          <span class="tag tag-green">API Training</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Qlik Community Tool — featured -->
+    <div class="card rounded-2xl overflow-hidden mb-8" data-aos="fade-up">
+      <div class="p-6 sm:flex items-center justify-between gap-8">
+        <div class="mb-5 sm:mb-0">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0">
+              <i class="fas fa-arrow-up-right-dots text-blue-400"></i>
+            </div>
+            <div>
+              <span class="tag tag-slate text-xs">Community Tool</span>
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Qlik Sense Upgrade Guide</h3>
+          <p class="text-slate-400 text-sm leading-relaxed max-w-xl">
+            Interactive upgrade path calculator for all 33 Qlik Sense Enterprise versions (2016–2023). Covers prerequisites checklist, safe mode version-to-version paths, PostgreSQL migration routes, and EOS dates. Built for the Qlik community.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <span class="tag tag-blue">33 QS Versions</span>
+            <span class="tag tag-blue">PostgreSQL Matrix</span>
+            <span class="tag tag-blue">Upgrade Paths</span>
+            <span class="tag tag-slate">Free Tool</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3 shrink-0">
+          <a href="qlik/index.html" target="_blank"
+             class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap">
+            <i class="fas fa-arrow-up-right-dots text-xs"></i> Upgrade Tool
+          </a>
+          <a href="qlik/QS_Release_Notes.html" target="_blank"
+             class="flex items-center gap-2 card text-slate-300 hover:text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap">
+            <i class="fas fa-file-lines text-xs text-blue-400"></i> Release Notes
+          </a>
+          <a href="qlik/QS_Postgres_Upgrade_List.html" target="_blank"
+             class="flex items-center gap-2 card text-slate-300 hover:text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap">
+            <i class="fas fa-database text-xs text-purple-400"></i> Postgres Matrix
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+      <a href="https://github.com/ajaykakkar93" target="_blank" rel="noopener"
+         class="card rounded-xl px-5 py-3 flex items-center gap-3 hover:border-slate-500/50">
+        <i class="fab fa-github text-slate-300 text-xl"></i>
+        <span class="text-sm text-slate-300">GitHub</span>
+      </a>
+      <a href="https://www.udemy.com/user/ajay-kakkar/" target="_blank" rel="noopener"
+         class="card rounded-xl px-5 py-3 flex items-center gap-3 hover:border-purple-500/30">
+        <i class="fab fa-udemy text-purple-400 text-xl"></i>
+        <span class="text-sm text-slate-300">Udemy</span>
+      </a>
+      <a href="https://www.linkedin.com/in/ajaykakkar93/" target="_blank" rel="noopener"
+         class="card rounded-xl px-5 py-3 flex items-center gap-3 hover:border-blue-500/30">
+        <i class="fab fa-linkedin text-blue-400 text-xl"></i>
+        <span class="text-sm text-slate-300">LinkedIn</span>
+      </a>
+      <a href="https://www.youtube.com/user/ajaykakkar93" target="_blank" rel="noopener"
+         class="card rounded-xl px-5 py-3 flex items-center gap-3 hover:border-red-500/30">
+        <i class="fab fa-youtube text-red-400 text-xl"></i>
+        <span class="text-sm text-slate-300">YouTube Tutorials</span>
+      </a>
+      <a href="https://community.qlik.com/t5/user/viewprofilepage/user-id/18706" target="_blank" rel="noopener"
+         class="card rounded-xl px-5 py-3 flex items-center gap-3 hover:border-green-500/30">
+        <i class="fas fa-chart-bar text-green-400 text-xl"></i>
+        <span class="text-sm text-slate-300">Qlik Community</span>
+      </a>
+      <div class="card rounded-xl px-5 py-3 flex items-center gap-3">
+        <i class="fab fa-medium text-slate-300 text-xl"></i>
+        <span class="text-sm text-slate-300">Medium Articles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- AWARDS -->
+<section id="awards" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Recognition</p>
+      <h2 class="font-display font-bold text-4xl mb-3">Qlik Awards</h2>
+      <p class="text-slate-400">5 awards across 6 years — from Qlik India, Qlik Global, and the community</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="award-card" data-aos="fade-up" data-aos-delay="0">
+        <i class="fas fa-trophy text-amber-400 text-2xl mb-3 block"></i>
+        <h4 class="font-semibold mb-1">#QlikForSwag — Grand Prize</h4>
+        <p class="text-slate-400 text-sm mb-3">Global community challenge — school education analysis project</p>
+        <span class="text-xs text-amber-500 font-medium">2018 · Qlik Global</span>
+      </div>
+
+      <div class="award-card" data-aos="fade-up" data-aos-delay="70">
+        <i class="fas fa-lightbulb text-amber-400 text-2xl mb-3 block"></i>
+        <h4 class="font-semibold mb-1">Outstanding Innovator</h4>
+        <p class="text-slate-400 text-sm mb-3">Recognised for innovation in client delivery work</p>
+        <span class="text-xs text-amber-500 font-medium">Oct 2019 · Clay Logix</span>
+      </div>
+
+      <div class="award-card" data-aos="fade-up" data-aos-delay="140">
+        <i class="fas fa-medal text-amber-400 text-2xl mb-3 block"></i>
+        <h4 class="font-semibold mb-1">Qlik Innovation Challenge</h4>
+        <p class="text-slate-400 text-sm mb-3">Best Innovation — nationally judged by Qlik India</p>
+        <span class="text-xs text-amber-500 font-medium">Dec 2019 · Qlik India</span>
+      </div>
+
+      <div class="award-card" data-aos="fade-up" data-aos-delay="0">
+        <i class="fas fa-star text-amber-400 text-2xl mb-3 block"></i>
+        <h4 class="font-semibold mb-1">#QlikHighlights2019 — 1st Prize</h4>
+        <p class="text-slate-400 text-sm mb-3">Personally recognised by Michael Tarallo, Qlik's Global Community Manager</p>
+        <span class="text-xs text-amber-500 font-medium">2019 · Qlik Employee Recognition</span>
+      </div>
+
+      <div class="award-card" data-aos="fade-up" data-aos-delay="70">
+        <i class="fas fa-hand-holding-heart text-amber-400 text-2xl mb-3 block"></i>
+        <h4 class="font-semibold mb-1">High Five — November 2023</h4>
+        <p class="text-slate-400 text-sm mb-3">Qlik Community monthly lead recognition — sustained excellence, 5 years on</p>
+        <span class="text-xs text-amber-500 font-medium">Nov 2023 · Qlik Community</span>
+      </div>
+
+      <div class="card rounded-2xl p-5 flex flex-col justify-center items-center text-center"
+           data-aos="fade-up" data-aos-delay="140">
+        <p class="text-slate-500 text-xs mb-2 uppercase tracking-widest">Recognition span</p>
+        <p class="font-display font-bold text-2xl text-gradient-blue mb-2">2018 → 2023</p>
+        <p class="text-slate-400 text-sm">Not a one-time burst —
+          <span class="text-white font-medium">sustained recognition across 6 years</span>
+          from different parts of the Qlik ecosystem.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Learning</p>
+      <h2 class="font-display font-bold text-4xl">Certifications</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div class="card rounded-2xl p-5 border border-purple-500/20 cursor-pointer hover:border-purple-500/50 transition-colors" data-aos="fade-up" data-aos-delay="0" onclick="openCert('img/cert/rag_systems_in_practice.jpg', 'RAG Systems in Practice — Edureka')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-purple-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-brain text-purple-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm leading-snug">RAG Systems in Practice</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Edureka · Mar 2026</p>
+            <p class="text-purple-400 text-xs mt-1">ID: XR8S5EHF8SCM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 border border-blue-500/20 cursor-pointer hover:border-blue-500/50 transition-colors" data-aos="fade-up" data-aos-delay="60" onclick="openCert('img/cert/team_building_leadership_pm.jpg', 'Team Building &amp; Leadership in PM — Microsoft')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-microsoft text-blue-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm leading-snug">Team Building &amp; Leadership in PM</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Microsoft · Dec 2025</p>
+            <p class="text-blue-400 text-xs mt-1">ID: DA9LNBECGNYZ</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 border border-blue-500/20 cursor-pointer hover:border-blue-500/50 transition-colors" data-aos="fade-up" data-aos-delay="120" onclick="openCert('img/cert/project_management_fundamentals.jpg', 'Project Management Fundamentals — Microsoft')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-microsoft text-blue-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm leading-snug">Project Management Fundamentals</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Microsoft · Dec 2025</p>
+            <p class="text-blue-400 text-xs mt-1">ID: 06TNP8NRYRU4</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="0" onclick="openCert('img/cert/ai_for_everyone.PNG', 'AI for Everyone — deeplearning.ai / Coursera')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-robot text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">AI for Everyone</h4>
+            <p class="text-slate-500 text-xs mt-0.5">deeplearning.ai / Coursera · 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="60" onclick="openCert('img/cert/cloud_computing.PNG', 'Cloud Computing Basics — LearnQuest / Coursera')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-cloud text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Cloud Computing Basics</h4>
+            <p class="text-slate-500 text-xs mt-0.5">LearnQuest / Coursera · 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5" data-aos="fade-up" data-aos-delay="120">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-python text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Python Programming Fundamentals</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Coursera · 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="0" onclick="openCert('img/cert/JavaScript Essentials 2020.jpg', 'JavaScript Essentials — Udemy')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-js text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">JavaScript Essentials 2020</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Udemy</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="60" onclick="openCert('img/cert/Power BI — The Ultimate Orientation.jpg', 'Power BI — The Ultimate Orientation — Udemy')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-chart-pie text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Power BI — The Ultimate Orientation</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Udemy · 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="120" onclick="openCert('img/cert/Learing_how_to_learn.PNG', 'How to Learn: Powerful Mental Tools — McMaster / UCSD')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-book-open text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">How to Learn: Powerful Mental Tools</h4>
+            <p class="text-slate-500 text-xs mt-0.5">McMaster / UCSD · 2020</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="0" onclick="openCert('img/cert/Qlikview Developer from scratch.jpg', 'Become QlikView Developer from Scratch — Udemy')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-chart-bar text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Become QlikView Developer from Scratch</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Udemy · Jul 2018</p>
+            <p class="text-slate-500 text-xs mt-0.5">ID: UC-X4RDXU18</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="60" onclick="openCert('img/cert/Strategy_of_Content_Marketing.PNG', 'The Strategy of Content Marketing — UC Davis / Coursera')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-bullhorn text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">The Strategy of Content Marketing</h4>
+            <p class="text-slate-500 text-xs mt-0.5">UC Davis / Coursera</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="120" onclick="openCert('img/cert/Understanding Technology and Data Certificate.png', 'Understanding Technology and Data')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-database text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Understanding Technology and Data</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Coursera</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="0" onclick="openCert('img/cert/Learn to Program The Fundamentals.jpeg', 'Learn to Program: The Fundamentals — University of Toronto / Coursera')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-code text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Learn to Program: The Fundamentals</h4>
+            <p class="text-slate-500 text-xs mt-0.5">University of Toronto / Coursera</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="60" onclick="openCert('img/cert/Process Groups and Processes in Project Management.jpeg', 'Process Groups and Processes in Project Management')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-diagram-project text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Process Groups and Processes in PM</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Coursera</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-5 cursor-pointer hover:border-slate-600 transition-colors" data-aos="fade-up" data-aos-delay="120" onclick="openCert('img/cert/Project Manager Engagement with Stakeholders.jpeg', 'Project Manager Engagement with Stakeholders')">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-slate-700 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-people-group text-slate-400 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-sm">Project Manager Engagement with Stakeholders</h4>
+            <p class="text-slate-500 text-xs mt-0.5">Coursera</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+
+<!-- CONTACT -->
+<section id="contact" class="py-24">
+  <div class="max-w-4xl mx-auto px-5">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-3">Get In Touch</p>
+      <h2 class="font-display font-bold text-4xl mb-4">Let's Talk</h2>
+      <p class="text-slate-400 max-w-lg mx-auto">
+        Open to Qlik solutions architect roles, senior consultant opportunities,
+        and AI-augmented analytics collaborations.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+
+      <div data-aos="fade-right" class="space-y-4">
+        <a href="mailto:ajaykakkar93@gmail.com"
+           class="card rounded-xl p-4 flex items-center gap-4 block hover:border-red-500/30">
+          <div class="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-google text-red-400 text-lg"></i>
+          </div>
+          <div>
+            <p class="text-slate-500 text-xs mb-0.5">Email</p>
+            <p class="font-medium text-sm">ajaykakkar93@gmail.com</p>
+          </div>
+        </a>
+
+        <a href="tel:+919594411469"
+           class="card rounded-xl p-4 flex items-center gap-4 block hover:border-green-500/30">
+          <div class="w-11 h-11 bg-green-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fas fa-phone text-green-400 text-lg"></i>
+          </div>
+          <div>
+            <p class="text-slate-500 text-xs mb-0.5">Phone</p>
+            <p class="font-medium text-sm">+91 95944 11469</p>
+          </div>
+        </a>
+
+        <a href="https://www.linkedin.com/in/ajaykakkar93" target="_blank" rel="noopener"
+           class="card rounded-xl p-4 flex items-center gap-4 block hover:border-blue-500/30">
+          <div class="w-11 h-11 bg-blue-500/10 rounded-xl flex items-center justify-center shrink-0">
+            <i class="fab fa-linkedin text-blue-400 text-lg"></i>
+          </div>
+          <div>
+            <p class="text-slate-500 text-xs mb-0.5">LinkedIn</p>
+            <p class="font-medium text-sm">linkedin.com/in/ajaykakkar93</p>
+          </div>
+        </a>
+
+        <div class="card rounded-xl p-4">
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-1.5">Location</p>
+          <p class="text-slate-300 text-sm font-medium">Mumbai, India</p>
+          <p class="text-slate-500 text-xs mt-1">Open to remote &amp; hybrid roles</p>
+        </div>
+      </div>
+
+      <!-- WhatsApp CTA -->
+      <div data-aos="fade-left" class="flex flex-col items-center justify-center h-full gap-6 py-8">
+        <a href="https://wa.me/919594411469?text=Hi%20Ajay%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect."
+           target="_blank" rel="noopener"
+           class="flex items-center gap-3 bg-green-500 hover:bg-green-400 text-white font-semibold
+                  px-8 py-4 rounded-2xl transition-colors text-base shadow-lg shadow-green-500/20">
+          <i class="fab fa-whatsapp text-xl"></i>
+          Chat on WhatsApp
+        </a>
+        <p class="text-slate-600 text-xs">Opens WhatsApp with a pre-filled message</p>
+
+        <div class="flex flex-col items-center gap-2 mt-2">
+          <div class="bg-white rounded-2xl p-3 shadow-lg">
+            <img src="img/AJAY_QR_CONTACT.svg" alt="Scan to connect with Ajay Kakkar" class="w-32 h-32">
+          </div>
+          <p class="text-slate-500 text-xs">Scan to save contact</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 py-8">
+  <div class="max-w-7xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-slate-600 text-sm">&#169; 2026 Ajay Kakkar · Mumbai, India</p>
+    <div class="flex items-center gap-5">
+      <a href="https://www.linkedin.com/in/ajaykakkar93" target="_blank" rel="noopener"
+         class="text-slate-600 hover:text-blue-400 text-lg transition-colors"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/ajaykakkar93" target="_blank" rel="noopener"
+         class="text-slate-600 hover:text-white text-lg transition-colors"><i class="fab fa-github"></i></a>
+      <a href="https://www.youtube.com/user/ajaykakkar93" target="_blank" rel="noopener"
+         class="text-slate-600 hover:text-red-400 text-lg transition-colors"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.udemy.com/user/ajay-kakkar/" target="_blank" rel="noopener"
+         class="text-slate-600 hover:text-purple-400 text-lg transition-colors"><i class="fas fa-graduation-cap"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/dist/typed.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  window.toggleMobNav = function() {
+    const m = document.getElementById('mob-menu');
+    const i = document.getElementById('mob-icon');
+    if (!m) return;
+    const open = m.classList.toggle('is-open');
+    if (i) i.className = open ? 'fas fa-times pointer-events-none' : 'fas fa-bars pointer-events-none';
+  };
+
+  AOS.init({ once: true, offset: 50, duration: 650, easing: 'ease-out-cubic' });
+
+  new Typed('#typed', {
+    strings: [
+      'Qlik Solutions Architect',
+      'AI Product Builder',
+      'Team Lead · Team Wowizer',
+      'Qlik Cloud &amp; Enterprise Expert',
+      'Udemy Instructor &amp; Mentor',
+    ],
+    typeSpeed: 48,
+    backSpeed: 28,
+    backDelay: 2200,
+    loop: true,
+    smartBackspace: true,
+  });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  document.querySelectorAll('#mob-menu a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('mob-menu').classList.remove('is-open');
+      const i = document.getElementById('mob-icon');
+      if (i) i.className = 'fas fa-bars pointer-events-none';
+    });
+  });
+</script>
+
+<!-- CERT LIGHTBOX MODAL -->
+<div id="cert-modal"
+     class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden"
+     onclick="closeCert(event)">
+  <div class="relative max-w-3xl w-full mx-4" onclick="event.stopPropagation()">
+    <button onclick="closeCert()"
+            class="absolute -top-10 right-0 text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1.5">
+      <i class="fas fa-times"></i> Close
+    </button>
+    <div id="cert-img-wrap" class="rounded-2xl overflow-hidden bg-slate-800 border border-slate-700/60 shadow-2xl">
+      <img id="cert-img" src="" alt="" class="w-full object-contain max-h-[80vh]">
+    </div>
+    <div id="cert-no-img" class="hidden rounded-2xl bg-slate-800 border border-slate-700/60 shadow-2xl p-16 text-center">
+      <i class="fas fa-image text-slate-600 text-5xl mb-4"></i>
+      <p class="text-slate-400 text-sm">Certificate image not available</p>
+    </div>
+    <p id="cert-title" class="text-center text-slate-300 text-sm mt-3 font-medium"></p>
+  </div>
+</div>
+
+<script>
+  function openCert(src, title) {
+    const modal = document.getElementById('cert-modal');
+    const imgWrap = document.getElementById('cert-img-wrap');
+    const noImg = document.getElementById('cert-no-img');
+    const img = document.getElementById('cert-img');
+    document.getElementById('cert-title').textContent = title;
+    if (src) {
+      img.src = src;
+      img.alt = title;
+      imgWrap.classList.remove('hidden');
+      noImg.classList.add('hidden');
+    } else {
+      imgWrap.classList.add('hidden');
+      noImg.classList.remove('hidden');
+    }
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCert(e) {
+    if (e && e.target !== document.getElementById('cert-modal')) return;
+    document.getElementById('cert-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('cert-modal').classList.add('hidden'); document.body.style.overflow = ''; } });
+</script>
+
+</body>
+</html>

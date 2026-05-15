@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qlik Sense PostgreSQL Version Matrix — Ajay Kakkar</title>
+  <meta name="description" content="PostgreSQL version compatibility matrix for every Qlik Sense Enterprise release. Know which PG version your QS version ships with. By Ajay Kakkar." />
+  <meta name="keywords" content="Qlik Sense PostgreSQL, Qlik PostgreSQL Version, QS Postgres Upgrade, Ajay Kakkar" />
+  <meta name="author" content="Ajay Kakkar" />
+  <link rel="icon" href="../img/favicon.ico" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    body { background-color:#080e1a; color:#f1f5f9; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+    .card { background:rgba(30,41,59,.55); backdrop-filter:blur(10px); border:1px solid rgba(148,163,184,.1); }
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; }
+    .tag-blue  { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-amber { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-green { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-purple{ background:rgba(139,92,246,.1);  border:1px solid rgba(139,92,246,.2);  color:#c4b5fd; }
+    .tag-slate { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:#080e1a; } ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:3px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 py-3 border-b border-slate-800/60" style="background:rgba(8,14,26,.93);backdrop-filter:blur(14px)">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <a href="../index.html" class="font-display font-bold text-lg" style="background:linear-gradient(135deg,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">← AK</a>
+      <span class="text-slate-600 hidden sm:block">|</span>
+      <span class="text-slate-300 font-semibold text-sm hidden sm:block">PostgreSQL Version Matrix</span>
+    </div>
+    <div class="flex items-center gap-1 text-xs">
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Upgrade Tool</a>
+      <a href="./QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Release Notes</a>
+      <a href="./QS_Postgres_Upgrade_List.html" class="px-3 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 font-semibold">Postgres Versions</a>
+      <a href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Download QS</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-28 pb-12 px-5" style="background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(59,130,246,.1),transparent)">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="tag tag-blue mb-4 inline-block">Community Tool · Built by Ajay Kakkar</span>
+    <h1 class="font-display font-extrabold text-4xl sm:text-5xl mb-4">PostgreSQL <span style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Version Matrix</span></h1>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+      Which PostgreSQL version ships with each Qlik Sense Enterprise release — and what you need to do when upgrading across major PG milestones.
+    </p>
+  </div>
+</section>
+
+<div class="max-w-4xl mx-auto px-5 pb-24">
+
+  <!-- KEY MILESTONES -->
+  <div class="grid sm:grid-cols-3 gap-4 mb-10">
+    <div class="card rounded-2xl p-5 border border-slate-700/50">
+      <p class="text-slate-500 text-xs uppercase tracking-widest mb-2">Era 1</p>
+      <p class="font-display font-bold text-2xl text-slate-300 mb-1">9.6.x</p>
+      <p class="text-slate-400 text-sm">Qlik 3.1 — Nov 2020</p>
+      <p class="text-slate-600 text-xs mt-2">Bundled PostgreSQL, no manual action needed</p>
+    </div>
+    <div class="card rounded-2xl p-5 border border-amber-500/30">
+      <p class="text-slate-500 text-xs uppercase tracking-widest mb-2">Pivot — Feb 2021</p>
+      <p class="font-display font-bold text-2xl text-amber-400 mb-1">12.x</p>
+      <p class="text-slate-400 text-sm">Fresh install only</p>
+      <p class="text-slate-600 text-xs mt-2">Upgrade path still lands on 9.6.x — reinstall needed for 12.x</p>
+    </div>
+    <div class="card rounded-2xl p-5 border border-blue-500/30">
+      <p class="text-slate-500 text-xs uppercase tracking-widest mb-2">Era 3 — Aug 2023+</p>
+      <p class="font-display font-bold text-2xl text-blue-400 mb-1">14.x</p>
+      <p class="text-slate-400 text-sm">QPI tool required</p>
+      <p class="text-slate-600 text-xs mt-2">Use Qlik PostgreSQL Installer from Qlik Community Downloads</p>
+    </div>
+  </div>
+
+  <!-- FULL MATRIX TABLE -->
+  <div class="card rounded-2xl overflow-hidden mb-8">
+    <div class="px-6 py-4 border-b border-slate-700/50">
+      <h2 class="font-display font-bold text-xl">Full Compatibility Matrix</h2>
+      <p class="text-slate-500 text-xs mt-0.5">Upgrade column = PostgreSQL after in-place upgrade. Fresh Install = PostgreSQL after clean install.</p>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-700/50">
+            <th class="text-left px-6 py-3 text-slate-500 text-xs uppercase tracking-wider font-semibold">QS Version</th>
+            <th class="text-left px-4 py-3 text-slate-500 text-xs uppercase tracking-wider font-semibold">After Upgrade</th>
+            <th class="text-left px-4 py-3 text-slate-500 text-xs uppercase tracking-wider font-semibold">Fresh Install</th>
+            <th class="text-left px-4 py-3 text-slate-500 text-xs uppercase tracking-wider font-semibold">Notes</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60" id="matrix-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MILESTONE DETAIL CARDS -->
+  <h2 class="font-display font-bold text-2xl mb-5">Milestone Versions — What Changes</h2>
+  <div class="space-y-5 mb-10">
+
+    <div class="card rounded-2xl p-6">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display font-bold text-xl">Nov 2020 and Earlier</h3>
+          <p class="text-slate-400 text-sm mt-0.5">QS 3.1 through QS Nov-20</p>
+        </div>
+        <span class="tag tag-slate shrink-0">PG 9.3.x – 9.6.x</span>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        All these versions ship with PostgreSQL bundled at 9.6.x (earlier versions used 9.3.x). No manual PostgreSQL action required — upgrade QS and PG moves with it.
+      </p>
+      <div class="mt-4 overflow-x-auto">
+        <table class="text-xs w-full">
+          <thead><tr class="text-slate-500"><th class="text-left pb-2">QS Version</th><th class="text-left pb-2">PostgreSQL</th></tr></thead>
+          <tbody class="text-slate-400 space-y-1">
+            <tr><td class="py-1">3.1</td><td>9.3.x</td></tr>
+            <tr><td class="py-1">3.2</td><td>9.3.x & 9.6.x</td></tr>
+            <tr><td class="py-1">Jun 2017</td><td>9.6.x</td></tr>
+            <tr><td class="py-1">Sep 2017</td><td>9.6.x</td></tr>
+            <tr><td class="py-1">Nov 2019 – Nov 2020</td><td>9.6.x & 11.x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-slate-600 text-xs mt-3">
+        Source: <a href="https://community.qlik.com/t5/Official-Support-Articles/How-to-manually-upgrade-the-bundled-Qlik-Sense-PostgreSQL/ta-p/1820358" target="_blank" class="text-blue-400 hover:underline">Qlik Community</a>
+      </p>
+    </div>
+
+    <div class="card rounded-2xl p-6 border border-amber-500/25">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <span class="tag tag-amber mb-2 inline-block">⚑ Pivot Version</span>
+          <h3 class="font-display font-bold text-xl">Feb 2021</h3>
+          <p class="text-slate-400 text-sm mt-0.5">The fork in the road</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-slate-500 mb-1">Upgrade path</p>
+          <span class="tag tag-slate">9.6.x</span>
+          <p class="text-xs text-slate-500 mt-2 mb-1">Fresh install</p>
+          <span class="tag tag-amber">12.x</span>
+        </div>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Feb 2021 is the critical pivot. <strong class="text-white">Upgrading in-place stays on 9.6.x.</strong> Only a fresh install of Feb 2021 gives you PostgreSQL 12.x. This is why the Expert Mode reinstall path goes through Feb 2021 — uninstall, fresh install, restore backup, then continue upgrading.
+      </p>
+      <div class="mt-4 p-3 bg-amber-500/5 border border-amber-500/15 rounded-lg text-xs text-slate-400">
+        Also includes: 7 new visualization types, improved UI, fixed user impersonation issue.
+      </div>
+    </div>
+
+    <div class="card rounded-2xl p-6">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display font-bold text-xl">May 2021</h3>
+          <p class="text-slate-400 text-sm mt-0.5">PostgreSQL 12.5 required — but not automatic</p>
+        </div>
+        <span class="tag tag-amber shrink-0">PG 12.5</span>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        From May 2021, Qlik Sense ships with PostgreSQL 12.5. However, <strong class="text-white">upgrading QS does not automatically upgrade the bundled PostgreSQL</strong>. New PG versions are only deployed on fresh install. To manually upgrade, use the <strong class="text-white">Qlik PostgreSQL Installer (QPI)</strong> — this also unbundles PostgreSQL from QS.
+      </p>
+    </div>
+
+    <div class="card rounded-2xl p-6 border border-blue-500/25">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display font-bold text-xl">Aug 2023+</h3>
+          <p class="text-slate-400 text-sm mt-0.5">PostgreSQL 14.x — QPI supports Feb 2022 and above</p>
+        </div>
+        <span class="tag tag-blue shrink-0">PG 14.x</span>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Aug 2023 ships with PostgreSQL 14.x. If migrating from 9.6 or 12.5, use the <strong class="text-white">Qlik PostgreSQL Installer (QPI)</strong>. Note: QPI only supports <strong class="text-white">QS Feb 2022 and above</strong>. Upgrade to Feb 2022 first if on an older version before running QPI.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- QUICK DECISION -->
+  <div class="card rounded-2xl p-6 border border-slate-700/60">
+    <h2 class="font-display font-bold text-xl mb-4"><i class="fas fa-map-signs text-blue-400 mr-2"></i>Quick Decision Guide</h2>
+    <div class="space-y-3 text-sm">
+      <div class="flex gap-3 items-start">
+        <span class="text-blue-400 font-bold shrink-0 w-6">Q:</span>
+        <p class="text-slate-400">On 9.6.x, want to get to 14.x?</p>
+      </div>
+      <div class="flex gap-3 items-start mb-4">
+        <span class="text-green-400 font-bold shrink-0 w-6">A:</span>
+        <p class="text-slate-300">Step-upgrade to Feb 2021 → upgrade QS to Feb 2022+ → run QPI to get PG 14.x</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <span class="text-blue-400 font-bold shrink-0 w-6">Q:</span>
+        <p class="text-slate-400">Want 12.x without QPI?</p>
+      </div>
+      <div class="flex gap-3 items-start mb-4">
+        <span class="text-green-400 font-bold shrink-0 w-6">A:</span>
+        <p class="text-slate-300">Upgrade to Feb 2021 → take QRS backup → uninstall → fresh install Feb 2021 → restore → continue upgrading</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <span class="text-blue-400 font-bold shrink-0 w-6">Q:</span>
+        <p class="text-slate-400">Already on 12.x, want 14.x?</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <span class="text-green-400 font-bold shrink-0 w-6">A:</span>
+        <p class="text-slate-300">Ensure QS is Feb 2022 or above → run QPI from Qlik Community Downloads</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 py-6 text-center text-slate-600 text-sm">
+  Built by <a href="../index.html" class="text-blue-400 hover:underline">Ajay Kakkar</a> — Qlik Solutions Architect · Mumbai, India
+</footer>
+
+<script>
+const rows = [
+  { qs:'3.1',                 upgrade:'9.3.x',      fresh:'9.3.x',  note:'' },
+  { qs:'3.2',                 upgrade:'9.3.x',      fresh:'9.6.x',  note:'' },
+  { qs:'Jun 2017 – Sep 2017', upgrade:'9.6.x',      fresh:'9.6.x',  note:'' },
+  { qs:'Nov 2019 – Nov 2020', upgrade:'9.6.x / 11.x', fresh:'9.6.x / 11.x', note:'' },
+  { qs:'Feb 2021',            upgrade:'9.6.x',      fresh:'12.x',   note:'⚑ Pivot version', pivot:true },
+  { qs:'May 2021',            upgrade:'9.6.x*',     fresh:'12.5',   note:'*Manual QPI needed for 12.5 on upgrade', pg:true },
+  { qs:'Feb 2022 – Jul 2023', upgrade:'12.x',       fresh:'12.x',   note:'' },
+  { qs:'Aug 2023+',           upgrade:'14.x**',     fresh:'14.x',   note:'**QPI required; supports Feb 2022+', latest:true },
+];
+
+const tbody = document.getElementById('matrix-body');
+tbody.innerHTML = rows.map(r => `
+  <tr class="${r.pivot ? 'bg-amber-500/5' : r.latest ? 'bg-blue-500/5' : ''}">
+    <td class="px-6 py-3 font-medium ${r.pivot ? 'text-amber-400' : r.latest ? 'text-blue-400' : 'text-slate-200'}">${r.qs}</td>
+    <td class="px-4 py-3 text-slate-400 font-mono text-xs">${r.upgrade}</td>
+    <td class="px-4 py-3 text-slate-400 font-mono text-xs">${r.fresh}</td>
+    <td class="px-4 py-3 text-slate-500 text-xs">${r.note}</td>
+  </tr>
+`).join('');
+</script>
+
+</body>
+</html>

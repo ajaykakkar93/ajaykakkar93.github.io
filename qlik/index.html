@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qlik Sense Upgrade Guide — Ajay Kakkar</title>
+  <meta name="description" content="Interactive Qlik Sense version upgrade tool. Prerequisites checklist, safe upgrade paths, PostgreSQL migration guide. Built by Ajay Kakkar, Qlik Solutions Architect." />
+  <meta name="keywords" content="Qlik Sense Upgrade, Qlik Sense Version, PostgreSQL Upgrade, Qlik Sense Release Notes, Ajay Kakkar" />
+  <meta name="author" content="Ajay Kakkar" />
+  <link rel="icon" href="../img/favicon.ico" />
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    body { background-color:#080e1a; color:#f1f5f9; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+    .card { background:rgba(30,41,59,.55); backdrop-filter:blur(10px); border:1px solid rgba(148,163,184,.1); transition:border-color .25s; }
+    .card:hover { border-color:rgba(59,130,246,.25); }
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; }
+    .tag-blue   { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-amber  { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-red    { background:rgba(239,68,68,.1);   border:1px solid rgba(239,68,68,.2);   color:#fca5a5; }
+    .tag-green  { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-slate  { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+    .rule { height:1px; background:linear-gradient(to right,transparent,rgba(148,163,184,.1),transparent); }
+    .mode-btn { padding:.6rem 1.4rem; border-radius:.75rem; font-size:.875rem; font-weight:600; border:1px solid rgba(71,85,105,.4); color:#94a3b8; background:rgba(30,41,59,.4); cursor:pointer; transition:all .2s; }
+    .mode-btn:hover { border-color:rgba(59,130,246,.3); color:#e2e8f0; }
+    .mode-btn.active { background:rgba(59,130,246,.15); border-color:rgba(59,130,246,.5); color:#93c5fd; }
+    .acc-btn { width:100%; text-align:left; padding:1rem 1.25rem; background:rgba(30,41,59,.6); border:1px solid rgba(71,85,105,.3); border-radius:.75rem; color:#e2e8f0; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:border-color .2s; }
+    .acc-btn:hover { border-color:rgba(59,130,246,.3); }
+    .acc-body { display:none; padding:1rem 1.25rem 1.25rem; }
+    .acc-body.open { display:block; }
+    .port-chip { background:rgba(59,130,246,.08); border:1px solid rgba(59,130,246,.15); border-radius:.5rem; padding:.4rem .75rem; font-size:.8rem; display:flex; gap:.5rem; align-items:center; }
+    select { background:rgba(15,23,42,.8); border:1px solid rgba(71,85,105,.4); border-radius:.75rem; padding:.6rem 1rem; color:#e2e8f0; font-size:.875rem; outline:none; width:100%; }
+    select:focus { border-color:#3b82f6; }
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:#080e1a; } ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:3px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 py-3 border-b border-slate-800/60" style="background:rgba(8,14,26,.93);backdrop-filter:blur(14px)">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <a href="../index.html" class="font-display font-bold text-lg" style="background:linear-gradient(135deg,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">← AK</a>
+      <span class="text-slate-600 hidden sm:block">|</span>
+      <span class="text-slate-300 font-semibold text-sm hidden sm:block">Qlik Sense Upgrade Guide</span>
+    </div>
+    <div class="flex items-center gap-1 text-xs">
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 font-semibold">Upgrade Tool</a>
+      <a href="./QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Release Notes</a>
+      <a href="./QS_Postgres_Upgrade_List.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Postgres Versions</a>
+      <a href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Download QS</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-28 pb-12 px-5" style="background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(59,130,246,.1),transparent)">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="tag tag-blue mb-4 inline-block">Community Tool · Built by Ajay Kakkar</span>
+    <h1 class="font-display font-extrabold text-4xl sm:text-5xl mb-4">Qlik Sense <span style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Upgrade Guide</span></h1>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+      Interactive upgrade path tool for Qlik Sense Enterprise on Windows. Covers all 33 versions from 3.0 (2016) to Nov-23, PostgreSQL migration paths, and prerequisites checklist.
+    </p>
+  </div>
+</section>
+
+<!-- MODE TABS -->
+<div class="max-w-4xl mx-auto px-5 mb-8">
+  <div class="flex flex-wrap gap-3 justify-center">
+    <button class="mode-btn active" onclick="setMode('prereq',this)"><i class="fas fa-clipboard-check mr-2"></i>Prerequisites</button>
+    <button class="mode-btn" onclick="setMode('safe',this)"><i class="fas fa-route mr-2"></i>Safe Mode — Upgrade Path</button>
+    <button class="mode-btn" onclick="setMode('expert',this)"><i class="fas fa-wrench mr-2"></i>Expert Mode — PostgreSQL</button>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-5 pb-24">
+
+  <!-- ====== PREREQUISITES PANEL ====== -->
+  <div id="panel-prereq">
+
+    <div class="card rounded-2xl p-6 mb-5">
+      <h2 class="font-display font-bold text-xl mb-1 flex items-center gap-2">
+        <i class="fas fa-user-shield text-blue-400"></i> Admin Access
+      </h2>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Ensure <strong class="text-white">administrator rights</strong> on the server and Remote Desktop Access before starting. Services path: <code class="text-blue-300 text-xs bg-slate-800 px-2 py-0.5 rounded">C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\services.lnk</code>
+      </p>
+    </div>
+
+    <div class="card rounded-2xl p-6 mb-5">
+      <h2 class="font-display font-bold text-xl mb-4 flex items-center gap-2">
+        <i class="fas fa-network-wired text-blue-400"></i> Required Ports
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">80</span><span class="text-slate-400 text-xs">Proxy (HTTP)</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">443</span><span class="text-slate-400 text-xs">Proxy (HTTPS)</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4242</span><span class="text-slate-400 text-xs">QRS REST API</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4243</span><span class="text-slate-400 text-xs">QPS REST API</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4244</span><span class="text-slate-400 text-xs">Windows Auth</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4239</span><span class="text-slate-400 text-xs">QPS WebSocket</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4432</span><span class="text-slate-400 text-xs">DB Connections</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4444</span><span class="text-slate-400 text-xs">Central ↔ Rim</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4747</span><span class="text-slate-400 text-xs">QES Listen</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4748</span><span class="text-slate-400 text-xs">QRS Notifications</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4899</span><span class="text-slate-400 text-xs">QPR Printing</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4900</span><span class="text-slate-400 text-xs">Broker Service</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">4949</span><span class="text-slate-400 text-xs">Data Profiling</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">5050/5151</span><span class="text-slate-400 text-xs">Scheduler</span></div>
+        <div class="port-chip"><span class="text-blue-400 font-mono font-bold">9028</span><span class="text-slate-400 text-xs">Hub Service</span></div>
+      </div>
+    </div>
+
+    <div class="card rounded-2xl p-6 mb-5">
+      <h2 class="font-display font-bold text-xl mb-4 flex items-center gap-2">
+        <i class="fas fa-key text-amber-400"></i> License Activation
+      </h2>
+      <ul class="space-y-2 text-slate-400 text-sm">
+        <li class="flex gap-2.5"><span class="text-amber-400 shrink-0">→</span>LEF is downloaded when serial + control number are entered in QMC</li>
+        <li class="flex gap-2.5"><span class="text-amber-400 shrink-0">→</span>Signed License obtained from Qlik sales or the organisation</li>
+        <li class="flex gap-2.5"><span class="text-amber-400 shrink-0">→</span>SLD Link: <a href="https://license.qlikcloud.com/sld" target="_blank" class="text-blue-400 hover:underline">license.qlikcloud.com/sld</a> — valid for <strong class="text-white">90 days only</strong></li>
+        <li class="flex gap-2.5"><span class="text-amber-400 shrink-0">→</span>Whitelist <code class="text-blue-300 bg-slate-800 px-1 rounded text-xs">license.qlikcloud.com</code> and <code class="text-blue-300 bg-slate-800 px-1 rounded text-xs">lef4.qliktech.com</code> in Proxy Exceptions</li>
+      </ul>
+    </div>
+
+    <div class="card rounded-2xl p-6 mb-5">
+      <h2 class="font-display font-bold text-xl mb-4 flex items-center gap-2">
+        <i class="fas fa-database text-green-400"></i> Backup Plan
+      </h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-2">VM / Folder Backup</p>
+          <ul class="space-y-1.5 text-slate-400 text-sm">
+            <li class="flex gap-2"><i class="fas fa-folder text-blue-400 text-xs mt-0.5 shrink-0"></i>VM snapshot (if virtualised)</li>
+            <li class="flex gap-2"><i class="fas fa-folder text-blue-400 text-xs mt-0.5 shrink-0"></i><code class="text-xs">C:\ProgramData\Qlik</code></li>
+            <li class="flex gap-2"><i class="fas fa-folder text-blue-400 text-xs mt-0.5 shrink-0"></i><code class="text-xs">C:\Program Files\Qlik</code></li>
+            <li class="flex gap-2"><i class="fas fa-folder text-blue-400 text-xs mt-0.5 shrink-0"></i>Qlik Share Folder (Apps, Static Content, Archived Logs)</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-slate-500 text-xs uppercase tracking-widest mb-2">Manual Backup Items</p>
+          <ul class="space-y-1.5 text-slate-400 text-sm">
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>SSL Certificate thumbprint (QMC → Proxies → Central → Security)</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>QRS Repository Database backup</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>User Directory Path (QMC user sync tasks)</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>All Published & My Work app exports</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>Monitoring Apps backup</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>Custom Security Rules backup</li>
+            <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 text-xs mt-0.5 shrink-0"></i>All Whitelist entries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card rounded-2xl p-6 mb-5">
+      <h2 class="font-display font-bold text-xl mb-4 flex items-center gap-2">
+        <i class="fas fa-circle-check text-green-400"></i> Post-Upgrade Verification
+      </h2>
+      <div class="grid sm:grid-cols-2 gap-2">
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>Successful app migration</div>
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>Data connections (prod & dev)</div>
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>Scheduling processes (data refresh)</div>
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>User access to streams & apps</div>
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>Reports visible on Hub</div>
+        <div class="flex gap-2 text-sm text-slate-400 items-center"><i class="fas fa-square-check text-green-400 text-xs"></i>NPrinting connections & reports</div>
+      </div>
+    </div>
+
+    <div class="card rounded-2xl p-5 border border-amber-500/20">
+      <div class="flex gap-3 items-start">
+        <i class="fas fa-triangle-exclamation text-amber-400 mt-0.5 shrink-0"></i>
+        <div>
+          <p class="font-semibold text-sm mb-1">PostgreSQL Upgrade Note</p>
+          <p class="text-slate-400 text-sm">If migrating PostgreSQL version, follow the <a href="https://community.qlik.com/t5/Official-Support-Articles/Upgrading-and-unbundling-the-Qlik-Sense-Repository-Database/ta-p/1934238" target="_blank" class="text-blue-400 hover:underline">Qlik Community guide</a>. Note: after QPI migration to PG 12, <em>Qlik Sense Repository Database</em> service is replaced by <code class="text-blue-300 bg-slate-800 px-1 rounded text-xs">postgresql-x64-12</code>.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== SAFE MODE PANEL ====== -->
+  <div id="panel-safe" style="display:none">
+
+    <div class="card rounded-2xl p-6 mb-6">
+      <h2 class="font-display font-bold text-xl mb-2 flex items-center gap-2">
+        <i class="fas fa-route text-blue-400"></i> Select Your Upgrade Range
+      </h2>
+      <p class="text-slate-400 text-sm mb-5">Select your current version and the version you want to upgrade to. The tool will show all intermediate steps.</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-slate-500 text-xs uppercase tracking-widest mb-2 block">Current Version</label>
+          <select id="qs_from"></select>
+        </div>
+        <div>
+          <label class="text-slate-500 text-xs uppercase tracking-widest mb-2 block">Target Version</label>
+          <select id="qs_to"></select>
+        </div>
+      </div>
+      <button id="qs_submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
+        Show Upgrade Path <i class="fas fa-arrow-right ml-1"></i>
+      </button>
+    </div>
+
+    <div id="version-list" class="space-y-3"></div>
+
+  </div>
+
+  <!-- ====== EXPERT MODE PANEL ====== -->
+  <div id="panel-expert" style="display:none">
+
+    <div class="card rounded-2xl p-5 border border-amber-500/20 mb-6">
+      <div class="flex gap-3 items-start">
+        <i class="fas fa-info-circle text-blue-400 mt-0.5 shrink-0"></i>
+        <p class="text-slate-400 text-sm">Expert mode covers PostgreSQL migration paths for users who need to upgrade the bundled database. <strong class="text-white">Feb 2021 is the pivot version</strong> — all paths run through it.</p>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+
+      <div class="card rounded-2xl overflow-hidden">
+        <button class="acc-btn" onclick="toggleAcc('acc1','ico1')">
+          <span><i class="fas fa-arrow-up-right-dots text-blue-400 mr-2"></i>Option 1 — Upgrade to PostgreSQL 14.x (Unbundled via QPI)</span>
+          <i id="ico1" class="fas fa-chevron-down text-slate-500 text-sm transition-transform"></i>
+        </button>
+        <div id="acc1" class="acc-body">
+          <ol class="space-y-3 text-slate-400 text-sm list-decimal list-inside">
+            <li>Begin upgrade from current version, stepping through intermediate versions up to the last QS bundled with <strong class="text-white">PostgreSQL 9.x</strong></li>
+            <li>Upgrade to <strong class="text-white">Feb 2021</strong> — take a full PostgreSQL backup before continuing</li>
+            <li>Use the <strong class="text-white">Qlik PostgreSQL Installer (QPI)</strong> — found in <a href="https://community.qlik.com/t5/Product-Downloads/tkb-p/Downloads" target="_blank" class="text-blue-400 hover:underline">Qlik Community Downloads</a> — to upgrade to unbundled <strong class="text-white">PostgreSQL 14.x</strong></li>
+            <li>From Feb 2021 onward, upgrade to any latest version — all support PostgreSQL 14.x</li>
+          </ol>
+          <div class="mt-4 p-3 bg-blue-500/5 border border-blue-500/15 rounded-lg text-xs text-slate-400">
+            Source: <a href="https://community.qlik.com/t5/Official-Support-Articles/How-to-manually-upgrade-the-bundled-Qlik-Sense-PostgreSQL/ta-p/1820358" target="_blank" class="text-blue-400 hover:underline">Qlik Community — Manual PostgreSQL Upgrade</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl overflow-hidden">
+        <button class="acc-btn" onclick="toggleAcc('acc2','ico2')">
+          <span><i class="fas fa-arrows-rotate text-purple-400 mr-2"></i>Option 2 — Reinstall Path to PostgreSQL 12.x</span>
+          <i id="ico2" class="fas fa-chevron-down text-slate-500 text-sm transition-transform"></i>
+        </button>
+        <div id="acc2" class="acc-body">
+          <ol class="space-y-3 text-slate-400 text-sm list-decimal list-inside">
+            <li>Step-upgrade to <strong class="text-white">Feb 2021</strong> using the standard upgrade path</li>
+            <li>Take a full QRS backup — refer to <a href="https://help.qlik.com/en-US/sense-admin/November2023/Subsystems/DeployAdministerQSE/Content/Sense_DeployAdminister/QSEoW/Deploy_QSEoW/Backing-up-a-site.htm" target="_blank" class="text-blue-400 hover:underline">Qlik Help Backup Guide</a></li>
+            <li><strong class="text-white">Uninstall</strong> Feb 2021, then <strong class="text-white">fresh install</strong> Feb 2021 — this upgrades PostgreSQL from 9.6 to <strong class="text-white">12.x</strong></li>
+            <li>Restore the PostgreSQL backup — refer to <a href="https://help.qlik.com/en-US/sense-admin/November2023/Subsystems/DeployAdministerQSE/Content/Sense_DeployAdminister/QSEoW/Deploy_QSEoW/Restoring-a-site.htm" target="_blank" class="text-blue-400 hover:underline">Qlik Help Restore Guide</a> (PostgreSQL login required)</li>
+            <li>From Feb 2021 (fresh install), upgrade to any latest version — all support PostgreSQL 12.x</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 py-6 text-center text-slate-600 text-sm">
+  Built by <a href="../index.html" class="text-blue-400 hover:underline">Ajay Kakkar</a> — Qlik Solutions Architect · Mumbai, India
+</footer>
+
+<script>
+// Version data — all 33 QS Enterprise versions
+const versions = [
+  { id:1,  label:'3.0',    year:2016, eos:'Jun 28 2018',  notes:'./ReleaseNotes/1 QlikSense30ReleaseNotes_20160620.pdf', pg:null, vuln:null },
+  { id:2,  label:'3.1',    year:2016, eos:'Sep 20 2018',  notes:'./ReleaseNotes/2 QlikSense3_1ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:3,  label:'3.2',    year:2017, eos:'Feb 9 2019',   notes:'./ReleaseNotes/3 QlikSense32_SR4ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:4,  label:'Jun-17', year:2017, eos:'Jun 29 2019',  notes:'./ReleaseNotes/4 QlikSense_June_2017_Patch1_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:5,  label:'Sep-17', year:2017, eos:'Sep 19 2019',  notes:'./ReleaseNotes/5 QlikSense_September_2017_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:6,  label:'Nov-17', year:2017, eos:'Nov 13 2019',  notes:'./ReleaseNotes/6 QlikSense_November_2017_Patch1_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:7,  label:'Feb-18', year:2018, eos:'Feb 13 2020',  notes:'./ReleaseNotes/7 QlikSense_February_2018_Patch2_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:8,  label:'Apr-18', year:2018, eos:'Apr 19 2020',  notes:'./ReleaseNotes/8 QlikSense_April_2018_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:9,  label:'Jun-18', year:2018, eos:'Jun 26 2020',  notes:'./ReleaseNotes/9 QlikSense_June2018_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:10, label:'Sep-18', year:2018, eos:'Sep 11 2020',  notes:'./ReleaseNotes/10 QlikSense_September_2018_ ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:11, label:'Nov-18', year:2018, eos:'Nov 13 2020',  notes:'./ReleaseNotes/11 QlikSense_November_2018_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:12, label:'Feb-19', year:2019, eos:'Feb 12 2021',  notes:'./ReleaseNotes/12 QlikSense_February_2019_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:13, label:'Apr-19', year:2019, eos:'Apr 25 2021',  notes:'./ReleaseNotes/13 QlikSense_April_2019_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:14, label:'Jun-19', year:2019, eos:'Jun 28 2021',  notes:'./ReleaseNotes/14 QlikSense_June_2019_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:15, label:'Sep-19', year:2019, eos:'Sep 30 2021',  notes:'./ReleaseNotes/15 QlikSense_September_2019_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:16, label:'Nov-19', year:2019, eos:'Nov 11 2021',  notes:'./ReleaseNotes/16 QlikSense_November_2019_Patch18_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:17, label:'Feb-20', year:2020, eos:'Feb 25 2022',  notes:'./ReleaseNotes/17 QlikSense_February_2020_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:18, label:'Apr-20', year:2020, eos:'Apr 14 2022',  notes:'./ReleaseNotes/18 QlikSense_April_2020_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:19, label:'Jun-20', year:2020, eos:'Jun 10 2022',  notes:'./ReleaseNotes/19 QlikSense_June_2020_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:20, label:'Sep-20', year:2020, eos:'Sep 9 2022',   notes:'./ReleaseNotes/20 QlikSense_September_2020_ReleaseNotes.pdf', pg:null, vuln:null },
+  { id:21, label:'Nov-20', year:2020, eos:'Nov 10 2022',  notes:'./ReleaseNotes/21 QlikSense_November_2020.html', pg:null, vuln:null },
+  { id:22, label:'Feb-21', year:2021, eos:'Feb 9 2023',   notes:'./ReleaseNotes/22 QlikSense_February_2021.html', pg:'Upgrade: 9.6.x → Fresh install: 12.x', vuln:null, pivot:true },
+  { id:23, label:'May-21', year:2021, eos:'May 10 2023',  notes:'./ReleaseNotes/23 QlikSense_May_2021.html', pg:'PostgreSQL 12.5 required', vuln:null },
+  { id:24, label:'Aug-21', year:2021, eos:'Aug 23 2023',  notes:'./ReleaseNotes/24 QlikSense_August_2021.html', pg:null, vuln:null },
+  { id:25, label:'Nov-21', year:2021, eos:'Nov 8 2023',   notes:'./ReleaseNotes/25 QlikSense_November_2021.html', pg:null, vuln:'Vulnerability on Patch 16 — update to latest patch' },
+  { id:26, label:'Feb-22', year:2022, eos:'Feb 15 2024',  notes:'./ReleaseNotes/26 QlikSense_February_2022.html', pg:null, vuln:'Vulnerability on Patch 14 — update to latest patch' },
+  { id:27, label:'May-22', year:2022, eos:'May 10 2024',  notes:'./ReleaseNotes/27 QlikSense_May_2022.html', pg:null, vuln:'Vulnerability on Patch 15 — update to latest patch' },
+  { id:28, label:'Aug-22', year:2022, eos:'Aug 23 2024',  notes:'./ReleaseNotes/28 QlikSense_August_2022.html', pg:null, vuln:'Vulnerability on Patch 13 — update to latest patch' },
+  { id:29, label:'Nov-22', year:2022, eos:'Nov 8 2024',   notes:'./ReleaseNotes/29 QlikSense_November_2022.html', pg:null, vuln:'Vulnerability on Patch 11 — update to latest patch' },
+  { id:30, label:'Feb-23', year:2023, eos:'Feb 16 2025',  notes:'./ReleaseNotes/30 QlikSense_February_2023.html', pg:null, vuln:'Vulnerability on Patch 9 — update to latest patch' },
+  { id:31, label:'May-23', year:2023, eos:'May 16 2025',  notes:'./ReleaseNotes/31 QlikSense_May_2023.html', pg:null, vuln:'Vulnerability on Patch 5 — update to latest patch' },
+  { id:32, label:'Aug-23', year:2023, eos:'Aug 29 2025',  notes:'./ReleaseNotes/32 QlikSense_August_2023.html', pg:'PostgreSQL 14.x recommended', vuln:'Vulnerability on Patch 16 — update to latest patch' },
+  { id:33, label:'Nov-23', year:2023, eos:'Nov 14 2025',  notes:'./ReleaseNotes/33 QlikSense_November_2023.html', pg:null, vuln:null, fixed:true },
+];
+
+// Populate selects
+const fromSel = document.getElementById('qs_from');
+const toSel   = document.getElementById('qs_to');
+versions.forEach(v => {
+  fromSel.innerHTML += `<option value="${v.id}">${v.label}</option>`;
+  if (v.id >= 7) toSel.innerHTML += `<option value="${v.id}">${v.label}</option>`;
+});
+
+// Render version cards
+function renderVersions(from, to) {
+  const list = document.getElementById('version-list');
+  const filtered = versions.filter(v => v.id >= from && v.id <= to);
+  list.innerHTML = filtered.map((v, i) => `
+    <div class="card rounded-xl p-5 ${v.pivot ? 'border border-amber-500/30' : ''}">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center text-lg font-display font-bold shrink-0
+            ${i === 0 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : i === filtered.length-1 ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-slate-700/50 text-slate-300 border border-slate-700'}">
+            ${v.label}
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-1">
+              ${i === 0 ? '<span class="tag tag-blue" style="font-size:.6rem">Current</span>' : ''}
+              ${i === filtered.length-1 ? '<span class="tag tag-green" style="font-size:.6rem">Target</span>' : ''}
+              ${v.pivot ? '<span class="tag tag-amber" style="font-size:.6rem">⚑ Pivot — PG upgrade here</span>' : ''}
+              ${v.fixed ? '<span class="tag tag-green" style="font-size:.6rem">Security Fixed</span>' : ''}
+            </div>
+            <p class="text-slate-500 text-xs">EOS: ${v.eos}</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+          ${v.pg ? `<span class="tag tag-amber text-xs">${v.pg}</span>` : ''}
+          ${v.vuln ? `<span class="tag tag-red text-xs"><i class="fas fa-shield-exclamation mr-1"></i>${v.vuln}</span>` : ''}
+          <a href="${v.notes}" target="_blank" class="tag tag-slate hover:border-blue-500/30 hover:text-blue-400 transition-colors cursor-pointer">
+            <i class="fas fa-file-lines mr-1"></i>Release Notes
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('qs_submit').addEventListener('click', () => {
+  const from = parseInt(fromSel.value);
+  const to   = parseInt(toSel.value);
+  if (to <= from) {
+    document.getElementById('version-list').innerHTML =
+      '<div class="card rounded-xl p-4 border border-red-500/20 text-red-400 text-sm"><i class="fas fa-triangle-exclamation mr-2"></i>Target version must be higher than current version.</div>';
+    return;
+  }
+  renderVersions(from, to);
+});
+
+// Mode switcher
+function setMode(mode, btn) {
+  ['prereq','safe','expert'].forEach(m => document.getElementById('panel-'+m).style.display = 'none');
+  document.getElementById('panel-'+mode).style.display = 'block';
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// Accordion
+function toggleAcc(id, iconId) {
+  const body = document.getElementById(id);
+  const icon = document.getElementById(iconId);
+  body.classList.toggle('open');
+  icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+</script>
+
+</body>
+</html>
