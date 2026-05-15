@@ -42,6 +42,6 @@ git commit -m $msg
 
 # ── Push ─────────────────────────────────────────────────────────────────────
 Write-Host "`nPushing to $branch..." -ForegroundColor Cyan
-git push -u origin $branch
+git push -u origin $branch --force
 
 Write-Host "`nDeployed! Live at https://ajaykakkar93.github.io" -ForegroundColor Green
