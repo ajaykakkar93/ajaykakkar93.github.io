@@ -3,7 +3,8 @@
 
 $ErrorActionPreference = "Stop"
 $repoUrl = "https://github.com/ajaykakkar93/ajaykakkar93.github.io.git"
-$branch  = "main"
+$branch  = (git symbolic-ref --short HEAD 2>$null)
+if (-not $branch) { $branch = "main" }
 
 Set-Location $PSScriptRoot
 
