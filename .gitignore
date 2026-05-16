@@ -1,0 +1,8 @@
+# Internal docs — not for public repo
+doc/
+
+# Claude Code config — not for public repo
+.claude/
+
+# Deploy script — internal use only
+deploy.ps1
