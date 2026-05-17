@@ -4,6 +4,7 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
               http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
+  <!-- Main portfolio -->
   <url>
     <loc>https://ajaykakkar93.github.io/</loc>
     <lastmod>2026-05-17</lastmod>
@@ -11,20 +12,19 @@
     <priority>1.00</priority>
   </url>
 
+  <!-- Qlik tools -->
   <url>
     <loc>https://ajaykakkar93.github.io/qlik/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
-
   <url>
     <loc>https://ajaykakkar93.github.io/qlik/QS_Release_Notes.html</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.64</priority>
   </url>
-
   <url>
     <loc>https://ajaykakkar93.github.io/qlik/QS_Postgres_Upgrade_List.html</loc>
     <lastmod>2026-05-17</lastmod>
@@ -32,6 +32,7 @@
     <priority>0.64</priority>
   </url>
 
+  <!-- Resume PDF -->
   <url>
     <loc>https://ajaykakkar93.github.io/Ajay%20Kakkar%20Resume.pdf</loc>
     <lastmod>2026-05-17</lastmod>
