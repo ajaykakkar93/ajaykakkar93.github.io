@@ -1899,18 +1899,23 @@
                           ['🌙', 'Good night'];
     const emojiEl = el.querySelector('.greeting-emoji');
     const textEl  = el.querySelector('.greeting-text');
-    fetch('https://ipapi.co/json/')
+
+    // Show time-based greeting immediately — no waiting
+    emojiEl.textContent = emoji;
+    textEl.textContent  = word + '! Welcome to my portfolio';
+
+    // Then try to enrich with city (3s timeout)
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    fetch('https://ipapi.co/json/', { signal: controller.signal })
       .then(r => r.json())
       .then(d => {
-        emojiEl.textContent = emoji;
-        textEl.innerHTML = d.city
-          ? `${word}, visitor from <span class="text-white font-semibold">${d.city}</span>`
-          : `${word}! Welcome to my portfolio`;
+        clearTimeout(timeout);
+        if (d.city) {
+          textEl.innerHTML = `${word}, visitor from <span class="text-white font-semibold">${d.city}</span>`;
+        }
       })
-      .catch(() => {
-        emojiEl.textContent = emoji;
-        textEl.textContent = `${word}! Welcome to my portfolio`;
-      });
+      .catch(() => { /* keep the time-based greeting already shown */ });
   })();
 
   const nav = document.getElementById('nav');
