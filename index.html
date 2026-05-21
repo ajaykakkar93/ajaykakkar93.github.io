@@ -1913,8 +1913,8 @@
 
     // Show time-based greeting immediately
     emojiEl.textContent = emoji;
-    textEl.textContent  = word + '! Welcome to my portfolio';
-    console.log(`✅ Greeting shown (time-based): "${word}! Welcome to my portfolio"`);
+    textEl.textContent  = `${word}, visitor, Welcome to my portfolio`;
+    console.log(`✅ Greeting shown: "${word}, visitor, Welcome to my portfolio"`);
 
     // Enrich with city via IP lookup (3s timeout)
     console.log('🌐 Fetching location from ipapi.co...');
@@ -1933,11 +1933,11 @@
         clearTimeout(timeout);
         console.log('📍 Location data:', { city: d.city, country: d.country_name, timezone: d.timezone, ip: d.ip });
         if (d.city) {
-          textEl.innerHTML = `${word}, visitor from <span class="text-white font-semibold">${d.city}</span>`;
-          console.log(`✅ Greeting upgraded: "${word}, visitor from ${d.city}"`);
+          console.log(`✅ Visitor city detected: ${d.city} — not shown on site`);
         } else {
-          console.warn('⚠️ No city in response — keeping time-based greeting');
+          console.warn('⚠️ No city in response');
         }
+        textEl.innerHTML = `${word}, visitor, Welcome to my portfolio`;
       })
       .catch(err => {
         clearTimeout(timeout);
