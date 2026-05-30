@@ -181,8 +181,9 @@
     .calc-section { display: none; max-width: 780px; }
     .calc-section.active { display: block; }
 
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     .section-header { margin-bottom: 1.75rem; }
-    .section-header h1 {
+    .section-header h2 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1.4rem;
       font-weight: 700;
@@ -474,7 +475,7 @@
 
     /* Main panel */
     body.light .main-panel { background: #f0f4f8; }
-    body.light .section-header h1 { color: #1e293b; }
+    body.light .section-header h2 { color: #1e293b; }
     body.light .section-header p { color: #94a3b8; }
 
     /* Cards & inputs */
@@ -724,13 +725,14 @@
 
   <!-- ═══ MAIN PANEL ═══ -->
   <main class="main-panel">
+    <h1 class="sr-only">Free Finance Calculators — SIP, EMI, Stock Profit/Loss, CAGR, Home &amp; Car Loan</h1>
 
     <!-- ══════════════════════════════════════════ -->
     <!-- 1. STOCK PROFIT / LOSS                    -->
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section active" id="section-profit-loss">
       <div class="section-header">
-        <h1><i class="fa-solid fa-chart-line mr-2" style="color:#4ade80;font-size:1.1rem"></i>Stock Profit / Loss</h1>
+        <h2><i class="fa-solid fa-chart-line mr-2" style="color:#4ade80;font-size:1.1rem"></i>Stock Profit / Loss</h2>
         <p>Calculate realized gain or loss — with optional broker &amp; tax charges</p>
       </div>
 
@@ -851,7 +853,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-avg">
       <div class="section-header">
-        <h1><i class="fa-solid fa-scale-balanced mr-2" style="color:#c4b5fd;font-size:1.1rem"></i>Stock Average Calculator</h1>
+        <h2><i class="fa-solid fa-scale-balanced mr-2" style="color:#c4b5fd;font-size:1.1rem"></i>Stock Average Calculator</h2>
         <p>Average down / up across multiple purchases</p>
       </div>
 
@@ -890,7 +892,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-sip">
       <div class="section-header">
-        <h1><i class="fa-solid fa-arrow-trend-up mr-2" style="color:#93c5fd;font-size:1.1rem"></i>SIP Calculator</h1>
+        <h2><i class="fa-solid fa-arrow-trend-up mr-2" style="color:#93c5fd;font-size:1.1rem"></i>SIP Calculator</h2>
         <p>Systematic Investment Plan — with optional yearly step-up</p>
       </div>
 
@@ -938,7 +940,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-pct">
       <div class="section-header">
-        <h1><i class="fa-solid fa-percent mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Percentage Calculator</h1>
+        <h2><i class="fa-solid fa-percent mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Percentage Calculator</h2>
         <p>Four common percentage operations</p>
       </div>
 
@@ -1030,7 +1032,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-emi">
       <div class="section-header">
-        <h1><i class="fa-solid fa-credit-card mr-2" style="color:#f87171;font-size:1.1rem"></i>Credit Card EMI Calculator</h1>
+        <h2><i class="fa-solid fa-credit-card mr-2" style="color:#f87171;font-size:1.1rem"></i>Credit Card EMI Calculator</h2>
         <p>Standard &amp; No-Cost EMI — with GST, processing fee, and foreclosure</p>
       </div>
 
@@ -1184,7 +1186,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-cagr">
       <div class="section-header">
-        <h1><i class="fa-solid fa-seedling mr-2" style="color:#67e8f9;font-size:1.1rem"></i>CAGR Calculator</h1>
+        <h2><i class="fa-solid fa-seedling mr-2" style="color:#67e8f9;font-size:1.1rem"></i>CAGR Calculator</h2>
         <p>Compound Annual Growth Rate of an investment</p>
       </div>
 
@@ -1227,7 +1229,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-swp">
       <div class="section-header">
-        <h1><i class="fa-solid fa-hand-holding-dollar mr-2" style="color:#fb923c;font-size:1.1rem"></i>SWP Calculator</h1>
+        <h2><i class="fa-solid fa-hand-holding-dollar mr-2" style="color:#fb923c;font-size:1.1rem"></i>SWP Calculator</h2>
         <p>Systematic Withdrawal Plan — monthly income from a corpus</p>
       </div>
 
@@ -1274,7 +1276,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-lumpsum">
       <div class="section-header">
-        <h1><i class="fa-solid fa-coins mr-2" style="color:#a5b4fc;font-size:1.1rem"></i>Lumpsum Calculator</h1>
+        <h2><i class="fa-solid fa-coins mr-2" style="color:#a5b4fc;font-size:1.1rem"></i>Lumpsum Calculator</h2>
         <p>One-time investment growth projection</p>
       </div>
 
@@ -1319,7 +1321,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-homeloan">
       <div class="section-header">
-        <h1><i class="fa-solid fa-house mr-2" style="color:#4ade80;font-size:1.1rem"></i>Home Loan Calculator</h1>
+        <h2><i class="fa-solid fa-house mr-2" style="color:#4ade80;font-size:1.1rem"></i>Home Loan Calculator</h2>
         <p>EMI · Amortization · Upfront costs · Extra EMI savings — Indian market</p>
       </div>
 
@@ -1560,7 +1562,7 @@
     <!-- ══════════════════════════════════════════ -->
     <div class="calc-section" id="section-carloan">
       <div class="section-header">
-        <h1><i class="fa-solid fa-car mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Car Loan Calculator</h1>
+        <h2><i class="fa-solid fa-car mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Car Loan Calculator</h2>
         <p>ICE &amp; EV · State RTO · On-road price · EMI · Extra EMI · Hike · Foreclosure</p>
       </div>
 
