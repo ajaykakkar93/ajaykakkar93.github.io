@@ -412,7 +412,9 @@
     body.light .calc-input { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
     body.light .calc-input::placeholder { color: #cbd5e1; }
     body.light .calc-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.1); }
-    body.light .calc-input[readonly] { background: #f8fafc; }
+    body.light .calc-input[readonly] { background: #f8fafc !important; color: #64748b !important; }
+    body.light #cl-total-insurance { background: #ffffff !important; color: #1e293b !important; }
+    body.light #cl-ins-breakdown { background: rgba(0,0,0,.03) !important; border-color: rgba(0,0,0,.08) !important; }
     body.light .calc-select { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
     body.light .calc-select option { background: #ffffff; color: #1e293b; }
     body.light .calc-label { color: #64748b; }
@@ -501,9 +503,59 @@
       .field-grid.cols-3 { grid-template-columns: repeat(2,1fr); }
       .chips.c4 { grid-template-columns: repeat(2,1fr); }
     }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, .7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background: rgba(30,41,59,.95);
+      border: 1px solid rgba(148,163,184,.2);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+      animation: slideIn .3s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    body.light .modal-overlay { background: rgba(0, 0, 0, .5); }
+    body.light .modal-content { background: #ffffff; border-color: rgba(0, 0, 0, .1); color: #1e293b; }
+    .modal-content img { filter: brightness(1); }
   </style>
 </head>
 <body>
+
+<!-- Financial Privacy Disclaimer Modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+      <img src="img/logo_dark.png" alt="Logo" style="width: 40px; height: 40px; border-radius: .5rem;">
+      <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: #e2e8f0;">
+        <i class="fa-solid fa-lock" style="color: #4ade80; margin-right: .5rem"></i>Your Financial Privacy Matters
+      </h2>
+    </div>
+    <p style="margin: 0 0 1.5rem 0; font-size: .9rem; line-height: 1.8; color: #cbd5e1;">
+      We do not save, store, or share your financial data. All numbers, loan details, and calculations entered into our EMI calculator are processed instantly and permanently cleared from our servers. Your data remains entirely private, safe, and 100% confidential.
+    </p>
+    <div style="display: flex; gap: .75rem; justify-content: flex-end;">
+      <button onclick="closeDisclaimer()" class="btn-clear" style="min-width: 100px;">Close</button>
+      <button onclick="closeDisclaimer()" class="btn-calc" style="min-width: 100px;">I Understand</button>
+    </div>
+  </div>
+</div>
 
 <!-- Mobile top bar -->
 <div class="mobile-topbar">
@@ -533,7 +585,10 @@
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">
-        <div class="title">Finance Tools</div>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <img src="img/logo_dark.png" alt="Logo" style="width: 28px; height: 28px; border-radius: .4rem;">
+          <div class="title">Finance Tools</div>
+        </div>
         <button class="theme-btn" id="theme-btn-sidebar" onclick="toggleTheme()" title="Toggle light / dark">
           <i id="theme-icon-sidebar" class="fa-solid fa-sun"></i>
         </button>
@@ -1505,7 +1560,7 @@
           </div>
         </div>
         <!-- Insurance Breakdown -->
-        <div style="background:rgba(10,18,35,.4);border:1px solid rgba(71,85,105,.2);border-radius:.65rem;padding:.85rem 1rem;margin-bottom:.85rem">
+        <div id="cl-ins-breakdown" style="background:rgba(10,18,35,.4);border:1px solid rgba(71,85,105,.2);border-radius:.65rem;padding:.85rem 1rem;margin-bottom:.85rem">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.65rem">
             <div style="font-size:.68rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.07em">Car Insurance Breakdown <span style="font-weight:400;color:#334155">(IRDAI structure)</span></div>
             <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:#64748b">
@@ -1829,6 +1884,20 @@ function _applyThemeIcons(isLight) {
     // Icons updated after DOM ready (see DOMContentLoaded)
   }
 })();
+
+// ─── Disclaimer Modal ────────────────────────────────────────────────────────
+function closeDisclaimer() {
+  const modal = document.getElementById('disclaimer-modal');
+  modal.style.opacity = '0';
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 300);
+}
+
+window.addEventListener('load', () => {
+  const modal = document.getElementById('disclaimer-modal');
+  modal.style.transition = 'opacity .3s ease';
+});
 
 // ─── Nav / section switching ─────────────────────────────────────────────────
 function showSection(id) {
