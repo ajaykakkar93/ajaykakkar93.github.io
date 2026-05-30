@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Date &amp; Time Calculator — Age, Duration, Epoch, Cron Parser | Ajay Kakkar</title>
+  <meta name="description" content="Free online date and time tools — age calculator, duration between dates, add/subtract days, working-days counter, Unix epoch ↔ date converter, and a human-readable cron expression parser. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="date calculator, age calculator, duration between dates, working days calculator, epoch converter, unix timestamp, timestamp to date, cron parser, cron expression, time calculator" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/datetime/" />
+
+  <meta property="og:title" content="Free Date &amp; Time Calculator" />
+  <meta property="og:description" content="Age, duration, add/subtract days, working days, epoch↔date, cron parser. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/datetime/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Date &amp; Time Calculator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Date &amp; Time Calculator" />
+  <meta name="twitter:description" content="Age, duration, working days, epoch↔date, cron parser. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Date &amp; Time Calculator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Date & Time Calculator", "item": "https://ajaykakkar93.github.io/tools/datetime/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Date & Time Calculator",
+        "url": "https://ajaykakkar93.github.io/tools/datetime/",
+        "description": "Free online date and time tools — age, duration, add/subtract days, working days, epoch converter and cron parser. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Age calculator", "Duration between dates", "Add/subtract days", "Working days", "Epoch converter", "Cron parser" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    input,select { background:#0b1220; color:#e2e8f0; border:1px solid #334155; border-radius:.5rem; padding:.45rem .6rem; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; }
+    .tab.active { background:#1e293b; color:#e2e8f0; }
+    .res { background:#0b1220; border:1px solid #1e293b; border-radius:.6rem; }
+    .res b { font-family:'Space Grotesk'; color:#7dd3fc; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The dates and values you enter are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-calendar-days mr-2" style="color:#7dd3fc"></i>Date &amp; Time Calculator</h1>
+    <p class="text-slate-400 text-sm">Age, duration, working days, epoch &amp; cron. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      <span class="tab active" data-t="age" onclick="tab('age')">Age</span>
+      <span class="tab" data-t="dur" onclick="tab('dur')">Duration</span>
+      <span class="tab" data-t="add" onclick="tab('add')">Add / Subtract</span>
+      <span class="tab" data-t="work" onclick="tab('work')">Working days</span>
+      <span class="tab" data-t="epoch" onclick="tab('epoch')">Epoch</span>
+      <span class="tab" data-t="cron" onclick="tab('cron')">Cron</span>
+    </div>
+
+    <section data-p="age" class="panel rounded-xl p-5">
+      <label class="text-sm text-slate-400">Date of birth</label>
+      <input type="date" id="dob" class="block mt-1 mb-4" onchange="age()" />
+      <div id="ageOut" class="res p-4 text-sm space-y-1"></div>
+    </section>
+
+    <section data-p="dur" hidden class="panel rounded-xl p-5">
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div><label class="text-sm text-slate-400">From</label><input type="date" id="df" class="block mt-1 w-full" onchange="dur()" /></div>
+        <div><label class="text-sm text-slate-400">To</label><input type="date" id="dt" class="block mt-1 w-full" onchange="dur()" /></div>
+      </div>
+      <div id="durOut" class="res p-4 text-sm space-y-1"></div>
+    </section>
+
+    <section data-p="add" hidden class="panel rounded-xl p-5">
+      <div class="flex flex-wrap gap-3 items-end mb-4">
+        <div><label class="text-sm text-slate-400">Start date</label><input type="date" id="as" class="block mt-1" onchange="addsub()" /></div>
+        <select id="aop" onchange="addsub()"><option value="1">Add</option><option value="-1">Subtract</option></select>
+        <input type="number" id="aval" value="30" class="w-24" oninput="addsub()" />
+        <select id="aunit" onchange="addsub()"><option value="d">Days</option><option value="w">Weeks</option><option value="m">Months</option><option value="y">Years</option></select>
+      </div>
+      <div id="addOut" class="res p-4 text-sm"></div>
+    </section>
+
+    <section data-p="work" hidden class="panel rounded-xl p-5">
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div><label class="text-sm text-slate-400">From</label><input type="date" id="wf" class="block mt-1 w-full" onchange="work()" /></div>
+        <div><label class="text-sm text-slate-400">To</label><input type="date" id="wt" class="block mt-1 w-full" onchange="work()" /></div>
+      </div>
+      <div id="workOut" class="res p-4 text-sm space-y-1"></div>
+    </section>
+
+    <section data-p="epoch" hidden class="panel rounded-xl p-5 space-y-4">
+      <div>
+        <label class="text-sm text-slate-400">Unix timestamp (s or ms)</label>
+        <div class="flex gap-2 mt-1"><input type="text" id="ep" class="flex-1" placeholder="1717000000" oninput="epoch()" /><button class="btn rounded-lg px-3" onclick="nowEp()">Now</button></div>
+      </div>
+      <div id="epOut" class="res p-4 text-sm space-y-1"></div>
+      <div>
+        <label class="text-sm text-slate-400">Date → timestamp</label>
+        <input type="datetime-local" id="edt" class="block mt-1" onchange="dateToEp()" />
+        <div id="edtOut" class="res p-3 text-sm mt-2"></div>
+      </div>
+    </section>
+
+    <section data-p="cron" hidden class="panel rounded-xl p-5">
+      <label class="text-sm text-slate-400">Cron expression (min hour day-of-month month day-of-week)</label>
+      <input type="text" id="cron" class="block mt-1 w-full font-mono" placeholder="*/15 9-17 * * 1-5" oninput="cronParse()" />
+      <div id="cronOut" class="res p-4 text-sm mt-3"></div>
+    </section>
+
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    const DAY=864e5;
+    function tab(t){ document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t)); document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t); }
+    function diffYMD(a,b){ let y=b.getFullYear()-a.getFullYear(),m=b.getMonth()-a.getMonth(),d=b.getDate()-a.getDate();
+      if(d<0){ m--; d+=new Date(b.getFullYear(),b.getMonth(),0).getDate(); } if(m<0){ y--; m+=12; } return {y,m,d}; }
+    function age(){ const v=$('dob').value; if(!v) return; const a=new Date(v),n=new Date();
+      const {y,m,d}=diffYMD(a,n); const days=Math.floor((n-a)/DAY);
+      $('ageOut').innerHTML=`<div><b>${y}</b> years, <b>${m}</b> months, <b>${d}</b> days</div>
+        <div class="text-slate-400">${days.toLocaleString()} days · ${Math.floor(days/7).toLocaleString()} weeks · ${(y*12+m)} months</div>
+        <div class="text-slate-400">${(days*24).toLocaleString()} hours · ${(days*86400).toLocaleString()} seconds</div>`; }
+    function dur(){ const a=$('df').value,b=$('dt').value; if(!a||!b) return; const d1=new Date(a),d2=new Date(b);
+      const lo=d1<d2?d1:d2,hi=d1<d2?d2:d1; const {y,m,d}=diffYMD(lo,hi); const days=Math.round((hi-lo)/DAY);
+      $('durOut').innerHTML=`<div><b>${y}</b>y <b>${m}</b>m <b>${d}</b>d</div><div class="text-slate-400">${days.toLocaleString()} days · ${Math.floor(days/7)} weeks ${days%7} days</div>`; }
+    function addsub(){ const v=$('as').value; if(!v) return; const d=new Date(v); const sign=+$('aop').value,n=sign*(+$('aval').value||0),u=$('aunit').value;
+      if(u==='d') d.setDate(d.getDate()+n); else if(u==='w') d.setDate(d.getDate()+n*7); else if(u==='m') d.setMonth(d.getMonth()+n); else d.setFullYear(d.getFullYear()+n);
+      $('addOut').innerHTML=`<b>${d.toDateString()}</b><div class="text-slate-400">${d.toISOString().slice(0,10)}</div>`; }
+    function work(){ const a=$('wf').value,b=$('wt').value; if(!a||!b) return; let lo=new Date(a),hi=new Date(b); if(lo>hi)[lo,hi]=[hi,lo];
+      let wd=0,we=0; for(let t=new Date(lo);t<=hi;t.setDate(t.getDate()+1)){ const day=t.getDay(); (day===0||day===6)?we++:wd++; }
+      $('workOut').innerHTML=`<div><b>${wd}</b> working days</div><div class="text-slate-400">${we} weekend days · ${wd+we} total</div>`; }
+    function epoch(){ let v=$('ep').value.trim(); if(!v){$('epOut').innerHTML='';return;} let n=+v; if(v.length<=10) n*=1000; const d=new Date(n);
+      if(isNaN(d)){$('epOut').innerHTML='<span style="color:#f87171">Invalid</span>';return;}
+      $('epOut').innerHTML=`<div><b>${d.toUTCString()}</b></div><div class="text-slate-400">Local: ${d.toString()}</div><div class="text-slate-400">ISO: ${d.toISOString()}</div>`; }
+    function nowEp(){ $('ep').value=Math.floor(Date.now()/1000); epoch(); }
+    function dateToEp(){ const v=$('edt').value; if(!v) return; const d=new Date(v); $('edtOut').innerHTML=`<b>${Math.floor(d.getTime()/1000)}</b> s · ${d.getTime()} ms`; }
+    // cron
+    const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    function field(f,name,min,max,names){
+      if(f==='*') return 'every '+name;
+      if(f.startsWith('*/')) return `every ${f.slice(2)} ${name}s`;
+      const part=p=>{ if(p.includes('-')){const[a,b]=p.split('-');return `${lbl(a,names)}–${lbl(b,names)}`;} return lbl(p,names); };
+      return f.split(',').map(part).join(', ');
+    }
+    function lbl(v,names){ return names?(names[+v]||v):v; }
+    function cronParse(){ const v=$('cron').value.trim(); if(!v){$('cronOut').innerHTML='';return;}
+      const p=v.split(/\s+/); if(p.length!==5){ $('cronOut').innerHTML='<span style="color:#f87171">Expected 5 fields: min hour dom month dow</span>'; return; }
+      const [mi,h,dom,mo,dow]=p;
+      const txt=`At ${field(mi,'minute')} past ${field(h,'hour')}, on ${field(dom,'day-of-month')}, in ${field(mo,'month',1,12,{1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'})}, on ${field(dow,'day-of-week',0,6,{0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat',7:'Sun'})}.`;
+      $('cronOut').innerHTML=`<div class="text-slate-200">${txt}</div><div class="text-slate-500 text-xs mt-2 font-mono">min=${mi} hour=${h} dom=${dom} month=${mo} dow=${dow}</div>`; }
+    age();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Unit Converter — Length, Weight, Data, Temperature &amp; Currency | Ajay Kakkar</title>
+  <meta name="description" content="Free online unit converter — length, weight, temperature, area, volume, speed, time, digital storage, pressure, energy and number base, plus live currency conversion. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, data storage converter, currency converter, metric to imperial, kg to lb, celsius to fahrenheit, online converter" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/converter/" />
+
+  <meta property="og:title" content="Free Unit &amp; Currency Converter" />
+  <meta property="og:description" content="Convert length, weight, temperature, data, speed, energy and more, plus live currency. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/converter/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Unit Converter by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Unit &amp; Currency Converter" />
+  <meta name="twitter:description" content="Length, weight, temperature, data, currency and more. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Unit Converter by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Unit Converter", "item": "https://ajaykakkar93.github.io/tools/converter/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Unit & Currency Converter",
+        "url": "https://ajaykakkar93.github.io/tools/converter/",
+        "description": "Free online converter for length, weight, temperature, area, volume, speed, time, data, pressure, energy, number base and live currency. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Length, weight, temperature", "Area, volume, speed, time", "Digital storage", "Pressure, energy", "Number base", "Live currency" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    input,select { background:#0b1220; color:#e2e8f0; border:1px solid #334155; border-radius:.5rem; padding:.55rem .7rem; }
+    .cat { padding:.4rem .8rem; border-radius:.5rem; cursor:pointer; font-size:.8rem; color:#94a3b8; border:1px solid transparent; }
+    .cat.active { background:#1e293b; color:#fcd34d; border-color:#334155; }
+    .big { font-family:'Space Grotesk'; }
+    #histTable td{padding:.3rem .25rem;border-bottom:1px solid #1e293b;color:#cbd5e1;font-size:.8rem;}
+    #histTable td:last-child{text-align:right;font-family:'Space Grotesk';color:#fcd34d;}
+    #histTable tr:hover td{background:#0e1626;}
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The values you convert are never uploaded or stored. Only anonymous, public exchange-rate data is fetched for currency - your inputs are never sent. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-3xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-right-left mr-2" style="color:#fcd34d"></i>Unit &amp; Currency Converter</h1>
+    <p class="text-slate-400 text-sm">Length, weight, data, temperature &amp; live currency. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <div id="cats" class="flex flex-wrap gap-1.5 mb-5"></div>
+
+    <div class="panel rounded-2xl p-6">
+      <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-end">
+        <div>
+          <input id="inVal" type="number" value="1" class="w-full text-lg big" oninput="convert()" />
+          <select id="inUnit" class="w-full mt-2 text-sm" onchange="convert()"></select>
+        </div>
+        <button class="btn text-slate-400 hover:text-slate-200 px-2 pb-2" onclick="swap()" title="Swap"><i class="fa-solid fa-right-left"></i></button>
+        <div>
+          <input id="outVal" type="text" readonly class="w-full text-lg big" style="color:#fcd34d" />
+          <select id="outUnit" class="w-full mt-2 text-sm" onchange="convert()"></select>
+        </div>
+      </div>
+      <div id="note" class="text-xs text-slate-500 mt-4"></div>
+    </div>
+
+    <!-- 30-day currency history (currency mode only) -->
+    <div id="hist" class="mt-5" hidden>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="panel rounded-2xl p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs text-slate-400 uppercase tracking-wide">30-Day Trend</span>
+            <span id="histPair" class="text-xs text-slate-500"></span>
+          </div>
+          <div id="chart" style="min-height:200px"></div>
+        </div>
+        <div class="panel rounded-2xl p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs text-slate-400 uppercase tracking-wide">Last 30 Days</span>
+            <button class="btn rounded px-2 py-1 text-xs" onclick="dlHistCsv()"><i class="fa-solid fa-download mr-1"></i>CSV</button>
+          </div>
+          <div style="max-height:248px;overflow:auto">
+            <table class="w-full" id="histTable"><tbody></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div id="histNote" class="text-xs text-slate-500 mt-2"></div>
+    </div>
+
+    <p class="text-slate-500 text-xs mt-8 text-center">Unit math is 100% offline. Currency rates &amp; 30-day history fetched live from frankfurter.dev (no key). · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    // factor-based categories (to base unit)
+    const CATS={
+      Length:{base:'m',u:{Millimeter:.001,Centimeter:.01,Meter:1,Kilometer:1000,Inch:.0254,Foot:.3048,Yard:.9144,Mile:1609.344,'Nautical mile':1852}},
+      Weight:{base:'kg',u:{Milligram:1e-6,Gram:.001,Kilogram:1,Tonne:1000,Ounce:.0283495,Pound:.453592,Stone:6.35029}},
+      Area:{base:'m²',u:{'Sq mm':1e-6,'Sq cm':1e-4,'Sq meter':1,Hectare:1e4,'Sq km':1e6,'Sq inch':6.4516e-4,'Sq foot':.092903,Acre:4046.86}},
+      Volume:{base:'L',u:{Milliliter:.001,Liter:1,'Cubic meter':1000,Teaspoon:.00492892,Tablespoon:.0147868,Cup:.24,Pint:.473176,Quart:.946353,'Gallon (US)':3.78541}},
+      Speed:{base:'m/s',u:{'m/s':1,'km/h':.277778,'mph':.44704,Knot:.514444,'ft/s':.3048}},
+      Time:{base:'s',u:{Millisecond:.001,Second:1,Minute:60,Hour:3600,Day:86400,Week:604800,Year:31557600}},
+      Data:{base:'byte',u:{Bit:.125,Byte:1,Kilobyte:1e3,Megabyte:1e6,Gigabyte:1e9,Terabyte:1e12,KiB:1024,MiB:1048576,GiB:1073741824,TiB:1099511627776}},
+      Pressure:{base:'Pa',u:{Pascal:1,Kilopascal:1000,Bar:1e5,PSI:6894.76,Atmosphere:101325,mmHg:133.322}},
+      Energy:{base:'J',u:{Joule:1,Kilojoule:1000,Calorie:4.184,Kilocalorie:4184,'Watt-hour':3600,'Kilowatt-hour':3.6e6,BTU:1055.06}}
+    };
+    let cur='Length', isCurrency=false, rates=null, lastHistKey='', histData=null;
+    const cats=['Length','Weight','Temperature','Area','Volume','Speed','Time','Data','Pressure','Energy','Currency'];
+    $('cats').innerHTML=cats.map(c=>`<span class="cat${c==='Length'?' active':''}" onclick="pick('${c}')">${c}</span>`).join('');
+    function pick(c){ cur=c; document.querySelectorAll('.cat').forEach(e=>e.classList.toggle('active',e.textContent===c)); build(); }
+    function fill(sel,opts,def){ sel.innerHTML=opts.map(o=>`<option${o===def?' selected':''}>${o}</option>`).join(''); }
+    async function build(){
+      $('note').textContent='';
+      if(cur==='Currency'){ isCurrency=true; await loadRates(); const codes=Object.keys(rates).sort(); fill($('inUnit'),codes,'USD'); fill($('outUnit'),codes,'INR'); }
+      else if(cur==='Temperature'){ isCurrency=false; const u=['Celsius','Fahrenheit','Kelvin']; fill($('inUnit'),u,'Celsius'); fill($('outUnit'),u,'Fahrenheit'); }
+      else { isCurrency=false; const u=Object.keys(CATS[cur].u); fill($('inUnit'),u,u[0]); fill($('outUnit'),u,u[1]||u[0]); }
+      $('hist').hidden=!isCurrency; lastHistKey='';
+      convert();
+    }
+    async function loadRates(){
+      if(rates) return;
+      // 1) v1: object map { rates:{CODE:val}, date }
+      try{
+        const r=await fetch('https://api.frankfurter.dev/v1/latest?base=USD');
+        if(r.ok){ const d=await r.json();
+          if(d && d.rates && Object.keys(d.rates).length){
+            rates={USD:1,...d.rates}; $('note').textContent='Rates as of '+d.date+' (base USD).'; return;
+          }
+        }
+      }catch(e){}
+      // 2) fallback v2: array [{base,quote,rate,date}]
+      try{
+        const r=await fetch('https://api.frankfurter.dev/v2/rates?base=USD');
+        if(r.ok){ const arr=await r.json();
+          if(Array.isArray(arr) && arr.length){
+            rates={USD:1}; let date='';
+            arr.forEach(x=>{ if(x && x.quote){ rates[x.quote]=x.rate; date=x.date||date; } });
+            $('note').textContent='Rates as of '+date+' (base USD, v2 fallback).'; return;
+          }
+        }
+      }catch(e){}
+      // 3) last resort: hardcoded approximations
+      rates={USD:1,EUR:.92,INR:83,GBP:.79,JPY:150};
+      $('note').innerHTML='<span style="color:#f87171">Live rates unavailable — using fallback approximations.</span>';
+    }
+    function tempConv(v,f,t){ let c=f==='Celsius'?v:f==='Fahrenheit'?(v-32)*5/9:v-273.15; return t==='Celsius'?c:t==='Fahrenheit'?c*9/5+32:c+273.15; }
+    function convert(){
+      const fu=$('inUnit').value,tu=$('outUnit').value;
+      if(cur==='Currency'){ const key=fu+'_'+tu; if(key!==lastHistKey){ lastHistKey=key; updateHistory(fu,tu); } }
+      const v=parseFloat($('inVal').value); if(isNaN(v)){ $('outVal').value=''; return; }
+      let out;
+      if(cur==='Currency'){ if(!rates){ return; } out=v/rates[fu]*rates[tu]; }
+      else if(cur==='Temperature'){ out=tempConv(v,fu,tu); }
+      else { const u=CATS[cur].u; out=v*u[fu]/u[tu]; }
+      $('outVal').value=(+out.toPrecision(10)).toLocaleString(undefined,{maximumFractionDigits:8});
+    }
+    function swap(){ const a=$('inUnit').value; $('inUnit').value=$('outUnit').value; $('outUnit').value=a; convert(); }
+
+    // ─── 30-day currency history ───
+    function ymd(d){ return d.toISOString().slice(0,10); }
+    async function updateHistory(from,to){
+      $('histPair').textContent=from+' → '+to;
+      const end=new Date(), start=new Date(end-29*864e5);
+      if(from===to){ const entries=[]; for(let i=29;i>=0;i--) entries.push([ymd(new Date(end-i*864e5)),1]); histData=entries; renderChart(entries); renderTable(entries); $('histNote').textContent='Same currency — rate is 1.'; return; }
+      $('chart').innerHTML='<div class="text-slate-500 text-sm py-8 text-center">Loading…</div>';
+      try{
+        const r=await fetch(`https://api.frankfurter.dev/v1/${ymd(start)}..${ymd(end)}?base=${from}&symbols=${to}`);
+        if(!r.ok) throw 0; const d=await r.json();
+        const entries=Object.entries(d.rates||{}).map(([dt,o])=>[dt,o[to]]).filter(e=>e[1]!=null).sort((a,b)=>a[0]<b[0]?-1:1);
+        if(!entries.length) throw 0;
+        histData=entries; renderChart(entries); renderTable(entries);
+        $('histNote').textContent=`${entries.length} business days · base ${from} · ${entries[0][0]} → ${entries[entries.length-1][0]}`;
+      }catch(e){ $('chart').innerHTML='<div class="text-slate-500 text-sm py-8 text-center">History unavailable.</div>'; $('histTable').querySelector('tbody').innerHTML=''; $('histNote').textContent=''; histData=null; }
+    }
+    function renderChart(entries){
+      const w=520,h=200,pad=34,n=entries.length;
+      if(n<2){ $('chart').innerHTML='<div class="text-slate-500 text-sm py-8 text-center">Not enough data.</div>'; return; }
+      const vals=entries.map(e=>e[1]), min=Math.min(...vals), max=Math.max(...vals), range=(max-min)||1;
+      const x=i=>pad+i*(w-2*pad)/(n-1), y=v=>h-pad-(v-min)/range*(h-2*pad);
+      const pts=entries.map((e,i)=>`${x(i).toFixed(1)},${y(e[1]).toFixed(1)}`);
+      const line='M'+pts.join(' L');
+      const area=`M${x(0).toFixed(1)},${(h-pad)} L`+pts.join(' L')+` L${x(n-1).toFixed(1)},${(h-pad)} Z`;
+      const last=entries[n-1], lx=x(n-1), ly=y(last[1]);
+      $('chart').innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block;height:auto">
+        <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fcd34d" stop-opacity=".35"/><stop offset="1" stop-color="#fcd34d" stop-opacity="0"/></linearGradient></defs>
+        <line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="#1e293b"/>
+        <path d="${area}" fill="url(#cg)"/>
+        <path d="${line}" fill="none" stroke="#fcd34d" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="3.5" fill="#fcd34d"/>
+        <text x="4" y="14" fill="#64748b" font-size="11">${(+max.toPrecision(6))}</text>
+        <text x="4" y="${h-pad+4}" fill="#64748b" font-size="11">${(+min.toPrecision(6))}</text>
+        <text x="${pad}" y="${h-8}" fill="#64748b" font-size="10">${entries[0][0].slice(5)}</text>
+        <text x="${w-pad}" y="${h-8}" fill="#64748b" font-size="10" text-anchor="end">${last[0].slice(5)}</text>
+      </svg>`;
+    }
+    function renderTable(entries){
+      $('histTable').querySelector('tbody').innerHTML=[...entries].reverse().map(([d,v])=>`<tr><td>${d}</td><td>${(+v.toPrecision(8))}</td></tr>`).join('');
+    }
+    function dlHistCsv(){ if(!histData) return; const csv='date,rate\n'+histData.map(([d,v])=>d+','+v).join('\n'); const b=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='rates-30d.csv'; a.click(); }
+
+    build();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

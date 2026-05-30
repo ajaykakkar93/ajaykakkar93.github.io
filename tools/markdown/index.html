@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Markdown Editor — Live Preview, Markdown to HTML &amp; Table Maker | Ajay Kakkar</title>
+  <meta name="description" content="Free online Markdown editor with live side-by-side preview, export to HTML, copy rendered HTML, and a Markdown table generator. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="markdown editor, markdown preview, markdown to html, online markdown, md editor, markdown table generator, live markdown, github flavored markdown" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/markdown/" />
+
+  <meta property="og:title" content="Free Markdown Editor — Live Preview &amp; HTML Export" />
+  <meta property="og:description" content="Live Markdown preview, export to HTML, table generator. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/markdown/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Markdown Editor by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Markdown Editor" />
+  <meta name="twitter:description" content="Live preview, Markdown to HTML, table maker. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Markdown Editor by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Markdown Editor", "item": "https://ajaykakkar93.github.io/tools/markdown/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Markdown Editor",
+        "url": "https://ajaykakkar93.github.io/tools/markdown/",
+        "description": "Free online Markdown editor with live preview, HTML export and a table generator. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Live Markdown preview", "Markdown to HTML export", "Copy rendered HTML", "Table generator" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    textarea { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:13px; line-height:1.7; background:#0b1220; color:#e2e8f0; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; } .tab.active { background:#1e293b; color:#e2e8f0; }
+    .prose { color:#cbd5e1; } .prose h1,.prose h2,.prose h3 { color:#f1f5f9; font-family:'Space Grotesk'; margin:.8em 0 .4em; font-weight:700; }
+    .prose h1 { font-size:1.6em; border-bottom:1px solid #1e293b; padding-bottom:.2em; } .prose h2 { font-size:1.3em; } .prose h3 { font-size:1.1em; }
+    .prose p,.prose ul,.prose ol { margin:.6em 0; } .prose ul,.prose ol { padding-left:1.4em; } .prose li { margin:.2em 0; }
+    .prose code { background:#0b1220; border:1px solid #1e293b; border-radius:4px; padding:.1em .3em; font-family:monospace; font-size:.9em; color:#fcd34d; }
+    .prose pre { background:#0b1220; border:1px solid #1e293b; border-radius:8px; padding:.8em; overflow:auto; } .prose pre code { border:none; background:none; color:#e2e8f0; }
+    .prose blockquote { border-left:3px solid #334155; padding-left:1em; color:#94a3b8; margin:.6em 0; }
+    .prose a { color:#93c5fd; } .prose table { border-collapse:collapse; margin:.6em 0; } .prose th,.prose td { border:1px solid #1e293b; padding:.4em .7em; }
+    .prose img { max-width:100%; border-radius:6px; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The Markdown you write is never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-6xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-brands fa-markdown mr-2" style="color:#94a3b8"></i>Markdown Editor</h1>
+    <p class="text-slate-400 text-sm">Live preview, HTML export, table generator. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-1.5 mb-3 items-center">
+      <span class="tab active" data-t="edit" onclick="tab('edit')">Editor</span>
+      <span class="tab" data-t="table" onclick="tab('table')">Table maker</span>
+      <span class="flex-1"></span>
+      <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyHtml()"><i class="fa-solid fa-copy mr-1"></i>Copy HTML</button>
+      <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="dlHtml()"><i class="fa-solid fa-download mr-1"></i>HTML</button>
+      <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="window.print()"><i class="fa-solid fa-file-pdf mr-1"></i>Print/PDF</button>
+    </div>
+
+    <section data-p="edit" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <textarea id="md" class="panel w-full h-[62vh] rounded-xl p-4 outline-none resize-none" spellcheck="false" oninput="render()"></textarea>
+      <div id="prev" class="panel prose w-full h-[62vh] rounded-xl p-5 overflow-auto"></div>
+    </section>
+
+    <section data-p="table" hidden class="panel rounded-xl p-5">
+      <div class="flex gap-3 items-end mb-4 flex-wrap">
+        <div><label class="text-xs text-slate-400 block mb-1">Rows</label><input type="number" id="tr" value="3" min="1" max="50" class="btn rounded-lg px-2 py-1.5 w-20" onchange="tbl()"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Columns</label><input type="number" id="tc" value="3" min="1" max="20" class="btn rounded-lg px-2 py-1.5 w-20" onchange="tbl()"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Align</label><select id="ta" class="btn rounded-lg px-2 py-1.5" onchange="tbl()"><option value="l">Left</option><option value="c">Center</option><option value="r">Right</option></select></div>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('tout')"><i class="fa-solid fa-copy mr-1"></i>Copy</button>
+      </div>
+      <textarea id="tout" class="w-full h-48 rounded-xl p-3 outline-none resize-none panel" readonly></textarea>
+    </section>
+
+    <p class="text-slate-500 text-xs mt-6 text-center">Rendered HTML is sanitized with DOMPurify. 100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    function tab(t){ document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t)); document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t); }
+    function render(){ const html=DOMPurify.sanitize(marked.parse($('md').value||'')); $('prev').innerHTML=html; }
+    function copyHtml(){ navigator.clipboard.writeText(DOMPurify.sanitize(marked.parse($('md').value||''))); }
+    function dlHtml(){ const doc=`<!doctype html><meta charset="utf-8"><body>${DOMPurify.sanitize(marked.parse($('md').value||''))}`; const b=new Blob([doc],{type:'text/html'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='document.html'; a.click(); }
+    function copyEl(id){ navigator.clipboard.writeText($(id).value); }
+    function tbl(){ const r=Math.max(1,+$('tr').value),c=Math.max(1,+$('tc').value),a=$('ta').value;
+      const sep={l:':---',c:':---:',r:'---:'}[a];
+      let out='| '+Array.from({length:c},(_,i)=>'Header '+(i+1)).join(' | ')+' |\n';
+      out+='| '+Array.from({length:c},()=>sep).join(' | ')+' |\n';
+      for(let i=0;i<r;i++) out+='| '+Array.from({length:c},(_,j)=>'Cell '+(i+1)+'-'+(j+1)).join(' | ')+' |\n';
+      $('tout').value=out; }
+    $('md').value=`# Hello, Markdown\n\nType on the **left**, see it rendered on the **right**.\n\n- Lists\n- *Italic* and **bold**\n- \`inline code\`\n\n> Blockquote\n\n\`\`\`js\nconsole.log("code block");\n\`\`\`\n\n| Tool | Status |\n|------|:------:|\n| Markdown | ✅ |\n`;
+    render(); tbl();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

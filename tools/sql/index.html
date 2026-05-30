@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free SQL Formatter &amp; Minifier — Beautify SQL Online | Ajay Kakkar</title>
+  <meta name="description" content="Free online SQL formatter and minifier. Beautify, indent and standardize SQL queries (MySQL, PostgreSQL, T-SQL, standard SQL) or compress them to one line. 100% private — runs entirely in your browser, nothing uploaded. No signup." />
+  <meta name="keywords" content="SQL formatter, SQL beautifier, format SQL online, SQL minify, prettify SQL, SQL indentation, MySQL formatter, PostgreSQL formatter, T-SQL formatter, free SQL tool" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/sql/" />
+
+  <meta property="og:title" content="Free SQL Formatter &amp; Minifier" />
+  <meta property="og:description" content="Beautify, indent and standardize SQL or minify to one line. Multi-dialect. 100% private, browser-based, no signup." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/sql/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="SQL Formatter by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free SQL Formatter &amp; Minifier" />
+  <meta name="twitter:description" content="Beautify or minify SQL, multi-dialect. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="SQL Formatter by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "SQL Formatter", "item": "https://ajaykakkar93.github.io/tools/sql/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "SQL Formatter",
+        "url": "https://ajaykakkar93.github.io/tools/sql/",
+        "description": "Free online SQL formatter and minifier for MySQL, PostgreSQL, T-SQL and standard SQL. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Beautify SQL", "Minify SQL", "Multi-dialect support", "Uppercase keywords", "Copy and download" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql-formatter/15.3.2/sql-formatter.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    textarea, .out { font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace; font-size:13px; line-height:1.6; background:#0b1220; color:#e2e8f0; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; transition:background .15s; }
+    .btn:hover { background:#334155; }
+    .btn-primary { background:#0891b2; border-color:#0891b2; color:#fff; } .btn-primary:hover { background:#0e7490; }
+    select.btn option { background:#111a2e; }
+    .ok { color:#4ade80; } .err { color:#f87171; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The SQL you paste is never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-6xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-database mr-2" style="color:#67e8f9"></i>SQL Formatter</h1>
+    <p class="text-slate-400 text-sm">Beautify or minify SQL. Multi-dialect. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-2 mb-3 items-center">
+      <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="beautify()"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Beautify</button>
+      <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="minify()"><i class="fa-solid fa-compress mr-1"></i>Minify</button>
+      <select id="dialect" class="btn rounded-lg px-3 py-1.5 text-sm">
+        <option value="sql">Standard SQL</option>
+        <option value="mysql">MySQL</option>
+        <option value="postgresql">PostgreSQL</option>
+        <option value="tsql">T-SQL (SQL Server)</option>
+        <option value="sqlite">SQLite</option>
+        <option value="mariadb">MariaDB</option>
+        <option value="bigquery">BigQuery</option>
+        <option value="snowflake">Snowflake</option>
+      </select>
+      <select id="kw" class="btn rounded-lg px-3 py-1.5 text-sm">
+        <option value="upper">KEYWORDS UPPER</option>
+        <option value="lower">keywords lower</option>
+        <option value="preserve">keywords as-is</option>
+      </select>
+      <select id="indent" class="btn rounded-lg px-3 py-1.5 text-sm">
+        <option value="2">2 spaces</option>
+        <option value="4">4 spaces</option>
+        <option value="tab">tab</option>
+      </select>
+      <span class="flex-1"></span>
+      <span id="status" class="text-xs"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="panel rounded-xl p-3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-slate-400 uppercase tracking-wide">SQL Input</span>
+          <div class="flex gap-2">
+            <button class="btn rounded px-2 py-1 text-xs" onclick="sample()">Sample</button>
+            <button class="btn rounded px-2 py-1 text-xs" onclick="document.getElementById('in').value=''">Clear</button>
+          </div>
+        </div>
+        <textarea id="in" class="w-full h-[55vh] rounded-lg p-3 outline-none resize-none" spellcheck="false" placeholder="select * from users u join orders o on o.uid=u.id where u.active=1 order by o.created desc"></textarea>
+      </div>
+      <div class="panel rounded-xl p-3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-slate-400 uppercase tracking-wide">Output</span>
+          <div class="flex gap-2">
+            <button class="btn rounded px-2 py-1 text-xs" onclick="copyOut()"><i class="fa-solid fa-copy"></i> Copy</button>
+            <button class="btn rounded px-2 py-1 text-xs" onclick="download()"><i class="fa-solid fa-download"></i></button>
+          </div>
+        </div>
+        <textarea id="out" class="w-full h-[55vh] rounded-lg p-3 outline-none resize-none out" spellcheck="false" readonly></textarea>
+      </div>
+    </div>
+    <p class="text-slate-500 text-xs mt-6 text-center">Formatting only — does not execute SQL. 100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    const setStatus=(m,ok)=>{const s=$('status');s.textContent=m;s.className='text-xs '+(ok?'ok':'err');};
+    function beautify(){
+      const sql=$('in').value; if(!sql.trim()){setStatus('Enter SQL',false);return;}
+      try{
+        const ind=$('indent').value;
+        const out=sqlFormatter.format(sql,{language:$('dialect').value,keywordCase:$('kw').value,tabWidth:ind==='tab'?1:+ind,useTabs:ind==='tab'});
+        $('out').value=out; setStatus('Formatted ✓',true);
+      }catch(e){ setStatus('Error: '+e.message,false); }
+    }
+    function minify(){
+      const sql=$('in').value; if(!sql.trim()){setStatus('Enter SQL',false);return;}
+      const out=sql.replace(/--[^\n]*/g,' ').replace(/\/\*[\s\S]*?\*\//g,' ').replace(/\s+/g,' ').replace(/\s*([(),;])\s*/g,'$1').trim();
+      $('out').value=out; setStatus('Minified ✓',true);
+    }
+    function copyOut(){ navigator.clipboard.writeText($('out').value).then(()=>setStatus('Copied ✓',true)); }
+    function download(){ const b=new Blob([$('out').value],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='query.sql'; a.click(); }
+    function sample(){ $('in').value="select u.id,u.name,count(o.id) as orders from users u left join orders o on o.user_id=u.id where u.created_at>'2024-01-01' and u.active=true group by u.id,u.name having count(o.id)>5 order by orders desc limit 20;"; }
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

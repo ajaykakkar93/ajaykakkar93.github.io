@@ -12,9 +12,17 @@
     <priority>1.00</priority>
   </url>
 
+  <!-- Tools hub -->
+  <url>
+    <loc>https://ajaykakkar93.github.io/tools/</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
   <!-- Finance Tools -->
   <url>
-    <loc>https://ajaykakkar93.github.io/finance-tools.html</loc>
+    <loc>https://ajaykakkar93.github.io/tools/finance/</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
@@ -22,7 +30,7 @@
 
   <!-- PDF Tools -->
   <url>
-    <loc>https://ajaykakkar93.github.io/pdf/</loc>
+    <loc>https://ajaykakkar93.github.io/tools/pdf/</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -30,23 +38,48 @@
 
   <!-- Qlik tools -->
   <url>
-    <loc>https://ajaykakkar93.github.io/qlik/</loc>
+    <loc>https://ajaykakkar93.github.io/tools/qlik/</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ajaykakkar93.github.io/qlik/QS_Release_Notes.html</loc>
+    <loc>https://ajaykakkar93.github.io/tools/qlik/QS_Release_Notes.html</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>https://ajaykakkar93.github.io/qlik/QS_Postgres_Upgrade_List.html</loc>
+    <loc>https://ajaykakkar93.github.io/tools/qlik/QS_Postgres_Upgrade_List.html</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.64</priority>
   </url>
+
+  <!-- JSON Tools -->
+  <url><loc>https://ajaykakkar93.github.io/tools/json/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Developer Tools -->
+  <url><loc>https://ajaykakkar93.github.io/tools/text/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Color Tools -->
+  <url><loc>https://ajaykakkar93.github.io/tools/color/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Text Utilities -->
+  <url><loc>https://ajaykakkar93.github.io/tools/text-utils/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Crypto Tools -->
+  <url><loc>https://ajaykakkar93.github.io/tools/crypto/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- SQL Formatter -->
+  <url><loc>https://ajaykakkar93.github.io/tools/sql/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Unit Converter -->
+  <url><loc>https://ajaykakkar93.github.io/tools/converter/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- QR & Barcode Generator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/qr/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Markdown Editor -->
+  <url><loc>https://ajaykakkar93.github.io/tools/markdown/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Image Tools -->
+  <url><loc>https://ajaykakkar93.github.io/tools/image/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Date & Time Calculator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/datetime/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Image to Text OCR -->
+  <url><loc>https://ajaykakkar93.github.io/tools/ocr/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
 
   <!-- Resume PDF -->
   <url>

@@ -1,0 +1,32 @@
+# Ajay Kakkar
+
+> Senior Qlik Solutions Architect and AI Product Builder (11+ years). Builds free, private, 100% client-side browser tools — no signup, nothing uploaded. Portfolio plus a growing suite of finance, developer, and data utilities.
+
+Site: https://ajaykakkar93.github.io/
+Author: Ajay Kakkar — Qlik expert, Udemy instructor, AI/bots product builder.
+
+## Portfolio
+- [Home / Portfolio](https://ajaykakkar93.github.io/): Experience, Gen AI products, teaching, awards, certifications, contact.
+- [Resume (PDF)](https://ajaykakkar93.github.io/Ajay%20Kakkar%20Resume.pdf): Full CV.
+
+## Tools (all free, client-side, no data leaves the browser)
+- [All Tools hub](https://ajaykakkar93.github.io/tools/): Index of every tool below.
+- [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/): SIP, step-up SIP, SWP, lumpsum, stock profit/loss with brokerage and STT, credit-card EMI, CAGR, stock averaging, percentage, home and car loan EMI with amortization. India-focused.
+- [PDF Tools](https://ajaykakkar93.github.io/tools/pdf/): Convert PDF to PNG/JPG, merge PDFs, split or extract pages.
+- [Qlik Sense Guides](https://ajaykakkar93.github.io/tools/qlik/): Upgrade guide, release notes, PostgreSQL version matrix.
+- [JSON Tools](https://ajaykakkar93.github.io/tools/json/): Format, validate, minify, tree view, JSON to CSV and YAML, JSONPath.
+- [Developer Tools](https://ajaykakkar93.github.io/tools/text/): Base64, URL encode/decode, UUID generator, JWT decoder, regex tester.
+- [Color Tools](https://ajaykakkar93.github.io/tools/color/): Picker, palette generator, HEX/RGB/HSL converter, WCAG contrast checker.
+- [Text Utilities](https://ajaykakkar93.github.io/tools/text-utils/): Word/character counter, case converter, text diff, lorem ipsum, slugify, dedupe and sort lines.
+- [Crypto Tools](https://ajaykakkar93.github.io/tools/crypto/): AES-GCM text encrypt/decrypt, SHA hashing, strong password generator.
+- [SQL Formatter](https://ajaykakkar93.github.io/tools/sql/): Beautify and minify SQL, multi-dialect.
+- [Unit and Currency Converter](https://ajaykakkar93.github.io/tools/converter/): Length, weight, temperature, area, volume, speed, time, data, pressure, energy, plus live currency.
+- [QR and Barcode Generator](https://ajaykakkar93.github.io/tools/qr/): QR for URL, WiFi, vCard, email, phone, SMS; 1D barcodes (Code128, EAN, UPC). Download PNG/SVG.
+- [Markdown Editor](https://ajaykakkar93.github.io/tools/markdown/): Live preview, Markdown to HTML, table generator.
+- [Image Tools](https://ajaykakkar93.github.io/tools/image/): Resize, compress, convert PNG/JPG/WebP.
+- [Date and Time Calculator](https://ajaykakkar93.github.io/tools/datetime/): Age, duration, working days, epoch converter, cron parser.
+- [Image to Text (OCR)](https://ajaykakkar93.github.io/tools/ocr/): Extract text from images in-browser, multiple languages.
+
+## Notes
+- All tools run entirely in the browser. No accounts, no uploads, no tracking.
+- Sitemap: https://ajaykakkar93.github.io/sitemap.xml

@@ -45,7 +45,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>https://ajaykakkar93.github.io/qlik/index.html</link>
+     <link>https://ajaykakkar93.github.io/tools/qlik/index.html</link>
      <title>Qlik Sense Upgrade Guide — Ajay Kakkar</title>
      <description>Interactive Qlik Sense version upgrade tool. Prerequisites checklist, safe upgrade paths, PostgreSQL migration guide. Built by Ajay Kakkar, Qlik Solutions Architect.</description>
      <ror:updatePeriod></ror:updatePeriod>
@@ -53,7 +53,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>https://ajaykakkar93.github.io/qlik/QS_Release_Notes.html</link>
+     <link>https://ajaykakkar93.github.io/tools/qlik/QS_Release_Notes.html</link>
      <title>Qlik Sense Release Notes — Ajay Kakkar</title>
      <description>Complete Qlik Sense Enterprise release notes index — all 33 versions from 3.0 (2016) to Nov-23, with EOS dates and direct PDF/HTML links. By Ajay Kakkar.</description>
      <ror:updatePeriod></ror:updatePeriod>
@@ -61,7 +61,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>https://ajaykakkar93.github.io/qlik/QS_Postgres_Upgrade_List.html</link>
+     <link>https://ajaykakkar93.github.io/tools/qlik/QS_Postgres_Upgrade_List.html</link>
      <title>Qlik Sense PostgreSQL Version Matrix — Ajay Kakkar</title>
      <description>PostgreSQL version compatibility matrix for every Qlik Sense Enterprise release. Know which PG version your QS version ships with. By Ajay Kakkar.</description>
      <ror:updatePeriod></ror:updatePeriod>

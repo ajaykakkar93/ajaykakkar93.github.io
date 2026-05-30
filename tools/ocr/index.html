@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Image to Text (OCR) — Extract Text from Images Online | Ajay Kakkar</title>
+  <meta name="description" content="Free online OCR — extract text from images (PNG, JPG, WebP) right in your browser using Tesseract.js. Multiple languages, copy or download the result. 100% private: images never leave your device, nothing uploaded. No signup." />
+  <meta name="keywords" content="OCR online, image to text, extract text from image, free OCR, picture to text, tesseract ocr, convert image to text, photo to text, private OCR tool" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/ocr/" />
+
+  <meta property="og:title" content="Free Image to Text (OCR)" />
+  <meta property="og:description" content="Extract text from images in your browser with Tesseract.js. Multi-language, private — nothing uploaded." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/ocr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Image to Text OCR by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Image to Text (OCR)" />
+  <meta name="twitter:description" content="Extract text from images in-browser. Multi-language, private." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Image to Text OCR by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Image to Text (OCR)", "item": "https://ajaykakkar93.github.io/tools/ocr/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Image to Text (OCR)",
+        "url": "https://ajaykakkar93.github.io/tools/ocr/",
+        "description": "Free online OCR to extract text from images using Tesseract.js. Multiple languages. Images never leave the browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Extract text from images", "Multiple languages", "Copy and download text", "Confidence score", "Runs fully in-browser" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    input,select,textarea { background:#0b1220; color:#e2e8f0; border:1px solid #334155; border-radius:.5rem; padding:.5rem .6rem; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .btn-primary { background:#0d9488; border-color:#0d9488; color:#fff; } .btn-primary:hover { background:#0f766e; }
+    .drop { border:2px dashed #334155; border-radius:.75rem; } .drop.over { border-color:#5eead4; background:#0d1a1a; }
+    .meter { height:8px; border-radius:4px; background:#1e293b; overflow:hidden; } .meter>div { height:100%; background:#2dd4bf; transition:width .2s; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The images you extract text from are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-image mr-2" style="color:#5eead4"></i>Image to Text (OCR)</h1>
+    <p class="text-slate-400 text-sm">Extract text from images in your browser. Images never leave your device.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-3 items-end mb-4">
+      <div><label class="text-xs text-slate-400 block mb-1">Language</label>
+        <select id="lang">
+          <option value="eng">English</option><option value="spa">Spanish</option><option value="fra">French</option>
+          <option value="deu">German</option><option value="ita">Italian</option><option value="por">Portuguese</option>
+          <option value="hin">Hindi</option><option value="ara">Arabic</option><option value="rus">Russian</option>
+          <option value="chi_sim">Chinese (Simplified)</option><option value="jpn">Japanese</option>
+          <option value="eng+hin">English + Hindi</option>
+        </select>
+      </div>
+      <button id="runBtn" class="btn btn-primary rounded-lg px-4 py-2 text-sm" onclick="run()" disabled><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Extract text</button>
+    </div>
+
+    <div id="drop" class="drop p-8 text-center cursor-pointer mb-5" onclick="$('file').click()">
+      <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-500 mb-2"></i>
+      <p class="text-slate-400 text-sm">Click, drop, or paste an image (Ctrl/Cmd+V)</p>
+      <input type="file" id="file" accept="image/*" hidden onchange="pick(this.files[0])" />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <section class="panel rounded-xl p-3 flex items-center justify-center" style="min-height:200px">
+        <img id="preview" class="max-w-full max-h-[50vh] rounded" hidden />
+        <span id="ph" class="text-slate-600 text-sm">Image preview</span>
+      </section>
+      <section class="panel rounded-xl p-3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-slate-400 uppercase tracking-wide">Extracted text</span>
+          <div class="flex gap-2"><button class="btn rounded px-2 py-1 text-xs" onclick="copyOut()"><i class="fa-solid fa-copy"></i></button><button class="btn rounded px-2 py-1 text-xs" onclick="dl()"><i class="fa-solid fa-download"></i></button></div>
+        </div>
+        <textarea id="out" class="w-full h-[46vh] rounded-lg p-3 outline-none resize-none text-sm" placeholder="Result appears here..."></textarea>
+      </section>
+    </div>
+
+    <div id="prog" hidden class="mt-4">
+      <div class="meter"><div id="bar" style="width:0%"></div></div>
+      <div id="status" class="text-xs text-slate-400 mt-1"></div>
+    </div>
+    <p class="text-slate-500 text-xs mt-6 text-center"><i class="fa-solid fa-circle-info"></i> First run downloads the OCR engine (~2–15 MB per language). Best on clear, printed text. 100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script>
+    const $=id=>document.getElementById(id);
+    let curFile=null;
+    const drop=$('drop');
+    ['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('over');}));
+    ['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('over');}));
+    drop.addEventListener('drop',ev=>{ev.preventDefault(); if(ev.dataTransfer.files[0]) pick(ev.dataTransfer.files[0]);});
+    window.addEventListener('paste',ev=>{ const it=[...ev.clipboardData.items].find(i=>i.type.startsWith('image/')); if(it) pick(it.getAsFile()); });
+    function pick(f){ if(!f||!f.type.startsWith('image/')) return; curFile=f; const url=URL.createObjectURL(f);
+      $('preview').src=url; $('preview').hidden=false; $('ph').hidden=true; $('runBtn').disabled=false; }
+    async function run(){
+      if(!curFile||typeof Tesseract==='undefined'){ if(typeof Tesseract==='undefined') alert('OCR engine still loading, try again in a moment.'); return; }
+      $('runBtn').disabled=true; $('prog').hidden=false; $('out').value='';
+      try{
+        const { data }=await Tesseract.recognize(curFile,$('lang').value,{ logger:m=>{
+          if(m.status){ $('status').textContent=m.status+(m.progress?` ${Math.round(m.progress*100)}%`:''); if(m.progress!=null) $('bar').style.width=(m.progress*100)+'%'; }
+        }});
+        $('out').value=data.text.trim();
+        $('status').innerHTML='Done ✓ · confidence '+Math.round(data.confidence)+'%'; $('bar').style.width='100%';
+      }catch(e){ $('status').textContent='Error: '+e.message; }
+      finally{ $('runBtn').disabled=false; }
+    }
+    function copyOut(){ navigator.clipboard.writeText($('out').value); }
+    function dl(){ const b=new Blob([$('out').value],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='extracted-text.txt'; a.click(); }
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

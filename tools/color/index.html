@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Color Tools — Picker, Palette, HEX RGB HSL Converter, Contrast | Ajay Kakkar</title>
+  <meta name="description" content="Free online color tools — color picker, palette generator (shades, tints, complementary), HEX ↔ RGB ↔ HSL converter, and WCAG contrast checker for accessibility. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="color picker, palette generator, hex to rgb, rgb to hex, hsl converter, color converter, WCAG contrast checker, accessibility contrast, complementary colors, color shades, online color tool" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/color/" />
+
+  <meta property="og:title" content="Free Color Tools — Picker, Palette, Converter, Contrast" />
+  <meta property="og:description" content="Color picker, palette generator, HEX↔RGB↔HSL converter, WCAG contrast checker. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/color/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Color Tools by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Color Tools" />
+  <meta name="twitter:description" content="Color picker, palette, HEX↔RGB↔HSL, WCAG contrast. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Color Tools by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Color Tools", "item": "https://ajaykakkar93.github.io/tools/color/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Color Tools",
+        "url": "https://ajaykakkar93.github.io/tools/color/",
+        "description": "Free online color picker, palette generator, HEX/RGB/HSL converter and WCAG contrast checker. Runs entirely in the browser.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Color picker", "Palette generator", "HEX/RGB/HSL converter", "WCAG contrast checker" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    input[type=text]{ background:#0b1220; color:#e2e8f0; border:1px solid #334155; font-family:ui-monospace,monospace; }
+    .swatch { height:64px; border-radius:.5rem; cursor:pointer; position:relative; }
+    .swatch span { position:absolute; bottom:4px; left:6px; font-size:10px; font-family:monospace; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The colors and values you pick are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-5xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-palette mr-2" style="color:#c4b5fd"></i>Color Tools</h1>
+    <p class="text-slate-400 text-sm">Pick, convert, build palettes, check WCAG contrast. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-5 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <!-- Picker + converter -->
+    <section class="panel rounded-xl p-5">
+      <h2 class="font-display font-semibold mb-3">Picker &amp; Converter</h2>
+      <div class="flex items-center gap-4 mb-4">
+        <input type="color" id="pick" value="#2563eb" oninput="fromPick()" style="width:64px;height:64px;border:none;background:none;cursor:pointer" />
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center gap-2"><span class="text-xs text-slate-400 w-10">HEX</span><input type="text" id="hex" class="flex-1 rounded px-2 py-1 text-sm" value="#2563eb" oninput="fromHex()" /></div>
+          <div class="flex items-center gap-2"><span class="text-xs text-slate-400 w-10">RGB</span><input type="text" id="rgb" class="flex-1 rounded px-2 py-1 text-sm" oninput="fromRgb()" /></div>
+          <div class="flex items-center gap-2"><span class="text-xs text-slate-400 w-10">HSL</span><input type="text" id="hsl" class="flex-1 rounded px-2 py-1 text-sm" oninput="fromHsl()" /></div>
+        </div>
+      </div>
+      <div id="preview" class="rounded-lg h-16" style="background:#2563eb"></div>
+    </section>
+
+    <!-- Palette -->
+    <section class="panel rounded-xl p-5">
+      <h2 class="font-display font-semibold mb-3">Palette</h2>
+      <div class="flex gap-2 mb-3">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="pal('shades')">Shades</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="pal('tints')">Tints</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="pal('comp')">Complementary</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="pal('analog')">Analogous</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="pal('triad')">Triadic</button>
+      </div>
+      <div id="pal" class="grid grid-cols-5 gap-2"></div>
+      <p class="text-xs text-slate-500 mt-2">Click a swatch to copy its HEX.</p>
+    </section>
+
+    <!-- Contrast -->
+    <section class="panel rounded-xl p-5 lg:col-span-2">
+      <h2 class="font-display font-semibold mb-3">WCAG Contrast Checker</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2"><span class="text-xs text-slate-400">Text</span><input type="color" id="cFg" value="#ffffff" oninput="contrast()" style="width:40px;height:40px;border:none;background:none"></div>
+        <div class="flex items-center gap-2"><span class="text-xs text-slate-400">BG</span><input type="color" id="cBg" value="#2563eb" oninput="contrast()" style="width:40px;height:40px;border:none;background:none"></div>
+        <div id="cPrev" class="rounded-lg px-4 py-3 text-sm flex-1 min-w-[200px]" style="background:#2563eb;color:#fff">The quick brown fox jumps over the lazy dog.</div>
+      </div>
+      <div class="flex flex-wrap gap-3 mt-4 items-center">
+        <div class="stat panel rounded-lg px-3 py-2"><span class="text-xs text-slate-400">Ratio</span> <b id="cRatio" class="font-display" style="color:#a5b4fc">—</b></div>
+        <span id="aaN" class="text-xs px-2 py-1 rounded">AA normal</span>
+        <span id="aaaN" class="text-xs px-2 py-1 rounded">AAA normal</span>
+        <span id="aaL" class="text-xs px-2 py-1 rounded">AA large</span>
+        <span id="aaaL" class="text-xs px-2 py-1 rounded">AAA large</span>
+      </div>
+    </section>
+    <p class="text-slate-500 text-xs text-center lg:col-span-2">100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+    function hexToRgb(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}; }
+    function rgbToHex(r,g,b){ return '#'+[r,g,b].map(x=>clamp(Math.round(x),0,255).toString(16).padStart(2,'0')).join(''); }
+    function rgbToHsl(r,g,b){ r/=255;g/=255;b/=255; const mx=Math.max(r,g,b),mn=Math.min(r,g,b); let h,s,l=(mx+mn)/2;
+      if(mx===mn){h=s=0;}else{const d=mx-mn; s=l>.5?d/(2-mx-mn):d/(mx+mn); h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4; h/=6;}
+      return {h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)}; }
+    function hslToRgb(h,s,l){ h/=360;s/=100;l/=100; let r,g,b;
+      if(s===0){r=g=b=l;}else{const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q; const f=t=>{t<0&&(t+=1);t>1&&(t-=1); return t<1/6?p+(q-p)*6*t:t<1/2?q:t<2/3?p+(q-p)*(2/3-t)*6:p;}; r=f(h+1/3);g=f(h);b=f(h-1/3);}
+      return {r:Math.round(r*255),g:Math.round(g*255),b:Math.round(b*255)}; }
+    let cur={r:37,g:99,b:235};
+    function sync(src){
+      const hex=rgbToHex(cur.r,cur.g,cur.b), hsl=rgbToHsl(cur.r,cur.g,cur.b);
+      if(src!=='hex') $('hex').value=hex;
+      if(src!=='rgb') $('rgb').value=`rgb(${cur.r}, ${cur.g}, ${cur.b})`;
+      if(src!=='hsl') $('hsl').value=`hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+      $('pick').value=hex; $('preview').style.background=hex;
+    }
+    function fromPick(){ cur=hexToRgb($('pick').value); sync(); }
+    function fromHex(){ const v=$('hex').value.trim(); if(/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)){ cur=hexToRgb(v); sync('hex'); } }
+    function fromRgb(){ const m=$('rgb').value.match(/(\d+)\D+(\d+)\D+(\d+)/); if(m){ cur={r:+m[1],g:+m[2],b:+m[3]}; sync('rgb'); } }
+    function fromHsl(){ const m=$('hsl').value.match(/(\d+)\D+(\d+)\D+(\d+)/); if(m){ cur=hslToRgb(+m[1],+m[2],+m[3]); sync('hsl'); } }
+    // palette
+    function setPal(cols){ $('pal').innerHTML=cols.map(c=>`<div class="swatch" style="background:${c};color:${best(c)}" onclick="navigator.clipboard.writeText('${c}')"><span>${c}</span></div>`).join(''); }
+    function best(hex){ const {r,g,b}=hexToRgb(hex); return (0.299*r+0.587*g+0.114*b)>140?'#000':'#fff'; }
+    function pal(type){
+      const hsl=rgbToHsl(cur.r,cur.g,cur.b); let out=[];
+      if(type==='shades') out=[0,12,25,40,55,70,85].map(d=>{const r=hslToRgb(hsl.h,hsl.s,clamp(hsl.l-d,0,100));return rgbToHex(r.r,r.g,r.b);}).slice(0,5).concat([]);
+      if(type==='shades') out=[hsl.l,hsl.l*.8,hsl.l*.6,hsl.l*.4,hsl.l*.2].map(l=>{const r=hslToRgb(hsl.h,hsl.s,l);return rgbToHex(r.r,r.g,r.b);});
+      if(type==='tints') out=[hsl.l,hsl.l+(100-hsl.l)*.25,hsl.l+(100-hsl.l)*.5,hsl.l+(100-hsl.l)*.75,95].map(l=>{const r=hslToRgb(hsl.h,hsl.s,l);return rgbToHex(r.r,r.g,r.b);});
+      if(type==='comp'){ const r2=hslToRgb((hsl.h+180)%360,hsl.s,hsl.l); out=[rgbToHex(cur.r,cur.g,cur.b),rgbToHex(r2.r,r2.g,r2.b)]; }
+      if(type==='analog') out=[-40,-20,0,20,40].map(d=>{const r=hslToRgb((hsl.h+d+360)%360,hsl.s,hsl.l);return rgbToHex(r.r,r.g,r.b);});
+      if(type==='triad') out=[0,120,240].map(d=>{const r=hslToRgb((hsl.h+d)%360,hsl.s,hsl.l);return rgbToHex(r.r,r.g,r.b);});
+      setPal(out);
+    }
+    // contrast
+    function lum(r,g,b){ const a=[r,g,b].map(v=>{v/=255; return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4);}); return .2126*a[0]+.7152*a[1]+.0722*a[2]; }
+    function contrast(){
+      const fg=hexToRgb($('cFg').value), bg=hexToRgb($('cBg').value);
+      const l1=lum(fg.r,fg.g,fg.b),l2=lum(bg.r,bg.g,bg.b);
+      const ratio=(Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05);
+      $('cRatio').textContent=ratio.toFixed(2)+':1';
+      $('cPrev').style.background=$('cBg').value; $('cPrev').style.color=$('cFg').value;
+      const set=(id,pass)=>{ const e=$(id); e.style.background=pass?'rgba(34,197,94,.15)':'rgba(248,113,113,.15)'; e.style.color=pass?'#4ade80':'#f87171'; e.innerHTML=(pass?'✔ ':'✖ ')+e.id.replace(/^(aa+)([NL])$/,(m,a,b)=>a.toUpperCase()+(b==='N'?' normal':' large')); };
+      set('aaN',ratio>=4.5); set('aaaN',ratio>=7); set('aaL',ratio>=3); set('aaaL',ratio>=4.5);
+    }
+    sync(); pal('shades'); contrast();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

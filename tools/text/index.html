@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Developer Tools — Base64, URL Encode, UUID, JWT Decoder, Regex | Ajay Kakkar</title>
+  <meta name="description" content="Free online developer tools — Base64 encode/decode, URL encode/decode, UUID v4 generator, JWT decoder (header &amp; payload), and a live regex tester with match highlighting. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="base64 encode, base64 decode, url encode, url decode, uuid generator, guid generator, jwt decoder, decode jwt, regex tester, regular expression tester, developer tools online" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/text/" />
+
+  <meta property="og:title" content="Free Developer Tools — Base64, URL, UUID, JWT, Regex" />
+  <meta property="og:description" content="Base64, URL encode/decode, UUID generator, JWT decoder, live regex tester. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/text/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Developer Tools by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Developer Tools" />
+  <meta name="twitter:description" content="Base64, URL, UUID, JWT decoder, regex tester. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Developer Tools by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Developer Tools", "item": "https://ajaykakkar93.github.io/tools/text/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Developer Tools",
+        "url": "https://ajaykakkar93.github.io/tools/text/",
+        "description": "Free online developer tools — Base64, URL encode/decode, UUID generator, JWT decoder and regex tester. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Base64 encode/decode", "URL encode/decode", "UUID generator", "JWT decoder", "Regex tester" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    textarea,input.mono { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:13px; background:#0b1220; color:#e2e8f0; border:1px solid #334155; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .btn-primary { background:#2563eb; border-color:#2563eb; color:#fff; } .btn-primary:hover { background:#1d4ed8; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; }
+    .tab.active { background:#1e293b; color:#e2e8f0; }
+    mark { background:rgba(251,191,36,.35); color:#fde68a; border-radius:2px; }
+    .err { color:#f87171; } .ok { color:#4ade80; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The text, tokens and JWTs you enter are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-terminal mr-2" style="color:#93c5fd"></i>Developer Tools</h1>
+    <p class="text-slate-400 text-sm">Base64, URL encode, UUID, JWT decoder, regex tester. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      <span class="tab active" data-t="b64" onclick="tab('b64')">Base64</span>
+      <span class="tab" data-t="url" onclick="tab('url')">URL</span>
+      <span class="tab" data-t="uuid" onclick="tab('uuid')">UUID</span>
+      <span class="tab" data-t="jwt" onclick="tab('jwt')">JWT decode</span>
+      <span class="tab" data-t="regex" onclick="tab('regex')">Regex</span>
+    </div>
+
+    <section data-p="b64" class="panel rounded-xl p-5">
+      <textarea id="b64in" class="w-full h-32 rounded-lg p-3 outline-none resize-none" placeholder="Text or Base64..." oninput="b64()"></textarea>
+      <div class="flex gap-2 my-3"><button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="b64mode='enc';b64()">Encode →</button><button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="b64mode='dec';b64()">← Decode</button><button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('b64out')"><i class="fa-solid fa-copy"></i></button></div>
+      <textarea id="b64out" class="w-full h-32 rounded-lg p-3 outline-none resize-none" readonly></textarea>
+    </section>
+
+    <section data-p="url" hidden class="panel rounded-xl p-5">
+      <textarea id="urlin" class="w-full h-32 rounded-lg p-3 outline-none resize-none" placeholder="Text or URL-encoded string..."></textarea>
+      <div class="flex gap-2 my-3"><button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="urlfn('enc')">Encode →</button><button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="urlfn('dec')">← Decode</button><button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('urlout')"><i class="fa-solid fa-copy"></i></button></div>
+      <textarea id="urlout" class="w-full h-32 rounded-lg p-3 outline-none resize-none" readonly></textarea>
+    </section>
+
+    <section data-p="uuid" hidden class="panel rounded-xl p-5">
+      <div class="flex gap-2 items-center mb-3">
+        <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="uuid()">Generate</button>
+        <input type="number" id="uq" value="5" min="1" max="100" class="mono rounded-lg px-2 py-1.5 w-20" />
+        <span class="text-xs text-slate-400">UUID v4</span>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('uout')"><i class="fa-solid fa-copy"></i> Copy all</button>
+      </div>
+      <textarea id="uout" class="w-full h-40 rounded-lg p-3 outline-none resize-none mono" readonly></textarea>
+    </section>
+
+    <section data-p="jwt" hidden class="panel rounded-xl p-5">
+      <textarea id="jwtin" class="w-full h-28 rounded-lg p-3 outline-none resize-none" placeholder="Paste JWT (eyJ...)" oninput="jwt()"></textarea>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+        <div><div class="text-xs text-slate-400 mb-1">Header</div><pre id="jwtH" class="panel rounded-lg p-3 text-xs overflow-auto" style="background:#0b1220;min-height:6rem"></pre></div>
+        <div><div class="text-xs text-slate-400 mb-1">Payload</div><pre id="jwtP" class="panel rounded-lg p-3 text-xs overflow-auto" style="background:#0b1220;min-height:6rem"></pre></div>
+      </div>
+      <div id="jwtMeta" class="text-xs mt-2 text-slate-400"></div>
+      <p class="text-xs text-slate-500 mt-2"><i class="fa-solid fa-circle-info"></i> Decodes only — signature is not verified (needs the secret/key).</p>
+    </section>
+
+    <section data-p="regex" hidden class="panel rounded-xl p-5">
+      <div class="flex gap-2 items-center mb-3">
+        <span class="text-slate-500 mono">/</span>
+        <input id="rxp" class="mono rounded-lg px-2 py-1.5 flex-1" placeholder="pattern" oninput="rx()" />
+        <span class="text-slate-500 mono">/</span>
+        <input id="rxf" class="mono rounded-lg px-2 py-1.5 w-20" placeholder="gi" value="g" oninput="rx()" />
+      </div>
+      <textarea id="rxt" class="w-full h-32 rounded-lg p-3 outline-none resize-none" placeholder="Test string..." oninput="rx()"></textarea>
+      <div id="rxinfo" class="text-xs my-2"></div>
+      <div id="rxout" class="panel rounded-lg p-3 text-sm whitespace-pre-wrap mono" style="background:#0b1220;min-height:4rem"></div>
+    </section>
+
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · nothing uploaded · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    function tab(t){ document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t)); document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t); }
+    function copyEl(id){ navigator.clipboard.writeText($(id).value!==undefined?$(id).value:$(id).textContent); }
+    // base64 (unicode-safe)
+    let b64mode='enc';
+    function b64(){ const t=$('b64in').value; try{
+      $('b64out').value = b64mode==='enc' ? btoa(unescape(encodeURIComponent(t))) : decodeURIComponent(escape(atob(t.trim())));
+    }catch(e){ $('b64out').value='⚠ '+e.message; } }
+    // url
+    function urlfn(m){ const t=$('urlin').value; try{ $('urlout').value=m==='enc'?encodeURIComponent(t):decodeURIComponent(t); }catch(e){ $('urlout').value='⚠ '+e.message; } }
+    // uuid
+    function gen(){ return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)); }
+    function uuid(){ const n=Math.min(100,Math.max(1,+$('uq').value||1)); $('uout').value=Array.from({length:n},()=> (crypto.randomUUID?crypto.randomUUID():gen())).join('\n'); }
+    // jwt
+    function b64urlDecode(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4)s+='='; return decodeURIComponent(escape(atob(s))); }
+    function jwt(){ const v=$('jwtin').value.trim(); $('jwtMeta').textContent='';
+      if(!v){ $('jwtH').textContent=''; $('jwtP').textContent=''; return; }
+      const p=v.split('.'); if(p.length<2){ $('jwtH').innerHTML='<span class="err">Not a JWT</span>'; $('jwtP').textContent=''; return; }
+      try{ const h=JSON.parse(b64urlDecode(p[0])), pl=JSON.parse(b64urlDecode(p[1]));
+        $('jwtH').textContent=JSON.stringify(h,null,2); $('jwtP').textContent=JSON.stringify(pl,null,2);
+        let meta=[]; if(pl.exp){ const d=new Date(pl.exp*1000); meta.push('exp: '+d.toUTCString()+(d<new Date()?' (EXPIRED)':' (valid)')); }
+        if(pl.iat) meta.push('iat: '+new Date(pl.iat*1000).toUTCString());
+        $('jwtMeta').innerHTML=meta.map(m=>'<div>'+(m.includes('EXPIRED')?'<span class="err">'+m+'</span>':'<span class="ok">'+m+'</span>')+'</div>').join('');
+      }catch(e){ $('jwtH').innerHTML='<span class="err">Invalid: '+e.message+'</span>'; $('jwtP').textContent=''; } }
+    // regex
+    function rx(){ const p=$('rxp').value,f=$('rxf').value,t=$('rxt').value; const info=$('rxinfo');
+      if(!p){ $('rxout').textContent=''; info.textContent=''; return; }
+      let re; try{ re=new RegExp(p,f.includes('g')?f:f+'g'); }catch(e){ info.innerHTML='<span class="err">'+e.message+'</span>'; $('rxout').textContent=''; return; }
+      const matches=[...t.matchAll(re)]; info.innerHTML='<span class="ok">'+matches.length+' match'+(matches.length===1?'':'es')+'</span>';
+      let out='',last=0; const esc=s=>s.replace(/</g,'&lt;');
+      for(const m of matches){ if(m.index<last) continue; out+=esc(t.slice(last,m.index))+'<mark>'+esc(m[0]||'')+'</mark>'; last=m.index+(m[0].length||1); }
+      out+=esc(t.slice(last)); $('rxout').innerHTML=out;
+    }
+    uuid();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

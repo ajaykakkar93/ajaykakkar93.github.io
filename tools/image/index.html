@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Image Tools — Resize, Compress, Convert PNG WebP JPG | Ajay Kakkar</title>
+  <meta name="description" content="Free online image tools — resize, compress and convert images between PNG, JPG and WebP right in your browser. Adjust quality and dimensions, see the new file size, and download. 100% private: images never leave your device. No signup." />
+  <meta name="keywords" content="image resizer, image compressor, convert png to webp, jpg to png, webp converter, reduce image size, resize image online, compress image, private image tool" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/image/" />
+
+  <meta property="og:title" content="Free Image Tools — Resize, Compress, Convert" />
+  <meta property="og:description" content="Resize, compress and convert PNG/JPG/WebP in your browser. Images never uploaded. Private, no signup." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/image/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Image Tools by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Image Tools" />
+  <meta name="twitter:description" content="Resize, compress, convert PNG/JPG/WebP. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Image Tools by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Image Tools", "item": "https://ajaykakkar93.github.io/tools/image/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Image Tools",
+        "url": "https://ajaykakkar93.github.io/tools/image/",
+        "description": "Free online image resizer, compressor and converter for PNG, JPG and WebP. Images never leave the browser.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Resize images", "Compress images", "Convert PNG/JPG/WebP", "Quality control", "Download result" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    input,select { background:#0b1220; color:#e2e8f0; border:1px solid #334155; border-radius:.5rem; padding:.5rem .6rem; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .btn-primary { background:#e11d48; border-color:#e11d48; color:#fff; } .btn-primary:hover { background:#be123c; }
+    .drop { border:2px dashed #334155; border-radius:.75rem; } .drop.over { border-color:#fda4af; background:#1a1320; }
+    .stat b { font-family:'Space Grotesk'; color:#fda4af; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The images you resize, compress or convert are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-crop-simple mr-2" style="color:#fda4af"></i>Image Tools</h1>
+    <p class="text-slate-400 text-sm">Resize, compress &amp; convert PNG/JPG/WebP. Images never leave your device.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <div id="drop" class="drop p-8 text-center cursor-pointer mb-5" onclick="$('file').click()">
+      <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-500 mb-2"></i>
+      <p class="text-slate-400 text-sm">Click or drop an image (PNG, JPG, WebP, BMP, GIF)</p>
+      <input type="file" id="file" accept="image/*" hidden onchange="load(this.files[0])" />
+    </div>
+
+    <div id="editor" hidden class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <section class="panel rounded-xl p-5 space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="text-xs text-slate-400 block mb-1">Width (px)</label><input type="number" id="w" oninput="onW()" class="w-full"></div>
+          <div><label class="text-xs text-slate-400 block mb-1">Height (px)</label><input type="number" id="h" oninput="onH()" class="w-full"></div>
+        </div>
+        <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="lock" checked> Lock aspect ratio</label>
+        <div><label class="text-xs text-slate-400 block mb-1">Output format</label>
+          <select id="fmt" class="w-full" onchange="upd()"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select>
+        </div>
+        <div><label class="text-xs text-slate-400 block mb-1">Quality <span id="qv">90</span>%</label>
+          <input type="range" id="q" min="10" max="100" value="90" class="w-full" oninput="$('qv').textContent=this.value;upd()">
+        </div>
+        <div class="flex gap-2">
+          <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="upd()"><i class="fa-solid fa-rotate mr-1"></i>Apply</button>
+          <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="download()"><i class="fa-solid fa-download mr-1"></i>Download</button>
+          <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="reset()">New image</button>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-xs pt-2">
+          <div class="stat panel rounded-lg p-2">Original<br><b id="sOrig">—</b></div>
+          <div class="stat panel rounded-lg p-2">New size<br><b id="sNew">—</b></div>
+          <div class="stat panel rounded-lg p-2">Saved<br><b id="sSave">—</b></div>
+        </div>
+      </section>
+      <section class="panel rounded-xl p-3 flex items-center justify-center" style="min-height:300px;background-image:linear-gradient(45deg,#0e1626 25%,transparent 25%),linear-gradient(-45deg,#0e1626 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#0e1626 75%),linear-gradient(-45deg,transparent 75%,#0e1626 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0">
+        <img id="preview" class="max-w-full max-h-[55vh] rounded" />
+      </section>
+    </div>
+    <canvas id="cv" hidden></canvas>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · nothing uploaded · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    let img=new Image(), origW=0, origH=0, origSize=0, lastBlob=null, origName='image';
+    const drop=$('drop');
+    ['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('over');}));
+    ['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('over');}));
+    drop.addEventListener('drop',ev=>{ if(ev.dataTransfer.files[0]) load(ev.dataTransfer.files[0]); });
+    function fmtSize(b){ return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB'; }
+    function load(f){ if(!f||!f.type.startsWith('image/')) return; origSize=f.size; origName=(f.name||'image').replace(/\.[^.]+$/,'');
+      const r=new FileReader(); r.onload=e=>{ img=new Image(); img.onload=()=>{ origW=img.width;origH=img.height; $('w').value=origW;$('h').value=origH;
+        $('drop').hidden=true; $('editor').hidden=false; $('sOrig').textContent=fmtSize(origSize)+' · '+origW+'×'+origH; upd(); }; img.src=e.target.result; };
+      r.readAsDataURL(f); }
+    function onW(){ if($('lock').checked&&origW){ $('h').value=Math.round(+$('w').value*origH/origW); } upd(); }
+    function onH(){ if($('lock').checked&&origH){ $('w').value=Math.round(+$('h').value*origW/origH); } upd(); }
+    function upd(){ const w=Math.max(1,+$('w').value||origW),h=Math.max(1,+$('h').value||origH); const c=$('cv'); c.width=w;c.height=h;
+      const ctx=c.getContext('2d'); if($('fmt').value==='image/jpeg'){ ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h); } ctx.drawImage(img,0,0,w,h);
+      const q=+$('q').value/100; c.toBlob(b=>{ lastBlob=b; $('preview').src=URL.createObjectURL(b); $('sNew').textContent=fmtSize(b.size)+' · '+w+'×'+h;
+        const pct=Math.round((1-b.size/origSize)*100); $('sSave').textContent=(pct>=0?pct+'%':'+'+(-pct)+'%'); $('sSave').style.color=pct>=0?'#4ade80':'#f87171';
+      },$('fmt').value,q); }
+    function download(){ if(!lastBlob) return; const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[$('fmt').value]; const a=document.createElement('a'); a.href=URL.createObjectURL(lastBlob); a.download=origName+'.'+ext; a.click(); }
+    function reset(){ $('editor').hidden=true; $('drop').hidden=false; $('file').value=''; }
+    // quality control only meaningful for jpg/webp
+    $('fmt').addEventListener('change',()=>{ const png=$('fmt').value==='image/png'; $('q').disabled=png; });
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

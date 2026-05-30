@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Text Utilities — Word Count, Case Converter, Diff, Slugify | Ajay Kakkar</title>
+  <meta name="description" content="Free online text utilities — word and character counter, case converter (UPPER, lower, Title, camelCase, snake_case, kebab), text diff checker, lorem ipsum generator, slugify, remove duplicate lines, sort and trim. 100% private, browser-based, no signup." />
+  <meta name="keywords" content="word counter, character count, case converter, text diff, compare text, lorem ipsum generator, slugify, remove duplicate lines, sort lines, text tools, online text utility" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/text-utils/" />
+
+  <meta property="og:title" content="Free Text Utilities — Count, Case, Diff, Slugify" />
+  <meta property="og:description" content="Word/char counter, case converter, diff checker, lorem ipsum, slugify, dedupe and sort lines. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/text-utils/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Text Utilities by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Text Utilities" />
+  <meta name="twitter:description" content="Word/char counter, case converter, diff, lorem ipsum, slugify. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Text Utilities by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Text Utilities", "item": "https://ajaykakkar93.github.io/tools/text-utils/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Text Utilities",
+        "url": "https://ajaykakkar93.github.io/tools/text-utils/",
+        "description": "Free online text utilities — word/character counter, case converter, diff checker, lorem ipsum, slugify, dedupe and sort lines. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Word and character count", "Case conversion", "Text diff", "Lorem ipsum", "Slugify", "Remove duplicate lines", "Sort lines" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    textarea { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:13px; line-height:1.6; background:#0b1220; color:#e2e8f0; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; transition:background .15s; } .btn:hover { background:#334155; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; }
+    .tab.active { background:#1e293b; color:#e2e8f0; }
+    .stat { background:#0b1220; border:1px solid #1e293b; border-radius:.6rem; padding:.6rem .8rem; }
+    .stat b { font-family:'Space Grotesk'; font-size:1.1rem; color:#a5b4fc; display:block; }
+    ins { background:rgba(34,197,94,.2); color:#bbf7d0; text-decoration:none; }
+    del { background:rgba(248,113,113,.2); color:#fecaca; text-decoration:none; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The text you enter is never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-5xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-font mr-2" style="color:#a5b4fc"></i>Text Utilities</h1>
+    <p class="text-slate-400 text-sm">Count, convert case, diff, slugify, lorem ipsum, dedupe &amp; sort. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      <span class="tab active" data-t="count" onclick="tab('count')">Counter</span>
+      <span class="tab" data-t="case" onclick="tab('case')">Case</span>
+      <span class="tab" data-t="lines" onclick="tab('lines')">Lines</span>
+      <span class="tab" data-t="diff" onclick="tab('diff')">Diff</span>
+      <span class="tab" data-t="lorem" onclick="tab('lorem')">Lorem</span>
+      <span class="tab" data-t="slug" onclick="tab('slug')">Slugify</span>
+    </div>
+
+    <!-- COUNT -->
+    <section data-p="count">
+      <textarea id="ct" class="w-full h-56 rounded-xl p-3 panel outline-none resize-none" placeholder="Type or paste text..." oninput="count()"></textarea>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+        <div class="stat"><b id="c_words">0</b><span class="text-xs text-slate-400">Words</span></div>
+        <div class="stat"><b id="c_chars">0</b><span class="text-xs text-slate-400">Characters</span></div>
+        <div class="stat"><b id="c_nospace">0</b><span class="text-xs text-slate-400">No spaces</span></div>
+        <div class="stat"><b id="c_sent">0</b><span class="text-xs text-slate-400">Sentences</span></div>
+        <div class="stat"><b id="c_lines">0</b><span class="text-xs text-slate-400">Lines</span></div>
+        <div class="stat"><b id="c_para">0</b><span class="text-xs text-slate-400">Paragraphs</span></div>
+        <div class="stat"><b id="c_read">0s</b><span class="text-xs text-slate-400">Read time</span></div>
+        <div class="stat"><b id="c_uniq">0</b><span class="text-xs text-slate-400">Unique words</span></div>
+      </div>
+    </section>
+
+    <!-- CASE -->
+    <section data-p="case" hidden>
+      <textarea id="cs" class="w-full h-48 rounded-xl p-3 panel outline-none resize-none" placeholder="Enter text..."></textarea>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('upper')">UPPERCASE</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('lower')">lowercase</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('title')">Title Case</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('sentence')">Sentence case</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('camel')">camelCase</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('snake')">snake_case</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('kebab')">kebab-case</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="cc('const')">CONSTANT_CASE</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('cs')"><i class="fa-solid fa-copy"></i> Copy</button>
+      </div>
+    </section>
+
+    <!-- LINES -->
+    <section data-p="lines" hidden>
+      <textarea id="ln" class="w-full h-48 rounded-xl p-3 panel outline-none resize-none" placeholder="One item per line..."></textarea>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('dedupe')">Remove duplicates</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('sortaz')">Sort A→Z</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('sortza')">Sort Z→A</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('reverse')">Reverse</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('trim')">Trim each</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('blank')">Remove blank</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lines('shuffle')">Shuffle</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('ln')"><i class="fa-solid fa-copy"></i> Copy</button>
+      </div>
+    </section>
+
+    <!-- DIFF -->
+    <section data-p="diff" hidden>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <textarea id="d1" class="w-full h-40 rounded-xl p-3 panel outline-none resize-none" placeholder="Original" oninput="diff()"></textarea>
+        <textarea id="d2" class="w-full h-40 rounded-xl p-3 panel outline-none resize-none" placeholder="Changed" oninput="diff()"></textarea>
+      </div>
+      <div id="dout" class="panel rounded-xl p-3 mt-3 text-sm whitespace-pre-wrap" style="font-family:'JetBrains Mono',monospace;min-height:4rem"></div>
+    </section>
+
+    <!-- LOREM -->
+    <section data-p="lorem" hidden>
+      <div class="flex flex-wrap gap-2 items-center mb-3">
+        <input id="lq" type="number" value="3" min="1" max="50" class="btn rounded-lg px-3 py-1.5 text-sm w-20" />
+        <select id="lt" class="btn rounded-lg px-3 py-1.5 text-sm">
+          <option value="para">Paragraphs</option><option value="sent">Sentences</option><option value="words">Words</option>
+        </select>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="lorem()">Generate</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('lo')"><i class="fa-solid fa-copy"></i> Copy</button>
+      </div>
+      <textarea id="lo" class="w-full h-48 rounded-xl p-3 panel outline-none resize-none" readonly></textarea>
+    </section>
+
+    <!-- SLUG -->
+    <section data-p="slug" hidden>
+      <input id="sl" class="w-full rounded-xl p-3 panel outline-none mb-3" placeholder="Enter title or text..." oninput="slug()" />
+      <div class="panel rounded-xl p-3 text-sm" style="font-family:'JetBrains Mono',monospace">
+        <span class="text-slate-400 text-xs">slug:</span> <span id="so" style="color:#86efac"></span>
+        <button class="btn rounded px-2 py-1 text-xs ml-2" onclick="copyEl('so')"><i class="fa-solid fa-copy"></i></button>
+      </div>
+    </section>
+
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · nothing uploaded · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    function tab(t){
+      document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t));
+      document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t);
+    }
+    // counter
+    function count(){
+      const t=$('ct').value;
+      const words=(t.match(/\S+/g)||[]);
+      $('c_words').textContent=words.length;
+      $('c_chars').textContent=t.length;
+      $('c_nospace').textContent=t.replace(/\s/g,'').length;
+      $('c_sent').textContent=(t.match(/[.!?]+(\s|$)/g)||[]).length;
+      $('c_lines').textContent=t===''?0:t.split('\n').length;
+      $('c_para').textContent=(t.split(/\n\s*\n/).filter(p=>p.trim()).length);
+      const secs=Math.ceil(words.length/200*60); $('c_read').textContent=secs<60?secs+'s':Math.ceil(secs/60)+'m';
+      $('c_uniq').textContent=new Set(words.map(w=>w.toLowerCase())).size;
+    }
+    // case
+    function words(s){ return s.replace(/([a-z])([A-Z])/g,'$1 $2').split(/[\s_\-]+/).filter(Boolean); }
+    function cc(m){
+      const t=$('cs').value; let r=t;
+      if(m==='upper') r=t.toUpperCase();
+      else if(m==='lower') r=t.toLowerCase();
+      else if(m==='title') r=t.replace(/\w\S*/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase());
+      else if(m==='sentence') r=t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,c=>c.toUpperCase());
+      else if(m==='camel'){ const w=words(t.toLowerCase()); r=w.map((x,i)=>i?x[0].toUpperCase()+x.slice(1):x).join(''); }
+      else if(m==='snake') r=words(t).map(w=>w.toLowerCase()).join('_');
+      else if(m==='kebab') r=words(t).map(w=>w.toLowerCase()).join('-');
+      else if(m==='const') r=words(t).map(w=>w.toUpperCase()).join('_');
+      $('cs').value=r;
+    }
+    // lines
+    function lines(m){
+      let a=$('ln').value.split('\n');
+      if(m==='dedupe') a=[...new Set(a)];
+      else if(m==='sortaz') a.sort((x,y)=>x.localeCompare(y));
+      else if(m==='sortza') a.sort((x,y)=>y.localeCompare(x));
+      else if(m==='reverse') a.reverse();
+      else if(m==='trim') a=a.map(x=>x.trim());
+      else if(m==='blank') a=a.filter(x=>x.trim());
+      else if(m==='shuffle') for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}
+      $('ln').value=a.join('\n');
+    }
+    // diff (word-level LCS)
+    function diff(){
+      const a=$('d1').value.split(/(\s+)/), b=$('d2').value.split(/(\s+)/);
+      const n=a.length,m=b.length, dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+      for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--) dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+      let i=0,j=0,out='';
+      const esc=s=>s.replace(/</g,'&lt;');
+      while(i<n&&j<m){
+        if(a[i]===b[j]){ out+=esc(a[i]); i++;j++; }
+        else if(dp[i+1][j]>=dp[i][j+1]){ out+='<del>'+esc(a[i])+'</del>'; i++; }
+        else { out+='<ins>'+esc(b[j])+'</ins>'; j++; }
+      }
+      while(i<n){ out+='<del>'+esc(a[i++])+'</del>'; }
+      while(j<m){ out+='<ins>'+esc(b[j++])+'</ins>'; }
+      $('dout').innerHTML=out||'<span class="text-slate-500">No differences</span>';
+    }
+    // lorem
+    const LW="lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum".split(' ');
+    const rw=()=>LW[Math.random()*LW.length|0];
+    function sentence(){ const n=8+(Math.random()*8|0); let s=Array.from({length:n},rw).join(' '); return s[0].toUpperCase()+s.slice(1)+'.'; }
+    function lorem(){
+      const q=Math.max(1,+$('lq').value||1), t=$('lt').value; let r='';
+      if(t==='words') r=Array.from({length:q},rw).join(' ');
+      else if(t==='sent') r=Array.from({length:q},sentence).join(' ');
+      else r=Array.from({length:q},()=>Array.from({length:3+(Math.random()*3|0)},sentence).join(' ')).join('\n\n');
+      $('lo').value=r;
+    }
+    // slug
+    function slug(){ $('so').textContent=$('sl').value.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
+    function copyEl(id){ const el=$(id); const v=el.value!==undefined?el.value:el.textContent; navigator.clipboard.writeText(v); }
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

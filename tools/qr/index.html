@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free QR Code &amp; Barcode Generator — URL, WiFi, vCard, Code128, EAN | Ajay Kakkar</title>
+  <meta name="description" content="Free online QR code and barcode generator — make QR codes for URL, text, WiFi, email, phone, SMS and vCard, customize colors and error correction, and generate 1D barcodes (Code128, Code39, EAN-13, UPC). Download as PNG or SVG. 100% private, browser-based." />
+  <meta name="keywords" content="QR code generator, free QR code, WiFi QR code, vCard QR, barcode generator, Code128 generator, EAN-13, UPC barcode, QR code maker, download QR png svg" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/qr/" />
+
+  <meta property="og:title" content="Free QR Code &amp; Barcode Generator" />
+  <meta property="og:description" content="QR codes for URL, WiFi, vCard, email and more, plus 1D barcodes. Customizable, download PNG/SVG. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/qr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="QR &amp; Barcode Generator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free QR Code &amp; Barcode Generator" />
+  <meta name="twitter:description" content="QR for URL/WiFi/vCard + 1D barcodes. Download PNG/SVG. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="QR &amp; Barcode Generator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "QR & Barcode Generator", "item": "https://ajaykakkar93.github.io/tools/qr/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "QR & Barcode Generator",
+        "url": "https://ajaykakkar93.github.io/tools/qr/",
+        "description": "Free online QR code and barcode generator for URL, WiFi, vCard, email, phone and SMS, plus 1D barcodes. Download as PNG or SVG. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "QR for URL/text/WiFi/vCard/email/phone/SMS", "Custom colors and error correction", "1D barcodes (Code128, Code39, EAN, UPC)", "Download PNG/SVG" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    input,select,textarea { background:#0b1220; color:#e2e8f0; border:1px solid #334155; border-radius:.5rem; padding:.5rem .6rem; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .btn-primary { background:#db2777; border-color:#db2777; color:#fff; } .btn-primary:hover { background:#be185d; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; }
+    .tab.active { background:#1e293b; color:#f9a8d4; }
+    label.fld { display:block; font-size:.72rem; color:#94a3b8; margin-bottom:.2rem; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The content you encode into QR codes and barcodes is never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-qrcode mr-2" style="color:#f9a8d4"></i>QR &amp; Barcode Generator</h1>
+    <p class="text-slate-400 text-sm">QR codes &amp; 1D barcodes, customizable, downloadable. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 pb-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+    <section class="panel rounded-xl p-5">
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        <span class="tab active" data-t="qr" onclick="tab('qr')">QR Code</span>
+        <span class="tab" data-t="bar" onclick="tab('bar')">Barcode</span>
+      </div>
+
+      <div data-p="qr" class="space-y-3">
+        <div>
+          <label class="fld">QR type</label>
+          <select id="qtype" onchange="qfields();gen()">
+            <option value="text">URL / Text</option><option value="wifi">WiFi</option>
+            <option value="email">Email</option><option value="tel">Phone</option>
+            <option value="sms">SMS</option><option value="vcard">Contact (vCard)</option>
+          </select>
+        </div>
+        <div id="qfields" class="space-y-2"></div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><label class="fld">Foreground</label><input type="color" id="qfg" value="#0b1220" oninput="gen()" class="w-full h-9 p-0.5"></div>
+          <div><label class="fld">Background</label><input type="color" id="qbg" value="#ffffff" oninput="gen()" class="w-full h-9 p-0.5"></div>
+          <div><label class="fld">Size</label><select id="qsize" onchange="gen()"><option>256</option><option>384</option><option>512</option></select></div>
+          <div><label class="fld">Error correction</label><select id="qec" onchange="gen()"><option value="L">L (7%)</option><option value="M" selected>M (15%)</option><option value="Q">Q (25%)</option><option value="H">H (30%)</option></select></div>
+        </div>
+      </div>
+
+      <div data-p="bar" hidden class="space-y-3">
+        <div><label class="fld">Format</label>
+          <select id="bfmt" onchange="gen()">
+            <option value="CODE128">Code128</option><option value="CODE39">Code39</option>
+            <option value="EAN13">EAN-13 (12-13 digits)</option><option value="EAN8">EAN-8</option>
+            <option value="UPC">UPC-A (11-12 digits)</option><option value="ITF14">ITF-14</option>
+            <option value="MSI">MSI</option><option value="codabar">Codabar</option>
+          </select>
+        </div>
+        <div><label class="fld">Value</label><input id="bval" value="123456789012" oninput="gen()" class="w-full"></div>
+        <div><label class="fld">Line color</label><input type="color" id="bcol" value="#0b1220" oninput="gen()" class="w-full h-9 p-0.5"></div>
+      </div>
+    </section>
+
+    <section class="panel rounded-xl p-5 flex flex-col items-center justify-center">
+      <div id="canvasWrap" class="bg-white rounded-lg p-4 inline-block min-h-[200px] flex items-center justify-center">
+        <div id="qrout"></div>
+        <svg id="barout" style="display:none"></svg>
+      </div>
+      <div id="err" class="text-xs mt-2" style="color:#f87171"></div>
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="dl('png')"><i class="fa-solid fa-download mr-1"></i>PNG</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="dl('svg')">SVG</button>
+      </div>
+    </section>
+    <p class="text-slate-500 text-xs text-center md:col-span-2">100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    let mode='qr';
+    function tab(t){ mode=t; document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t)); document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t); $('qrout').style.display=t==='qr'?'':'none'; $('barout').style.display=t==='bar'?'':'none'; gen(); }
+    const F={
+      text:[['q_data','URL or text','https://ajaykakkar93.github.io']],
+      wifi:[['q_ssid','Network name (SSID)','MyWiFi'],['q_pass','Password',''],['q_enc','Encryption','WPA']],
+      email:[['q_to','Email','hello@example.com'],['q_sub','Subject',''],['q_body','Body','']],
+      tel:[['q_num','Phone number','+919999999999']],
+      sms:[['q_num','Phone number','+919999999999'],['q_msg','Message','']],
+      vcard:[['q_name','Full name','Ajay Kakkar'],['q_org','Organization',''],['q_phone','Phone',''],['q_em','Email',''],['q_url','Website','']]
+    };
+    function qfields(){ const t=$('qtype').value; $('qfields').innerHTML=F[t].map(([id,ph])=>
+      id==='q_enc'?`<div><label class="fld">${ph}</label><select id="${id}" onchange="gen()"><option>WPA</option><option>WEP</option><option value="nopass">None</option></select></div>`
+      :`<div><label class="fld">${ph}</label><input id="${id}" placeholder="${ph}" oninput="gen()" class="w-full"></div>`).join('');
+      const first=$('qfields').querySelector('input,select'); if(first&&F[t][0][2]) first.value=F[t][0][2]; }
+    function qData(){ const t=$('qtype').value,g=id=>($(id)||{}).value||'';
+      if(t==='text') return g('q_data');
+      if(t==='wifi') return `WIFI:T:${g('q_enc')};S:${g('q_ssid')};P:${g('q_pass')};;`;
+      if(t==='email') return `mailto:${g('q_to')}?subject=${encodeURIComponent(g('q_sub'))}&body=${encodeURIComponent(g('q_body'))}`;
+      if(t==='tel') return `tel:${g('q_num')}`;
+      if(t==='sms') return `SMSTO:${g('q_num')}:${g('q_msg')}`;
+      if(t==='vcard') return `BEGIN:VCARD\nVERSION:3.0\nN:${g('q_name')}\nFN:${g('q_name')}\nORG:${g('q_org')}\nTEL:${g('q_phone')}\nEMAIL:${g('q_em')}\nURL:${g('q_url')}\nEND:VCARD`;
+      return ''; }
+    let qr=null;
+    function gen(){ $('err').textContent='';
+      if(mode==='qr'){ const data=qData(); $('qrout').innerHTML=''; if(!data){ return; }
+        const size=+$('qsize').value;
+        try{ qr=new QRCode($('qrout'),{text:data,width:size,height:size,colorDark:$('qfg').value,colorLight:$('qbg').value,correctLevel:QRCode.CorrectLevel[$('qec').value]}); }
+        catch(e){ $('err').textContent=e.message; } }
+      else { const val=$('bval').value; try{ JsBarcode('#barout',val,{format:$('bfmt').value,lineColor:$('bcol').value,width:2,height:90,displayValue:true,background:'#ffffff'}); }
+        catch(e){ $('err').textContent='Invalid value for '+$('bfmt').value; } }
+    }
+    function dl(fmt){
+      if(mode==='qr'){ const cv=$('qrout').querySelector('canvas'); if(!cv){ $('err').textContent='Nothing to download'; return; }
+        if(fmt==='png'){ const a=document.createElement('a'); a.href=cv.toDataURL('image/png'); a.download='qrcode.png'; a.click(); }
+        else { const img=$('qrout').querySelector('img')||cv; const s=cv.width; const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}"><image href="${cv.toDataURL()}" width="${s}" height="${s}"/></svg>`; dlBlob(svg,'qrcode.svg','image/svg+xml'); } }
+      else { const svgEl=$('barout');
+        if(fmt==='svg'){ dlBlob(new XMLSerializer().serializeToString(svgEl),'barcode.svg','image/svg+xml'); }
+        else { const xml=new XMLSerializer().serializeToString(svgEl); const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); c.width=img.width||300; c.height=img.height||120; const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(img,0,0); const a=document.createElement('a'); a.href=c.toDataURL('image/png'); a.download='barcode.png'; a.click(); }; img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(xml))); } }
+    }
+    function dlBlob(content,name,type){ const b=new Blob([content],{type}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name; a.click(); }
+    qfields(); gen();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

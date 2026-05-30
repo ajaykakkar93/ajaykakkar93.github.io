@@ -131,11 +131,28 @@ Full certification list available on [LinkedIn](https://www.linkedin.com/in/ajay
 
 ## Community Tools (Live on this site)
 
+All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykakkar93.github.io/tools/).
+
 | Tool | Description |
 |------|-------------|
-| [Qlik Sense Upgrade Guide](https://ajaykakkar93.github.io/qlik/) | Interactive upgrade path calculator for all 33 QS Enterprise versions |
-| [Qlik Sense Release Notes](https://ajaykakkar93.github.io/qlik/QS_Release_Notes.html) | Release notes index — v3.0 (2016) onwards with EOS dates |
-| [PostgreSQL Compatibility Matrix](https://ajaykakkar93.github.io/qlik/QS_Postgres_Upgrade_List.html) | PostgreSQL version matrix for every Qlik Sense Enterprise release |
+| [All Tools hub](https://ajaykakkar93.github.io/tools/) | Index of every tool below |
+| [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/) | SIP, EMI, stock P&L with brokerage, CAGR, SWP, home & car loan with amortization |
+| [PDF Tools](https://ajaykakkar93.github.io/tools/pdf/) | Convert PDF to image, merge, split, extract pages |
+| [Qlik Sense Upgrade Guide](https://ajaykakkar93.github.io/tools/qlik/) | Interactive upgrade path calculator for all 33 QS Enterprise versions |
+| [Qlik Sense Release Notes](https://ajaykakkar93.github.io/tools/qlik/QS_Release_Notes.html) | Release notes index — v3.0 (2016) onwards with EOS dates |
+| [PostgreSQL Compatibility Matrix](https://ajaykakkar93.github.io/tools/qlik/QS_Postgres_Upgrade_List.html) | PostgreSQL version matrix for every Qlik Sense Enterprise release |
+| [JSON Tools](https://ajaykakkar93.github.io/tools/json/) | Format, validate, minify, tree view, JSON↔CSV↔YAML, JSONPath |
+| [Developer Tools](https://ajaykakkar93.github.io/tools/text/) | Base64, URL encode, UUID, JWT decode, regex tester |
+| [Color Tools](https://ajaykakkar93.github.io/tools/color/) | Picker, palette, HEX↔RGB↔HSL, WCAG contrast checker |
+| [Text Utilities](https://ajaykakkar93.github.io/tools/text-utils/) | Word count, case convert, diff, lorem ipsum, slugify |
+| [Crypto Tools](https://ajaykakkar93.github.io/tools/crypto/) | AES encrypt/decrypt, password generator, SHA hashing |
+| [SQL Formatter](https://ajaykakkar93.github.io/tools/sql/) | Beautify and minify SQL, multi-dialect |
+| [Unit & Currency Converter](https://ajaykakkar93.github.io/tools/converter/) | Length, weight, data, temperature + live currency with 30-day history chart |
+| [QR & Barcode Generator](https://ajaykakkar93.github.io/tools/qr/) | QR (URL/WiFi/vCard/…) + 1D barcodes, download PNG/SVG |
+| [Markdown Editor](https://ajaykakkar93.github.io/tools/markdown/) | Live preview, Markdown→HTML, table generator |
+| [Image Tools](https://ajaykakkar93.github.io/tools/image/) | Resize, compress, convert PNG/JPG/WebP |
+| [Date & Time Calculator](https://ajaykakkar93.github.io/tools/datetime/) | Age, duration, working days, epoch converter, cron parser |
+| [Image to Text (OCR)](https://ajaykakkar93.github.io/tools/ocr/) | Extract text from images, in-browser, multi-language |
 
 ---
 

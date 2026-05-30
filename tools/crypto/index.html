@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Crypto Tools — AES Text Encrypt/Decrypt, Hash, Password Generator | Ajay Kakkar</title>
+  <meta name="description" content="Free online crypto utilities — AES-GCM encrypt and decrypt text with a passphrase, generate SHA-256 / SHA-1 / SHA-512 hashes, and build strong random passwords with a strength meter. Uses the browser's Web Crypto API; 100% private, nothing uploaded." />
+  <meta name="keywords" content="AES encrypt online, encrypt text, decrypt text, SHA-256 generator, hash generator, password generator, strong password, web crypto, secure password, online encryption tool" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/crypto/" />
+
+  <meta property="og:title" content="Free Crypto Tools — AES Encrypt, Hash, Password Generator" />
+  <meta property="og:description" content="AES-GCM encrypt/decrypt text, SHA hashing, strong password generator. Web Crypto API, 100% private." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/crypto/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Crypto Tools by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Crypto Tools" />
+  <meta name="twitter:description" content="AES encrypt/decrypt, SHA hashing, password generator. Web Crypto, private." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Crypto Tools by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Crypto Tools", "item": "https://ajaykakkar93.github.io/tools/crypto/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Crypto Tools",
+        "url": "https://ajaykakkar93.github.io/tools/crypto/",
+        "description": "Free online AES-GCM text encryption/decryption, SHA hashing and strong password generator using the Web Crypto API. Runs entirely in the browser.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript and HTTPS. Runs in any modern browser.",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "AES-GCM encrypt/decrypt", "SHA-1/256/512 hashing", "Password generator", "Password strength meter" ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } } }
+  </script>
+  <style>
+    body { background:#0b1220; color:#e2e8f0; font-family:'Inter',sans-serif; }
+    .panel { background:#111a2e; border:1px solid #1e293b; }
+    textarea,input { font-family:'JetBrains Mono',ui-monospace,monospace; background:#0b1220; color:#e2e8f0; border:1px solid #334155; }
+    input.txt { font-family:'Inter'; }
+    .btn { background:#1e293b; color:#e2e8f0; border:1px solid #334155; } .btn:hover { background:#334155; }
+    .btn-primary { background:#ea580c; border-color:#ea580c; color:#fff; } .btn-primary:hover { background:#c2410c; }
+    .tab { padding:.4rem .85rem; border-radius:.5rem; cursor:pointer; font-size:.85rem; color:#94a3b8; }
+    .tab.active { background:#1e293b; color:#e2e8f0; }
+    .err { color:#f87171; } .ok { color:#4ade80; }
+    .meter { height:8px; border-radius:4px; background:#1e293b; overflow:hidden; }
+    .meter > div { height:100%; transition:width .2s,background .2s; }
+
+    /* Privacy disclaimer modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#1e293b;color:#e2e8f0;}
+    .modal-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .modal-btn-primary:hover{background:#1d4ed8;}
+    /* ensure inner left padding on form fields */
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select { padding-left: .7rem; }
+  </style>
+</head>
+<body>
+
+<!-- Privacy disclaimer modal -->
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;">
+        <i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters
+      </h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. Your text, passphrases and generated passwords are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;">
+      <button onclick="closeDisclaimer()" class="modal-btn modal-btn-primary" style="min-width:120px;">I Understand</button>
+    </div>
+  </div>
+</div>
+  <header class="max-w-3xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-shield-halved mr-2" style="color:#fb923c"></i>Crypto Tools</h1>
+    <p class="text-slate-400 text-sm">AES encrypt/decrypt, hashing, password generator. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-5 pb-12">
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      <span class="tab active" data-t="aes" onclick="tab('aes')">AES Encrypt</span>
+      <span class="tab" data-t="hash" onclick="tab('hash')">Hash</span>
+      <span class="tab" data-t="pwd" onclick="tab('pwd')">Password</span>
+    </div>
+
+    <section data-p="aes" class="panel rounded-xl p-5 space-y-3">
+      <input id="aesPass" type="password" class="txt w-full rounded-lg px-3 py-2 text-sm" placeholder="Passphrase" />
+      <textarea id="aesIn" class="w-full h-28 rounded-lg p-3 text-sm outline-none resize-none" placeholder="Text to encrypt, or paste encrypted output to decrypt..."></textarea>
+      <div class="flex gap-2">
+        <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="enc()"><i class="fa-solid fa-lock mr-1"></i>Encrypt</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="dec()"><i class="fa-solid fa-lock-open mr-1"></i>Decrypt</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyEl('aesOut')"><i class="fa-solid fa-copy"></i></button>
+      </div>
+      <textarea id="aesOut" class="w-full h-28 rounded-lg p-3 text-sm outline-none resize-none" readonly></textarea>
+      <p class="text-xs text-slate-500">AES-GCM 256-bit, key derived via PBKDF2 (150k iterations). Output = base64(salt+iv+ciphertext). Lose the passphrase = data unrecoverable.</p>
+    </section>
+
+    <section data-p="hash" hidden class="panel rounded-xl p-5 space-y-3">
+      <textarea id="hashIn" class="w-full h-28 rounded-lg p-3 text-sm outline-none resize-none" placeholder="Text to hash..." oninput="hash()"></textarea>
+      <div id="hashOut" class="space-y-2"></div>
+    </section>
+
+    <section data-p="pwd" hidden class="panel rounded-xl p-5 space-y-4">
+      <div class="flex items-center gap-3">
+        <input id="pwOut" class="flex-1 rounded-lg px-3 py-2 text-base" readonly />
+        <button class="btn rounded-lg px-3 py-2" onclick="copyEl('pwOut')"><i class="fa-solid fa-copy"></i></button>
+        <button class="btn btn-primary rounded-lg px-3 py-2" onclick="pw()"><i class="fa-solid fa-rotate"></i></button>
+      </div>
+      <div><div class="meter"><div id="pwMeter" style="width:0%"></div></div><div id="pwLabel" class="text-xs mt-1 text-slate-400"></div></div>
+      <div class="flex items-center gap-3 text-sm">
+        <span class="text-slate-400 w-20">Length</span>
+        <input id="pwLen" type="range" min="6" max="64" value="20" class="flex-1" oninput="$('pwLenV').textContent=this.value;pw()" />
+        <span id="pwLenV" class="w-8 text-right">20</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <label class="flex items-center gap-2"><input type="checkbox" id="pwU" checked onchange="pw()"> Uppercase A-Z</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pwL" checked onchange="pw()"> Lowercase a-z</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pwN" checked onchange="pw()"> Numbers 0-9</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pwS" checked onchange="pw()"> Symbols !@#$</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pwA" onchange="pw()"> Avoid ambiguous (0O1lI)</label>
+      </div>
+    </section>
+
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · Web Crypto API · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    function tab(t){ document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.dataset.t===t)); document.querySelectorAll('[data-p]').forEach(e=>e.hidden=e.dataset.p!==t); }
+    function copyEl(id){ navigator.clipboard.writeText($(id).value!==undefined?$(id).value:$(id).textContent); }
+    const enc8=new TextEncoder(), dec8=new TextDecoder();
+    const b64e=buf=>btoa(String.fromCharCode(...new Uint8Array(buf)));
+    const b64d=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+    async function deriveKey(pass,salt){
+      const base=await crypto.subtle.importKey('raw',enc8.encode(pass),'PBKDF2',false,['deriveKey']);
+      return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+    }
+    async function enc(){ const p=$('aesPass').value,t=$('aesIn').value; if(!p||!t){ $('aesOut').value='⚠ Need passphrase and text'; return; }
+      try{ const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+        const key=await deriveKey(p,salt); const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,enc8.encode(t));
+        const out=new Uint8Array(16+12+ct.byteLength); out.set(salt,0); out.set(iv,16); out.set(new Uint8Array(ct),28);
+        $('aesOut').value=b64e(out.buffer);
+      }catch(e){ $('aesOut').value='⚠ '+e.message; } }
+    async function dec(){ const p=$('aesPass').value,t=$('aesIn').value.trim(); if(!p||!t){ $('aesOut').value='⚠ Need passphrase and ciphertext'; return; }
+      try{ const all=b64d(t); const salt=all.slice(0,16),iv=all.slice(16,28),ct=all.slice(28);
+        const key=await deriveKey(p,salt); const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct);
+        $('aesOut').value=dec8.decode(pt);
+      }catch(e){ $('aesOut').value='⚠ Wrong passphrase or corrupted data'; } }
+    // hash
+    async function hash(){ const t=$('hashIn').value; const out=$('hashOut'); if(!t){ out.innerHTML=''; return; }
+      const algs=['SHA-1','SHA-256','SHA-512']; out.innerHTML='';
+      for(const a of algs){ const h=await crypto.subtle.digest(a,enc8.encode(t)); const hex=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');
+        const div=document.createElement('div'); div.className='panel rounded-lg p-3'; div.style.background='#0b1220';
+        div.innerHTML=`<div class="flex items-center justify-between mb-1"><span class="text-xs text-slate-400">${a}</span><button class="btn rounded px-2 py-0.5 text-xs">copy</button></div><div class="text-xs break-all" style="font-family:monospace;color:#86efac">${hex}</div>`;
+        div.querySelector('button').onclick=()=>navigator.clipboard.writeText(hex); out.appendChild(div); } }
+    // password
+    function pw(){ const len=+$('pwLen').value; let set='';
+      if($('pwU').checked) set+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if($('pwL').checked) set+='abcdefghijklmnopqrstuvwxyz';
+      if($('pwN').checked) set+='0123456789';
+      if($('pwS').checked) set+='!@#$%^&*()-_=+[]{};:,.<>?';
+      if($('pwA').checked) set=set.replace(/[0O1lI]/g,'');
+      if(!set){ $('pwOut').value=''; return; }
+      const arr=crypto.getRandomValues(new Uint32Array(len)); let p='';
+      for(let i=0;i<len;i++) p+=set[arr[i]%set.length]; $('pwOut').value=p; strength(p,set.length);
+    }
+    function strength(p,pool){ const bits=p.length*Math.log2(pool||1); const m=$('pwMeter'),l=$('pwLabel');
+      let pct=Math.min(100,bits/128*100),col,txt;
+      if(bits<40){col='#f87171';txt='Weak';}else if(bits<70){col='#fbbf24';txt='Fair';}else if(bits<100){col='#4ade80';txt='Strong';}else{col='#22d3ee';txt='Very strong';}
+      m.style.width=pct+'%'; m.style.background=col; l.textContent=`${txt} · ~${Math.round(bits)} bits of entropy`; }
+    pw();
+  </script>
+<script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>
