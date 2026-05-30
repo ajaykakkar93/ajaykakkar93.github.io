@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Number Base Converter — Binary, Octal, Decimal, Hex + Bitwise | Ajay Kakkar</title>
+  <meta name="description" content="Free online number base converter — convert between binary, octal, decimal and hexadecimal instantly, with live bitwise operations (AND, OR, XOR, NOT, shifts). 100% private, browser-based, no signup." />
+  <meta name="keywords" content="number base converter, binary to decimal, decimal to hex, hex to binary, octal converter, bitwise calculator, base converter online, programmer calculator" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/base/" />
+  <meta property="og:title" content="Free Number Base Converter — Binary, Octal, Decimal, Hex" />
+  <meta property="og:description" content="Convert binary/octal/decimal/hex + bitwise ops. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/base/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Number Base Converter by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Number Base Converter" />
+  <meta name="twitter:description" content="Binary/octal/decimal/hex + bitwise. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Number Base Converter by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Number Base Converter", "item": "https://ajaykakkar93.github.io/tools/base/" } ] },
+      { "@type": "WebApplication", "name": "Number Base Converter",
+        "url": "https://ajaykakkar93.github.io/tools/base/",
+        "description": "Free online converter between binary, octal, decimal and hexadecimal with bitwise operations. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Binary/octal/decimal/hex conversion", "Bitwise AND/OR/XOR/NOT", "Bit shifts" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.6rem .7rem;font-family:'JetBrains Mono',monospace;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;} .btn:hover{background:#334155;}
+    .err{color:#f87171;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The numbers you convert are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+
+  <header class="max-w-3xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-1 mr-1" style="color:#67e8f9"></i><i class="fa-solid fa-0 mr-2" style="color:#67e8f9"></i>Number Base Converter</h1>
+    <p class="text-slate-400 text-sm">Binary, octal, decimal, hex + bitwise. Private &amp; in-browser.</p>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-6 space-y-3">
+      <div class="grid grid-cols-1 sm:grid-cols-[90px_1fr] gap-3 items-center">
+        <label class="text-sm text-slate-400">Decimal</label><input id="dec" class="w-full" oninput="from('dec')" placeholder="255" />
+        <label class="text-sm text-slate-400">Hex</label><input id="hex" class="w-full" oninput="from('hex')" placeholder="ff" />
+        <label class="text-sm text-slate-400">Octal</label><input id="oct" class="w-full" oninput="from('oct')" placeholder="377" />
+        <label class="text-sm text-slate-400">Binary</label><input id="bin" class="w-full" oninput="from('bin')" placeholder="11111111" />
+      </div>
+      <div id="err" class="err text-xs"></div>
+    </section>
+
+    <section class="panel rounded-2xl p-6 mt-5">
+      <h2 class="font-display font-semibold mb-3">Bitwise</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <input id="a" class="w-full" oninput="bit()" placeholder="A (decimal) e.g. 12" />
+        <input id="b" class="w-full" oninput="bit()" placeholder="B (decimal) e.g. 10" />
+      </div>
+      <div id="bitout" class="mt-3 text-sm space-y-1" style="font-family:'JetBrains Mono',monospace"></div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side · by Ajay Kakkar</p>
+  </main>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    function setAll(n){ $('dec').value=n.toString(10); $('hex').value=n.toString(16); $('oct').value=n.toString(8); $('bin').value=n.toString(2); }
+    function from(src){
+      const map={dec:10,hex:16,oct:8,bin:2}; const v=$(src).value.trim().replace(/^0[xbo]/i,''); $('err').textContent='';
+      if(v===''){ ['dec','hex','oct','bin'].forEach(k=>{ if(k!==src)$(k).value=''; }); return; }
+      const n=parseInt(v,map[src]);
+      const valid={dec:/^\d+$/,hex:/^[0-9a-f]+$/i,oct:/^[0-7]+$/,bin:/^[01]+$/}[src];
+      if(!valid.test(v)||isNaN(n)){ $('err').textContent='Invalid '+src+' value'; return; }
+      ['dec','hex','oct','bin'].forEach(k=>{ if(k!==src) $(k).value=n.toString(map[k]); });
+    }
+    function bit(){ const a=parseInt($('a').value,10),b=parseInt($('b').value,10); const o=$('bitout');
+      if(isNaN(a)||isNaN(b)){ o.innerHTML='<span class="text-slate-500">Enter A and B (decimal).</span>'; return; }
+      const row=(l,v)=>`<div><span class="text-slate-400">${l}</span> = <span style="color:#67e8f9">${v}</span> <span class="text-slate-500">(0b${(v>>>0).toString(2)})</span></div>`;
+      o.innerHTML=row('A &amp; B',a&b)+row('A | B',a|b)+row('A ^ B',a^b)+row('~A',~a)+row('A &lt;&lt; 1',a<<1)+row('A &gt;&gt; 1',a>>1);
+    }
+    setAll(255); bit();
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

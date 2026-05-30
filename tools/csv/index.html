@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free CSV Viewer &amp; Converter — View, Sort, Filter, CSV to JSON | Ajay Kakkar</title>
+  <meta name="description" content="Free online CSV tool - open or paste CSV to view it as a sortable, searchable table, then convert and download as JSON. Files never leave your browser. No signup." />
+  <meta name="keywords" content="csv viewer, csv to json, view csv online, csv table, sort csv, filter csv, csv converter, open csv" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/csv/" />
+  <meta property="og:title" content="Free CSV Viewer and Converter" />
+  <meta property="og:description" content="View CSV as a sortable/searchable table, convert to JSON. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/csv/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="CSV Viewer by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free CSV Viewer and Converter" />
+  <meta name="twitter:description" content="View CSV as a sortable/searchable table, convert to JSON. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="CSV Viewer by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "CSV Viewer and Converter", "item": "https://ajaykakkar93.github.io/tools/csv/" } ] },
+      { "@type": "WebApplication", "name": "CSV Viewer and Converter",
+        "url": "https://ajaykakkar93.github.io/tools/csv/",
+        "description": "Free online CSV viewer and converter - sortable searchable table and CSV to JSON export. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "View CSV as table", "Sort and search", "CSV to JSON", "Download" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+    #tbl{border-collapse:collapse;width:100%;font-size:.8rem;} #tbl th,#tbl td{border:1px solid #1e293b;padding:.35rem .6rem;text-align:left;white-space:nowrap;} #tbl th{background:#0e1626;cursor:pointer;position:sticky;top:0;} #tbl tr:hover td{background:#0e1626;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The CSV you open is parsed locally and never uploaded, stored, or shared. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-6xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-table mr-2" style="color:#34d399"></i>CSV Viewer &amp; Converter</h1>
+    <p class="text-slate-400 text-sm">View, sort, search &amp; convert CSV to JSON. Files never leave your browser.</p>
+  </header>
+  <main class="max-w-6xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-4 mb-4">
+      <div class="flex flex-wrap gap-2 items-center">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="$('f').click()"><i class="fa-solid fa-file-arrow-up mr-1"></i>Open CSV</button>
+        <input type="file" id="f" accept=".csv,text/csv" hidden onchange="loadFile(this.files[0])">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="togglePaste()">Paste</button>
+        <input id="search" class="flex-1 min-w-[140px]" placeholder="Search all columns…" oninput="renderBody()">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="clearFilters()" title="Clear column filters">Clear filters</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="toJson()"><i class="fa-solid fa-download mr-1"></i>JSON</button>
+        <span id="info" class="text-xs text-slate-400"></span>
+      </div>
+      <textarea id="paste" class="w-full h-28 rounded-lg p-3 mono text-xs mt-3 outline-none resize-none" placeholder="Paste CSV here…" style="display:none" oninput="parseText(this.value)"></textarea>
+    </section>
+    <div style="max-height:60vh;overflow:auto" class="panel rounded-xl p-2"><table id="tbl"></table></div>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const esc=s=>String(s==null?'':s).replace(/</g,'&lt;');
+    let data=[],cols=[],sortCol=-1,sortAsc=true;
+    function togglePaste(){ const p=$('paste'); p.style.display=p.style.display==='none'?'block':'none'; }
+    function loadFile(f){ if(!f)return; Papa.parse(f,{header:true,skipEmptyLines:true,complete:r=>{ set(r.data); }}); }
+    function parseText(t){ const r=Papa.parse(t,{header:true,skipEmptyLines:true}); set(r.data); }
+    function set(rows){ data=rows; cols=rows.length?Object.keys(rows[0]):[]; sortCol=-1; buildHead(); renderBody(); }
+    // header built once so per-column filter inputs keep focus while typing
+    function buildHead(){
+      if(!cols.length){ $('tbl').innerHTML=''; $('info').textContent=''; return; }
+      let h='<thead><tr>'+cols.map((c,i)=>'<th onclick="sortBy('+i+')" title="Click to sort">'+esc(c)+' <span id="arr'+i+'" style="color:#fcd34d"></span></th>').join('')+'</tr>';
+      h+='<tr>'+cols.map((c,i)=>'<th style="cursor:auto;padding:3px;top:33px"><input id="flt'+i+'" class="w-full" style="font-size:.72rem;padding:.2rem .45rem" placeholder="filter…" oninput="renderBody()"></th>').join('')+'</tr></thead><tbody id="tbody"></tbody>';
+      $('tbl').innerHTML=h;
+    }
+    function viewRows(){
+      const q=$('search').value.toLowerCase();
+      const filt=cols.map((c,i)=>{ const el=$('flt'+i); return el?el.value.toLowerCase():''; });
+      let rows=data.filter(r=>
+        cols.every((c,i)=>!filt[i] || String(r[c]==null?'':r[c]).toLowerCase().includes(filt[i])) &&
+        (!q || cols.some(c=>String(r[c]==null?'':r[c]).toLowerCase().includes(q)))
+      );
+      if(sortCol>=0){ const c=cols[sortCol]; rows=[...rows].sort((a,b)=>{ const x=a[c]||'',y=b[c]||''; const nx=parseFloat(x),ny=parseFloat(y); const r=(!isNaN(nx)&&!isNaN(ny))?nx-ny:String(x).localeCompare(String(y)); return sortAsc?r:-r; }); }
+      return rows;
+    }
+    function renderBody(){
+      if(!cols.length) return;
+      const rows=viewRows();
+      $('tbody').innerHTML=rows.map(r=>'<tr>'+cols.map(c=>'<td>'+esc(r[c])+'</td>').join('')+'</tr>').join('');
+      $('info').textContent=rows.length+' / '+data.length+' rows · '+cols.length+' cols';
+    }
+    function sortBy(i){ if(sortCol===i) sortAsc=!sortAsc; else { sortCol=i; sortAsc=true; }
+      cols.forEach((c,j)=>{ const a=$('arr'+j); if(a) a.textContent=(j===sortCol)?(sortAsc?'▲':'▼'):''; });
+      renderBody();
+    }
+    function clearFilters(){ cols.forEach((c,i)=>{ const el=$('flt'+i); if(el) el.value=''; }); $('search').value=''; renderBody(); }
+    function toJson(){ const rows=cols.length?viewRows():data; if(!rows.length)return; const b=new Blob([JSON.stringify(rows,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='data.json'; a.click(); }
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

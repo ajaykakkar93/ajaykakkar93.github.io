@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Number to Words Converter — Indian &amp; International | Ajay Kakkar</title>
+  <meta name="description" content="Free online number to words converter - turn any number into words in the Indian system (lakh, crore) or International system (million, billion), with an optional currency (Rupees / Dollars) mode for cheques and invoices. 100% private, browser-based." />
+  <meta name="keywords" content="number to words, number to words indian, rupees in words, amount in words, cheque amount in words, lakh crore to words, number spelling" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/num-to-words/" />
+  <meta property="og:title" content="Free Number to Words Converter" />
+  <meta property="og:description" content="Numbers to words - Indian (lakh/crore) and International, with currency mode. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/num-to-words/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Number to Words by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Number to Words Converter" />
+  <meta name="twitter:description" content="Numbers to words - Indian (lakh/crore) and International, with currency mode. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Number to Words by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Number to Words Converter", "item": "https://ajaykakkar93.github.io/tools/num-to-words/" } ] },
+      { "@type": "WebApplication", "name": "Number to Words Converter",
+        "url": "https://ajaykakkar93.github.io/tools/num-to-words/",
+        "description": "Free online number to words converter supporting the Indian (lakh, crore) and International (million, billion) systems with a currency mode. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Indian numbering (lakh, crore)", "International numbering", "Currency / cheque mode" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The numbers you convert are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-2xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-spell-check mr-2" style="color:#a5b4fc"></i>Number to Words</h1>
+    <p class="text-slate-400 text-sm">Indian (lakh, crore) &amp; International, with cheque/currency mode. Private &amp; in-browser.</p>
+  </header>
+  <main class="max-w-2xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-6 space-y-4">
+      <input id="num" class="w-full text-lg mono" placeholder="123456.78" oninput="conv()" />
+      <div class="flex flex-wrap gap-2">
+        <select id="sys" onchange="conv()"><option value="in">Indian (lakh, crore)</option><option value="intl">International (million)</option></select>
+        <select id="cur" onchange="conv()"><option value="">Plain number</option><option value="INR">Indian Rupees</option><option value="USD">US Dollars</option></select>
+      </div>
+      <div id="out" class="panel rounded-xl p-4 text-base" style="min-height:3.5rem;line-height:1.7"></div>
+      <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="navigator.clipboard.writeText(document.getElementById('out').textContent)"><i class="fa-solid fa-copy mr-1"></i>Copy</button>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const ONES=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+    const TENS=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+    function two(n){ return n<20?ONES[n]:TENS[Math.floor(n/10)]+(n%10?'-'+ONES[n%10]:''); }
+    function three(n){ const h=Math.floor(n/100),r=n%100; return (h?ONES[h]+' hundred'+(r?' ':''):'')+(r?two(r):''); }
+    function intl(n){ if(n===0)return 'zero'; const units=['','thousand','million','billion','trillion']; let i=0,parts=[];
+      while(n>0){ const c=n%1000; if(c) parts.unshift(three(c)+(units[i]?' '+units[i]:'')); n=Math.floor(n/1000); i++; } return parts.join(' '); }
+    function indian(n){ if(n===0)return 'zero'; let parts=[]; const last3=n%1000; n=Math.floor(n/1000);
+      const groups=[]; while(n>0){ groups.push(n%100); n=Math.floor(n/100); }
+      const names=['thousand','lakh','crore','arab','kharab'];
+      groups.forEach((g,i)=>{ if(g) parts.unshift(two(g)+' '+names[i]); });
+      if(last3) parts.push(three(last3)); return parts.join(' '); }
+    function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+    function conv(){ let v=$('num').value.trim().replace(/,/g,''); const o=$('out');
+      if(v===''||isNaN(+v)){ o.innerHTML='<span class="text-slate-500">Enter a number.</span>'; return; }
+      const neg=v.startsWith('-'); v=v.replace('-',''); const parts=v.split('.'); const ip=parts[0],dp=parts[1];
+      const intN=parseInt(ip||'0',10); const f=$('sys').value==='in'?indian:intl; const cur=$('cur').value;
+      let words=f(intN);
+      if(cur){ const main=cur==='INR'?'Rupees':'Dollars', sub=cur==='INR'?'Paise':'Cents';
+        words=main+' '+words; if(dp){ const c=parseInt((dp+'00').slice(0,2),10); if(c) words+=' and '+f(c)+' '+sub; } words+=' only';
+      } else if(dp){ words+=' and '+dp.split('').map(d=>ONES[+d]||'zero').join(' '); }
+      o.textContent=(neg?'minus ':'')+cap(words);
+    }
+    $('num').value='123456.78'; conv();
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

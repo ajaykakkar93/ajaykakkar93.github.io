@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Mock Data Generator — Fake CSV, JSON &amp; SQL Test Data | Ajay Kakkar</title>
+  <meta name="description" content="Free online mock data generator - create realistic fake rows (names, emails, dates, numbers, UUIDs, cities and more) and export as CSV, JSON or SQL INSERT statements. Perfect for testing apps, dashboards and Qlik models. 100% private, browser-based." />
+  <meta name="keywords" content="mock data generator, fake data, test data generator, dummy data, csv generator, json test data, sql insert generator, sample data" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/mock-data/" />
+  <meta property="og:title" content="Free Mock Data Generator" />
+  <meta property="og:description" content="Generate fake rows as CSV / JSON / SQL INSERTs. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/mock-data/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Mock Data Generator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Mock Data Generator" />
+  <meta name="twitter:description" content="Generate fake rows as CSV / JSON / SQL INSERTs. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Mock Data Generator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Mock Data Generator", "item": "https://ajaykakkar93.github.io/tools/mock-data/" } ] },
+      { "@type": "WebApplication", "name": "Mock Data Generator",
+        "url": "https://ajaykakkar93.github.io/tools/mock-data/",
+        "description": "Free online mock/fake data generator that exports realistic test rows as CSV, JSON or SQL INSERT statements. Runs entirely in the browser.",
+        "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Runs in any modern browser.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Configurable fields and types", "CSV / JSON / SQL output", "Up to thousands of rows", "Download or copy" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs entirely in your browser. The schema you define and the data generated are never uploaded, stored, or shared - nothing leaves your device. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-5xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-table-cells mr-2" style="color:#fbbf24"></i>Mock Data Generator</h1>
+    <p class="text-slate-400 text-sm">Fake names, emails, dates, IDs &amp; more &rarr; CSV / JSON / SQL. Private &amp; in-browser.</p>
+  </header>
+  <main class="max-w-5xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-5 mb-4">
+      <div id="fields" class="space-y-2 mb-3"></div>
+      <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="addField()"><i class="fa-solid fa-plus mr-1"></i>Add field</button>
+      <div class="flex flex-wrap gap-3 items-center mt-4">
+        <label class="text-xs text-slate-400">Rows</label><input id="rows" type="number" value="20" min="1" max="5000" class="w-24 mono">
+        <label class="text-xs text-slate-400">Format</label>
+        <select id="fmt"><option value="csv">CSV</option><option value="json">JSON</option><option value="sql">SQL INSERT</option></select>
+        <input id="table" class="w-40" placeholder="table name (SQL)" value="users">
+        <button class="btn btn-primary rounded-lg px-4 py-1.5 text-sm" onclick="gen()"><i class="fa-solid fa-bolt mr-1"></i>Generate</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="copyOut()"><i class="fa-solid fa-copy"></i></button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="dl()"><i class="fa-solid fa-download"></i></button>
+      </div>
+    </section>
+    <textarea id="out" class="panel w-full h-72 rounded-xl p-3 mono text-xs outline-none resize-none" readonly></textarea>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const TYPES=['First name','Last name','Full name','Email','Username','Integer','Decimal','Boolean','Date','Datetime','UUID','City','Country','Company','Phone','Paragraph'];
+    const FN=['Aarav','Vivaan','Aditya','Diya','Anaya','Ishaan','Riya','Liam','Olivia','Noah','Emma','Ava','Sophia','Arjun','Kavya','Rohan','Neha','Sara','James','Mia'];
+    const LN=['Kakkar','Sharma','Patel','Mehta','Gupta','Singh','Khan','Smith','Johnson','Brown','Iyer','Nair','Das','Bose','Reddy','Rao','Verma','Jain','Lee','Wang'];
+    const CITY=['Mumbai','Delhi','Bengaluru','Pune','Chennai','Hyderabad','Kolkata','London','New York','Berlin','Tokyo','Toronto','Dubai','Singapore'];
+    const COUNTRY=['India','USA','UK','Germany','Japan','Canada','UAE','Singapore','Australia','France'];
+    const COMP=['Acme','Globex','Initech','Umbrella','Stark Inc','Wayne Co','Wonka','Hooli','Pied Piper','Soylent'];
+    const rand=a=>a[Math.random()*a.length|0];
+    const ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+    const uuid=()=>(crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}));
+    function val(t){ const fn=rand(FN),ln=rand(LN);
+      switch(t){ case 'First name':return fn; case 'Last name':return ln; case 'Full name':return fn+' '+ln;
+        case 'Email':return (fn+'.'+ln).toLowerCase()+ri(1,99)+'@example.com'; case 'Username':return fn.toLowerCase()+ri(1,999);
+        case 'Integer':return ri(1,10000); case 'Decimal':return (Math.random()*1000).toFixed(2); case 'Boolean':return Math.random()<.5;
+        case 'Date':return new Date(Date.now()-ri(0,1000)*864e5).toISOString().slice(0,10);
+        case 'Datetime':return new Date(Date.now()-ri(0,1000)*864e5).toISOString().slice(0,19).replace('T',' ');
+        case 'UUID':return uuid(); case 'City':return rand(CITY); case 'Country':return rand(COUNTRY); case 'Company':return rand(COMP);
+        case 'Phone':return '+91 '+ri(70000,99999)+ri(10000,99999); case 'Paragraph':return 'Lorem ipsum dolor sit amet '+ri(1,999); default:return ''; } }
+    function addField(name,type){ const row=document.createElement('div'); row.className='flex gap-2 items-center fld';
+      row.innerHTML='<input class="fname flex-1" value="'+(name||'field'+($('fields').children.length+1))+'"><select class="ftype">'+TYPES.map(t=>'<option'+(t===type?' selected':'')+'>'+t+'</option>').join('')+'</select><button class="btn rounded px-2 py-1 text-xs" onclick="this.parentNode.remove()"><i class="fa-solid fa-xmark"></i></button>';
+      $('fields').appendChild(row); }
+    function schema(){ return [...document.querySelectorAll('.fld')].map(r=>({name:r.querySelector('.fname').value||'field',type:r.querySelector('.ftype').value})); }
+    function gen(){ const cols=schema(); const n=Math.min(5000,Math.max(1,+$('rows').value||1)); const rows=Array.from({length:n},()=>cols.map(c=>val(c.type)));
+      const fmt=$('fmt').value; let out;
+      if(fmt==='json'){ out=JSON.stringify(rows.map(r=>Object.fromEntries(cols.map((c,i)=>[c.name,r[i]]))),null,2); }
+      else if(fmt==='csv'){ const esc=v=>{ v=String(v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; }; out=[cols.map(c=>c.name).join(',')].concat(rows.map(r=>r.map(esc).join(','))).join('\n'); }
+      else { const tb=$('table').value||'tbl'; const q=v=>typeof v==='number'||typeof v==='boolean'?v:"'"+String(v).replace(/'/g,"''")+"'";
+        out=rows.map(r=>'INSERT INTO '+tb+' ('+cols.map(c=>c.name).join(', ')+') VALUES ('+r.map(q).join(', ')+');').join('\n'); }
+      $('out').value=out; }
+    function copyOut(){ navigator.clipboard.writeText($('out').value); }
+    function dl(){ const ext={csv:'csv',json:'json',sql:'sql'}[$('fmt').value]; const b=new Blob([$('out').value],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='mock-data.'+ext; a.click(); }
+    ['id|Integer','name|Full name','email|Email','created|Date','active|Boolean'].forEach(s=>{ const p=s.split('|'); addField(p[0],p[1]); });
+    gen();
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

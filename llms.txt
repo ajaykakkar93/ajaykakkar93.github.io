@@ -26,6 +26,21 @@ Author: Ajay Kakkar — Qlik expert, Udemy instructor, AI/bots product builder.
 - [Image Tools](https://ajaykakkar93.github.io/tools/image/): Resize, compress, convert PNG/JPG/WebP.
 - [Date and Time Calculator](https://ajaykakkar93.github.io/tools/datetime/): Age, duration, working days, epoch converter, cron parser.
 - [Image to Text (OCR)](https://ajaykakkar93.github.io/tools/ocr/): Extract text from images in-browser, multiple languages.
+- [Mock Data Generator](https://ajaykakkar93.github.io/tools/mock-data/): fake CSV/JSON/SQL test data.
+- [Number Base Converter](https://ajaykakkar93.github.io/tools/base/): binary, octal, decimal, hex + bitwise.
+- [chmod Calculator](https://ajaykakkar93.github.io/tools/chmod/): Linux permissions to octal and symbolic.
+- [Text Diff Checker](https://ajaykakkar93.github.io/tools/diff/): compare two texts line by line.
+- [Cron Expression Builder](https://ajaykakkar93.github.io/tools/cron/): explain cron and see next run times.
+- [CSV Viewer and Converter](https://ajaykakkar93.github.io/tools/csv/): view, sort, search CSV and convert to JSON.
+- [File Checksum Verifier](https://ajaykakkar93.github.io/tools/checksum/): SHA-256/1/512 a file and verify integrity.
+- [Number to Words](https://ajaykakkar93.github.io/tools/num-to-words/): Indian (lakh/crore) and International, cheque mode.
+- [GST Calculator](https://ajaykakkar93.github.io/tools/gst/): add or remove GST with CGST/SGST/IGST split (India).
+- [CSS Generator](https://ajaykakkar93.github.io/tools/css/): gradient and box-shadow makers with live preview.
+- [Online Timer](https://ajaykakkar93.github.io/tools/timer/): Pomodoro, stopwatch and countdown.
+- [Favicon Generator](https://ajaykakkar93.github.io/tools/favicon/): image to favicon PNG set plus HTML tags.
+- [Image to PDF](https://ajaykakkar93.github.io/tools/img-to-pdf/): combine JPG/PNG images into one PDF.
+- [Time Zone Converter](https://ajaykakkar93.github.io/tools/timezone/): world clock and meeting planner across zones.
+- [EXIF Viewer and Remover](https://ajaykakkar93.github.io/tools/exif/): view photo metadata (GPS) or strip it.
 
 ## Notes
 - All tools run entirely in the browser. No accounts, no uploads, no tracking.

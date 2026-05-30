@@ -81,6 +81,37 @@
   <!-- Image to Text OCR -->
   <url><loc>https://ajaykakkar93.github.io/tools/ocr/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
 
+  <!-- Mock Data Generator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/mock-data/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Number Base Converter -->
+  <url><loc>https://ajaykakkar93.github.io/tools/base/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- chmod Calculator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/chmod/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Text Diff Checker -->
+  <url><loc>https://ajaykakkar93.github.io/tools/diff/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Cron Builder -->
+  <url><loc>https://ajaykakkar93.github.io/tools/cron/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- CSV Viewer -->
+  <url><loc>https://ajaykakkar93.github.io/tools/csv/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- File Checksum -->
+  <url><loc>https://ajaykakkar93.github.io/tools/checksum/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Number to Words -->
+  <url><loc>https://ajaykakkar93.github.io/tools/num-to-words/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- GST Calculator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/gst/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- CSS Generator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/css/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Timer -->
+  <url><loc>https://ajaykakkar93.github.io/tools/timer/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Favicon Generator -->
+  <url><loc>https://ajaykakkar93.github.io/tools/favicon/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Image to PDF -->
+  <url><loc>https://ajaykakkar93.github.io/tools/img-to-pdf/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- Time Zone Converter -->
+  <url><loc>https://ajaykakkar93.github.io/tools/timezone/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <!-- EXIF Viewer / Remover -->
+  <url><loc>https://ajaykakkar93.github.io/tools/exif/</loc><lastmod>2026-05-30</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+
   <!-- Resume PDF -->
   <url>
     <loc>https://ajaykakkar93.github.io/Ajay%20Kakkar%20Resume.pdf</loc>

@@ -79,6 +79,9 @@
     .card.soon:hover { transform:none; box-shadow:none; border-color:#1e293b; }
     .badge-soon { background:rgba(148,163,184,.12); color:#94a3b8; }
     .badge-live { background:rgba(34,197,94,.12); color:#4ade80; }
+    .cat-chip { font-size:.78rem; padding:.3rem .8rem; border-radius:999px; cursor:pointer; color:#94a3b8; background:#111a2e; border:1px solid #1e293b; transition:all .15s; user-select:none; }
+    .cat-chip:hover { color:#e2e8f0; border-color:#334155; }
+    .cat-chip.active { background:#1e293b; color:#f1f5f9; border-color:#475569; }
   </style>
 </head>
 <body>
@@ -91,47 +94,94 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-5 py-8">
-    <div id="tool-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <div class="relative mb-6 max-w-md">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+      <input id="search" type="search" placeholder="Search tools…" autocomplete="off"
+        class="w-full rounded-xl py-2.5 pl-9 pr-3 text-sm outline-none"
+        style="background:#111a2e;border:1px solid #1e293b;color:#e2e8f0" oninput="draw()">
+    </div>
+    <div id="cat-filters" class="flex flex-wrap gap-1.5 mb-6"></div>
+    <div id="tool-grid"></div>
     <p class="text-slate-500 text-xs mt-10 text-center">Built by Ajay Kakkar · 100% client-side · open in any modern browser</p>
   </main>
 
   <script>
+    const CAT_ORDER = ["Developer & Data","Finance","Text","Images & Media","Design","Documents","Time & Productivity","Security & Privacy","Qlik"];
     const tools = [
-      { name:"Finance Calculators", desc:"SIP, EMI, stock P&L, CAGR, home &amp; car loan with amortization.", href:"finance/index.html", icon:"fa-indian-rupee-sign", color:"#4ade80", live:true },
-      { name:"PDF Tools", desc:"Convert PDF to image, merge, split and extract pages.", href:"pdf/index.html", icon:"fa-file-pdf", color:"#f87171", live:true },
-      { name:"Qlik Sense Guides", desc:"Upgrade guide, release notes and PostgreSQL version matrix.", href:"qlik/index.html", icon:"fa-chart-column", color:"#34d399", live:true },
-      { name:"JSON Tools", desc:"Format, validate, minify, tree view, JSON↔CSV↔YAML, JSONPath.", href:"json/index.html", icon:"fa-code", color:"#fbbf24", live:true },
-      { name:"Dev / Text Tools", desc:"Base64, URL encode, UUID, JWT decode, regex tester.", href:"text/index.html", icon:"fa-terminal", color:"#93c5fd", live:true },
-      { name:"Color Tools", desc:"Picker, palette, HEX↔RGB↔HSL, WCAG contrast checker.", href:"color/index.html", icon:"fa-palette", color:"#c4b5fd", live:true },
-      { name:"Text Utilities", desc:"Word count, case convert, diff, lorem ipsum, slugify.", href:"text-utils/index.html", icon:"fa-font", color:"#a5b4fc", live:true },
-      { name:"Crypto / Encode", desc:"AES encrypt/decrypt, password generator, hashing.", href:"crypto/index.html", icon:"fa-shield-halved", color:"#fb923c", live:true },
-      { name:"SQL Formatter", desc:"Beautify and minify SQL, dialect-aware.", href:"sql/index.html", icon:"fa-database", color:"#67e8f9", live:true },
-      { name:"Unit Converter", desc:"Length, weight, data, temperature + live currency.", href:"converter/index.html", icon:"fa-right-left", color:"#fcd34d", live:true },
-      { name:"QR Generator", desc:"Generate QR codes &amp; 1D barcodes, styled, downloadable.", href:"qr/index.html", icon:"fa-qrcode", color:"#f9a8d4", live:true },
-      { name:"Image OCR", desc:"Extract text from images, in-browser, multi-language.", href:"ocr/index.html", icon:"fa-image", color:"#5eead4", live:true },
-      { name:"Markdown Tools", desc:"Live preview, MD→HTML, table generator, MD→PDF.", href:"markdown/index.html", icon:"fa-markdown", color:"#94a3b8", live:true, brand:true },
-      { name:"Image Tools", desc:"Resize, crop, compress, convert PNG↔WebP↔JPG, favicon.", href:"image/index.html", icon:"fa-crop-simple", color:"#fda4af", live:true },
-      { name:"Date / Time Calc", desc:"Age, duration, working days, cron parser, epoch↔date.", href:"datetime/index.html", icon:"fa-calendar-days", color:"#7dd3fc", live:true }
+      { name:"Finance Calculators", desc:"SIP, EMI, stock P&L, CAGR, home &amp; car loan with amortization.", href:"finance/index.html", icon:"fa-indian-rupee-sign", color:"#4ade80", cat:"Finance", live:true },
+      { name:"PDF Tools", desc:"Convert PDF to image, merge, split and extract pages.", href:"pdf/index.html", icon:"fa-file-pdf", color:"#f87171", cat:"Documents", live:true },
+      { name:"Qlik Sense Guides", desc:"Upgrade guide, release notes and PostgreSQL version matrix.", href:"qlik/index.html", icon:"fa-chart-column", color:"#34d399", cat:"Qlik", live:true },
+      { name:"JSON Tools", desc:"Format, validate, minify, tree view, JSON↔CSV↔YAML, JSONPath.", href:"json/index.html", icon:"fa-code", color:"#fbbf24", cat:"Developer & Data", live:true },
+      { name:"Dev / Text Tools", desc:"Base64, URL encode, UUID, JWT decode, regex tester.", href:"text/index.html", icon:"fa-terminal", color:"#93c5fd", cat:"Developer & Data", live:true },
+      { name:"Color Tools", desc:"Picker, palette, HEX↔RGB↔HSL, WCAG contrast checker.", href:"color/index.html", icon:"fa-palette", color:"#c4b5fd", cat:"Design", live:true },
+      { name:"Text Utilities", desc:"Word count, case convert, diff, lorem ipsum, slugify.", href:"text-utils/index.html", icon:"fa-font", color:"#a5b4fc", cat:"Text", live:true },
+      { name:"Crypto / Encode", desc:"AES encrypt/decrypt, password generator, hashing.", href:"crypto/index.html", icon:"fa-shield-halved", color:"#fb923c", cat:"Security & Privacy", live:true },
+      { name:"SQL Formatter", desc:"Beautify and minify SQL, dialect-aware.", href:"sql/index.html", icon:"fa-database", color:"#67e8f9", cat:"Developer & Data", live:true },
+      { name:"Unit Converter", desc:"Length, weight, data, temperature + live currency.", href:"converter/index.html", icon:"fa-right-left", color:"#fcd34d", cat:"Finance", live:true },
+      { name:"QR Generator", desc:"Generate QR codes &amp; 1D barcodes, styled, downloadable.", href:"qr/index.html", icon:"fa-qrcode", color:"#f9a8d4", cat:"Images & Media", live:true },
+      { name:"Image OCR", desc:"Extract text from images, in-browser, multi-language.", href:"ocr/index.html", icon:"fa-image", color:"#5eead4", cat:"Images & Media", live:true },
+      { name:"Markdown Tools", desc:"Live preview, MD→HTML, table generator, MD→PDF.", href:"markdown/index.html", icon:"fa-markdown", color:"#94a3b8", cat:"Text", live:true, brand:true },
+      { name:"Image Tools", desc:"Resize, crop, compress, convert PNG↔WebP↔JPG, favicon.", href:"image/index.html", icon:"fa-crop-simple", color:"#fda4af", cat:"Images & Media", live:true },
+      { name:"Date / Time Calc", desc:"Age, duration, working days, cron parser, epoch↔date.", href:"datetime/index.html", icon:"fa-calendar-days", color:"#7dd3fc", cat:"Time & Productivity", live:true },
+      { name:"Mock Data Generator", desc:"Fake names, emails, dates, IDs → CSV / JSON / SQL.", href:"mock-data/index.html", icon:"fa-table-cells", color:"#fbbf24", cat:"Developer & Data", live:true },
+      { name:"Number Base Converter", desc:"Binary, octal, decimal, hex + bitwise ops.", href:"base/index.html", icon:"fa-hashtag", color:"#67e8f9", cat:"Developer & Data", live:true },
+      { name:"chmod Calculator", desc:"Linux permissions → octal, symbolic &amp; chmod command.", href:"chmod/index.html", icon:"fa-key", color:"#fcd34d", cat:"Developer & Data", live:true },
+      { name:"Text Diff Checker", desc:"Compare two texts line by line, added/removed.", href:"diff/index.html", icon:"fa-code-compare", color:"#93c5fd", cat:"Developer & Data", live:true },
+      { name:"Cron Builder", desc:"Explain a cron expression + next run times.", href:"cron/index.html", icon:"fa-clock", color:"#7dd3fc", cat:"Developer & Data", live:true },
+      { name:"CSV Viewer", desc:"View, sort, search &amp; convert CSV to JSON.", href:"csv/index.html", icon:"fa-table", color:"#34d399", cat:"Developer & Data", live:true },
+      { name:"File Checksum", desc:"SHA-256/1/512 a file &amp; verify against expected.", href:"checksum/index.html", icon:"fa-fingerprint", color:"#fb923c", cat:"Security & Privacy", live:true },
+      { name:"Number to Words", desc:"Indian (lakh/crore) &amp; International + cheque mode.", href:"num-to-words/index.html", icon:"fa-spell-check", color:"#a5b4fc", cat:"Finance", live:true },
+      { name:"GST Calculator", desc:"Add/remove GST, CGST/SGST/IGST split. India.", href:"gst/index.html", icon:"fa-indian-rupee-sign", color:"#4ade80", cat:"Finance", live:true },
+      { name:"CSS Generator", desc:"Gradient &amp; box-shadow makers with live preview.", href:"css/index.html", icon:"fa-css3-alt", color:"#93c5fd", cat:"Design", live:true, brand:true },
+      { name:"Timer", desc:"Pomodoro, stopwatch &amp; countdown with alert.", href:"timer/index.html", icon:"fa-stopwatch", color:"#7dd3fc", cat:"Time & Productivity", live:true },
+      { name:"Favicon Generator", desc:"Image → favicon PNG set + HTML tags.", href:"favicon/index.html", icon:"fa-icons", color:"#fda4af", cat:"Images & Media", live:true },
+      { name:"Image to PDF", desc:"Combine JPG/PNG images into one PDF.", href:"img-to-pdf/index.html", icon:"fa-file-pdf", color:"#f87171", cat:"Documents", live:true },
+      { name:"Time Zone Converter", desc:"World clock &amp; meeting planner across zones.", href:"timezone/index.html", icon:"fa-globe", color:"#7dd3fc", cat:"Time & Productivity", live:true },
+      { name:"EXIF Viewer / Remover", desc:"Read photo metadata (GPS) or strip it.", href:"exif/index.html", icon:"fa-location-crosshairs", color:"#5eead4", live:true, cat:"Images & Media" }
     ];
     const grid = document.getElementById("tool-grid");
-    grid.innerHTML = tools.map(t => {
+    let activeCat = "All";
+
+    function card(t){
       const iconPrefix = t.brand ? "fa-brands" : "fa-solid";
-      const badge = t.live
-        ? '<span class="badge-live text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>'
-        : '<span class="badge-soon text-[10px] font-semibold px-2 py-0.5 rounded-full">SOON</span>';
       const inner = `
         <div class="flex items-start justify-between mb-3">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl text-lg" style="background:${t.color}1a;color:${t.color}">
             <i class="${iconPrefix} ${t.icon}"></i>
           </span>
-          ${badge}
+          <span class="badge-live text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>
         </div>
         <h2 class="font-display font-semibold text-base mb-1" style="color:#f1f5f9">${t.name}</h2>
         <p class="text-slate-400 text-sm leading-relaxed">${t.desc}</p>`;
-      return t.live
-        ? `<a href="${t.href}" class="card rounded-2xl p-5 block no-underline">${inner}</a>`
-        : `<div class="card soon rounded-2xl p-5">${inner}</div>`;
-    }).join("");
+      return `<a href="${t.href}" class="card rounded-2xl p-5 block no-underline">${inner}</a>`;
+    }
+
+    function buildFilters(){
+      const cats = CAT_ORDER.filter(c => tools.some(t => t.cat === c));
+      const chip = (label,on) => `<span class="cat-chip${on?' active':''}" onclick="setCat('${label.replace(/'/g,"\\'")}')">${label}</span>`;
+      document.getElementById("cat-filters").innerHTML =
+        chip("All", activeCat==="All") + cats.map(c => chip(c, activeCat===c)).join("");
+    }
+    function setCat(c){ activeCat = c; buildFilters(); draw(); }
+
+    function draw(){
+      const q = (document.getElementById("search").value || "").toLowerCase().trim();
+      const cats = CAT_ORDER.filter(c => activeCat==="All" || c===activeCat);
+      let html = "";
+      cats.forEach(cat => {
+        const hits = tools.filter(t => t.cat===cat &&
+          (t.name + " " + t.desc).toLowerCase().includes(q));
+        if(!hits.length) return;
+        html += `<div class="mb-7">
+          <h2 class="font-display font-semibold text-sm uppercase tracking-wider mb-3" style="color:#94a3b8">
+            ${cat} <span class="text-slate-600">(${hits.length})</span>
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${hits.map(card).join("")}</div>
+        </div>`;
+      });
+      grid.innerHTML = html || '<p class="text-slate-500 text-sm text-center py-10">No tools match your search.</p>';
+    }
+    buildFilters(); draw();
   </script>
 </body>
 </html>
