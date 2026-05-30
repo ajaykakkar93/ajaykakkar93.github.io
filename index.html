@@ -148,6 +148,36 @@
     .badge-new    { background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25); color:#fbbf24;  font-size:.65rem; padding:.2rem .6rem; border-radius:999px; }
     .badge-active { background:rgba(59,130,246,.1); border:1px solid rgba(59,130,246,.25); color:#60a5fa;  font-size:.65rem; padding:.2rem .6rem; border-radius:999px; }
 
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(30,41,59,.98);
+      border: 1px solid rgba(148,163,184,.2);
+      border-radius: 0.5rem;
+      min-width: 220px;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+      z-index: 10;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color .2s, background .2s;
+      border-bottom: 1px solid rgba(148,163,184,.1);
+    }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover {
+      color: #f1f5f9;
+      background: rgba(59,130,246,.1);
+    }
+
     .tl-line {
       position:absolute; left:1.1rem; top:2rem; bottom:0; width:2px;
       background:linear-gradient(to bottom, #3b82f6, #8b5cf6, #f59e0b, transparent);
@@ -341,6 +371,17 @@
       <a href="#teaching"   class="hover:text-white transition-colors">Teaching</a>
       <a href="#awards"     class="hover:text-white transition-colors">Awards</a>
       <a href="#certifications" class="hover:text-white transition-colors">Certifications</a>
+      <div class="dropdown">
+        <button id="tools-btn" class="hover:text-white transition-colors flex items-center gap-1 cursor-pointer" onclick="toggleToolsDropdown()">
+          Tools <i class="fas fa-chevron-down text-xs"></i>
+        </button>
+        <div id="tools-menu" class="dropdown-menu">
+          <a href="finance-tools.html">Finance Tools</a>
+          <a href="./qlik/index.html">Qlik Sense Upgrade Guide</a>
+          <a href="qlik/QS_Release_Notes.html">Qlik Sense Release Notes</a>
+          <a href="qlik/QS_Postgres_Upgrade_List.html">Qlik Sense PostgreSQL</a>
+        </div>
+      </div>
       <a href="#contact"    class="hover:text-white transition-colors">Contact</a>
       <a href="Ajay Kakkar Resume.pdf" download
          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg
@@ -362,6 +403,17 @@
     <a href="#teaching"   class="block hover:text-white">Teaching</a>
     <a href="#awards"     class="block hover:text-white">Awards</a>
     <a href="#certifications" class="block hover:text-white">Certifications</a>
+    <div class="block">
+      <button id="mob-tools-btn" class="w-full text-left hover:text-white flex items-center justify-between cursor-pointer" onclick="toggleMobToolsDropdown()">
+        Tools <i id="mob-tools-icon" class="fas fa-chevron-down text-xs"></i>
+      </button>
+      <div id="mob-tools-menu" class="hidden space-y-2 mt-2 pl-4 border-l border-slate-600">
+        <a href="finance-tools.html" class="block hover:text-white">Finance Tools</a>
+        <a href="./qlik/index.html" class="block hover:text-white">Qlik Sense Upgrade Guide</a>
+        <a href="qlik/QS_Release_Notes.html" class="block hover:text-white">Qlik Sense Release Notes</a>
+        <a href="qlik/QS_Postgres_Upgrade_List.html" class="block hover:text-white">Qlik Sense PostgreSQL</a>
+      </div>
+    </div>
     <a href="#contact"    class="block hover:text-white">Contact</a>
     <a href="Ajay Kakkar Resume.pdf" download
        class="inline-block bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg mt-1">
@@ -1869,6 +1921,27 @@
     const open = m.classList.toggle('is-open');
     if (i) i.className = open ? 'fas fa-times pointer-events-none' : 'fas fa-bars pointer-events-none';
   };
+
+  window.toggleToolsDropdown = function() {
+    const menu = document.getElementById('tools-menu');
+    menu.classList.toggle('show');
+  };
+
+  window.toggleMobToolsDropdown = function() {
+    const menu = document.getElementById('mob-tools-menu');
+    const icon = document.getElementById('mob-tools-icon');
+    menu.classList.toggle('hidden');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+  };
+
+  // Close desktop Tools dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    const toolsMenu = document.getElementById('tools-menu');
+    if (!e.target.closest('.dropdown')) {
+      toolsMenu.classList.remove('show');
+    }
+  });
 
   AOS.init({ once: true, offset: 50, duration: 650, easing: 'ease-out-cubic' });
 

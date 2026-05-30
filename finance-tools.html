@@ -1,0 +1,3412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Tools — Calculators</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="img/logo_dark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #080e1a;
+      color: #f1f5f9;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Layout shell ── */
+    .app-shell { display: flex; flex: 1; overflow: hidden; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: #0d1625;
+      border-right: 1px solid rgba(148,163,184,.08);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      padding: 1.1rem 1.25rem .75rem;
+      border-bottom: 1px solid rgba(148,163,184,.07);
+    }
+    .sidebar-logo .title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .sidebar-logo .back-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .7rem; color: #475569;
+      text-decoration: none; margin-top: .35rem;
+      transition: color .2s;
+    }
+    .sidebar-logo .back-link:hover { color: #94a3b8; }
+
+    .nav-group-label {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #334155;
+      padding: .9rem 1.25rem .3rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .55rem 1.25rem;
+      font-size: .8rem;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all .18s;
+      user-select: none;
+    }
+    .nav-item:hover { color: #cbd5e1; background: rgba(255,255,255,.03); }
+    .nav-item.active {
+      color: #93c5fd;
+      background: rgba(59,130,246,.08);
+      border-left-color: #3b82f6;
+    }
+    .nav-item .icon {
+      width: 26px; height: 26px;
+      border-radius: .4rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Main panel ── */
+    .main-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      background: #080e1a;
+    }
+
+    /* ── Sections ── */
+    .calc-section { display: none; max-width: 780px; }
+    .calc-section.active { display: block; }
+
+    .section-header { margin-bottom: 1.75rem; }
+    .section-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin: 0 0 .25rem;
+    }
+    .section-header p { font-size: .8rem; color: #64748b; margin: 0; }
+
+    /* ── Card ── */
+    .card {
+      background: rgba(30,41,59,.55);
+      border: 1px solid rgba(148,163,184,.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Inputs ── */
+    .field-grid { display: grid; gap: .85rem; margin-bottom: 1.1rem; }
+    .field-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .field-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .field-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .calc-label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: .3rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .calc-input {
+      width: 100%;
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(71,85,105,.4);
+      border-radius: .6rem;
+      padding: .55rem .85rem;
+      font-size: .875rem;
+      color: #e2e8f0;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .calc-input::placeholder { color: #334155; }
+    .calc-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.1); }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: .65rem; align-items: center; margin-bottom: .25rem; }
+    .btn-calc {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff; font-weight: 600; font-size: .82rem;
+      padding: .55rem 1.4rem; border-radius: .6rem; border: none;
+      cursor: pointer; transition: opacity .2s, transform .1s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-calc:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-clear {
+      background: rgba(71,85,105,.2);
+      color: #64748b; font-weight: 500; font-size: .82rem;
+      padding: .55rem 1.1rem; border-radius: .6rem;
+      border: 1px solid rgba(71,85,105,.3);
+      cursor: pointer; transition: all .2s; font-family: 'Inter', sans-serif;
+    }
+    .btn-clear:hover { background: rgba(71,85,105,.35); color: #94a3b8; }
+    .btn-add {
+      background: rgba(34,197,94,.08);
+      color: #4ade80; font-size: .75rem; font-weight: 500;
+      padding: .4rem .85rem; border-radius: .5rem;
+      border: 1px solid rgba(34,197,94,.2);
+      cursor: pointer; transition: background .2s; font-family: 'Inter', sans-serif;
+    }
+    .btn-add:hover { background: rgba(34,197,94,.15); }
+    .btn-remove {
+      background: rgba(239,68,68,.08);
+      color: #f87171; font-size: .72rem;
+      padding: .35rem .65rem; border-radius: .4rem;
+      border: 1px solid rgba(239,68,68,.18);
+      cursor: pointer; transition: background .2s; font-family: 'Inter', sans-serif;
+      align-self: flex-end; margin-bottom: 1px;
+    }
+    .btn-remove:hover { background: rgba(239,68,68,.15); }
+
+    /* ── Result ── */
+    .result-box {
+      background: rgba(10,18,35,.7);
+      border: 1px solid rgba(59,130,246,.18);
+      border-radius: .75rem;
+      padding: 1.1rem 1.25rem;
+      margin-top: 1rem;
+      display: none;
+    }
+    .result-box.show { display: block; }
+
+    .result-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    .result-table th {
+      text-align: left; color: #475569; font-size: .68rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .07em;
+      padding: .4rem .6rem; border-bottom: 1px solid rgba(71,85,105,.25);
+    }
+    .result-table td {
+      padding: .5rem .6rem;
+      border-bottom: 1px solid rgba(71,85,105,.12);
+      color: #94a3b8;
+    }
+    .result-table tr:last-child td { border-bottom: none; }
+    .result-table td.val { color: #e2e8f0; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+    .result-table tr.row-profit td { color: #4ade80; }
+    .result-table tr.row-profit td.val { color: #4ade80; font-size: .9rem; }
+    .result-table tr.row-loss td { color: #f87171; }
+    .result-table tr.row-loss td.val { color: #f87171; font-size: .9rem; }
+    .result-table tr.row-total td { color: #c4b5fd; font-weight: 600; }
+    .result-table tr.row-total td.val { color: #c4b5fd; }
+
+    .chips { display: grid; gap: .65rem; margin-bottom: .75rem; }
+    .chips.c2 { grid-template-columns: repeat(2, 1fr); }
+    .chips.c3 { grid-template-columns: repeat(3, 1fr); }
+    .chips.c4 { grid-template-columns: repeat(4, 1fr); }
+    .chip {
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(71,85,105,.25);
+      border-radius: .65rem; padding: .75rem 1rem; text-align: center;
+    }
+    .chip .cv { font-size: 1.15rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+    .chip .cl { font-size: .65rem; color: #475569; margin-top: .15rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .big-result {
+      text-align: center; padding: .75rem 0;
+    }
+    .big-result .bv { font-size: 2rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
+    .big-result .bs { font-size: .75rem; color: #475569; margin-top: .3rem; }
+
+    /* ── Info box ── */
+    .info-box {
+      background: rgba(10,18,35,.45);
+      border: 1px solid rgba(71,85,105,.15);
+      border-radius: .75rem;
+      padding: 1.1rem 1.25rem;
+      font-size: .8rem; color: #64748b; line-height: 1.7;
+    }
+    .info-box h4 { color: #94a3b8; font-weight: 600; margin: 0 0 .5rem; font-size: .85rem; }
+    .info-box ul { padding-left: 1.1rem; margin: .4rem 0; }
+    .info-box li { margin-bottom: .25rem; }
+    .info-box .formula {
+      background: rgba(30,41,59,.7);
+      border: 1px solid rgba(99,102,241,.15);
+      border-radius: .45rem; padding: .6rem .9rem;
+      font-family: monospace; font-size: .78rem; color: #a5b4fc;
+      margin: .6rem 0;
+    }
+
+    /* ── Avg bars ── */
+    .avg-bar-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+    .avg-bar-label { font-size: .7rem; color: #475569; min-width: 120px; }
+    .avg-bar-track { flex: 1; background: rgba(71,85,105,.2); border-radius: 999px; height: 7px; overflow: hidden; }
+    .avg-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,#3b82f6,#8b5cf6); transition: width .35s ease; }
+    .avg-bar-val { font-size: .7rem; color: #64748b; white-space: nowrap; min-width: 80px; text-align: right; }
+
+    /* ── % tabs ── */
+    .tab-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .pct-tab {
+      background: rgba(30,41,59,.4);
+      border: 1px solid rgba(71,85,105,.3);
+      color: #475569; font-size: .74rem; font-weight: 500;
+      padding: .35rem .8rem; border-radius: .5rem;
+      cursor: pointer; transition: all .18s; font-family: 'Inter', sans-serif;
+    }
+    .pct-tab:hover { color: #94a3b8; }
+    .pct-tab.active { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.3); color: #93c5fd; }
+
+    /* ── Avg purchase rows ── */
+    .avg-purchase-row { display: flex; gap: .65rem; align-items: flex-end; margin-bottom: .5rem; }
+    .avg-purchase-row .field { flex: 1; }
+
+    /* ── Toggle switch ── */
+    .toggle-wrap { display: flex; align-items: center; gap: .65rem; margin-bottom: 1rem; }
+    .toggle-switch { position: relative; width: 38px; height: 22px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0; cursor: pointer;
+      background: rgba(71,85,105,.35); border-radius: 999px;
+      transition: background .2s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 16px; height: 16px; left: 3px; bottom: 3px;
+      background: #64748b; border-radius: 50%; transition: transform .2s, background .2s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: rgba(59,130,246,.5); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: #3b82f6; }
+    .toggle-label { font-size: .78rem; font-weight: 500; color: #64748b; cursor: pointer; user-select: none; }
+    .toggle-label.on { color: #93c5fd; }
+
+    /* ── Broker panel ── */
+    .broker-panel {
+      background: rgba(10,18,35,.5);
+      border: 1px solid rgba(59,130,246,.12);
+      border-radius: .75rem;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .broker-panel.show { display: block; }
+
+    .seg-btn-row { display: flex; gap: .4rem; margin-bottom: .75rem; }
+    .seg-btn {
+      flex: 1; padding: .45rem; border-radius: .5rem; font-size: .75rem; font-weight: 600;
+      border: 1px solid rgba(71,85,105,.3); background: rgba(30,41,59,.4);
+      color: #475569; cursor: pointer; transition: all .18s; text-align: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .seg-btn:hover { color: #94a3b8; }
+    .seg-btn.active-seg { background: rgba(59,130,246,.15); border-color: rgba(59,130,246,.4); color: #93c5fd; }
+    .seg-btn.active-seg.seg-intra { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); color: #fbbf24; }
+
+    .calc-select {
+      width: 100%;
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(71,85,105,.4);
+      border-radius: .6rem; padding: .55rem .85rem;
+      font-size: .85rem; color: #e2e8f0; outline: none;
+      transition: border-color .2s; font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+    .calc-select:focus { border-color: #3b82f6; }
+    .calc-select option { background: #0f172a; }
+
+    /* ── Charges table rows ── */
+    .result-table tr.row-section-head td {
+      background: rgba(15,23,42,.6); color: #475569;
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; padding: .35rem .6rem;
+      border-bottom: 1px solid rgba(71,85,105,.2);
+    }
+    .result-table tr.row-net-profit td { color: #4ade80; font-weight: 700; border-top: 1px solid rgba(71,85,105,.3); }
+    .result-table tr.row-net-profit td.val { color: #4ade80; font-size: 1rem; }
+    .result-table tr.row-net-loss td { color: #f87171; font-weight: 700; border-top: 1px solid rgba(71,85,105,.3); }
+    .result-table tr.row-net-loss td.val { color: #f87171; font-size: 1rem; }
+    .result-table tr.row-subtotal td { color: #cbd5e1; border-top: 1px solid rgba(71,85,105,.2); }
+    .result-table tr.row-subtotal td.val { color: #f87171; }
+    .result-table .muted { color: #334155; font-size: .72rem; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+    /* ── Theme toggle button ── */
+    .theme-btn {
+      background: none;
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: .45rem;
+      color: #64748b;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .75rem;
+      transition: all .2s; flex-shrink: 0;
+      font-family: inherit;
+    }
+    .theme-btn:hover { color: #fbbf24; border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.07); }
+
+    /* ══════════════════════════════════════
+       LIGHT MODE OVERRIDES
+    ══════════════════════════════════════ */
+    body.light {
+      background-color: #f0f4f8;
+      color: #1e293b;
+    }
+    body.light ::-webkit-scrollbar-track { background: #f0f4f8; }
+    body.light ::-webkit-scrollbar-thumb { background: #e2e8f0; }
+    body.light ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+    /* Sidebar */
+    body.light .sidebar { background: #ffffff; border-right-color: rgba(0,0,0,.08); }
+    body.light .sidebar-logo { border-bottom-color: rgba(0,0,0,.07); }
+    body.light .sidebar-logo .back-link { color: #94a3b8; }
+    body.light .sidebar-logo .back-link:hover { color: #64748b; }
+    body.light .nav-group-label { color: #94a3b8; }
+    body.light .nav-item { color: #64748b; }
+    body.light .nav-item:hover { color: #1e293b; background: rgba(0,0,0,.04); }
+    body.light .nav-item.active { color: #1d4ed8; background: rgba(59,130,246,.08); border-left-color: #3b82f6; }
+    body.light .theme-btn { border-color: rgba(0,0,0,.15); color: #64748b; }
+    body.light .theme-btn:hover { color: #d97706; border-color: rgba(217,119,6,.3); background: rgba(217,119,6,.06); }
+
+    /* Mobile top bar */
+    body.light .mobile-topbar { background: #ffffff; border-bottom-color: rgba(0,0,0,.08); }
+    body.light .mobile-select { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
+
+    /* Main panel */
+    body.light .main-panel { background: #f0f4f8; }
+    body.light .section-header h1 { color: #1e293b; }
+    body.light .section-header p { color: #94a3b8; }
+
+    /* Cards & inputs */
+    body.light .card { background: #ffffff; border-color: rgba(0,0,0,.09); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    body.light .card:hover { border-color: rgba(59,130,246,.3); box-shadow: 0 4px 12px rgba(59,130,246,.08); }
+    body.light .calc-input { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
+    body.light .calc-input::placeholder { color: #cbd5e1; }
+    body.light .calc-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.1); }
+    body.light .calc-input[readonly] { background: #f8fafc; }
+    body.light .calc-select { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
+    body.light .calc-select option { background: #ffffff; color: #1e293b; }
+    body.light .calc-label { color: #64748b; }
+
+    /* Buttons */
+    body.light .btn-clear { background: rgba(0,0,0,.05); border-color: rgba(0,0,0,.1); color: #94a3b8; }
+    body.light .btn-clear:hover { background: rgba(0,0,0,.09); color: #64748b; }
+    body.light .btn-add { background: rgba(34,197,94,.08); border-color: rgba(34,197,94,.25); }
+    body.light .btn-remove { background: rgba(239,68,68,.07); border-color: rgba(239,68,68,.2); }
+
+    /* Segments & tabs */
+    body.light .seg-btn { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.1); color: #94a3b8; }
+    body.light .seg-btn:hover { color: #64748b; background: rgba(0,0,0,.07); }
+    body.light .seg-btn.active-seg { background: rgba(59,130,246,.1); border-color: rgba(59,130,246,.3); color: #1d4ed8; }
+    body.light .seg-btn.active-seg.seg-intra { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.3); color: #d97706; }
+    body.light .pct-tab { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.1); color: #94a3b8; }
+    body.light .pct-tab:hover { color: #64748b; }
+    body.light .pct-tab.active { background: rgba(59,130,246,.1); border-color: rgba(59,130,246,.3); color: #1d4ed8; }
+
+    /* Result boxes */
+    body.light .result-box { background: #f8fafc; border-color: rgba(59,130,246,.18); }
+    body.light .chip { background: #f8fafc; border-color: rgba(0,0,0,.08); }
+    body.light .chip .cl { color: #94a3b8; }
+    body.light .big-result .bs { color: #94a3b8; }
+
+    /* Tables */
+    body.light .result-table th { color: #94a3b8; border-bottom-color: rgba(0,0,0,.1); }
+    body.light .result-table td { color: #64748b; border-bottom-color: rgba(0,0,0,.06); }
+    body.light .result-table td.val { color: #1e293b; }
+    body.light .result-table tr.row-section-head td { background: rgba(0,0,0,.04); color: #94a3b8; border-bottom-color: rgba(0,0,0,.08); }
+    body.light .result-table tr.row-subtotal td { color: #334155; border-top-color: rgba(0,0,0,.1); }
+    body.light .result-table tr.row-subtotal td.val { color: #ef4444; }
+    body.light .muted { color: #94a3b8; }
+
+    /* Info & broker panels */
+    body.light .info-box { background: #f1f5f9; border-color: rgba(0,0,0,.08); color: #64748b; }
+    body.light .info-box h4 { color: #334155; }
+    body.light .info-box .formula { background: #e8eef5; border-color: rgba(99,102,241,.2); color: #4338ca; }
+    body.light .broker-panel { background: #f8fafc; border-color: rgba(59,130,246,.15); }
+    body.light #emi-nocost-note { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.2); }
+    body.light #bse-penny-wrap label { color: #ef4444; }
+
+    /* Toggle switch */
+    body.light .toggle-slider { background: rgba(0,0,0,.15); }
+    body.light .toggle-slider::before { background: #94a3b8; }
+    body.light .toggle-switch input:checked + .toggle-slider { background: rgba(59,130,246,.4); }
+    body.light .toggle-switch input:checked + .toggle-slider::before { background: #3b82f6; }
+    body.light .toggle-label { color: #64748b; }
+    body.light .toggle-label.on { color: #1d4ed8; }
+
+    /* Avg bars */
+    body.light .avg-bar-track { background: rgba(0,0,0,.08); }
+    body.light .avg-bar-label { color: #94a3b8; }
+    body.light .avg-bar-val { color: #64748b; }
+
+    /* Chip subtitle */
+    .chip .cs { font-size:.62rem; color:#334155; margin-top:.12rem; font-style:italic; }
+    body.light .chip .cs { color:#94a3b8; }
+
+    /* ── Mobile top bar (< 640px) ── */
+    .mobile-topbar {
+      display: none;
+      background: #0d1625;
+      border-bottom: 1px solid rgba(148,163,184,.08);
+      padding: .6rem 1rem;
+      align-items: center;
+      gap: .75rem;
+    }
+    .mobile-select {
+      flex: 1;
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(71,85,105,.35);
+      border-radius: .5rem;
+      color: #94a3b8;
+      font-size: .8rem;
+      padding: .4rem .7rem;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    @media (max-width: 639px) {
+      .sidebar { display: none; }
+      .mobile-topbar { display: flex; }
+      .main-panel { padding: 1.25rem 1rem; }
+      .field-grid.cols-4 { grid-template-columns: repeat(2,1fr); }
+      .field-grid.cols-3 { grid-template-columns: repeat(2,1fr); }
+      .chips.c4 { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile top bar -->
+<div class="mobile-topbar">
+  <a href="index.html" style="color:#475569;font-size:.75rem;text-decoration:none;white-space:nowrap">
+    <i class="fa-solid fa-arrow-left mr-1"></i>Back
+  </a>
+  <select class="mobile-select" onchange="showSection(this.value)">
+    <option value="profit-loss">📈 Stock Profit / Loss</option>
+    <option value="avg">⚖️ Stock Average</option>
+    <option value="sip">📊 SIP Calculator</option>
+    <option value="pct">% Percentage</option>
+    <option value="emi">💳 CC EMI Calculator</option>
+    <option value="cagr">🌱 CAGR Calculator</option>
+    <option value="homeloan">🏠 Home Loan</option>
+    <option value="carloan">🚗 Car Loan</option>
+    <option value="swp">💸 SWP Calculator</option>
+    <option value="lumpsum">🪙 Lumpsum Calculator</option>
+  </select>
+  <button class="theme-btn" id="theme-btn-mobile" onclick="toggleTheme()" title="Toggle light / dark">
+    <i id="theme-icon-mobile" class="fa-solid fa-sun"></i>
+  </button>
+</div>
+
+<div class="app-shell">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">
+        <div class="title">Finance Tools</div>
+        <button class="theme-btn" id="theme-btn-sidebar" onclick="toggleTheme()" title="Toggle light / dark">
+          <i id="theme-icon-sidebar" class="fa-solid fa-sun"></i>
+        </button>
+      </div>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left" style="font-size:.6rem"></i> Back to Portfolio</a>
+    </div>
+
+    <div class="nav-group-label">Stocks</div>
+    <div class="nav-item active" onclick="showSection('profit-loss')" data-section="profit-loss">
+      <span class="icon" style="background:rgba(34,197,94,.1);color:#4ade80"><i class="fa-solid fa-chart-line"></i></span>
+      Profit / Loss
+    </div>
+    <div class="nav-item" onclick="showSection('avg')" data-section="avg">
+      <span class="icon" style="background:rgba(139,92,246,.1);color:#c4b5fd"><i class="fa-solid fa-scale-balanced"></i></span>
+      Stock Average
+    </div>
+
+    <div class="nav-group-label">Mutual Funds</div>
+    <div class="nav-item" onclick="showSection('sip')" data-section="sip">
+      <span class="icon" style="background:rgba(59,130,246,.1);color:#93c5fd"><i class="fa-solid fa-arrow-trend-up"></i></span>
+      SIP Calculator
+    </div>
+    <div class="nav-item" onclick="showSection('swp')" data-section="swp">
+      <span class="icon" style="background:rgba(251,146,60,.1);color:#fb923c"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+      SWP Calculator
+    </div>
+    <div class="nav-item" onclick="showSection('lumpsum')" data-section="lumpsum">
+      <span class="icon" style="background:rgba(99,102,241,.1);color:#a5b4fc"><i class="fa-solid fa-coins"></i></span>
+      Lumpsum
+    </div>
+
+    <div class="nav-group-label">General</div>
+    <div class="nav-item" onclick="showSection('pct')" data-section="pct">
+      <span class="icon" style="background:rgba(245,158,11,.1);color:#fbbf24"><i class="fa-solid fa-percent"></i></span>
+      Percentage
+    </div>
+    <div class="nav-item" onclick="showSection('emi')" data-section="emi">
+      <span class="icon" style="background:rgba(239,68,68,.1);color:#f87171"><i class="fa-solid fa-credit-card"></i></span>
+      CC EMI Calculator
+    </div>
+    <div class="nav-item" onclick="showSection('cagr')" data-section="cagr">
+      <span class="icon" style="background:rgba(6,182,212,.1);color:#67e8f9"><i class="fa-solid fa-seedling"></i></span>
+      CAGR Calculator
+    </div>
+
+    <div class="nav-group-label">Loans</div>
+    <div class="nav-item" onclick="showSection('homeloan')" data-section="homeloan">
+      <span class="icon" style="background:rgba(34,197,94,.1);color:#4ade80"><i class="fa-solid fa-house"></i></span>
+      Home Loan
+    </div>
+    <div class="nav-item" onclick="showSection('carloan')" data-section="carloan">
+      <span class="icon" style="background:rgba(245,158,11,.1);color:#fbbf24"><i class="fa-solid fa-car"></i></span>
+      Car Loan
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN PANEL ═══ -->
+  <main class="main-panel">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 1. STOCK PROFIT / LOSS                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section active" id="section-profit-loss">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-chart-line mr-2" style="color:#4ade80;font-size:1.1rem"></i>Stock Profit / Loss</h1>
+        <p>Calculate realized gain or loss — with optional broker &amp; tax charges</p>
+      </div>
+
+      <div class="card">
+        <!-- Core inputs -->
+        <div class="field-grid cols-4">
+          <div>
+            <label class="calc-label" for="pl-owned">Stocks Owned</label>
+            <input class="calc-input" type="number" id="pl-owned" placeholder="100" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="pl-buy">Buy Price (₹)</label>
+            <input class="calc-input" type="number" id="pl-buy" placeholder="500" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="pl-sell">Current Price (₹)</label>
+            <input class="calc-input" type="number" id="pl-sell" placeholder="510" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="pl-qty">Stocks to Sell</label>
+            <input class="calc-input" type="number" id="pl-qty" placeholder="50" min="0" />
+          </div>
+        </div>
+
+        <!-- Broker charges toggle -->
+        <div class="toggle-wrap">
+          <label class="toggle-switch">
+            <input type="checkbox" id="pl-broker-toggle" onchange="toggleBrokerPanel()" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="pl-toggle-label" onclick="document.getElementById('pl-broker-toggle').click()">
+            Include Broker &amp; Tax Charges
+          </span>
+        </div>
+
+        <!-- Broker panel (hidden by default) -->
+        <div class="broker-panel" id="pl-broker-panel">
+
+          <!-- Row 1: Exchange + Trade Type -->
+          <div class="field-grid cols-2" style="margin-bottom:.75rem">
+            <div>
+              <label class="calc-label">Exchange</label>
+              <div class="seg-btn-row">
+                <div class="seg-btn active-seg" id="exch-nse" onclick="setExchange('NSE')">NSE</div>
+                <div class="seg-btn" id="exch-bse" onclick="setExchange('BSE')">BSE</div>
+              </div>
+              <!-- BSE penny stock -->
+              <div id="bse-penny-wrap" style="display:none;margin-top:.4rem">
+                <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.73rem;color:#f87171">
+                  <input type="checkbox" id="pl-penny" style="accent-color:#f87171" />
+                  Penny / Illiquid stock (X/Z group — 0.1% exchange fee)
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="calc-label">Trade Type</label>
+              <div class="seg-btn-row">
+                <div class="seg-btn active-seg" id="trade-delivery" onclick="setTradeType('delivery')">Delivery</div>
+                <div class="seg-btn" id="trade-intraday" onclick="setTradeType('intraday')">Intraday</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Broker -->
+          <div>
+            <label class="calc-label">Broker</label>
+            <select class="calc-select" id="pl-broker">
+              <option value="zerodha">Zerodha — ₹0 Delivery | Min(₹20, 0.03%) Intraday</option>
+              <option value="groww">Groww — Min(₹20, 0.1%) both</option>
+              <option value="angelone">Angel One — Min(₹20, 0.1%) both</option>
+              <option value="upstox">Upstox — Min(₹20, 2.5%) Delivery | Min(₹20, 0.05%) Intraday</option>
+              <option value="fivepaisa">5paisa — ₹20 flat both</option>
+              <option value="icici">ICICI Direct — 0.55% Delivery | 0.05% Intraday (min ₹35)</option>
+              <option value="hdfc">HDFC Securities — 0.32% Delivery | 0.04% Intraday (min ₹25)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcPL()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearPL()">Clear</button>
+        </div>
+
+        <div class="result-box" id="pl-result">
+          <table class="result-table">
+            <thead><tr><th>Description</th><th>Calculation</th><th style="text-align:right">Value (₹)</th></tr></thead>
+            <tbody id="pl-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box" id="pl-info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#4ade80"></i>How it works</h4>
+        <ul>
+          <li><strong>Initial Purchase Value</strong> — Owned × Buy Price</li>
+          <li><strong>Current Shares Value</strong> — Owned × Current Price</li>
+          <li><strong>Current Sale Value</strong> — Sell Qty × Current Price</li>
+          <li><strong>Remaining Shares Value</strong> — (Owned − Sell Qty) × Current Price</li>
+          <li><strong>Profit / Loss</strong> — (Current Price − Buy Price) × Sell Qty</li>
+        </ul>
+        <div id="pl-charges-info" style="display:none;margin-top:.75rem;border-top:1px solid rgba(71,85,105,.2);padding-top:.75rem">
+          <h4 style="margin-bottom:.4rem"><i class="fa-solid fa-receipt mr-1" style="color:#93c5fd"></i>Statutory Charges Applied</h4>
+          <ul>
+            <li><strong>STT (Delivery)</strong> — 0.1% on both buy &amp; sell value</li>
+            <li><strong>STT (Intraday)</strong> — 0.025% on sell value only</li>
+            <li><strong>Exchange Fee NSE</strong> — 0.00297% of total turnover | <strong>BSE</strong> — 0.00275%</li>
+            <li><strong>Stamp Duty (Delivery)</strong> — 0.015% on buy value | <strong>Intraday</strong> — 0.003%</li>
+            <li><strong>SEBI Fee</strong> — 0.000075% (₹7.50/crore) on total turnover</li>
+            <li><strong>DP Charges (Delivery sell)</strong> — ₹15.93 per company per day</li>
+            <li><strong>GST</strong> — 18% on Brokerage + Exchange Fee + SEBI Fee only</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 2. STOCK AVERAGE                          -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-avg">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-scale-balanced mr-2" style="color:#c4b5fd;font-size:1.1rem"></i>Stock Average Calculator</h1>
+        <p>Average down / up across multiple purchases</p>
+      </div>
+
+      <div class="card">
+        <div id="avg-purchases"></div>
+        <div class="btn-row" style="margin-bottom:.85rem">
+          <button class="btn-add" onclick="addAvgRow()"><i class="fa-solid fa-plus mr-1"></i>Add Purchase</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcAvg()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearAvg()">Clear</button>
+        </div>
+        <div class="result-box" id="avg-result">
+          <div class="chips c4" id="avg-chips"></div>
+          <div id="avg-bars"></div>
+          <table class="result-table" style="margin-top:.5rem">
+            <thead><tr><th>Purchase</th><th style="text-align:right">Units</th><th style="text-align:right">Price (₹)</th><th style="text-align:right">Amount (₹)</th></tr></thead>
+            <tbody id="avg-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#c4b5fd"></i>Stock Average Calculator</h4>
+        <p>When a stock drops below your buy price, adding more shares lowers your average cost — called <em>averaging down</em>.</p>
+        <div class="formula">Average Price = Total Amount Invested ÷ Total Units</div>
+        <ul>
+          <li>Add as many purchases as needed</li>
+          <li>Calculator computes the weighted average price</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 3. SIP                                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-sip">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-arrow-trend-up mr-2" style="color:#93c5fd;font-size:1.1rem"></i>SIP Calculator</h1>
+        <p>Systematic Investment Plan — with optional yearly step-up</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-4">
+          <div>
+            <label class="calc-label" for="sip-amount">Monthly Investment (₹)</label>
+            <input class="calc-input" type="number" id="sip-amount" placeholder="5000" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="sip-years">Period (Years)</label>
+            <input class="calc-input" type="number" id="sip-years" placeholder="5" min="1" />
+          </div>
+          <div>
+            <label class="calc-label" for="sip-rate">Annual Return (%)</label>
+            <input class="calc-input" type="number" id="sip-rate" placeholder="15" min="0" step="0.1" />
+          </div>
+          <div>
+            <label class="calc-label" for="sip-stepup">Step-up % / year</label>
+            <input class="calc-input" type="number" id="sip-stepup" placeholder="5 (optional)" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcSIP()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearSIP()">Clear</button>
+        </div>
+        <div class="result-box" id="sip-result">
+          <div class="chips c3">
+            <div class="chip"><div class="cv" id="sip-expected" style="color:#93c5fd">—</div><div class="cl">Expected Amount</div></div>
+            <div class="chip"><div class="cv" id="sip-invested" style="color:#94a3b8">—</div><div class="cl">Amount Invested</div></div>
+            <div class="chip"><div class="cv" id="sip-gain" style="color:#4ade80">—</div><div class="cl">Total Gain</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#93c5fd"></i>What is SIP?</h4>
+        <p>Invest a fixed amount monthly in a mutual fund. Benefits: rupee cost averaging, power of compounding, step-up SIP boosts corpus significantly.</p>
+        <div class="formula">Monthly Rate r = Annual% / 12 / 100<br>FV = P × [((1+r)^n − 1) / r] × (1+r)<br>Step-up: monthly amount increases by step-up% each year</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 4. PERCENTAGE                             -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-pct">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-percent mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Percentage Calculator</h1>
+        <p>Four common percentage operations</p>
+      </div>
+
+      <div class="card">
+        <div class="tab-row">
+          <button class="pct-tab active" onclick="switchPct(0,this)">X% of Y</button>
+          <button class="pct-tab" onclick="switchPct(1,this)">X is what % of Y</button>
+          <button class="pct-tab" onclick="switchPct(2,this)">% Change</button>
+          <button class="pct-tab" onclick="switchPct(3,this)">% Increase / Decrease</button>
+        </div>
+
+        <div id="pct-panel-0">
+          <div class="field-grid cols-2" style="max-width:340px">
+            <div>
+              <label class="calc-label">Percentage (%)</label>
+              <input class="calc-input" type="number" id="pct0-x" placeholder="e.g. 500" />
+            </div>
+            <div>
+              <label class="calc-label">Of Number</label>
+              <input class="calc-input" type="number" id="pct0-y" placeholder="e.g. 5" />
+            </div>
+          </div>
+        </div>
+
+        <div id="pct-panel-1" style="display:none">
+          <div class="field-grid cols-2" style="max-width:340px">
+            <div>
+              <label class="calc-label">Value (X)</label>
+              <input class="calc-input" type="number" id="pct1-x" placeholder="e.g. 25" />
+            </div>
+            <div>
+              <label class="calc-label">Total (Y)</label>
+              <input class="calc-input" type="number" id="pct1-y" placeholder="e.g. 200" />
+            </div>
+          </div>
+        </div>
+
+        <div id="pct-panel-2" style="display:none">
+          <div class="field-grid cols-2" style="max-width:340px">
+            <div>
+              <label class="calc-label">Old Value</label>
+              <input class="calc-input" type="number" id="pct2-old" placeholder="e.g. 500" />
+            </div>
+            <div>
+              <label class="calc-label">New Value</label>
+              <input class="calc-input" type="number" id="pct2-new" placeholder="e.g. 550" />
+            </div>
+          </div>
+        </div>
+
+        <div id="pct-panel-3" style="display:none">
+          <div class="field-grid cols-2" style="max-width:340px">
+            <div>
+              <label class="calc-label">Original Value</label>
+              <input class="calc-input" type="number" id="pct3-base" placeholder="e.g. 1000" />
+            </div>
+            <div>
+              <label class="calc-label">Percentage (%)</label>
+              <input class="calc-input" type="number" id="pct3-pct" placeholder="e.g. 10" />
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcPct()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearPct()">Clear</button>
+        </div>
+        <div class="result-box" id="pct-result">
+          <div class="big-result">
+            <div class="bv" id="pct-answer" style="color:#fbbf24">—</div>
+            <div class="bs" id="pct-sub"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#fbbf24"></i>Modes</h4>
+        <ul>
+          <li><strong>X% of Y</strong> — e.g. 500% of 5 = 25</li>
+          <li><strong>X is what % of Y</strong> — e.g. 25 of 200 = 12.5%</li>
+          <li><strong>% Change</strong> — percentage change between two values</li>
+          <li><strong>% Increase / Decrease</strong> — value after applying a percentage</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 5. EMI                                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-emi">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-credit-card mr-2" style="color:#f87171;font-size:1.1rem"></i>Credit Card EMI Calculator</h1>
+        <p>Standard &amp; No-Cost EMI — with GST, processing fee, and foreclosure</p>
+      </div>
+
+      <div class="card">
+
+        <!-- EMI Type -->
+        <div style="margin-bottom:1rem">
+          <label class="calc-label">EMI Type</label>
+          <div class="seg-btn-row" style="max-width:320px">
+            <div class="seg-btn active-seg" id="emi-type-standard" onclick="setEmiType('standard')">Standard EMI</div>
+            <div class="seg-btn" id="emi-type-nocost" onclick="setEmiType('nocost')">No-Cost EMI</div>
+          </div>
+          <div id="emi-nocost-note" style="display:none;margin-top:.5rem;padding:.5rem .75rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);border-radius:.5rem;font-size:.75rem;color:#fbbf24">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+            No-Cost EMI: merchant discounts product price by total interest. Bank still charges GST on interest every month — you pay slightly more than sticker price.
+          </div>
+        </div>
+
+        <!-- Bank + EMI subtype -->
+        <div class="field-grid cols-2" style="margin-bottom:.85rem">
+          <div>
+            <label class="calc-label">Bank</label>
+            <select class="calc-select" id="emi-bank" onchange="onBankChange()">
+              <option value="custom">Custom / Other</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="sbi">SBI Card</option>
+              <option value="icici">ICICI Bank</option>
+              <option value="axis">Axis Bank</option>
+              <option value="kotak">Kotak Mahindra Bank</option>
+              <option value="rbl">RBL Bank</option>
+              <option value="idfc">IDFC First Bank</option>
+              <option value="amex">Amex India</option>
+            </select>
+          </div>
+          <div>
+            <label class="calc-label">EMI Subtype</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="emi-sub-merchant" onclick="setEmiSub('merchant')">Merchant EMI</div>
+              <div class="seg-btn" id="emi-sub-post" onclick="setEmiSub('post')">Post-Purchase</div>
+            </div>
+            <div style="font-size:.68rem;color:#334155;margin-top:.3rem" id="emi-bank-hint">Select bank to auto-fill rates</div>
+          </div>
+        </div>
+
+        <!-- Core inputs -->
+        <div class="field-grid cols-4" style="margin-bottom:.85rem;grid-template-columns:1fr 0.8fr 1.4fr 1fr">
+          <div>
+            <label class="calc-label" for="emi-amount">Purchase Amount (₹)</label>
+            <input class="calc-input" type="number" id="emi-amount" placeholder="30000" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="emi-tenure">Tenure</label>
+            <select class="calc-select" id="emi-tenure">
+              <option value="3">3 months</option>
+              <option value="6">6 months</option>
+              <option value="9">9 months</option>
+              <option value="12">12 months</option>
+              <option value="18">18 months</option>
+              <option value="24">24 months</option>
+            </select>
+          </div>
+          <div>
+            <label class="calc-label" for="emi-rate">Annual Interest Rate (%)</label>
+            <input class="calc-input" type="number" id="emi-rate" placeholder="15" min="0" step="0.01" />
+          </div>
+          <div>
+            <label class="calc-label" for="emi-procfee">Processing Fee (₹)</label>
+            <input class="calc-input" type="number" id="emi-procfee" placeholder="199" min="0" />
+          </div>
+        </div>
+
+        <!-- Foreclosure toggle -->
+        <div class="toggle-wrap" style="margin-bottom:.75rem">
+          <label class="toggle-switch">
+            <input type="checkbox" id="emi-fc-toggle" onchange="toggleForeclosure()" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="emi-fc-label" onclick="document.getElementById('emi-fc-toggle').click()">
+            Pre-closure / Foreclosure
+          </span>
+        </div>
+        <div id="emi-fc-panel" style="display:none;margin-bottom:.85rem">
+          <div class="field-grid cols-2" style="max-width:360px">
+            <div>
+              <label class="calc-label" for="emi-fc-month">Foreclose After Month</label>
+              <input class="calc-input" type="number" id="emi-fc-month" placeholder="e.g. 2" min="1" />
+            </div>
+            <div>
+              <label class="calc-label" for="emi-fc-pct">Foreclosure Fee (%)</label>
+              <input class="calc-input" type="number" id="emi-fc-pct" placeholder="3" min="0" step="0.1" value="3" />
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcEMI()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearEMI()">Clear</button>
+        </div>
+
+        <!-- Summary chips -->
+        <div class="result-box" id="emi-result">
+          <div class="chips c4" style="margin-bottom:1rem" id="emi-chips">
+            <div class="chip"><div class="cv" id="ec-principal" style="color:#94a3b8">—</div><div class="cl">Principal</div></div>
+            <div class="chip"><div class="cv" id="ec-interest" style="color:#f87171">—</div><div class="cl">Total Interest</div></div>
+            <div class="chip"><div class="cv" id="ec-gst" style="color:#f87171">—</div><div class="cl">Total GST</div></div>
+            <div class="chip"><div class="cv" id="ec-proc" style="color:#f87171">—</div><div class="cl">Processing + GST</div></div>
+            <div class="chip"><div class="cv" id="ec-total" style="color:#fbbf24">—</div><div class="cl">Total Cost</div></div>
+            <div class="chip"><div class="cv" id="ec-extra" style="color:#f87171">—</div><div class="cl">Extra vs Sticker</div></div>
+            <div class="chip" id="ec-fc-chip" style="display:none"><div class="cv" id="ec-fc" style="color:#fb923c">—</div><div class="cl">Foreclosure Cost</div></div>
+            <div class="chip"><div class="cv" id="ec-baseemi" style="color:#93c5fd">—</div><div class="cl">Base EMI / Month</div></div>
+          </div>
+          <!-- Month-by-month table -->
+          <div style="overflow-x:auto">
+            <table class="result-table" id="emi-schedule-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th style="text-align:right">Opening (₹)</th>
+                  <th style="text-align:right">Interest (₹)</th>
+                  <th style="text-align:right">GST on Interest</th>
+                  <th style="text-align:right">Principal Paid</th>
+                  <th style="text-align:right">One-time Charges</th>
+                  <th style="text-align:right">You Pay (₹)</th>
+                  <th style="text-align:right">Closing (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="emi-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#f87171"></i>Credit Card EMI — Key Rules</h4>
+        <ul>
+          <li><strong>GST 18%</strong> applies to interest and processing fee every month — never on principal</li>
+          <li><strong>No-Cost EMI</strong>: merchant discounts price by total interest → you still pay GST on that interest</li>
+          <li><strong>Processing fee</strong> is a one-time charge on your first statement</li>
+          <li><strong>Foreclosure fee</strong> (2–3%) + 18% GST applies if you close EMI early</li>
+          <li><strong>Miss a payment?</strong> The entire balance reverts to revolving credit rate (36–42% p.a.)</li>
+        </ul>
+        <div id="emi-bank-rates-box" style="display:none;margin-top:.75rem;border-top:1px solid rgba(71,85,105,.2);padding-top:.75rem">
+          <h4 style="margin-bottom:.3rem"><i class="fa-solid fa-table mr-1" style="color:#93c5fd"></i>Bank Rate Reference</h4>
+          <div id="emi-bank-rates-content" style="font-size:.75rem;color:#64748b"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 6. CAGR                                   -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-cagr">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-seedling mr-2" style="color:#67e8f9;font-size:1.1rem"></i>CAGR Calculator</h1>
+        <p>Compound Annual Growth Rate of an investment</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-3">
+          <div>
+            <label class="calc-label" for="cagr-initial">Initial Value (₹)</label>
+            <input class="calc-input" type="number" id="cagr-initial" placeholder="5000" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="cagr-final">Final Value (₹)</label>
+            <input class="calc-input" type="number" id="cagr-final" placeholder="5500" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="cagr-years">Years</label>
+            <input class="calc-input" type="number" id="cagr-years" placeholder="5" min="0.5" step="0.5" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcCAGR()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearCAGR()">Clear</button>
+        </div>
+        <div class="result-box" id="cagr-result">
+          <div class="big-result">
+            <div class="bv" id="cagr-answer" style="color:#67e8f9">—</div>
+            <div class="bs">Compound Annual Growth Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#67e8f9"></i>CAGR Formula</h4>
+        <div class="formula">CAGR = (Final Value / Initial Value) ^ (1 / Years) − 1</div>
+        <p>CAGR smooths year-to-year volatility. Ideal for comparing long-term investment performance across different assets.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 7. SWP                                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-swp">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-hand-holding-dollar mr-2" style="color:#fb923c;font-size:1.1rem"></i>SWP Calculator</h1>
+        <p>Systematic Withdrawal Plan — monthly income from a corpus</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-4" style="grid-template-columns:1fr 1.2fr 1.4fr 0.9fr">
+          <div>
+            <label class="calc-label" for="swp-initial">Initial Investment (₹)</label>
+            <input class="calc-input" type="number" id="swp-initial" placeholder="15000" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="swp-withdraw">Monthly Withdrawal (₹)</label>
+            <input class="calc-input" type="number" id="swp-withdraw" placeholder="200" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="swp-rate">Annual Interest Rate (%)</label>
+            <input class="calc-input" type="number" id="swp-rate" placeholder="7" min="0" step="0.1" />
+          </div>
+          <div>
+            <label class="calc-label" for="swp-months">Number of Months</label>
+            <input class="calc-input" type="number" id="swp-months" placeholder="5" min="1" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcSWP()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearSWP()">Clear</button>
+        </div>
+        <div class="result-box" id="swp-result">
+          <div class="chips c2">
+            <div class="chip"><div class="cv" id="swp-final" style="color:#fb923c">—</div><div class="cl">Final Value</div></div>
+            <div class="chip"><div class="cv" id="swp-withdrawn" style="color:#94a3b8">—</div><div class="cl">Total Withdrawn</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#fb923c"></i>How SWP Works</h4>
+        <div class="formula">Each month: Balance = Balance × (1 + r/12) − Withdrawal<br>r = Annual Rate / 100</div>
+        <p>If monthly returns exceed your withdrawal, corpus grows. If withdrawal exceeds returns, corpus depletes over time.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 8. LUMPSUM                                -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-lumpsum">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-coins mr-2" style="color:#a5b4fc;font-size:1.1rem"></i>Lumpsum Calculator</h1>
+        <p>One-time investment growth projection</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-3">
+          <div>
+            <label class="calc-label" for="ls-amount">Total Investment (₹)</label>
+            <input class="calc-input" type="number" id="ls-amount" placeholder="177500" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="ls-rate">Return Rate p.a. (%)</label>
+            <input class="calc-input" type="number" id="ls-rate" placeholder="12" min="0" step="0.1" />
+          </div>
+          <div>
+            <label class="calc-label" for="ls-months">Time Period (Months)</label>
+            <input class="calc-input" type="number" id="ls-months" placeholder="60" min="1" />
+            <div class="text-xs mt-1" id="ls-years-label" style="color:#334155;padding-left:.2rem"></div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcLumpsum()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearLumpsum()">Clear</button>
+        </div>
+        <div class="result-box" id="ls-result">
+          <div class="chips c3">
+            <div class="chip"><div class="cv" id="ls-invested" style="color:#94a3b8">—</div><div class="cl">Invested Amount</div></div>
+            <div class="chip"><div class="cv" id="ls-returns" style="color:#4ade80">—</div><div class="cl">Est. Returns</div></div>
+            <div class="chip"><div class="cv" id="ls-total" style="color:#a5b4fc">—</div><div class="cl">Total Value</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#a5b4fc"></i>What is Lumpsum?</h4>
+        <div class="formula">Future Value = P × (1 + r)^t<br>P = Investment  |  r = Annual Rate / 100  |  t = Years (Months / 12)</div>
+        <p>A single lump-sum investment compounded annually. Works best when markets are near a low. For disciplined periodic investing, SIP is generally preferred.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- HOME LOAN CALCULATOR                      -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-homeloan">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-house mr-2" style="color:#4ade80;font-size:1.1rem"></i>Home Loan Calculator</h1>
+        <p>EMI · Amortization · Upfront costs · Extra EMI savings — Indian market</p>
+      </div>
+
+      <!-- Card 1: Loan Details -->
+      <div class="card" style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Loan Details</div>
+        <div class="field-grid cols-3" style="margin-bottom:.85rem">
+          <div>
+            <label class="calc-label" for="hl-propval">Property Value (₹)</label>
+            <input class="calc-input" type="number" id="hl-propval" placeholder="2500000" min="0" oninput="hlAutoLoan()" />
+          </div>
+          <div>
+            <label class="calc-label" for="hl-down">Down Payment (₹)</label>
+            <input class="calc-input" type="number" id="hl-down" placeholder="500000" min="0" oninput="hlAutoLoan()" />
+          </div>
+          <div>
+            <label class="calc-label">Loan Amount (₹) — auto</label>
+            <input class="calc-input" type="number" id="hl-loan" placeholder="2000000" min="0" style="color:#93c5fd;background:rgba(10,18,35,.9)" readonly />
+          </div>
+        </div>
+        <div class="field-grid cols-4" style="margin-bottom:.85rem;grid-template-columns:1.3fr 0.8fr 1fr 1.2fr">
+          <div>
+            <label class="calc-label" for="hl-rate">Annual Interest Rate (%)</label>
+            <input class="calc-input" type="number" id="hl-rate" placeholder="7.5" min="0" step="0.05" />
+          </div>
+          <div>
+            <label class="calc-label" for="hl-tenure">Tenure (Years)</label>
+            <input class="calc-input" type="number" id="hl-tenure" placeholder="25" min="1" max="30" />
+          </div>
+          <div>
+            <label class="calc-label" for="hl-extraemi">Extra EMI / Year</label>
+            <input class="calc-input" type="number" id="hl-extraemi" placeholder="0" min="0" max="12" step="1" value="0" />
+          </div>
+          <div>
+            <label class="calc-label">Loan Start (Month / Year)</label>
+            <div style="display:flex;gap:.4rem">
+              <select class="calc-select" id="hl-startm" style="flex:1.2">
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select>
+              <input class="calc-input" type="number" id="hl-starty" placeholder="2025" min="2000" max="2050" style="flex:1;text-align:center" />
+            </div>
+          </div>
+        </div>
+
+        <!-- EMI Hike toggle -->
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <div class="toggle-wrap" style="margin-bottom:0">
+            <label class="toggle-switch">
+              <input type="checkbox" id="hl-hike-toggle" onchange="hlHikeToggle()" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="hl-hike-label" onclick="document.getElementById('hl-hike-toggle').click()">
+              Hike EMI every year by
+            </span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.4rem">
+            <input class="calc-input" type="number" id="hl-hikepct" placeholder="5" min="0.1" max="50" step="0.5"
+              style="width:80px;opacity:.4;pointer-events:none" />
+            <span style="font-size:.78rem;color:#64748b">% per year</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Bank & Charges -->
+      <div class="card" style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Bank & Charges</div>
+        <div class="field-grid cols-4" style="margin-bottom:.85rem;grid-template-columns:1.2fr 1fr 1fr 1fr">
+          <div>
+            <label class="calc-label">Bank</label>
+            <select class="calc-select" id="hl-bank" onchange="hlBankChange()">
+              <option value="custom">Custom / Other</option>
+              <option value="sbi">SBI</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="icici">ICICI Bank</option>
+              <option value="axis">Axis Bank</option>
+              <option value="bob">Bank of Baroda</option>
+              <option value="lic">LIC Housing Finance</option>
+            </select>
+          </div>
+          <div>
+            <label class="calc-label">Borrower Type</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="hl-sal" onclick="setHLBorrower('sal')">Salaried</div>
+              <div class="seg-btn" id="hl-self" onclick="setHLBorrower('self')">Self-Emp</div>
+            </div>
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem">Affects processing fee only · Rates as of May 2026</div>
+          </div>
+          <div>
+            <label class="calc-label" for="hl-procfee">Processing Fee (₹)</label>
+            <input class="calc-input" type="number" id="hl-procfee" placeholder="10000" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="hl-legal">Tech &amp; Legal Fee (₹)</label>
+            <input class="calc-input" type="number" id="hl-legal" placeholder="3500" value="3500" min="0" />
+          </div>
+        </div>
+        <div class="field-grid cols-4" style="grid-template-columns:1.2fr 1fr 0.85fr 1.4fr">
+          <div>
+            <label class="calc-label">State</label>
+            <select class="calc-select" id="hl-state" onchange="hlStampUpdate()">
+              <option value="">-- Select State --</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="AS">Assam</option>
+              <option value="BR">Bihar</option>
+              <option value="CG">Chhattisgarh</option>
+              <option value="DL">Delhi</option>
+              <option value="GA">Goa</option>
+              <option value="GJ">Gujarat</option>
+              <option value="HR">Haryana</option>
+              <option value="HP">Himachal Pradesh</option>
+              <option value="JH">Jharkhand</option>
+              <option value="KA">Karnataka</option>
+              <option value="KL">Kerala</option>
+              <option value="MP">Madhya Pradesh</option>
+              <option value="MH">Maharashtra</option>
+              <option value="OD">Odisha</option>
+              <option value="PB">Punjab</option>
+              <option value="RJ">Rajasthan</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="TG">Telangana</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="UK">Uttarakhand</option>
+              <option value="WB">West Bengal</option>
+            </select>
+          </div>
+          <div>
+            <label class="calc-label">Borrower Gender</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="hl-male" onclick="setHLGender('m')">Male</div>
+              <div class="seg-btn" id="hl-female" onclick="setHLGender('f')">Female</div>
+              <div class="seg-btn" id="hl-joint" onclick="setHLGender('j')">Joint</div>
+            </div>
+            <div id="hl-stamp-hint" style="font-size:.67rem;color:#475569;margin-top:.3rem"></div>
+          </div>
+          <div>
+            <label class="calc-label" for="hl-modt">MODT (% of loan)</label>
+            <input class="calc-input" type="number" id="hl-modt" placeholder="0.1" value="0.1" min="0" step="0.05" />
+          </div>
+          <div>
+            <label class="calc-label" for="hl-insurance">Home Insurance (% p.a.)</label>
+            <input class="calc-input" type="number" id="hl-insurance" placeholder="0.075" value="0.075" min="0" step="0.005" />
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;margin-bottom:.25rem">
+        <div class="btn-row" style="margin-bottom:0">
+          <button class="btn-calc" onclick="calcHomeLoan()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearHomeLoan()">Clear</button>
+        </div>
+        <button class="btn-calc" onclick="exportHLExcel()" style="background:linear-gradient(135deg,#16a34a,#15803d);font-size:.8rem">
+          <i class="fa-solid fa-file-excel mr-1"></i>Export to Excel
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="result-box" id="hl-result">
+
+        <!-- KPI Row 1: EMI & Timeline -->
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">EMI &amp; Timeline</div>
+        <div class="chips c4" style="margin-bottom:.85rem">
+          <div class="chip"><div class="cv" id="hl-k-emi" style="color:#93c5fd">—</div><div class="cs" id="hl-k-emi-s"></div><div class="cl">EMI / Month</div></div>
+          <div class="chip"><div class="cv" id="hl-k-start" style="color:#94a3b8">—</div><div class="cl">EMI Starts</div></div>
+          <div class="chip"><div class="cv" id="hl-k-origend" style="color:#64748b">—</div><div class="cl">Original End</div></div>
+          <div class="chip" id="hl-k-actend-chip"><div class="cv" id="hl-k-actend" style="color:#4ade80">—</div><div class="cl" id="hl-k-actend-l">Actual End</div></div>
+        </div>
+
+        <!-- KPI Row 2: Savings -->
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Savings (Extra EMI Impact)</div>
+        <div class="chips c4" style="margin-bottom:.85rem">
+          <div class="chip" id="hl-k-saved-chip"><div class="cv" id="hl-k-saved" style="color:#4ade80">—</div><div class="cl">Time Saved</div></div>
+          <div class="chip" id="hl-k-prepay-chip"><div class="cv" id="hl-k-prepay" style="color:#fbbf24">—</div><div class="cs" id="hl-k-prepay-s"></div><div class="cl">Total Prepayment Done</div></div>
+          <div class="chip" id="hl-k-isaved-chip"><div class="cv" id="hl-k-isaved" style="color:#4ade80">—</div><div class="cs" id="hl-k-isaved-s"></div><div class="cl">Interest Saved</div></div>
+          <div class="chip"><div class="cv" id="hl-k-totalcost" style="color:#f87171">—</div><div class="cs" id="hl-k-totalcost-s"></div><div class="cl" id="hl-k-totalcost-l">Total Cost</div></div>
+        </div>
+
+        <!-- KPI Row 3: Totals -->
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Loan Totals</div>
+        <div class="chips c4" style="margin-bottom:1.2rem">
+          <div class="chip"><div class="cv" id="hl-k-principal" style="color:#94a3b8">—</div><div class="cs" id="hl-k-principal-s"></div><div class="cl">Principal</div></div>
+          <div class="chip"><div class="cv" id="hl-k-interest" style="color:#f87171">—</div><div class="cs" id="hl-k-interest-s"></div><div class="cl">Total Interest</div></div>
+          <div class="chip"><div class="cv" id="hl-k-upfront" style="color:#fb923c">—</div><div class="cs" id="hl-k-upfront-s"></div><div class="cl">Total Upfront</div></div>
+          <div class="chip"><div class="cv" id="hl-k-grandtotal" style="color:#f87171">—</div><div class="cs" id="hl-k-grandtotal-s"></div><div class="cl">Grand Total (Cost of Ownership)</div></div>
+        </div>
+
+        <!-- Upfront breakdown -->
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Upfront Charges Breakdown</div>
+        <table class="result-table" style="margin-bottom:1.2rem">
+          <thead><tr><th>Charge</th><th>Basis</th><th style="text-align:right">Amount (₹)</th></tr></thead>
+          <tbody id="hl-upfront-tbody"></tbody>
+        </table>
+
+        <!-- Export note -->
+        <div style="font-size:.65rem;color:#475569;margin-bottom:1rem">
+          <i class="fa-solid fa-circle-info mr-1"></i>Inputs sheet has live formulas · Amortization is pre-computed (re-export to refresh)
+        </div>
+
+        <!-- Year-wise table -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em">Amortization Schedule — Year-wise</div>
+          <button class="pct-tab" id="hl-toggle-monthly" onclick="hlToggleMonthly()" style="font-size:.68rem">Show Month-by-Month</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="result-table" id="hl-year-table">
+            <thead id="hl-year-thead"></thead>
+            <tbody id="hl-year-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Month-by-month (hidden by default) -->
+        <div id="hl-monthly-wrap" style="display:none;margin-top:1rem;overflow-x:auto">
+          <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Month-by-Month Schedule</div>
+          <table class="result-table">
+            <thead id="hl-month-thead"></thead>
+            <tbody id="hl-month-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Penalty reference -->
+        <div class="info-box" style="margin-top:1rem">
+          <h4><i class="fa-solid fa-triangle-exclamation mr-1" style="color:#fbbf24"></i>Penalty &amp; Operational Charges (Reference)</h4>
+          <ul>
+            <li><strong>Late EMI penalty</strong> — 18–24% p.a. on overdue instalment amount</li>
+            <li><strong>NACH / ECS bounce</strong> — ₹450–550 + 18% GST per instance</li>
+            <li><strong>Rate switch / conversion</strong> — 0.25–0.50% of outstanding principal</li>
+            <li><strong>Document retrieval delay</strong> — ₹5,000 per month beyond deadline</li>
+            <li><strong>Floating rate foreclosure</strong> — NIL (RBI mandate for individual borrowers)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- CAR LOAN CALCULATOR                       -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-carloan">
+      <div class="section-header">
+        <h1><i class="fa-solid fa-car mr-2" style="color:#fbbf24;font-size:1.1rem"></i>Car Loan Calculator</h1>
+        <p>ICE &amp; EV · State RTO · On-road price · EMI · Extra EMI · Hike · Foreclosure</p>
+      </div>
+
+      <!-- Card 1: Vehicle -->
+      <div class="card" style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Vehicle Details</div>
+        <div class="field-grid cols-3" style="margin-bottom:.85rem">
+          <div>
+            <label class="calc-label" for="cl-exshow">Ex-Showroom Price (₹)</label>
+            <input class="calc-input" type="number" id="cl-exshow" placeholder="1500000" min="0" oninput="clInsUpdate()" />
+          </div>
+          <div>
+            <label class="calc-label" for="cl-disc">Showroom Discount (₹)</label>
+            <input class="calc-input" type="number" id="cl-disc" placeholder="0" min="0" value="0" oninput="clAutoCalcLoan()" />
+          </div>
+          <div>
+            <label class="calc-label">Invoice Value (₹) — auto</label>
+            <input class="calc-input" type="number" id="cl-invoice" readonly style="color:#93c5fd;background:rgba(10,18,35,.9)" />
+          </div>
+        </div>
+        <div class="field-grid cols-2">
+          <div>
+            <label class="calc-label">Fuel / Powertrain</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="cl-fuel-p"   onclick="setClFuel('p')">Petrol</div>
+              <div class="seg-btn"            id="cl-fuel-d"   onclick="setClFuel('d')">Diesel</div>
+              <div class="seg-btn"            id="cl-fuel-ev"  onclick="setClFuel('ev')">EV</div>
+              <div class="seg-btn"            id="cl-fuel-cng" onclick="setClFuel('cng')">CNG</div>
+            </div>
+          </div>
+          <div>
+            <label class="calc-label">Registration Type</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="cl-reg-ind"  onclick="setClReg('ind')">Individual</div>
+              <div class="seg-btn"            id="cl-reg-corp" onclick="setClReg('corp')">Corporate</div>
+            </div>
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem">Corporate RTO = 1.5–2× individual rate · Rates as of May 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: State & Charges -->
+      <div class="card" style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">State &amp; On-Road Charges</div>
+        <div class="field-grid cols-4" style="margin-bottom:.85rem;grid-template-columns:1.3fr 1fr 1.2fr 1fr">
+          <div>
+            <label class="calc-label">State</label>
+            <select class="calc-select" id="cl-state" onchange="clRTOUpdate();clAutoCalcLoan()">
+              <option value="">-- Select State --</option>
+              <option value="AP">Andhra Pradesh</option><option value="AS">Assam</option>
+              <option value="BR">Bihar</option><option value="CG">Chhattisgarh</option>
+              <option value="DL">Delhi</option><option value="GA">Goa</option>
+              <option value="GJ">Gujarat</option><option value="HR">Haryana</option>
+              <option value="HP">Himachal Pradesh</option><option value="JH">Jharkhand</option>
+              <option value="KA">Karnataka</option><option value="KL">Kerala</option>
+              <option value="MP">Madhya Pradesh</option><option value="MH">Maharashtra</option>
+              <option value="OD">Odisha</option><option value="PB">Punjab</option>
+              <option value="RJ">Rajasthan</option><option value="TN">Tamil Nadu</option>
+              <option value="TG">Telangana</option><option value="UP">Uttar Pradesh</option>
+              <option value="UK">Uttarakhand</option><option value="WB">West Bengal</option>
+            </select>
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem" id="cl-rto-hint"></div>
+          </div>
+          <div>
+            <label class="calc-label" for="cl-rto">RTO Road Tax (%)</label>
+            <input class="calc-input" type="number" id="cl-rto" placeholder="auto" min="0" step="0.5" oninput="clAutoCalcLoan()" />
+          </div>
+          <!-- Insurance replaced by structured breakdown below -->
+          <div style="display:none"><input id="cl-insurance-pct" value="0" /></div>
+          <div>
+            <label class="calc-label" for="cl-hypo">Hypothecation (₹)</label>
+            <input class="calc-input" type="number" id="cl-hypo" placeholder="1500" value="1500" min="0" oninput="clAutoCalcLoan()" />
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem">Bank name added to RC as collateral · ₹1,500 RTO fee + bank stamp duty · removed after loan closure</div>
+          </div>
+        </div>
+        <!-- Insurance Breakdown -->
+        <div style="background:rgba(10,18,35,.4);border:1px solid rgba(71,85,105,.2);border-radius:.65rem;padding:.85rem 1rem;margin-bottom:.85rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.65rem">
+            <div style="font-size:.68rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.07em">Car Insurance Breakdown <span style="font-weight:400;color:#334155">(IRDAI structure)</span></div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:#64748b">
+              <label class="toggle-switch">
+                <input type="checkbox" id="cl-ins-manual" checked onchange="clInsManualToggle()" />
+                <span class="toggle-slider"></span>
+              </label>
+              <span id="cl-ins-manual-label" style="cursor:pointer" onclick="document.getElementById('cl-ins-manual').click()">Enter total manually</span>
+            </div>
+          </div>
+          <div class="field-grid cols-4 cl-auto-only" style="margin-bottom:.65rem;grid-template-columns:1.1fr 0.8fr 1.1fr 1.1fr">
+            <div>
+              <label class="calc-label">IDV — Insured Declared Value (₹)</label>
+              <input class="calc-input" type="number" id="cl-idv" placeholder="auto from ex-showroom" min="0" oninput="clInsUpdate()" />
+              <div style="font-size:.62rem;color:#475569;margin-top:.2rem">Auto-fills from ex-showroom · editable</div>
+            </div>
+            <div>
+              <label class="calc-label">OD Premium (%)</label>
+              <input class="calc-input" type="number" id="cl-od-pct" placeholder="2.5" value="2.5" min="0" step="0.1" oninput="clInsUpdate()" />
+              <div style="font-size:.62rem;color:#4ade80;margin-top:.2rem;display:none" id="cl-ev-od-note">EV: 15% discount applied</div>
+            </div>
+            <div id="cl-ice-cc-wrap">
+              <label class="calc-label">Engine Capacity</label>
+              <select class="calc-select" id="cl-engine-cc" onchange="clInsUpdate()">
+                <option value="1000">Under 1,000 cc — ₹2,094 TP</option>
+                <option value="1500" selected>1,001–1,500 cc — ₹3,416 TP</option>
+                <option value="9999">Over 1,500 cc — ₹7,897 TP</option>
+              </select>
+              <div style="font-size:.62rem;color:#475569;margin-top:.2rem">IRDAI fixed Third-Party tariff</div>
+            </div>
+            <div id="cl-ev-kw-wrap" style="display:none">
+              <label class="calc-label">Motor Power (kW)</label>
+              <select class="calc-select" id="cl-motor-kw" onchange="clInsUpdate()">
+                <option value="30">Under 30 kW — ₹1,780 TP</option>
+                <option value="65" selected>30–65 kW — ₹2,904 TP</option>
+                <option value="9999">Over 65 kW — ₹6,712 TP</option>
+              </select>
+              <div style="font-size:.62rem;color:#475569;margin-top:.2rem">IRDAI fixed EV TP tariff</div>
+            </div>
+          </div>
+          <div style="margin-bottom:.65rem" class="cl-auto-only">
+            <label style="display:flex;align-items:center;gap:.35rem;cursor:pointer;font-size:.75rem;color:#64748b;width:fit-content">
+              <input type="checkbox" id="cl-newcar-tp" checked onchange="clInsUpdate()" style="accent-color:#3b82f6" />
+              New car — mandatory 3-year TP bundle (1yr Comprehensive + 3yr TP)
+            </label>
+          </div>
+          <div class="field-grid cols-4" style="margin-bottom:.65rem;grid-template-columns:1fr 1.2fr 1fr 0.9fr 1.1fr">
+            <div class="cl-auto-only">
+              <label class="calc-label">OD Amount (₹)</label>
+              <input class="calc-input" id="cl-od-amt" readonly style="color:#94a3b8;background:rgba(10,18,35,.9)" />
+            </div>
+            <div class="cl-auto-only">
+              <label class="calc-label" id="cl-tp-label">TP Tariff (₹) — fixed</label>
+              <input class="calc-input" id="cl-tp-amt" readonly style="color:#94a3b8;background:rgba(10,18,35,.9)" />
+            </div>
+            <div class="cl-auto-only">
+              <label class="calc-label">Add-ons (₹)</label>
+              <input class="calc-input" id="cl-addon-amt" readonly style="color:#94a3b8;background:rgba(10,18,35,.9)" />
+            </div>
+            <div class="cl-auto-only">
+              <label class="calc-label">GST 18% (₹)</label>
+              <input class="calc-input" id="cl-ins-gst" readonly style="color:#f87171;background:rgba(10,18,35,.9)" />
+            </div>
+            <div>
+              <label class="calc-label">Total Insurance (₹)</label>
+              <input class="calc-input" id="cl-total-insurance" value="20000" style="color:#e2e8f0;background:rgba(15,23,42,.8)" />
+            </div>
+          </div>
+          <!-- Add-ons -->
+          <div class="cl-auto-only" style="display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;font-size:.75rem;color:#64748b">
+            <label style="display:flex;align-items:center;gap:.35rem;cursor:pointer">
+              <input type="checkbox" id="cl-addon-zerodep" onchange="clInsUpdate()" style="accent-color:#3b82f6" />
+              Zero Depreciation (0.6% IDV)
+            </label>
+            <label style="display:flex;align-items:center;gap:.35rem;cursor:pointer">
+              <input type="checkbox" id="cl-addon-rti" onchange="clInsUpdate()" style="accent-color:#3b82f6" />
+              Return to Invoice (0.25% IDV)
+            </label>
+            <label style="display:flex;align-items:center;gap:.35rem;cursor:pointer">
+              <input type="checkbox" id="cl-addon-engine" onchange="clInsUpdate()" style="accent-color:#3b82f6" />
+              Engine Protection (0.2% IDV)
+            </label>
+            <label style="display:flex;align-items:center;gap:.35rem;cursor:pointer">
+              <input type="checkbox" id="cl-addon-cpa" checked onchange="clInsUpdate()" style="accent-color:#3b82f6" />
+              CPA Cover ₹375 (IRDAI mandatory)
+            </label>
+          </div>
+        </div>
+
+        <div class="field-grid cols-4" style="grid-template-columns:0.8fr 1.4fr 1.2fr 0.9fr">
+          <div>
+            <label class="calc-label" for="cl-fastag">FASTag (₹)</label>
+            <input class="calc-input" type="number" id="cl-fastag" placeholder="1500" value="1500" min="0" oninput="clAutoCalcLoan()" />
+          </div>
+          <div>
+            <label class="calc-label">EV State Subsidy (₹)</label>
+            <input class="calc-input" type="number" id="cl-ev-subsidy" placeholder="0" value="0" min="0" oninput="clAutoCalcLoan()" style="opacity:.4;pointer-events:none" />
+            <div style="font-size:.62rem;color:#475569;margin-top:.2rem" id="cl-ev-note">Switch to EV fuel to enable</div>
+            <div id="cl-gj-wrap" style="display:none;margin-top:.4rem">
+              <label class="calc-label" for="cl-ev-kwh">Battery Capacity (kWh) — for subsidy</label>
+              <input class="calc-input" type="number" id="cl-ev-kwh" placeholder="e.g. 40" min="0" step="0.5" oninput="clEvSubsidyUpdate()" />
+            </div>
+          </div>
+          <div>
+            <label class="calc-label">On-Road Price (₹) — auto</label>
+            <input class="calc-input" type="number" id="cl-onroad" readonly style="color:#fbbf24;background:rgba(10,18,35,.9)" />
+          </div>
+          <div>
+            <label class="calc-label">TCS (auto)</label>
+            <input class="calc-input" type="number" id="cl-tcs-display" readonly style="color:#f87171;background:rgba(10,18,35,.9)" placeholder="0" />
+            <div style="font-size:.62rem;color:#475569;margin-top:.2rem">1% if invoice &gt; ₹10L</div>
+          </div>
+        </div>
+        <div id="cl-loan-warn" style="display:none;margin-top:.75rem;padding:.5rem .75rem;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:.5rem;font-size:.75rem;color:#f87171"></div>
+      </div>
+
+      <!-- Card 3: Loan -->
+      <div class="card" style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Loan Details</div>
+        <div class="field-grid cols-4" style="margin-bottom:.85rem;grid-template-columns:1fr 1fr 0.7fr 1.2fr">
+          <div>
+            <label class="calc-label" for="cl-down">Down Payment (₹)</label>
+            <input class="calc-input" type="number" id="cl-down" placeholder="300000" min="0" oninput="clAutoCalcLoan()" />
+          </div>
+          <div>
+            <label class="calc-label">Loan Principal (₹) — auto</label>
+            <input class="calc-input" type="number" id="cl-loan" readonly style="color:#93c5fd;background:rgba(10,18,35,.9)" />
+          </div>
+          <div>
+            <label class="calc-label">Tenure</label>
+            <select class="calc-select" id="cl-tenure">
+              <option value="1">1 yr</option><option value="2">2 yrs</option>
+              <option value="3">3 yrs</option><option value="4">4 yrs</option>
+              <option value="5" selected>5 yrs</option><option value="6">6 yrs</option>
+              <option value="7">7 yrs</option>
+            </select>
+          </div>
+          <div>
+            <label class="calc-label">Loan Start (Month / Year)</label>
+            <div style="display:flex;gap:.4rem">
+              <select class="calc-select" id="cl-startm" style="flex:1.2">
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select>
+              <input class="calc-input" type="number" id="cl-starty" placeholder="2025" min="2000" max="2060" style="flex:1;text-align:center" value="2025" />
+            </div>
+          </div>
+        </div>
+        <div class="field-grid cols-2" style="margin-bottom:.85rem">
+          <div>
+            <label class="calc-label">Bank</label>
+            <select class="calc-select" id="cl-bank" onchange="clBankRateUpdate()">
+              <option value="custom">Custom / Other</option>
+              <option value="sbi">SBI</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="icici">ICICI Bank</option>
+              <option value="axis">Axis Bank</option>
+              <option value="bob">Bank of Baroda</option>
+              <option value="pnb">PNB</option>
+              <option value="canara">Canara Bank</option>
+              <option value="union">Union Bank</option>
+              <option value="idfc">IDFC First Bank</option>
+            </select>
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem" id="cl-bank-hint">Select bank to auto-fill rate · Data as of May 2026</div>
+          </div>
+          <div>
+            <label class="calc-label" for="cl-rate">Annual Interest Rate (%)</label>
+            <input class="calc-input" type="number" id="cl-rate" placeholder="9.5" min="0" step="0.05" />
+            <div style="font-size:.62rem;color:#475569;margin-top:.3rem" id="cl-fc-ref"></div>
+          </div>
+        </div>
+        <div class="field-grid cols-3" style="margin-bottom:.75rem">
+          <div>
+            <label class="calc-label" for="cl-procfee">Processing Fee (₹)</label>
+            <input class="calc-input" type="number" id="cl-procfee" placeholder="3500" min="0" />
+          </div>
+          <div>
+            <label class="calc-label" for="cl-extraemi">Extra EMI / Year</label>
+            <input class="calc-input" type="number" id="cl-extraemi" placeholder="0" min="0" max="12" step="1" value="0" />
+          </div>
+          <div>
+            <label class="calc-label">&nbsp;</label>
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <div class="toggle-wrap" style="margin-bottom:0">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="cl-hike-toggle" onchange="clHikeToggle()" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="cl-hike-label" onclick="document.getElementById('cl-hike-toggle').click()">Hike EMI</span>
+              </div>
+              <input class="calc-input" type="number" id="cl-hikepct" placeholder="5" min="0" max="30" step="0.5"
+                style="width:68px;opacity:.4;pointer-events:none" />
+              <span style="font-size:.75rem;color:#64748b">%/yr</span>
+            </div>
+          </div>
+        </div>
+        <!-- Foreclosure -->
+        <div class="toggle-wrap" style="margin-bottom:.6rem">
+          <label class="toggle-switch">
+            <input type="checkbox" id="cl-fc-toggle" onchange="clFcToggle()" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="cl-fc-tlabel" onclick="document.getElementById('cl-fc-toggle').click()">Pre-closure / Foreclosure</span>
+        </div>
+        <div id="cl-fc-panel" style="display:none;margin-bottom:.5rem">
+          <div class="field-grid cols-2" style="max-width:300px">
+            <div>
+              <label class="calc-label" for="cl-fc-month">Foreclose After Month</label>
+              <input class="calc-input" type="number" id="cl-fc-month" placeholder="e.g. 18" min="1" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;margin-bottom:.25rem">
+        <div class="btn-row" style="margin-bottom:0">
+          <button class="btn-calc" onclick="calcCarLoan()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearCarLoan()">Clear</button>
+        </div>
+        <button class="btn-calc" onclick="exportCLExcel()" style="background:linear-gradient(135deg,#16a34a,#15803d);font-size:.8rem">
+          <i class="fa-solid fa-file-excel mr-1"></i>Export to Excel
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="result-box" id="cl-result">
+
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Vehicle &amp; Loan</div>
+        <div class="chips c4" style="margin-bottom:.85rem">
+          <div class="chip"><div class="cv" id="cl-k-invoice" style="color:#94a3b8">—</div><div class="cs" id="cl-k-invoice-s"></div><div class="cl">Invoice Value</div></div>
+          <div class="chip"><div class="cv" id="cl-k-onroad" style="color:#fbbf24">—</div><div class="cs" id="cl-k-onroad-s"></div><div class="cl">On-Road Price</div></div>
+          <div class="chip"><div class="cv" id="cl-k-loan" style="color:#94a3b8">—</div><div class="cs" id="cl-k-loan-s"></div><div class="cl">Loan Principal</div></div>
+          <div class="chip"><div class="cv" id="cl-k-emi" style="color:#93c5fd">—</div><div class="cs" id="cl-k-emi-s"></div><div class="cl">EMI / Month</div></div>
+        </div>
+
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Timeline</div>
+        <div class="chips c4" style="margin-bottom:.85rem">
+          <div class="chip"><div class="cv" id="cl-k-start" style="color:#94a3b8">—</div><div class="cl">EMI Starts</div></div>
+          <div class="chip"><div class="cv" id="cl-k-origend" style="color:#64748b">—</div><div class="cl">Original End</div></div>
+          <div class="chip" id="cl-k-actend-chip"><div class="cv" id="cl-k-actend" style="color:#4ade80">—</div><div class="cl" id="cl-k-actend-l">Actual End</div></div>
+          <div class="chip"><div class="cv" id="cl-k-saved" style="color:#4ade80">—</div><div class="cl">Time Saved</div></div>
+        </div>
+
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Costs &amp; Savings</div>
+        <div class="chips c4" style="margin-bottom:.65rem">
+          <div class="chip"><div class="cv" id="cl-k-interest" style="color:#f87171">—</div><div class="cs" id="cl-k-interest-s"></div><div class="cl">Total Interest</div></div>
+          <div class="chip"><div class="cv" id="cl-k-prepay" style="color:#fbbf24">—</div><div class="cs" id="cl-k-prepay-s"></div><div class="cl">Total Prepayment</div></div>
+          <div class="chip"><div class="cv" id="cl-k-isaved" style="color:#4ade80">—</div><div class="cs" id="cl-k-isaved-s"></div><div class="cl">Interest Saved</div></div>
+          <div class="chip"><div class="cv" id="cl-k-totalcost" style="color:#f87171">—</div><div class="cs" id="cl-k-totalcost-s"></div><div class="cl" id="cl-k-totalcost-l">Total Cost</div></div>
+        </div>
+        <div class="chips c4" style="margin-bottom:1.2rem">
+          <div class="chip" id="cl-k-evsub-chip" style="display:none"><div class="cv" id="cl-k-evsub" style="color:#4ade80">—</div><div class="cl">EV Subsidy Saved</div></div>
+          <div class="chip" id="cl-k-fc-chip" style="display:none"><div class="cv" id="cl-k-fc" style="color:#f87171">—</div><div class="cs" id="cl-k-fc-s"></div><div class="cl">Foreclosure Cost</div></div>
+          <div class="chip"><div class="cv" id="cl-k-proc" style="color:#fb923c">—</div><div class="cl">Processing + GST</div></div>
+        </div>
+
+        <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">On-Road Cost Breakdown</div>
+        <table class="result-table" style="margin-bottom:1.2rem">
+          <thead><tr><th>Charge</th><th>Basis</th><th style="text-align:right">Amount (₹)</th></tr></thead>
+          <tbody id="cl-upfront-tbody"></tbody>
+        </table>
+
+        <div style="font-size:.65rem;color:#475569;margin-bottom:1rem">
+          <i class="fa-solid fa-circle-info mr-1"></i>Inputs sheet has live formulas · Amortization pre-computed (re-export to refresh)
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em">Amortization — Year-wise</div>
+          <button class="pct-tab" id="cl-toggle-monthly" onclick="clToggleMonthly()" style="font-size:.68rem">Show Month-by-Month</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="result-table"><thead id="cl-year-thead"></thead><tbody id="cl-year-tbody"></tbody></table>
+        </div>
+        <div id="cl-monthly-wrap" style="display:none;margin-top:1rem;overflow-x:auto">
+          <div style="font-size:.65rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Month-by-Month Schedule</div>
+          <table class="result-table"><thead id="cl-month-thead"></thead><tbody id="cl-month-tbody"></tbody></table>
+        </div>
+
+        <div class="info-box" style="margin-top:1rem">
+          <h4><i class="fa-solid fa-circle-info mr-1" style="color:#fbbf24"></i>Car Loan — Key Notes</h4>
+          <ul>
+            <li><strong>Fixed rate</strong> — EMI constant; foreclosure penalties apply (unlike floating home loans)</li>
+            <li><strong>TCS 1%</strong> — claimable as ITR tax credit if invoice &gt; ₹10L</li>
+            <li><strong>EV green discount</strong> — 0.10–0.15% rate cut available at most banks</li>
+            <li><strong>Max bank funding</strong> — typically 85–95% of ex-showroom; road tax &amp; insurance rarely funded</li>
+            <li><strong>Karnataka</strong> — highest ICE RTO in India (14–17%); 0% for EVs</li>
+            <li><strong>Rates as of May 2026</strong> — verify with bank/RTO before finalising</li>
+          </ul>
+          <div style="margin-top:.75rem;padding:.6rem .85rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);border-radius:.5rem;font-size:.73rem;color:#fbbf24">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+            <strong>FY 2026 EV Subsidy Disclaimer:</strong> Most state cash subsidy pools for private EVs have been capped or depleted. Benefits now predominantly consist of 100% road tax &amp; registration waivers. Gujarat retains a limited cash subsidy (₹10K/kWh, max ₹1.5L, min 15 kWh). Maharashtra, Delhi, Assam, West Bengal, Bihar, Odisha retain schemes subject to quota limits — verify availability at your state's transport portal before purchase. 5% GST on EV invoice remains unchanged.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main-panel -->
+</div><!-- /app-shell -->
+
+<script>
+// ─── Theme toggle ─────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  localStorage.setItem('ft-theme', isLight ? 'light' : 'dark');
+  _applyThemeIcons(isLight);
+}
+function _applyThemeIcons(isLight) {
+  const icon = isLight ? 'fa-moon' : 'fa-sun';
+  ['sidebar','mobile'].forEach(k => {
+    const el = document.getElementById('theme-icon-' + k);
+    if (el) el.className = 'fa-solid ' + icon;
+  });
+}
+// Apply saved theme immediately
+(function() {
+  if (localStorage.getItem('ft-theme') === 'light') {
+    document.body.classList.add('light');
+    // Icons updated after DOM ready (see DOMContentLoaded)
+  }
+})();
+
+// ─── Nav / section switching ─────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('section-' + id);
+  if (sec) sec.classList.add('active');
+  const nav = document.querySelector(`.nav-item[data-section="${id}"]`);
+  if (nav) nav.classList.add('active');
+  // sync mobile select
+  const sel = document.querySelector('.mobile-select');
+  if (sel) sel.value = id;
+}
+
+// ─── Utilities ───────────────────────────────────────────────────────────────
+function fmt(n) {
+  if (isNaN(n) || n === null) return '—';
+  return Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtI(n) { return Number(n).toLocaleString('en-IN'); }
+function pct(n) { return Number(n).toFixed(2) + '%'; }
+
+// ─── 1. Stock P/L ─────────────────────────────────────────────────────────
+
+// State
+let plExchange  = 'NSE';   // NSE | BSE
+let plTradeType = 'delivery'; // delivery | intraday
+
+function setExchange(ex) {
+  plExchange = ex;
+  document.getElementById('exch-nse').classList.toggle('active-seg', ex === 'NSE');
+  document.getElementById('exch-bse').classList.toggle('active-seg', ex === 'BSE');
+  document.getElementById('bse-penny-wrap').style.display = ex === 'BSE' ? 'block' : 'none';
+}
+function setTradeType(t) {
+  plTradeType = t;
+  document.getElementById('trade-delivery').classList.toggle('active-seg', t === 'delivery');
+  document.getElementById('trade-delivery').classList.remove('seg-intra');
+  document.getElementById('trade-intraday').classList.toggle('active-seg', t === 'intraday');
+  document.getElementById('trade-intraday').classList.toggle('seg-intra', t === 'intraday');
+}
+function toggleBrokerPanel() {
+  const on = document.getElementById('pl-broker-toggle').checked;
+  document.getElementById('pl-broker-panel').classList.toggle('show', on);
+  document.getElementById('pl-toggle-label').classList.toggle('on', on);
+  document.getElementById('pl-charges-info').style.display = on ? 'block' : 'none';
+}
+
+// Brokerage per side (buy or sell) for a given trade value
+function getBrokerage(broker, tradeType, tradeValue) {
+  const min20pct = (pct) => Math.min(20, tradeValue * pct);
+  switch (broker) {
+    case 'zerodha':    return tradeType === 'delivery' ? 0 : min20pct(0.0003);
+    case 'groww':      return min20pct(0.001);
+    case 'angelone':   return min20pct(0.001);
+    case 'upstox':     return tradeType === 'delivery' ? min20pct(0.025) : min20pct(0.0005);
+    case 'fivepaisa':  return 20;
+    case 'icici':      return Math.max(35, Math.min(tradeValue * (tradeType === 'delivery' ? 0.0055 : 0.0005), tradeValue * 0.025));
+    case 'hdfc':       return Math.max(25, Math.min(tradeValue * (tradeType === 'delivery' ? 0.0032 : 0.0004), tradeValue * 0.025));
+    default:           return 0;
+  }
+}
+
+function calcPL() {
+  const owned = parseFloat(document.getElementById('pl-owned').value);
+  const buy   = parseFloat(document.getElementById('pl-buy').value);
+  const sell  = parseFloat(document.getElementById('pl-sell').value);
+  const qty   = parseFloat(document.getElementById('pl-qty').value);
+  if ([owned,buy,sell,qty].some(isNaN)) { alert('Fill all fields.'); return; }
+  if (qty > owned) { alert('Sell quantity cannot exceed stocks owned.'); return; }
+
+  const initPurchase = owned * buy;
+  const currentTotal = owned * sell;
+  const buyVal       = qty * buy;   // buy value for the traded qty
+  const saleValue    = qty * sell;
+  const remaining    = (owned - qty) * sell;
+  const grossPL      = (sell - buy) * qty;
+  const isProfit     = grossPL >= 0;
+  const includeFees  = document.getElementById('pl-broker-toggle').checked;
+
+  let rows = `
+    <tr class="row-section-head"><td colspan="3">Position Summary</td></tr>
+    <tr><td>Initial Purchase Value</td><td class="muted">${fmtI(owned)} × ₹${fmtI(buy)}</td><td class="val">₹${fmt(initPurchase)}</td></tr>
+    <tr><td>Current Shares Value</td><td class="muted">${fmtI(owned)} × ₹${fmtI(sell)}</td><td class="val">₹${fmt(currentTotal)}</td></tr>
+    <tr><td>Current Sale Value</td><td class="muted">${fmtI(qty)} × ₹${fmtI(sell)}</td><td class="val">₹${fmt(saleValue)}</td></tr>
+    <tr><td>Remaining Shares Value</td><td class="muted">${fmtI(owned-qty)} × ₹${fmtI(sell)}</td><td class="val">₹${fmt(remaining)}</td></tr>
+    <tr class="${isProfit?'row-profit':'row-loss'}">
+      <td><strong>${isProfit?'✅ Gross Profit':'❌ Gross Loss'}</strong></td>
+      <td class="muted">(₹${fmtI(sell)}−₹${fmtI(buy)}) × ${fmtI(qty)}</td>
+      <td class="val">₹${fmt(Math.abs(grossPL))}</td>
+    </tr>`;
+
+  if (includeFees && qty > 0) {
+    const broker    = document.getElementById('pl-broker').value;
+    const isIntra   = plTradeType === 'intraday';
+    const isPenny   = plExchange === 'BSE' && document.getElementById('pl-penny').checked;
+    const turnover  = buyVal + saleValue;
+
+    // Brokerage
+    const brokBuy  = getBrokerage(broker, plTradeType, buyVal);
+    const brokSell = getBrokerage(broker, plTradeType, saleValue);
+    const totalBrok = brokBuy + brokSell;
+
+    // STT
+    const stt = isIntra
+      ? saleValue * 0.00025
+      : (buyVal * 0.001) + (saleValue * 0.001);
+
+    // Exchange fee
+    let exchRate = plExchange === 'NSE' ? 0.0000297 : (isPenny ? 0.001 : 0.0000275);
+    const exchFee = turnover * exchRate;
+
+    // Stamp Duty (buy side only)
+    const stampDuty = buyVal * (isIntra ? 0.00003 : 0.00015);
+
+    // SEBI
+    const sebiFee = turnover * 0.00000075;
+
+    // DP charges (delivery sell only)
+    const dpCharge = (!isIntra && qty > 0) ? 15.93 : 0;
+
+    // GST on brokerage + exchange + SEBI only
+    const gst = (totalBrok + exchFee + sebiFee) * 0.18;
+
+    const totalCharges = totalBrok + stt + exchFee + stampDuty + sebiFee + dpCharge + gst;
+    const netPL = grossPL - totalCharges;
+    const netProfit = netPL >= 0;
+
+    const exchLabel = plExchange + (isPenny ? ' (X/Z Penny 0.1%)' : '');
+    const tradeLabel = isIntra ? 'Intraday' : 'Delivery';
+
+    rows += `
+      <tr class="row-section-head"><td colspan="3">Broker Charges — ${document.getElementById('pl-broker').options[document.getElementById('pl-broker').selectedIndex].text.split('—')[0].trim()} · ${tradeLabel} · ${exchLabel}</td></tr>
+      <tr><td>Brokerage — Buy</td><td class="muted">on ₹${fmt(buyVal)}</td><td class="val" style="color:#f87171">₹${fmt(brokBuy)}</td></tr>
+      <tr><td>Brokerage — Sell</td><td class="muted">on ₹${fmt(saleValue)}</td><td class="val" style="color:#f87171">₹${fmt(brokSell)}</td></tr>
+      <tr class="row-section-head"><td colspan="3">Statutory Charges</td></tr>
+      <tr><td>STT</td><td class="muted">${isIntra ? `₹${fmt(saleValue)} × 0.025% (sell)` : `turnover × 0.1%`}</td><td class="val" style="color:#f87171">₹${fmt(stt)}</td></tr>
+      <tr><td>Exchange Fee (${plExchange})</td><td class="muted">₹${fmt(turnover)} × ${isPenny?'0.1%':(plExchange==='NSE'?'0.00297%':'0.00275%')}</td><td class="val" style="color:#f87171">₹${fmt(exchFee)}</td></tr>
+      <tr><td>Stamp Duty</td><td class="muted">₹${fmt(buyVal)} × ${isIntra?'0.003%':'0.015%'} (buy only)</td><td class="val" style="color:#f87171">₹${fmt(stampDuty)}</td></tr>
+      <tr><td>SEBI Fee</td><td class="muted">₹${fmt(turnover)} × 0.000075%</td><td class="val" style="color:#f87171">₹${fmt(sebiFee)}</td></tr>
+      ${dpCharge > 0 ? `<tr><td>DP Charges</td><td class="muted">sell from demat</td><td class="val" style="color:#f87171">₹${fmt(dpCharge)}</td></tr>` : ''}
+      <tr><td>GST</td><td class="muted">18% on brokerage + exchange + SEBI</td><td class="val" style="color:#f87171">₹${fmt(gst)}</td></tr>
+      <tr class="row-subtotal"><td><strong>Total Charges</strong></td><td></td><td class="val">₹${fmt(totalCharges)}</td></tr>
+      <tr class="${netProfit?'row-net-profit':'row-net-loss'}">
+        <td><strong>${netProfit?'✅ Net Profit':'❌ Net Loss'} (after all charges)</strong></td>
+        <td></td>
+        <td class="val">₹${fmt(Math.abs(netPL))}</td>
+      </tr>`;
+  }
+
+  document.getElementById('pl-tbody').innerHTML = rows;
+  document.getElementById('pl-result').classList.add('show');
+}
+
+function clearPL() {
+  ['pl-owned','pl-buy','pl-sell','pl-qty'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('pl-result').classList.remove('show');
+}
+
+// ─── 2. Stock Average ─────────────────────────────────────────────────────
+let avgCount = 0;
+function addAvgRow() {
+  avgCount++;
+  const wrap = document.getElementById('avg-purchases');
+  const row = document.createElement('div');
+  row.className = 'avg-purchase-row';
+  row.id = 'avg-row-' + avgCount;
+  row.innerHTML = `
+    <div class="field">
+      <label class="calc-label">Purchase ${avgCount} — Units</label>
+      <input class="calc-input" type="number" id="avg-u-${avgCount}" placeholder="100" min="0" />
+    </div>
+    <div class="field">
+      <label class="calc-label">Price / Share (₹)</label>
+      <input class="calc-input" type="number" id="avg-p-${avgCount}" placeholder="52.5" min="0" step="0.01" />
+    </div>
+    ${avgCount > 2
+      ? `<button class="btn-remove" onclick="document.getElementById('avg-row-${avgCount}').remove()"><i class="fa-solid fa-xmark"></i></button>`
+      : '<div style="width:44px"></div>'}
+  `;
+  wrap.appendChild(row);
+}
+function calcAvg() {
+  const rows = document.querySelectorAll('#avg-purchases .avg-purchase-row');
+  let totalUnits = 0, totalAmount = 0;
+  const purchases = [];
+  let ok = true;
+  rows.forEach((row, i) => {
+    const inputs = row.querySelectorAll('input');
+    const u = parseFloat(inputs[0].value);
+    const p = parseFloat(inputs[1].value);
+    if (isNaN(u) || isNaN(p)) { ok = false; return; }
+    totalUnits += u; totalAmount += u * p;
+    purchases.push({ u, p, amt: u * p, idx: i + 1 });
+  });
+  if (!ok || purchases.length < 2) { alert('Enter at least 2 valid purchases.'); return; }
+  const avgPrice = totalAmount / totalUnits;
+  const maxAmt = Math.max(...purchases.map(r => r.amt));
+  document.getElementById('avg-chips').innerHTML = `
+    <div class="chip" style="grid-column:span 2"><div class="cv" style="color:#c4b5fd">₹${fmt(avgPrice)}</div><div class="cl">Average Price</div></div>
+    <div class="chip"><div class="cv" style="color:#94a3b8">${fmtI(totalUnits)}</div><div class="cl">Total Units</div></div>
+    <div class="chip"><div class="cv" style="color:#93c5fd">₹${fmt(totalAmount)}</div><div class="cl">Total Amount</div></div>`;
+  document.getElementById('avg-bars').innerHTML = purchases.map(r => `
+    <div class="avg-bar-row">
+      <span class="avg-bar-label">P${r.idx}: ${fmtI(r.u)} × ₹${r.p}</span>
+      <div class="avg-bar-track"><div class="avg-bar-fill" style="width:${(r.amt/maxAmt*100).toFixed(1)}%"></div></div>
+      <span class="avg-bar-val">₹${fmt(r.amt)}</span>
+    </div>`).join('');
+  document.getElementById('avg-tbody').innerHTML = purchases.map(r => `
+    <tr><td>Purchase ${r.idx}</td><td class="val">${fmtI(r.u)}</td><td class="val">₹${fmt(r.p)}</td><td class="val">₹${fmt(r.amt)}</td></tr>
+  `).join('') + `
+    <tr class="row-total">
+      <td><strong>Total / Average</strong></td>
+      <td class="val">${fmtI(totalUnits)}</td>
+      <td class="val">₹${fmt(avgPrice)}</td>
+      <td class="val">₹${fmt(totalAmount)}</td>
+    </tr>`;
+  document.getElementById('avg-result').classList.add('show');
+}
+function clearAvg() {
+  document.getElementById('avg-purchases').innerHTML = '';
+  document.getElementById('avg-result').classList.remove('show');
+  avgCount = 0;
+  addAvgRow(); addAvgRow();
+}
+
+// ─── 3. SIP ──────────────────────────────────────────────────────────────
+function calcSIP() {
+  const P = parseFloat(document.getElementById('sip-amount').value);
+  const Y = parseFloat(document.getElementById('sip-years').value);
+  const R = parseFloat(document.getElementById('sip-rate').value);
+  const S = parseFloat(document.getElementById('sip-stepup').value) || 0;
+  if ([P,Y,R].some(isNaN)||P<=0||Y<=0||R<0) { alert('Fill Monthly Investment, Period, and Return Rate.'); return; }
+  const n = Y * 12;
+  let totalValue = 0, totalInvested = 0;
+  if (S === 0) {
+    const r = R / 100 / 12;
+    totalValue = P * ((Math.pow(1+r,n)-1)/r) * (1+r);
+    totalInvested = P * n;
+  } else {
+    let monthly = P, balance = 0;
+    const r = R / 100 / 12;
+    for (let m = 1; m <= n; m++) {
+      if (m > 1 && (m-1) % 12 === 0) monthly *= (1 + S/100);
+      balance = (balance + monthly) * (1 + r);
+      totalInvested += monthly;
+    }
+    totalValue = balance;
+  }
+  document.getElementById('sip-expected').textContent = '₹' + fmt(totalValue);
+  document.getElementById('sip-invested').textContent = '₹' + fmt(totalInvested);
+  document.getElementById('sip-gain').textContent = '₹' + fmt(totalValue - totalInvested);
+  document.getElementById('sip-result').classList.add('show');
+}
+function clearSIP() {
+  ['sip-amount','sip-years','sip-rate','sip-stepup'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('sip-result').classList.remove('show');
+}
+
+// ─── 4. Percentage ───────────────────────────────────────────────────────
+let pctMode = 0;
+function switchPct(mode, btn) {
+  pctMode = mode;
+  [0,1,2,3].forEach(i => {
+    const p = document.getElementById('pct-panel-' + i);
+    if (p) p.style.display = i === mode ? '' : 'none';
+  });
+  document.querySelectorAll('.pct-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pct-result').classList.remove('show');
+}
+function calcPct() {
+  const ans = document.getElementById('pct-answer');
+  const sub = document.getElementById('pct-sub');
+  ans.style.color = '#fbbf24';
+  if (pctMode === 0) {
+    const x = parseFloat(document.getElementById('pct0-x').value);
+    const y = parseFloat(document.getElementById('pct0-y').value);
+    if (isNaN(x)||isNaN(y)) { alert('Enter both values.'); return; }
+    const r = (x/100)*y;
+    ans.textContent = fmt(r);
+    sub.textContent = `${x}% of ${y} = ${fmt(r)}`;
+  } else if (pctMode === 1) {
+    const x = parseFloat(document.getElementById('pct1-x').value);
+    const y = parseFloat(document.getElementById('pct1-y').value);
+    if (isNaN(x)||isNaN(y)||y===0) { alert('Enter both values (Y ≠ 0).'); return; }
+    const r = (x/y)*100;
+    ans.textContent = pct(r);
+    sub.textContent = `${fmt(x)} is ${pct(r)} of ${fmt(y)}`;
+  } else if (pctMode === 2) {
+    const o = parseFloat(document.getElementById('pct2-old').value);
+    const nv = parseFloat(document.getElementById('pct2-new').value);
+    if (isNaN(o)||isNaN(nv)||o===0) { alert('Enter both values (Old ≠ 0).'); return; }
+    const r = ((nv-o)/o)*100;
+    ans.textContent = (r>=0?'+':'')+pct(r);
+    ans.style.color = r>=0 ? '#4ade80' : '#f87171';
+    sub.textContent = (r>=0?'▲ Increase':'▼ Decrease') + ` of ${Math.abs(r).toFixed(2)}% from ${fmt(o)} to ${fmt(nv)}`;
+  } else if (pctMode === 3) {
+    const b = parseFloat(document.getElementById('pct3-base').value);
+    const p2 = parseFloat(document.getElementById('pct3-pct').value);
+    if (isNaN(b)||isNaN(p2)) { alert('Enter both values.'); return; }
+    const inc = b+(b*p2/100), dec = b-(b*p2/100);
+    ans.textContent = `+: ₹${fmt(inc)}  |  −: ₹${fmt(dec)}`;
+    ans.style.fontSize = '1.4rem';
+    sub.textContent = `${p2}% increase → ₹${fmt(inc)}   |   ${p2}% decrease → ₹${fmt(dec)}`;
+  }
+  document.getElementById('pct-result').classList.add('show');
+}
+function clearPct() {
+  ['pct0-x','pct0-y','pct1-x','pct1-y','pct2-old','pct2-new','pct3-base','pct3-pct'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value='';
+  });
+  document.getElementById('pct-result').classList.remove('show');
+  document.getElementById('pct-answer').style.fontSize = '';
+  document.getElementById('pct-answer').style.color = '#fbbf24';
+}
+
+// ─── 5. Credit Card EMI ──────────────────────────────────────────────────
+
+const EMI_BANKS = {
+  custom: { name:'Custom',    mRate:[12,24],    pRate:[13,24],    fee:{type:'flat',val:199,min:0},    fc:3 },
+  hdfc:   { name:'HDFC Bank', mRate:[14,15],    pRate:[15,18],    fee:{type:'pct',val:1,min:150},     fc:3 },
+  sbi:    { name:'SBI Card',  mRate:[16,16.75], pRate:[13,18],    fee:{type:'flat',val:299,min:0},    fc:3 },
+  icici:  { name:'ICICI Bank',mRate:[12.99,14.99],pRate:[15.96,15.96],fee:{type:'flat',val:199,min:0},fc:3 },
+  axis:   { name:'Axis Bank', mRate:[14,16],    pRate:[18,21.5],  fee:{type:'pct',val:1.75,min:200},  fc:3 },
+  kotak:  { name:'Kotak',     mRate:[14,16],    pRate:[18,20],    fee:{type:'flat',val:199,min:0},    fc:3 },
+  rbl:    { name:'RBL Bank',  mRate:[14,15.5],  pRate:[18,22],    fee:{type:'pct',val:1.5,min:150},   fc:3 },
+  idfc:   { name:'IDFC First',mRate:[12,15],    pRate:[15,18],    fee:{type:'pct',val:1,min:99},      fc:3 },
+  amex:   { name:'Amex',      mRate:[14,15],    pRate:[16,18],    fee:{type:'flat',val:199,min:0},    fc:3 },
+};
+
+let emiType    = 'standard'; // standard | nocost
+let emiSubtype = 'merchant'; // merchant | post
+
+function setEmiType(t) {
+  emiType = t;
+  document.getElementById('emi-type-standard').classList.toggle('active-seg', t==='standard');
+  document.getElementById('emi-type-nocost').classList.toggle('active-seg', t==='nocost');
+  document.getElementById('emi-nocost-note').style.display = t==='nocost' ? 'block' : 'none';
+}
+function setEmiSub(s) {
+  emiSubtype = s;
+  document.getElementById('emi-sub-merchant').classList.toggle('active-seg', s==='merchant');
+  document.getElementById('emi-sub-post').classList.toggle('active-seg', s==='post');
+  onBankChange();
+}
+function toggleForeclosure() {
+  const on = document.getElementById('emi-fc-toggle').checked;
+  document.getElementById('emi-fc-panel').style.display = on ? 'block' : 'none';
+  document.getElementById('emi-fc-label').classList.toggle('on', on);
+}
+function onBankChange() {
+  const key = document.getElementById('emi-bank').value;
+  const b   = EMI_BANKS[key];
+  if (!b || key === 'custom') {
+    document.getElementById('emi-bank-hint').textContent = 'Enter rates manually';
+    document.getElementById('emi-bank-rates-box').style.display = 'none';
+    document.getElementById('emi-fc-pct').value = 3;
+    return;
+  }
+  const rates = emiSubtype === 'merchant' ? b.mRate : b.pRate;
+  const midRate = ((rates[0] + rates[1]) / 2).toFixed(2);
+  document.getElementById('emi-rate').value = midRate;
+  // Processing fee
+  const amount = parseFloat(document.getElementById('emi-amount').value) || 0;
+  let fee = b.fee.type === 'flat' ? b.fee.val : Math.max(b.fee.min, amount * b.fee.val / 100);
+  document.getElementById('emi-procfee').value = fee.toFixed(0);
+  document.getElementById('emi-fc-pct').value = b.fc;
+  // Rate hint
+  document.getElementById('emi-bank-hint').textContent =
+    `${emiSubtype==='merchant'?'Merchant':'Post-Purchase'}: ${rates[0]}–${rates[1]}% p.a. (using ${midRate}%)`;
+  // Bank rates reference box
+  const feeStr = b.fee.type === 'flat'
+    ? `₹${b.fee.val} flat`
+    : `${b.fee.val}% (min ₹${b.fee.min})`;
+  document.getElementById('emi-bank-rates-content').innerHTML =
+    `Merchant EMI: ${b.mRate[0]}–${b.mRate[1]}% p.a. &nbsp;|&nbsp; Post-Purchase: ${b.pRate[0]}–${b.pRate[1]}% p.a.<br>Processing fee: ${feeStr} &nbsp;|&nbsp; Foreclosure: ${b.fc}% of outstanding`;
+  document.getElementById('emi-bank-rates-box').style.display = 'block';
+}
+// (emi-amount input listener consolidated in main DOMContentLoaded init block)
+
+function calcEMI() {
+  const purchase = parseFloat(document.getElementById('emi-amount').value);
+  const annRate  = parseFloat(document.getElementById('emi-rate').value);
+  const n        = parseInt(document.getElementById('emi-tenure').value);
+  const procFee  = parseFloat(document.getElementById('emi-procfee').value) || 0;
+  const doFc     = document.getElementById('emi-fc-toggle').checked;
+  const fcMonth  = parseInt(document.getElementById('emi-fc-month').value) || 0;
+  const fcPct    = parseFloat(document.getElementById('emi-fc-pct').value) || 3;
+
+  if (isNaN(purchase)||isNaN(annRate)||purchase<=0||annRate<0) {
+    alert('Fill Purchase Amount and Interest Rate.'); return;
+  }
+  if (doFc && (fcMonth < 1 || fcMonth >= n)) {
+    alert(`Foreclose month must be between 1 and ${n-1}.`); return;
+  }
+
+  const r = annRate / 100 / 12;
+  let principal, baseEMI;
+
+  if (emiType === 'nocost') {
+    // Base EMI = purchase / n, find discounted principal
+    baseEMI   = purchase / n;
+    principal = r > 0 ? baseEMI * (1 - Math.pow(1+r, -n)) / r : purchase;
+  } else {
+    principal = purchase;
+    baseEMI   = r > 0
+      ? principal * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1)
+      : principal / n;
+  }
+
+  // Processing fee + GST
+  const procGST    = procFee * 0.18;
+  const procTotal  = procFee + procGST;
+
+  // Month-by-month schedule
+  let balance      = principal;
+  let totalInterest = 0, totalGST = 0, totalYouPay = 0;
+  let foreCloseCost = 0;
+  const rows = [];
+  const activeMonths = doFc ? fcMonth : n;
+
+  for (let m = 1; m <= activeMonths; m++) {
+    const opening    = balance;
+    const interest   = opening * r;
+    const gstOnInt   = interest * 0.18;
+    const principal_paid = baseEMI - interest;
+    const closing    = Math.max(0, opening - principal_paid);
+    const isFirst    = m === 1;
+    const isFcMonth  = doFc && m === activeMonths;
+    const oneTime    = isFirst ? procTotal : 0;
+
+    let youPay = baseEMI + gstOnInt + oneTime;
+
+    // Foreclosure on last active month
+    let fcCharge = 0, fcGST = 0;
+    if (isFcMonth) {
+      fcCharge = closing * fcPct / 100;
+      fcGST    = fcCharge * 0.18;
+      youPay   = closing + fcCharge + fcGST + gstOnInt + oneTime;
+      foreCloseCost = fcCharge + fcGST;
+    }
+
+    totalInterest += interest;
+    totalGST      += gstOnInt;
+    totalYouPay   += youPay;
+    balance        = isFcMonth ? 0 : closing;
+
+    rows.push({ m, opening, interest, gstOnInt, principal_paid: isFcMonth ? closing : principal_paid,
+                closing: isFcMonth ? 0 : closing, oneTime, youPay, isFcMonth, fcCharge, fcGST });
+  }
+
+  const totalCost   = totalYouPay;
+  const extraCost   = totalCost - purchase;
+
+  // Render chips
+  document.getElementById('ec-principal').textContent = '₹'+fmt(principal);
+  document.getElementById('ec-interest').textContent  = '₹'+fmt(totalInterest);
+  document.getElementById('ec-gst').textContent       = '₹'+fmt(totalGST);
+  document.getElementById('ec-proc').textContent      = '₹'+fmt(procTotal);
+  document.getElementById('ec-total').textContent     = '₹'+fmt(totalCost);
+  document.getElementById('ec-extra').textContent     = '₹'+fmt(extraCost);
+  document.getElementById('ec-baseemi').textContent   = '₹'+fmt(baseEMI);
+  const fcChip = document.getElementById('ec-fc-chip');
+  if (doFc) {
+    fcChip.style.display = '';
+    document.getElementById('ec-fc').textContent = '₹'+fmt(foreCloseCost);
+  } else {
+    fcChip.style.display = 'none';
+  }
+
+  // Render table
+  const tbody = document.getElementById('emi-tbody');
+  tbody.innerHTML = rows.map(row => {
+    const fcNote = row.isFcMonth
+      ? `<br><span style="font-size:.68rem;color:#fb923c">Foreclosure: ₹${fmt(row.fcCharge)} + GST ₹${fmt(row.fcGST)}</span>` : '';
+    const oneTimeNote = row.oneTime > 0
+      ? `<span style="font-size:.68rem;color:#94a3b8">Processing ₹${fmt(row.oneTime)}</span>` : '—';
+    return `<tr${row.isFcMonth ? ' style="background:rgba(251,146,60,.04)"' : ''}>
+      <td style="color:#64748b;font-size:.8rem">${row.m}${row.isFcMonth?'<br><span style="font-size:.65rem;color:#fb923c">FC</span>':''}</td>
+      <td class="val">₹${fmt(row.opening)}</td>
+      <td class="val" style="color:#f87171">₹${fmt(row.interest)}</td>
+      <td class="val" style="color:#f87171">₹${fmt(row.gstOnInt)}</td>
+      <td class="val">₹${fmt(row.principal_paid)}</td>
+      <td style="text-align:right">${oneTimeNote}</td>
+      <td class="val" style="color:#e2e8f0">₹${fmt(row.youPay)}${fcNote}</td>
+      <td class="val" style="color:${row.closing<0.01?'#4ade80':'#94a3b8'}">₹${fmt(row.closing)}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('emi-result').classList.add('show');
+}
+
+function clearEMI() {
+  ['emi-amount','emi-rate','emi-procfee','emi-fc-month'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('emi-result').classList.remove('show');
+  document.getElementById('emi-bank').value = 'custom';
+  document.getElementById('emi-bank-hint').textContent = 'Select bank to auto-fill rates';
+  document.getElementById('emi-bank-rates-box').style.display = 'none';
+  document.getElementById('emi-fc-toggle').checked = false;
+  document.getElementById('emi-fc-panel').style.display = 'none';
+  document.getElementById('emi-fc-label').classList.remove('on');
+  document.getElementById('emi-fc-pct').value = 3;
+  setEmiType('standard');
+  setEmiSub('merchant');
+}
+
+// ─── 6. CAGR ─────────────────────────────────────────────────────────────
+function calcCAGR() {
+  const i = parseFloat(document.getElementById('cagr-initial').value);
+  const f = parseFloat(document.getElementById('cagr-final').value);
+  const y = parseFloat(document.getElementById('cagr-years').value);
+  if ([i,f,y].some(isNaN)||i<=0||y<=0) { alert('Fill all fields with positive values.'); return; }
+  document.getElementById('cagr-answer').textContent = pct((Math.pow(f/i,1/y)-1)*100);
+  document.getElementById('cagr-result').classList.add('show');
+}
+function clearCAGR() {
+  ['cagr-initial','cagr-final','cagr-years'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('cagr-result').classList.remove('show');
+}
+
+// ─── 7. SWP ──────────────────────────────────────────────────────────────
+function calcSWP() {
+  let bal = parseFloat(document.getElementById('swp-initial').value);
+  const w = parseFloat(document.getElementById('swp-withdraw').value);
+  const R = parseFloat(document.getElementById('swp-rate').value);
+  const n = parseInt(document.getElementById('swp-months').value);
+  if ([bal,w,R,n].some(isNaN)||bal<=0||n<=0) { alert('Fill all fields.'); return; }
+  const r = R/100/12;
+  for (let m=0;m<n;m++) bal = bal*(1+r)-w;
+  document.getElementById('swp-final').textContent     = '₹'+fmt(bal<0?0:bal);
+  document.getElementById('swp-withdrawn').textContent  = '₹'+fmt(w*n);
+  document.getElementById('swp-result').classList.add('show');
+}
+function clearSWP() {
+  ['swp-initial','swp-withdraw','swp-rate','swp-months'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('swp-result').classList.remove('show');
+}
+
+// ─── 8. Lumpsum ──────────────────────────────────────────────────────────
+function calcLumpsum() {
+  const P = parseFloat(document.getElementById('ls-amount').value);
+  const R = parseFloat(document.getElementById('ls-rate').value);
+  const M = parseFloat(document.getElementById('ls-months').value);
+  if ([P,R,M].some(isNaN)||P<=0||M<=0) { alert('Fill all fields with positive values.'); return; }
+  const t = M/12;
+  const total = P*Math.pow(1+R/100,t);
+  document.getElementById('ls-invested').textContent = '₹'+fmt(P);
+  document.getElementById('ls-returns').textContent  = '₹'+fmt(total-P);
+  document.getElementById('ls-total').textContent    = '₹'+fmt(total);
+  document.getElementById('ls-result').classList.add('show');
+}
+function clearLumpsum() {
+  ['ls-amount','ls-rate','ls-months'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('ls-result').classList.remove('show');
+  document.getElementById('ls-years-label').textContent='';
+}
+
+// (merged into single DOMContentLoaded below)
+
+// ─── Humanize helper (Lac / Cr) ───────────────────────────────────────────
+function humanize(n, suffix) {
+  if (isNaN(n) || n === null || n === 0) return '';
+  const abs = Math.abs(n);
+  let s;
+  if (abs >= 1e7)      s = '₹' + (abs/1e7).toFixed(2).replace(/\.?0+$/, '') + 'Cr';
+  else if (abs >= 1e5) s = '₹' + (abs/1e5).toFixed(2).replace(/\.?0+$/, '') + 'Lac';
+  else                 s = '₹' + Math.round(abs).toLocaleString('en-IN');
+  return '(' + s + (suffix || '') + ')';
+}
+
+// ─── HOME LOAN ────────────────────────────────────────────────────────────
+
+const HL_STAMP = {
+  AP:{m:5,f:5,j:5},    AS:{m:6,f:5,j:5.5},   BR:{m:6,f:5.7,j:5.85},
+  CG:{m:5,f:4,j:4.5},  DL:{m:6,f:4,j:5},      GA:{m:3.5,f:3.5,j:3.5},
+  GJ:{m:4.9,f:3.9,j:4.4}, HR:{m:7,f:5,j:6},   HP:{m:5,f:4,j:4.5},
+  JH:{m:4,f:4,j:4},    KA:{m:5,f:5,j:5},      KL:{m:8,f:8,j:8},
+  MP:{m:7.5,f:6.5,j:7},MH:{m:6,f:5,j:5.5},    OD:{m:5,f:4,j:4.5},
+  PB:{m:7,f:5,j:6},    RJ:{m:6,f:5,j:5.5},    TN:{m:7,f:7,j:7},
+  TG:{m:5,f:5,j:5},    UP:{m:7,f:6,j:6.5},    UK:{m:5,f:3.75,j:4.375},
+  WB:{m:6,f:6,j:6}
+};
+
+const HL_BANKS = {
+  custom:{name:'Custom',sal:{pct:.5,min:5000,max:null},self:{pct:.5,min:5000,max:null},legal:3500},
+  sbi:   {name:'SBI',   sal:{pct:.35,min:3000,max:10000},self:{pct:.35,min:3000,max:10000},legal:3500},
+  hdfc:  {name:'HDFC',  sal:{pct:.5,min:3300,max:null}, self:{pct:1.5,min:5000,max:null}, legal:4500},
+  icici: {name:'ICICI', sal:{pct:.75,min:3000,max:null},self:{pct:2.0,min:5000,max:null}, legal:5000},
+  axis:  {name:'Axis',  sal:{pct:1.0,min:10000,max:null},self:{pct:1.0,min:10000,max:null},legal:4000},
+  bob:   {name:'BoB',   sal:{pct:.5,min:3000,max:null}, self:{pct:.5,min:3000,max:null},  legal:4000},
+  lic:   {name:'LIC HFC',sal:{pct:.25,min:2000,max:15000},self:{pct:.5,min:2000,max:25000},legal:3500},
+};
+
+let hlBorrower = 'sal', hlGender = 'm';
+let hlMonthlyData = [], hlHasExtra = false, hlHasHike = false;
+let hlShowMonthly = false;
+
+function hlHikeToggle() {
+  const on  = document.getElementById('hl-hike-toggle').checked;
+  const inp = document.getElementById('hl-hikepct');
+  inp.style.opacity = on ? '1' : '.4';
+  inp.style.pointerEvents = on ? 'auto' : 'none';
+  document.getElementById('hl-hike-label').classList.toggle('on', on);
+}
+
+function hlAutoLoan() {
+  const pv = parseFloat(document.getElementById('hl-propval').value) || 0;
+  const dp = parseFloat(document.getElementById('hl-down').value) || 0;
+  document.getElementById('hl-loan').value = Math.max(0, pv - dp) || '';
+  hlBankChange();
+}
+function setHLBorrower(t) {
+  hlBorrower = t;
+  document.getElementById('hl-sal').classList.toggle('active-seg', t==='sal');
+  document.getElementById('hl-self').classList.toggle('active-seg', t==='self');
+  hlBankChange();
+}
+function setHLGender(g) {
+  hlGender = g;
+  ['m','f','j'].forEach(x => {
+    const el = document.getElementById('hl-' + (x==='m'?'male':x==='f'?'female':'joint'));
+    if (el) el.classList.toggle('active-seg', x===g);
+  });
+  hlStampUpdate();
+}
+function hlStampUpdate() {
+  const st  = document.getElementById('hl-state').value;
+  const sd  = HL_STAMP[st];
+  const hint = document.getElementById('hl-stamp-hint');
+  if (!sd) { hint.textContent = ''; return; }
+  const rate = sd[hlGender];
+  hint.textContent = `Stamp Duty: ${rate}% (${hlGender==='m'?'Male':hlGender==='f'?'Female':'Joint'})`;
+}
+function hlBankChange() {
+  const key  = document.getElementById('hl-bank').value;
+  const loan = parseFloat(document.getElementById('hl-loan').value) || 0;
+  const b    = HL_BANKS[key];
+  if (!b || key==='custom') return;
+  const tier = hlBorrower==='sal' ? b.sal : b.self;
+  let fee = loan * tier.pct / 100;
+  fee = Math.max(tier.min, fee);
+  if (tier.max) fee = Math.min(tier.max, fee);
+  document.getElementById('hl-procfee').value = Math.round(fee);
+  document.getElementById('hl-legal').value   = b.legal;
+}
+
+function addMonths(year, month0, n) {
+  // month0: 0-based. Returns {y, m0}
+  const total = month0 + n;
+  return { y: year + Math.floor(total/12), m: total % 12 };
+}
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtDate(y, m0) { return MONTHS[m0] + ' ' + y; }
+
+function simulateHL(principal, r, n, baseEMI, extraCount, hikePct) {
+  // hikePct: % increase in EMI each year (0 = no hike)
+  let balance = principal;
+  let totalInterest = 0, totalExtra = 0;
+  const yearData = [], monthData = [];
+  let actualMonths = 0;
+  let curEMI = baseEMI;
+
+  for (let yr = 1; ; yr++) {
+    if (balance <= 0.01) break;
+    if (yr > 1 && hikePct > 0) curEMI = curEMI * (1 + hikePct / 100);
+    const yOpen = balance, yEMI = curEMI;
+    let yInt = 0, yPrin = 0;
+
+    for (let m = 1; m <= 12; m++) {
+      if (balance <= 0.01) break;
+      const interest = balance * r;
+      let   prin     = curEMI - interest;
+      if (prin < 0) prin = 0;
+      if (prin > balance) prin = balance;
+      balance   -= prin;
+      yInt      += interest;
+      yPrin     += prin;
+      totalInterest += interest;
+      actualMonths++;
+      monthData.push({ month: actualMonths, yr, emi: curEMI, interest, prin, balance: Math.max(0, balance), extra: 0 });
+    }
+
+    // Extra EMI at end of year (based on base EMI, not hiked EMI)
+    let extra = 0;
+    if (extraCount > 0 && balance > 0.01) {
+      extra   = Math.min(extraCount * baseEMI, balance);
+      balance = Math.max(0, balance - extra);
+      totalExtra += extra;
+      if (monthData.length) monthData[monthData.length - 1].extra = extra;
+    }
+
+    yearData.push({ yr, open: yOpen, emi: yEMI, emiTotal: yInt + yPrin, interest: yInt, prin: yPrin, extra, close: Math.max(0, balance) });
+    if (balance <= 0.01) break;
+    if (yr > 40) break;
+  }
+  return { yearData, monthData, actualMonths, totalInterest, totalExtra };
+}
+
+function calcHomeLoan() {
+  const propVal   = parseFloat(document.getElementById('hl-propval').value);
+  const loan      = parseFloat(document.getElementById('hl-loan').value);
+  const rate      = parseFloat(document.getElementById('hl-rate').value);
+  const tenureYrs = parseFloat(document.getElementById('hl-tenure').value);
+  const extraEMI  = parseInt(document.getElementById('hl-extraemi').value) || 0;
+  const hikeOn    = document.getElementById('hl-hike-toggle').checked;
+  const hikePct   = hikeOn ? (parseFloat(document.getElementById('hl-hikepct').value) || 0) : 0;
+  const procFee   = parseFloat(document.getElementById('hl-procfee').value) || 0;
+  const legalFee  = parseFloat(document.getElementById('hl-legal').value) || 3500;
+  const modtPct   = parseFloat(document.getElementById('hl-modt').value) || 0.1;
+  const insPct    = parseFloat(document.getElementById('hl-insurance').value) || 0.075;
+  const stCode    = document.getElementById('hl-state').value;
+  const startM    = parseInt(document.getElementById('hl-startm').value);  // 1-12
+  const startY    = parseInt(document.getElementById('hl-starty').value) || 2025;
+
+  if (isNaN(loan)||isNaN(rate)||isNaN(tenureYrs)||loan<=0||rate<=0) {
+    alert('Fill Property Value, Down Payment, Rate, and Tenure.'); return;
+  }
+
+  const r   = rate / 100 / 12;
+  const n   = tenureYrs * 12;
+  const emi = loan * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+
+  // Upfront costs
+  const sd      = stCode && HL_STAMP[stCode] ? HL_STAMP[stCode] : null;
+  const sdRate  = sd ? sd[hlGender] : 0;
+  const stampDuty    = (propVal||0) * sdRate / 100;
+  const regFee       = Math.min((propVal||0) * 0.01, 30000);
+  const procGST      = procFee * 0.18;
+  const modt         = loan * modtPct / 100;
+  const cersai       = loan <= 500000 ? 59 : 118; // 50/100 + 18% GST
+  const legalGST     = legalFee * 0.18;
+  const insYr1       = (propVal||0) * insPct / 100;
+  const totalUpfront = stampDuty + regFee + procFee + procGST + modt + cersai + legalFee + legalGST + insYr1;
+
+  // Simulate without extras (baseline)
+  const base  = simulateHL(loan, r, n, emi, 0, 0);
+  // Simulate with extra EMI + hike combined
+  const hasOpts = extraEMI > 0 || hikePct > 0;
+  const extra   = hasOpts ? simulateHL(loan, r, n, emi, extraEMI, hikePct) : null;
+
+  hlMonthlyData = extra ? extra.monthData : base.monthData;
+  hlHasExtra    = extraEMI > 0;
+  hlHasHike     = hikePct > 0;
+
+  // Dates
+  // EMI starts next month after loan start
+  const emiStart0  = addMonths(startY, startM - 1, 1);  // 0-based month
+  const origEnd0   = addMonths(emiStart0.y, emiStart0.m, base.actualMonths - 1);
+  const actEnd0    = extra ? addMonths(emiStart0.y, emiStart0.m, extra.actualMonths - 1) : null;
+
+  const savedMonths = extra ? (base.actualMonths - extra.actualMonths) : 0;
+  const savedYrs    = Math.floor(savedMonths / 12);
+  const savedMos    = savedMonths % 12;
+
+  const totalCostBase  = (base.totalInterest + loan) + totalUpfront + insYr1 * tenureYrs;
+  const totalCostExtra = extra ? (extra.totalInterest + loan) + totalUpfront + insYr1 * (extra.actualMonths/12) : totalCostBase;
+  const intSaved       = extra ? (base.totalInterest - extra.totalInterest) : 0;
+
+  // Render KPIs
+  const hs = (id, val, sfx) => { const e = document.getElementById(id); if(e) e.textContent = humanize(val, sfx); };
+  document.getElementById('hl-k-emi').textContent      = '₹' + fmt(emi) + (hikePct > 0 ? ` → +${hikePct}%/yr` : '');
+  hs('hl-k-emi-s', emi, '/M');
+  document.getElementById('hl-k-start').textContent    = fmtDate(emiStart0.y, emiStart0.m);
+  document.getElementById('hl-k-origend').textContent  = fmtDate(origEnd0.y, origEnd0.m);
+  document.getElementById('hl-k-actend').textContent   = extra ? fmtDate(actEnd0.y, actEnd0.m) : 'N/A';
+  document.getElementById('hl-k-actend-chip').style.opacity = extra ? '1' : '.4';
+
+  document.getElementById('hl-k-saved').textContent    = extra ? savedYrs+'y '+savedMos+'m saved' : 'N/A';
+  document.getElementById('hl-k-prepay').textContent   = extra ? '₹'+fmt(extra.totalExtra) : 'N/A';
+  hs('hl-k-prepay-s', extra ? extra.totalExtra : 0);
+  document.getElementById('hl-k-isaved').textContent   = extra ? '₹'+fmt(intSaved) : 'N/A';
+  hs('hl-k-isaved-s', extra ? intSaved : 0);
+  const tcVal = extra ? totalCostExtra : totalCostBase;
+  document.getElementById('hl-k-totalcost').textContent = '₹'+fmt(tcVal);
+  hs('hl-k-totalcost-s', tcVal);
+  document.getElementById('hl-k-totalcost-l').textContent = hasOpts ? 'Total Cost (with extra/hike)' : 'Total Cost';
+  document.getElementById('hl-k-actend-l').textContent   = hasOpts ? 'Actual End (with extra/hike)' : 'Actual End';
+
+  const interestVal = extra ? extra.totalInterest : base.totalInterest;
+  const grandVal    = extra ? totalCostExtra : totalCostBase;
+  document.getElementById('hl-k-principal').textContent  = '₹'+fmt(loan);
+  hs('hl-k-principal-s', loan);
+  document.getElementById('hl-k-interest').textContent   = '₹'+fmt(interestVal);
+  hs('hl-k-interest-s', interestVal);
+  document.getElementById('hl-k-upfront').textContent    = '₹'+fmt(totalUpfront);
+  hs('hl-k-upfront-s', totalUpfront);
+  document.getElementById('hl-k-grandtotal').textContent = '₹'+fmt(grandVal);
+  hs('hl-k-grandtotal-s', grandVal);
+
+  // Upfront table
+  const upRows = [
+    ['Stamp Duty', `₹${fmt(propVal||0)} × ${sdRate}% (${stCode||'—'})`, stampDuty],
+    ['Registration Fee', `min(1% of property, ₹30,000)`, regFee],
+    ['Processing Fee', `bank charge`, procFee],
+    ['GST on Processing Fee', `18% of ₹${fmt(procFee)}`, procGST],
+    ['MODT', `${modtPct}% of loan ₹${fmt(loan)}`, modt],
+    ['CERSAI', loan<=500000?'₹50 + 18% GST':'₹100 + 18% GST', cersai],
+    ['Tech & Legal Fee', `flat`, legalFee],
+    ['GST on Tech & Legal', `18% of ₹${fmt(legalFee)}`, legalGST],
+    ['Home Insurance (Year 1)', `${insPct}% of property value`, insYr1],
+  ];
+  document.getElementById('hl-upfront-tbody').innerHTML = upRows.map(([d,c,v]) =>
+    `<tr><td>${d}</td><td class="muted">${c}</td><td class="val">₹${fmt(v)}</td></tr>`
+  ).join('') + `<tr class="row-subtotal"><td><strong>Total Upfront</strong></td><td></td><td class="val">₹${fmt(totalUpfront)}</td></tr>`;
+
+  // Year-wise table
+  const src = extra || base;
+  const showExtra = extraEMI > 0;
+  const showHike  = hikePct > 0;
+  const headCols  = `<th>Year</th>
+    ${showHike ? '<th style="text-align:right">EMI This Year (₹)</th>' : ''}
+    <th style="text-align:right">Opening (₹)</th>
+    <th style="text-align:right">EMI Paid (₹)</th>
+    <th style="text-align:right">Interest (₹)</th>
+    <th style="text-align:right">Principal (₹)</th>
+    ${showExtra ? '<th style="text-align:right">Extra EMI (₹)</th>' : ''}
+    <th style="text-align:right">Closing (₹)</th>`;
+  document.getElementById('hl-year-thead').innerHTML = `<tr>${headCols}</tr>`;
+  document.getElementById('hl-year-tbody').innerHTML = src.yearData.map(y =>
+    `<tr>
+      <td style="color:#64748b">${y.yr}</td>
+      ${showHike ? `<td class="val" style="color:#93c5fd">₹${fmt(y.emi)}</td>` : ''}
+      <td class="val">₹${fmt(y.open)}</td>
+      <td class="val">₹${fmt(y.emiTotal)}</td>
+      <td class="val" style="color:#f87171">₹${fmt(y.interest)}</td>
+      <td class="val">₹${fmt(y.prin)}</td>
+      ${showExtra ? `<td class="val" style="color:#fbbf24">${y.extra>0?'₹'+fmt(y.extra):'—'}</td>` : ''}
+      <td class="val" style="color:${y.close<1?'#4ade80':'#94a3b8'}">₹${fmt(y.close)}</td>
+    </tr>`
+  ).join('');
+
+  // Pre-build month table headers (body rendered on toggle)
+  const mHead = `<tr>
+    <th>Month</th><th>Year</th>
+    ${showHike ? '<th style="text-align:right">EMI (₹)</th>' : ''}
+    <th style="text-align:right">Interest (₹)</th>
+    <th style="text-align:right">Principal (₹)</th>
+    ${showExtra ? '<th style="text-align:right">Extra EMI (₹)</th>' : ''}
+    <th style="text-align:right">Closing (₹)</th>
+  </tr>`;
+  document.getElementById('hl-month-thead').innerHTML = mHead;
+  document.getElementById('hl-month-tbody').innerHTML = '';
+  hlShowMonthly = false;
+  document.getElementById('hl-monthly-wrap').style.display = 'none';
+  document.getElementById('hl-toggle-monthly').textContent = 'Show Month-by-Month';
+  document.getElementById('hl-toggle-monthly').classList.remove('active');
+
+  document.getElementById('hl-result').classList.add('show');
+}
+
+function hlToggleMonthly() {
+  hlShowMonthly = !hlShowMonthly;
+  const wrap = document.getElementById('hl-monthly-wrap');
+  const btn  = document.getElementById('hl-toggle-monthly');
+  wrap.style.display = hlShowMonthly ? 'block' : 'none';
+  btn.textContent = hlShowMonthly ? 'Hide Month-by-Month' : 'Show Month-by-Month';
+  btn.classList.toggle('active', hlShowMonthly);
+
+  if (hlShowMonthly && document.getElementById('hl-month-tbody').innerHTML === '') {
+    document.getElementById('hl-month-tbody').innerHTML = hlMonthlyData.map(m =>
+      `<tr>
+        <td style="color:#64748b">${m.month}</td>
+        <td style="color:#475569">Yr ${m.yr}</td>
+        ${hlHasHike ? `<td class="val" style="color:#93c5fd">₹${fmt(m.emi)}</td>` : ''}
+        <td class="val" style="color:#f87171">₹${fmt(m.interest)}</td>
+        <td class="val">₹${fmt(m.prin)}</td>
+        ${hlHasExtra ? `<td class="val" style="color:#fbbf24">${m.extra>0?'₹'+fmt(m.extra):'—'}</td>` : ''}
+        <td class="val" style="color:${m.balance<1?'#4ade80':'#94a3b8'}">₹${fmt(m.balance)}</td>
+      </tr>`
+    ).join('');
+  }
+}
+
+function clearHomeLoan() {
+  ['hl-propval','hl-down','hl-loan','hl-rate','hl-tenure','hl-extraemi','hl-procfee','hl-legal','hl-modt','hl-insurance','hl-starty']
+    .forEach(id => { const e=document.getElementById(id); if(e){e.value=id==='hl-modt'?'0.1':id==='hl-insurance'?'0.075':id==='hl-legal'?'3500':id==='hl-starty'?'2025':'';}});
+  document.getElementById('hl-result').classList.remove('show');
+  document.getElementById('hl-bank').value  = 'custom';
+  document.getElementById('hl-state').value = '';
+  document.getElementById('hl-stamp-hint').textContent = '';
+  setHLBorrower('sal'); setHLGender('m');
+  hlMonthlyData = []; hlHasExtra = false; hlHasHike = false; hlShowMonthly = false;
+  document.getElementById('hl-hike-toggle').checked = false;
+  const hInp = document.getElementById('hl-hikepct');
+  hInp.value = ''; hInp.style.opacity = '.4'; hInp.style.pointerEvents = 'none';
+  document.getElementById('hl-hike-label').classList.remove('on');
+}
+
+// ─── Home Loan: Export to Excel ───────────────────────────────────────────
+function exportHLExcel() {
+  if (typeof XLSX === 'undefined') { alert('Excel library not loaded. Check internet connection.'); return; }
+  if (!document.getElementById('hl-result').classList.contains('show')) { alert('Run Calculate first.'); return; }
+
+  const g  = id => document.getElementById(id);
+  const gv = (id, fb) => parseFloat(g(id)?.value) || (fb||0);
+  const gi = (id, fb) => parseInt(g(id)?.value) || (fb||0);
+
+  const propVal = gv('hl-propval'); const downPay = gv('hl-down');
+  const loan    = gv('hl-loan');    const rate     = gv('hl-rate');
+  const tenure  = gv('hl-tenure'); const extraEMI = gi('hl-extraemi');
+  const hikeOn  = g('hl-hike-toggle').checked;
+  const hikePct = hikeOn ? gv('hl-hikepct') : 0;
+  const procFee = gv('hl-procfee'); const legal   = gv('hl-legal',3500);
+  const modtPct = gv('hl-modt',0.1); const insPct = gv('hl-insurance',0.075);
+  const stCode  = g('hl-state').value;
+  const startY  = gi('hl-starty',2025);
+  const sdObj   = stCode && HL_STAMP[stCode] ? HL_STAMP[stCode] : null;
+  const sdRate  = sdObj ? sdObj[hlGender] : 0;
+  const cersai  = loan <= 500000 ? 59 : 118;
+
+  // Re-run simulation for export data
+  const r    = rate / 100 / 12;
+  const n    = tenure * 12;
+  const emi  = r > 0 ? loan * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1) : loan/n;
+  const sim  = simulateHL(loan, r, n, emi, extraEMI, hikePct);
+  const showExtra = extraEMI > 0;
+  const showHike  = hikePct > 0;
+
+  const wb = XLSX.utils.book_new();
+  const C  = (v, t) => ({ v, t: t || (typeof v === 'number' ? 'n' : 's') });
+  const F  = f     => ({ f });
+
+  // ── Sheet 1: Inputs (explicit row refs — no loop drift) ──────────────────
+  const wsI = {};
+  // Row 1-2: headers
+  wsI['A1'] = C('HOME LOAN CALCULATOR — INPUTS');
+  wsI['A2'] = C('Edit B5:B12 values to recalculate. Amortization sheets are pre-computed — re-export to refresh.');
+  // Row 3: blank
+  // Row 4: section label
+  wsI['A4'] = C('PROPERTY & LOAN DETAILS');
+  wsI['A5'] = C('Property Value (₹)');          wsI['B5'] = C(propVal);
+  wsI['A6'] = C('Down Payment (₹)');            wsI['B6'] = C(downPay);
+  wsI['A7'] = C('Loan Amount (₹)');             wsI['B7'] = F('B5-B6');
+  wsI['A8'] = C('Annual Interest Rate (%)');    wsI['B8'] = C(rate);
+  wsI['A9'] = C('Tenure (Years)');              wsI['B9'] = C(tenure);
+  wsI['A10'] = C('Extra EMI per Year');         wsI['B10'] = C(extraEMI);
+  wsI['A11'] = C('EMI Hike per Year (%)');      wsI['B11'] = C(hikePct);
+  // Row 12: blank
+  wsI['A13'] = C('CALCULATED (auto-recalculates)');
+  wsI['A14'] = C('Base Monthly EMI (₹)');       wsI['B14'] = F('PMT(B8/100/12,B9*12,-B7)');
+  wsI['A15'] = C('Total Months');               wsI['B15'] = F('B9*12');
+  wsI['A16'] = C('Total Repayment — no extras (₹)'); wsI['B16'] = F('B14*B15');
+  wsI['A17'] = C('Total Interest — no extras (₹)');  wsI['B17'] = F('B16-B7');
+  // Row 18: blank
+  wsI['A19'] = C('BANK & CHARGES');
+  wsI['A20'] = C('Processing Fee (₹)');         wsI['B20'] = C(procFee);
+  wsI['A21'] = C('GST on Processing Fee (₹)');  wsI['B21'] = F('B20*0.18');
+  wsI['A22'] = C('MODT % of loan');             wsI['B22'] = C(modtPct);
+  wsI['A23'] = C('MODT Amount (₹)');            wsI['B23'] = F('B7*B22/100');
+  wsI['A24'] = C('Tech & Legal Fee (₹)');       wsI['B24'] = C(legal);
+  wsI['A25'] = C('GST on Tech & Legal (₹)');    wsI['B25'] = F('B24*0.18');
+  wsI['A26'] = C('Home Insurance % p.a.');      wsI['B26'] = C(insPct);
+  wsI['A27'] = C('Home Insurance Year 1 (₹)');  wsI['B27'] = F('B5*B26/100');
+  wsI['A28'] = C('Stamp Duty Rate (%)');        wsI['B28'] = C(sdRate);
+  wsI['A29'] = C('Stamp Duty (₹)');             wsI['B29'] = F('B5*B28/100');
+  wsI['A30'] = C('Registration Fee (₹)');       wsI['B30'] = F('MIN(B5*0.01,30000)');
+  wsI['A31'] = C('CERSAI Charge (₹)');          wsI['B31'] = C(cersai);
+  // Row 32: blank
+  wsI['A33'] = C('TOTAL UPFRONT (₹)');          wsI['B33'] = F('B20+B21+B23+B24+B25+B27+B29+B30+B31');
+
+  wsI['!ref'] = 'A1:B33';
+  wsI['!cols'] = [{ wch: 38 }, { wch: 22 }];
+  XLSX.utils.book_append_sheet(wb, wsI, 'Inputs');
+
+  // ── Sheet 2: Summary ─────────────────────────────────────────────────────
+  const wsS = {};
+  const totalInterest = sim.totalInterest;
+  const totalPrepay   = sim.totalExtra;
+  const totalCost     = loan + totalInterest + (procFee + procFee*0.18 + loan*modtPct/100 + legal + legal*0.18 + propVal*insPct/100 + propVal*sdRate/100 + Math.min(propVal*0.01,30000) + cersai);
+  const summaryRows = [
+    ['HOME LOAN SUMMARY', null],
+    ['', null],
+    ['Loan Principal (₹)',              loan],
+    ['Base Monthly EMI (₹)',            emi],
+    ['Total Months (with extras)',      sim.actualMonths],
+    ['Total Interest Paid (₹)',         totalInterest],
+    ['Total Prepayment Done (₹)',        totalPrepay],
+    ['Total Repayment (₹)',             loan + totalInterest],
+    ['Total Upfront Charges (₹)',        propVal*sdRate/100 + Math.min(propVal*0.01,30000) + procFee + procFee*0.18 + loan*modtPct/100 + cersai + legal + legal*0.18 + propVal*insPct/100],
+    ['Grand Total Cost of Ownership (₹)', totalCost],
+    ['', null],
+    ['NOTE: Amortization sheets are pre-computed. Re-export from site to refresh after changing inputs.', null],
+  ];
+  summaryRows.forEach((row, ri) => {
+    wsS[`A${ri+1}`] = C(row[0]);
+    if (typeof row[1] === 'number') wsS[`B${ri+1}`] = C(row[1]);
+  });
+  wsS['!ref'] = `A1:B${summaryRows.length}`;
+  wsS['!cols'] = [{ wch: 36 }, { wch: 22 }];
+  XLSX.utils.book_append_sheet(wb, wsS, 'Summary');
+
+  // ── Sheet 3: Year Schedule ────────────────────────────────────────────────
+  const yHdr = ['Year', ...(showHike?['EMI This Year (₹)']:[]), 'Opening Balance (₹)', 'EMI Paid (₹)', 'Interest (₹)', 'Principal (₹)', ...(showExtra?['Extra EMI (₹)']:[]), 'Closing Balance (₹)'];
+  const wsY  = XLSX.utils.aoa_to_sheet([yHdr, ...sim.yearData.map(y =>
+    [y.yr, ...(showHike?[y.emi]:[]), y.open, y.emiTotal, y.interest, y.prin, ...(showExtra?[y.extra]:[]), y.close]
+  )]);
+  wsY['!cols'] = yHdr.map(() => ({ wch: 20 }));
+  XLSX.utils.book_append_sheet(wb, wsY, 'Year Schedule');
+
+  // ── Sheet 4: Month Schedule ───────────────────────────────────────────────
+  const mHdr = ['Month', 'Year', ...(showHike?['EMI (₹)']:[]), 'Interest (₹)', 'Principal (₹)', ...(showExtra?['Extra EMI (₹)']:[]), 'Closing Balance (₹)'];
+  const wsM  = XLSX.utils.aoa_to_sheet([mHdr, ...sim.monthData.map(m =>
+    [m.month, m.yr, ...(showHike?[m.emi]:[]), m.interest, m.prin, ...(showExtra?[m.extra]:[]), m.balance]
+  )]);
+  wsM['!cols'] = mHdr.map(() => ({ wch: 18 }));
+  XLSX.utils.book_append_sheet(wb, wsM, 'Month Schedule');
+
+  XLSX.writeFile(wb, `HomeLoan_${propVal ? Math.round(propVal/100000)+'L' : ''}_${rate}pct_${tenure}yr_${startY}.xlsx`);
+}
+
+// ─── CAR LOAN ─────────────────────────────────────────────────────────────
+
+const CAR_RTO_RATES = {
+  // EV column = actual road tax % after state waiver (0 = 100% exempt)
+  AP:{p:12,d:14,ev:0, cng:12,corp:1.5}, AS:{p:8,d:10,ev:0, cng:8, corp:1.5},
+  BR:{p:9,d:10,ev:0, cng:9, corp:1.5},  CG:{p:8,d:9, ev:0, cng:8, corp:1.5},
+  DL:{p:10,d:12.5,ev:0,cng:5,corp:2},   GA:{p:9,d:11,ev:0, cng:9, corp:1.5},
+  GJ:{p:6,d:6,  ev:3, cng:6, corp:2},   HR:{p:8,d:10,ev:0, cng:8, corp:1.5},
+  HP:{p:7,d:9,  ev:0, cng:7, corp:1.5}, JH:{p:8,d:9, ev:0, cng:8, corp:1.5},
+  KA:{p:14,d:17,ev:0, cng:14,corp:2},   KL:{p:10,d:12,ev:5,cng:10,corp:1.5}, // 50% discount → 5%
+  MP:{p:8,d:9,  ev:0, cng:8, corp:1.5}, MH:{p:11,d:13,ev:0,cng:8, corp:1.5},
+  OD:{p:8,d:9,  ev:0, cng:8, corp:1.5}, PB:{p:8,d:9, ev:0, cng:8, corp:1.5},
+  RJ:{p:8,d:10, ev:0, cng:8, corp:1.5}, TN:{p:10,d:12,ev:0,cng:10,corp:1.5},
+  TG:{p:9,d:11, ev:0, cng:9, corp:1.5}, UP:{p:8,d:10,ev:0, cng:6, corp:1.5},
+  UK:{p:8,d:9,  ev:0, cng:8, corp:1.5}, WB:{p:8,d:10,ev:0, cng:8, corp:1.5},
+};
+
+const CAR_BANKS = {
+  custom:{ name:'Custom/Other', ice:{min:9,max:13},    ev:{min:8.5,max:12},
+    fee:{type:'flat',val:3500,min:0,max:null}, fc:[] },
+  sbi:   { name:'SBI',          ice:{min:8.75,max:9.85}, ev:{min:8.65,max:9.75},
+    fee:{type:'pct',val:0.4,min:1000,max:7500},  fc:[{upto:24,rate:3},{upto:999,rate:0}] },
+  hdfc:  { name:'HDFC Bank',    ice:{min:8.90,max:11.50},ev:{min:8.80,max:10.50},
+    fee:{type:'pct',val:1.0,min:3500,max:9000},  fc:[{upto:12,rate:6},{upto:24,rate:5},{upto:999,rate:3}] },
+  icici: { name:'ICICI Bank',   ice:{min:8.35,max:11.25},ev:{min:8.25,max:10.25},
+    fee:{type:'flat',val:8500,min:0,max:null},   fc:[{upto:12,rate:3},{upto:24,rate:2},{upto:999,rate:0}] },
+  axis:  { name:'Axis Bank',    ice:{min:8.95,max:11.75},ev:{min:8.85,max:11.00},
+    fee:{type:'flat',val:7500,min:0,max:null},   fc:[{upto:999,rate:5}] },
+  bob:   { name:'Bank of Baroda',ice:{min:8.80,max:10.90},ev:{min:8.65,max:10.00},
+    fee:{type:'pct',val:0.5,min:0,max:10000},    fc:[{upto:999,rate:2}] },
+  pnb:   { name:'PNB',          ice:{min:8.80,max:10.15},ev:{min:8.75,max:10.05},
+    fee:{type:'pct',val:0.25,min:1000,max:1500}, fc:[{upto:999,rate:2}] },
+  canara:{ name:'Canara Bank',  ice:{min:8.70,max:10.20},ev:{min:8.60,max:10.10},
+    fee:{type:'pct',val:0.25,min:1000,max:5000}, fc:[{upto:999,rate:0}] },
+  union: { name:'Union Bank',   ice:{min:7.50,max:9.00}, ev:{min:7.40,max:8.90},
+    fee:{type:'flat',val:1000,min:0,max:null},   fc:[{upto:999,rate:2}] },
+  idfc:  { name:'IDFC First',   ice:{min:9.25,max:12.50},ev:{min:9.15,max:11.50},
+    fee:{type:'flat',val:10000,min:0,max:null},  fc:[{upto:999,rate:5}] },
+};
+
+const ICE_TP     = { 1000:2094, 1500:3416, 9999:7897 };
+const ICE_TP_3YR = { 1000:6521, 1500:10640, 9999:24596 }; // mandatory 3-yr TP bundle for new ICE cars
+const EV_TP      = { 30:1780, 65:2904, 9999:6712 };
+
+function clInsUpdate() {
+  const isEV   = clFuelType === 'ev';
+  // Show cc vs kW selector
+  const iceWrap = document.getElementById('cl-ice-cc-wrap');
+  const evWrap  = document.getElementById('cl-ev-kw-wrap');
+  const evNote  = document.getElementById('cl-ev-od-note');
+  if (iceWrap) iceWrap.style.display = isEV ? 'none' : 'block';
+  if (evWrap)  evWrap.style.display  = isEV ? 'block' : 'none';
+  if (evNote)  evNote.style.display  = isEV ? 'block' : 'none';
+
+  // IDV auto-fill from ex-showroom if blank
+  const exShow = parseFloat(document.getElementById('cl-exshow')?.value) || 0;
+  const idvEl  = document.getElementById('cl-idv');
+  if (idvEl && !idvEl.value && exShow > 0) idvEl.value = exShow;
+  const idv = parseFloat(idvEl?.value) || exShow;
+
+  // OD Premium (15% discount for EV)
+  const odPct = parseFloat(document.getElementById('cl-od-pct')?.value) || 2.5;
+  const odRaw = idv * odPct / 100;
+  const odAmt = isEV ? odRaw * 0.85 : odRaw;
+  if (document.getElementById('cl-od-amt')) document.getElementById('cl-od-amt').value = Math.round(odAmt);
+
+  // Third-Party tariff (IRDAI fixed). New cars take the mandatory 3-year TP bundle.
+  const is3yr = document.getElementById('cl-newcar-tp')?.checked;
+  let tpAmt = 0;
+  if (isEV) {
+    const kw = parseInt(document.getElementById('cl-motor-kw')?.value) || 65;
+    tpAmt = EV_TP[kw] || 2904;
+    if (is3yr) tpAmt *= 3; // no gazetted EV 3-yr slab; approximate as 3× annual
+  } else {
+    const cc = parseInt(document.getElementById('cl-engine-cc')?.value) || 1500;
+    tpAmt = is3yr ? (ICE_TP_3YR[cc] || 10640) : (ICE_TP[cc] || 3416);
+  }
+  if (document.getElementById('cl-tp-amt')) document.getElementById('cl-tp-amt').value = tpAmt;
+  const tpLabel = document.getElementById('cl-tp-label');
+  if (tpLabel) tpLabel.textContent = is3yr ? 'TP Tariff (₹) — 3yr bundle' : 'TP Tariff (₹) — 1yr';
+
+  // Add-ons
+  let addons = 0;
+  if (document.getElementById('cl-addon-zerodep')?.checked) addons += idv * 0.006;
+  if (document.getElementById('cl-addon-rti')?.checked)     addons += idv * 0.0025;
+  if (document.getElementById('cl-addon-engine')?.checked)  addons += idv * 0.002;
+  if (document.getElementById('cl-addon-cpa')?.checked)     addons += 375;
+  if (document.getElementById('cl-addon-amt')) document.getElementById('cl-addon-amt').value = Math.round(addons);
+
+  // 18% GST applies to all insurance premiums (OD + TP + add-ons)
+  const premium = odAmt + tpAmt + addons;
+  const gst = premium * 0.18;
+  if (document.getElementById('cl-ins-gst')) document.getElementById('cl-ins-gst').value = Math.round(gst);
+  const total = Math.round(premium + gst);
+  // Skip overwriting total when manual entry is active
+  const manual = document.getElementById('cl-ins-manual')?.checked;
+  if (!manual && document.getElementById('cl-total-insurance'))
+    document.getElementById('cl-total-insurance').value = total;
+
+  clAutoCalcLoan();
+}
+
+function clInsManualToggle() {
+  const on    = document.getElementById('cl-ins-manual').checked;
+  const total = document.getElementById('cl-total-insurance');
+  const label = document.getElementById('cl-ins-manual-label');
+  // Hide/show the auto-breakdown sections
+  document.querySelectorAll('.cl-auto-only').forEach(e => { e.style.display = on ? 'none' : ''; });
+  if (on) {
+    total.removeAttribute('readonly');
+    total.style.background = 'rgba(15,23,42,.8)';
+    total.style.color = '#e2e8f0';
+    total.placeholder = 'enter total premium';
+    total.oninput = clAutoCalcLoan;
+    if (label) label.textContent = 'Manual entry on';
+    clAutoCalcLoan();
+  } else {
+    total.setAttribute('readonly','');
+    total.style.background = 'rgba(10,18,35,.9)';
+    total.style.color = '#93c5fd';
+    total.oninput = null;
+    if (label) label.textContent = 'Enter total manually';
+    clInsUpdate();
+  }
+}
+
+let clFuelType='p', clRegType='ind';
+let clMonthlyData=[], clHasExtra=false, clHasHike=false, clShowMonthly=false;
+
+function setClFuel(f) {
+  clFuelType = f;
+  ['p','d','ev','cng'].forEach(x => document.getElementById('cl-fuel-'+x)?.classList.toggle('active-seg',x===f));
+  const isEV = f==='ev';
+  const subEl = document.getElementById('cl-ev-subsidy');
+  subEl.style.opacity = isEV ? '1' : '.4';
+  subEl.style.pointerEvents = isEV ? 'auto' : 'none';
+  document.getElementById('cl-ev-note').textContent = isEV
+    ? '0% RTO for most states. Enter kWh for Gujarat subsidy.' : 'Switch to EV fuel to enable';
+  clRTOUpdate(); clBankRateUpdate(); clInsUpdate();
+}
+
+function setClReg(r) {
+  clRegType = r;
+  document.getElementById('cl-reg-ind').classList.toggle('active-seg', r==='ind');
+  document.getElementById('cl-reg-corp').classList.toggle('active-seg', r==='corp');
+  clRTOUpdate();
+}
+
+function clRTOUpdate() {
+  const st  = document.getElementById('cl-state').value;
+  const rto = CAR_RTO_RATES[st];
+  if (!rto) { document.getElementById('cl-rto-hint').textContent=''; return; }
+  const fuelRates = {p:rto.p,d:rto.d,ev:rto.ev,cng:rto.cng};
+  let rate = fuelRates[clFuelType] ?? rto.p;
+  if (clRegType==='corp' && rate > 0) rate = Math.min(rate*(rto.corp||1.5), 20);
+  document.getElementById('cl-rto').value = rate;
+  document.getElementById('cl-rto-hint').textContent =
+    `${st} ${clFuelType.toUpperCase()}: ${rate}% RTO${clRegType==='corp'?' (corporate)':''}`;
+  const gjWrap = document.getElementById('cl-gj-wrap');
+  const evSub  = EV_STATE_SUBSIDY[st];
+  if (gjWrap) gjWrap.style.display = (clFuelType==='ev' && evSub && evSub.type==='perkwh') ? 'block' : 'none';
+  clEvSubsidyUpdate();
+  clAutoCalcLoan();
+}
+
+// EV State Subsidy — FY 2026 data (cash pools; road tax handled in CAR_RTO_RATES)
+const EV_STATE_SUBSIDY = {
+  MH:{ type:'perkwh', rate:5000,  cap:250000, minKwh:15, note:'₹5K/kWh · max ₹2.5L (min 15 kWh). 100% RTO exempt. Cash pool status: verify MSRDC portal.' },
+  GJ:{ type:'perkwh', rate:10000, cap:150000, minKwh:15, note:'₹10K/kWh · max ₹1.5L (min 15 kWh). 50% RTO discount applied.' },
+  AS:{ type:'perkwh', rate:10000, cap:150000, minKwh:0,  note:'₹10K/kWh · max ₹1.5L. Quota: first 2,000 EVs only — verify availability.' },
+  WB:{ type:'perkwh', rate:10000, cap:150000, minKwh:0,  note:'₹10K/kWh · max ₹1.5L. Quota: first 10,000 EVs — verify availability.' },
+  BR:{ type:'perkwh', rate:10000, cap:150000, minKwh:0,  note:'₹10K/kWh · max ₹1.5L. First EV registration per buyer only.' },
+  DL:{ type:'perkwh', rate:10000, cap:150000, minKwh:0,  note:'₹10K/kWh · max ₹1.5L. High demand — check Delhi EV portal daily.' },
+  OD:{ type:'flat',   amount:100000, minKwh:0, note:'Flat ₹1L subsidy (ex-showroom slab). 100% RTO exempt.' },
+  TG:{ type:'none', note:'100% RTO exempt until Dec 2026. No cash subsidy for private cars.' },
+  UP:{ type:'none', note:'Cash pool expired. 75–100% road tax waiver persists.' },
+  KA:{ type:'none', note:'100% RTO exempt. No cash incentives for private buyers.' },
+  TN:{ type:'none', note:'100% RTO exempt. No cash incentives for private buyers.' },
+  KL:{ type:'none', note:'50% road tax discount (applied in RTO rate). No cash subsidy.' },
+};
+
+function clEvSubsidyUpdate() {
+  const st   = document.getElementById('cl-state').value;
+  const kwh  = parseFloat(document.getElementById('cl-ev-kwh').value) || 0;
+  const note = document.getElementById('cl-ev-note');
+  if (clFuelType !== 'ev') return;
+
+  const ev = EV_STATE_SUBSIDY[st];
+  const kwhWrap = document.getElementById('cl-gj-wrap');
+
+  if (!ev) {
+    // State not in EV subsidy list — no cash subsidy
+    document.getElementById('cl-ev-subsidy').value = 0;
+    note.textContent = '0% RTO. Check state EV portal for local incentives.';
+    if (kwhWrap) kwhWrap.style.display = 'none';
+    clAutoCalcLoan(); return;
+  }
+
+  // Show kWh input for perkwh states
+  if (kwhWrap) kwhWrap.style.display = ev.type === 'perkwh' ? 'block' : 'none';
+  if (kwhWrap) kwhWrap.querySelector('label').textContent = 'Battery Capacity (kWh) — for subsidy';
+
+  let sub = 0;
+  if (ev.type === 'perkwh') {
+    if (kwh > 0 && kwh >= (ev.minKwh || 0)) {
+      sub = Math.min(kwh * ev.rate, ev.cap);
+      note.textContent = `₹${(ev.rate/1000).toFixed(0)}K × ${kwh}kWh = ₹${fmt(sub)} (max ₹${fmt(ev.cap)}) — ${ev.note}`;
+    } else if (ev.minKwh > 0 && kwh > 0 && kwh < ev.minKwh) {
+      note.textContent = `⚠ Min ${ev.minKwh} kWh required for subsidy. ${ev.note}`;
+    } else {
+      note.textContent = `Enter battery kWh to calculate. ${ev.note}`;
+    }
+  } else if (ev.type === 'flat') {
+    sub = ev.amount;
+    note.textContent = `Flat ₹${fmt(ev.amount)} subsidy applied. ${ev.note}`;
+  } else {
+    note.textContent = ev.note;
+  }
+
+  document.getElementById('cl-ev-subsidy').value = sub || 0;
+  clAutoCalcLoan();
+}
+
+function clBankRateUpdate() {
+  const key = document.getElementById('cl-bank').value;
+  const b   = CAR_BANKS[key];
+  if (!b || key==='custom') { document.getElementById('cl-bank-hint').textContent='Enter rate manually'; return; }
+  const rates = clFuelType==='ev' ? b.ev : b.ice;
+  const mid   = ((rates.min+rates.max)/2).toFixed(2);
+  document.getElementById('cl-rate').value = mid;
+  document.getElementById('cl-bank-hint').textContent =
+    `${clFuelType==='ev'?'EV':'ICE'}: ${rates.min}–${rates.max}% p.a. (using ${mid}%)`;
+  const loanVal = parseFloat(document.getElementById('cl-loan').value)||0;
+  const f = b.fee;
+  let fee = f.type==='flat' ? f.val : loanVal*f.val/100;
+  if (f.min) fee=Math.max(f.min,fee);
+  if (f.max) fee=Math.min(f.max,fee);
+  document.getElementById('cl-procfee').value = Math.round(fee);
+  // Foreclosure reference
+  const ref = document.getElementById('cl-fc-ref');
+  if (!b.fc||!b.fc.length) { ref.textContent=`${b.name}: Verify foreclosure terms with bank.`; return; }
+  const lines = b.fc.map((t,i)=>{
+    const from=i===0?'M1':`M${b.fc[i-1].upto+1}`;
+    const to=t.upto===999?'+':` to M${t.upto}`;
+    return `${from}${to}: ${t.rate===0?'NIL':t.rate+'%'}`;
+  });
+  ref.textContent = `Foreclosure: ${lines.join(' · ')} of outstanding`;
+}
+
+function clAutoCalcLoan() {
+  const exShow = parseFloat(document.getElementById('cl-exshow').value)||0;
+  const disc   = parseFloat(document.getElementById('cl-disc').value)||0;
+  const iv     = Math.max(0, exShow-disc);
+  document.getElementById('cl-invoice').value = iv||'';
+  const rto    = parseFloat(document.getElementById('cl-rto').value)||0;
+  const insAmt = parseFloat(document.getElementById('cl-total-insurance').value)||0;
+  const hypo   = parseFloat(document.getElementById('cl-hypo').value)||0;
+  const fastag = parseFloat(document.getElementById('cl-fastag').value)||0;
+  const evSub  = parseFloat(document.getElementById('cl-ev-subsidy').value)||0;
+  const netIV  = iv-evSub;
+  const rtoAmt = netIV*rto/100;
+  const tcs    = iv>1000000 ? iv*0.01 : 0;
+  document.getElementById('cl-tcs-display').value = tcs>0?tcs.toFixed(0):'';
+  const aux    = rtoAmt+insAmt+tcs+hypo+fastag;
+  const onRoad = netIV+aux;
+  document.getElementById('cl-onroad').value = onRoad>0?onRoad.toFixed(0):'';
+  const down   = parseFloat(document.getElementById('cl-down').value)||0;
+  const loanReq= Math.max(0, onRoad-down);
+  document.getElementById('cl-loan').value = loanReq>0?loanReq.toFixed(0):'';
+  const maxLoan= exShow*0.95;
+  const warn   = document.getElementById('cl-loan-warn');
+  if (loanReq>maxLoan && exShow>0) {
+    warn.textContent=`⚠ Loan required (₹${fmt(loanReq)}) exceeds typical max (₹${fmt(maxLoan)} = 95% of ex-showroom). Increase down payment.`;
+    warn.style.display='block';
+  } else { warn.style.display='none'; }
+  // Re-apply bank fee on new loan
+  const key=document.getElementById('cl-bank').value;
+  const b=CAR_BANKS[key];
+  if(b&&key!=='custom'&&loanReq>0){
+    const f=b.fee; let fee=f.type==='flat'?f.val:loanReq*f.val/100;
+    if(f.min)fee=Math.max(f.min,fee); if(f.max)fee=Math.min(f.max,fee);
+    document.getElementById('cl-procfee').value=Math.round(fee);
+  }
+}
+
+function clHikeToggle() {
+  const on=document.getElementById('cl-hike-toggle').checked;
+  const inp=document.getElementById('cl-hikepct');
+  inp.style.opacity=on?'1':'.4'; inp.style.pointerEvents=on?'auto':'none';
+  document.getElementById('cl-hike-label').classList.toggle('on',on);
+}
+function clFcToggle() {
+  const on=document.getElementById('cl-fc-toggle').checked;
+  document.getElementById('cl-fc-panel').style.display=on?'block':'none';
+  document.getElementById('cl-fc-tlabel').classList.toggle('on',on);
+}
+
+function calcCarLoan() {
+  const loan    = parseFloat(document.getElementById('cl-loan').value);
+  const rate    = parseFloat(document.getElementById('cl-rate').value);
+  const tenure  = parseFloat(document.getElementById('cl-tenure').value);
+  const extra   = parseInt(document.getElementById('cl-extraemi').value)||0;
+  const hikeOn  = document.getElementById('cl-hike-toggle').checked;
+  const hikePct = hikeOn?(parseFloat(document.getElementById('cl-hikepct').value)||0):0;
+  const procFee = parseFloat(document.getElementById('cl-procfee').value)||0;
+  const startM  = parseInt(document.getElementById('cl-startm').value);
+  const startY  = parseInt(document.getElementById('cl-starty').value)||2025;
+  const doFc    = document.getElementById('cl-fc-toggle').checked;
+  const fcMonth = parseInt(document.getElementById('cl-fc-month').value)||0;
+
+  if (isNaN(loan)||isNaN(rate)||isNaN(tenure)||loan<=0||rate<=0) { alert('Fill Ex-Showroom, Down Payment, Rate.'); return; }
+  if (doFc&&(fcMonth<1||fcMonth>=tenure*12)) { alert(`Foreclose month: 1 to ${tenure*12-1}.`); return; }
+
+  const r   = rate/100/12, n=tenure*12;
+  const emi = r>0 ? loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1) : loan/n;
+  const base= simulateHL(loan,r,n,emi,0,0);
+  const hasOpts=extra>0||hikePct>0;
+  const sim = hasOpts ? simulateHL(loan,r,n,emi,extra,hikePct) : null;
+  const src = sim||base;
+  clMonthlyData=src.monthData; clHasExtra=extra>0; clHasHike=hikePct>0;
+
+  // Foreclosure
+  let fcPenalty=0,fcGST=0,fcCost=0;
+  if (doFc&&fcMonth>0&&src.monthData[fcMonth-1]) {
+    const outstanding=src.monthData[fcMonth-1].balance;
+    const key=document.getElementById('cl-bank').value;
+    const b=CAR_BANKS[key]||CAR_BANKS.custom;
+    let fcRate=0;
+    for(const t of (b.fc||[])){if(fcMonth<=t.upto){fcRate=t.rate;break;}}
+    fcPenalty=outstanding*fcRate/100; fcGST=fcPenalty*0.18; fcCost=fcPenalty+fcGST;
+  }
+
+  // Dates
+  const emiStart0 = addMonths(startY,startM-1,1);
+  const origEnd0  = addMonths(emiStart0.y,emiStart0.m,base.actualMonths-1);
+  const actEnd0   = sim?addMonths(emiStart0.y,emiStart0.m,sim.actualMonths-1):null;
+  const savedM    = sim?(base.actualMonths-sim.actualMonths):0;
+  const hs=(id,val,sfx)=>{const e=document.getElementById(id);if(e)e.textContent=val>0?humanize(val,sfx):''};
+
+  const iv     = parseFloat(document.getElementById('cl-invoice').value)||0;
+  const onRoad = parseFloat(document.getElementById('cl-onroad').value)||0;
+  const evSub  = parseFloat(document.getElementById('cl-ev-subsidy').value)||0;
+  const procGST= procFee*0.18;
+  const totalInterest=src.totalInterest;
+  const totalCost=loan+totalInterest+procFee+procGST+(doFc?fcCost:0);
+
+  // KPI chips
+  document.getElementById('cl-k-invoice').textContent='₹'+fmt(iv);     hs('cl-k-invoice-s',iv);
+  document.getElementById('cl-k-onroad').textContent ='₹'+fmt(onRoad);  hs('cl-k-onroad-s',onRoad);
+  document.getElementById('cl-k-loan').textContent   ='₹'+fmt(loan);    hs('cl-k-loan-s',loan);
+  document.getElementById('cl-k-emi').textContent    ='₹'+fmt(emi)+(hikePct>0?` → +${hikePct}%/yr`:'');
+  hs('cl-k-emi-s',emi,'/M');
+  document.getElementById('cl-k-start').textContent  =fmtDate(emiStart0.y,emiStart0.m);
+  document.getElementById('cl-k-origend').textContent=fmtDate(origEnd0.y,origEnd0.m);
+  document.getElementById('cl-k-actend').textContent =sim?fmtDate(actEnd0.y,actEnd0.m):'N/A';
+  document.getElementById('cl-k-actend-chip').style.opacity=sim?'1':'.4';
+  document.getElementById('cl-k-actend-l').textContent=hasOpts?'Actual End (with extra/hike)':'Actual End';
+  document.getElementById('cl-k-saved').textContent  =sim?Math.floor(savedM/12)+'y '+savedM%12+'m saved':'N/A';
+  document.getElementById('cl-k-interest').textContent='₹'+fmt(totalInterest); hs('cl-k-interest-s',totalInterest);
+  document.getElementById('cl-k-prepay').textContent =sim?'₹'+fmt(sim.totalExtra):'N/A';
+  hs('cl-k-prepay-s',sim?sim.totalExtra:0);
+  document.getElementById('cl-k-isaved').textContent =sim?'₹'+fmt(base.totalInterest-sim.totalInterest):'N/A';
+  hs('cl-k-isaved-s',sim?(base.totalInterest-sim.totalInterest):0);
+  document.getElementById('cl-k-totalcost').textContent='₹'+fmt(totalCost); hs('cl-k-totalcost-s',totalCost);
+  document.getElementById('cl-k-totalcost-l').textContent=hasOpts?'Total Cost (with extra/hike)':'Total Cost';
+  document.getElementById('cl-k-proc').textContent='₹'+fmt(procFee+procGST);
+
+  const evChip=document.getElementById('cl-k-evsub-chip');
+  if(evSub>0){evChip.style.display='';document.getElementById('cl-k-evsub').textContent='−₹'+fmt(evSub);}
+  else evChip.style.display='none';
+  const fcChip=document.getElementById('cl-k-fc-chip');
+  if(doFc&&fcCost>0){
+    fcChip.style.display='';
+    document.getElementById('cl-k-fc').textContent='₹'+fmt(fcCost);
+    document.getElementById('cl-k-fc-s').textContent=`(penalty ₹${fmt(fcPenalty)} + GST ₹${fmt(fcGST)})`;
+  } else fcChip.style.display='none';
+
+  // Upfront table
+  const rtoAmt=iv*(parseFloat(document.getElementById('cl-rto').value)||0)/100;
+  const insAmt=parseFloat(document.getElementById('cl-total-insurance').value)||0;
+  const tcs=iv>1000000?iv*0.01:0;
+  const hypo=parseFloat(document.getElementById('cl-hypo').value)||0;
+  const fastag=parseFloat(document.getElementById('cl-fastag').value)||0;
+  const upRows=[
+    ['Ex-Showroom Price','manufacturer list price',iv],
+    ['Showroom Discount','upfront discount',-(parseFloat(document.getElementById('cl-disc').value)||0)],
+    ['RTO Road Tax',`${parseFloat(document.getElementById('cl-rto').value)||0}% of net invoice`,rtoAmt],
+    ['Car Insurance (OD + TP + Add-ons + 18% GST)',`OD ₹${fmt(parseFloat(document.getElementById('cl-od-amt').value)||0)} + TP ₹${fmt(parseFloat(document.getElementById('cl-tp-amt').value)||0)} + Add-ons ₹${fmt(parseFloat(document.getElementById('cl-addon-amt').value)||0)} + GST ₹${fmt(parseFloat(document.getElementById('cl-ins-gst').value)||0)}`,insAmt],
+    ['TCS',iv>1000000?`1% of ₹${fmt(iv)}`:'Not applicable (invoice ≤ ₹10L)',tcs],
+    ['Hypothecation Fee','RTO + bank documentation',hypo],
+    ['FASTag & Logistics','RFID + dealer handling',fastag],
+    ['EV State Subsidy','deducted from on-road price',evSub>0?-evSub:0],
+    ['Processing Fee','bank charge',procFee],
+    ['GST on Processing','18% of processing fee',procGST],
+  ].filter(r=>r[2]!==0);
+  document.getElementById('cl-upfront-tbody').innerHTML=upRows.map(([d,c,v])=>
+    `<tr><td>${d}</td><td class="muted">${c}</td><td class="val" style="${v<0?'color:#4ade80':''}">${v<0?'−':''}₹${fmt(Math.abs(v))}</td></tr>`
+  ).join('')+`<tr class="row-subtotal"><td><strong>On-Road Price</strong></td><td></td><td class="val">₹${fmt(onRoad)}</td></tr>`;
+
+  // Year table
+  const showExtra=extra>0,showHike=hikePct>0;
+  document.getElementById('cl-year-thead').innerHTML=`<tr><th>Year</th>${showHike?'<th style="text-align:right">EMI This Year (₹)</th>':''}<th style="text-align:right">Opening (₹)</th><th style="text-align:right">EMI Paid (₹)</th><th style="text-align:right">Interest (₹)</th><th style="text-align:right">Principal (₹)</th>${showExtra?'<th style="text-align:right">Extra EMI (₹)</th>':''}<th style="text-align:right">Closing (₹)</th></tr>`;
+  document.getElementById('cl-year-tbody').innerHTML=src.yearData.map(y=>
+    `<tr><td style="color:#64748b">${y.yr}</td>${showHike?`<td class="val" style="color:#93c5fd">₹${fmt(y.emi)}</td>`:''}<td class="val">₹${fmt(y.open)}</td><td class="val">₹${fmt(y.emiTotal)}</td><td class="val" style="color:#f87171">₹${fmt(y.interest)}</td><td class="val">₹${fmt(y.prin)}</td>${showExtra?`<td class="val" style="color:#fbbf24">${y.extra>0?'₹'+fmt(y.extra):'—'}</td>`:''}<td class="val" style="color:${y.close<1?'#4ade80':'#94a3b8'}">₹${fmt(y.close)}</td></tr>`
+  ).join('');
+  document.getElementById('cl-month-thead').innerHTML=`<tr><th>Month</th><th>Year</th>${showHike?'<th style="text-align:right">EMI (₹)</th>':''}<th style="text-align:right">Interest (₹)</th><th style="text-align:right">Principal (₹)</th>${showExtra?'<th style="text-align:right">Extra EMI (₹)</th>':''}<th style="text-align:right">Closing (₹)</th></tr>`;
+  document.getElementById('cl-month-tbody').innerHTML='';
+  clShowMonthly=false;
+  document.getElementById('cl-monthly-wrap').style.display='none';
+  document.getElementById('cl-toggle-monthly').textContent='Show Month-by-Month';
+  document.getElementById('cl-toggle-monthly').classList.remove('active');
+  document.getElementById('cl-result').classList.add('show');
+}
+
+function clToggleMonthly() {
+  clShowMonthly=!clShowMonthly;
+  const wrap=document.getElementById('cl-monthly-wrap');
+  const btn=document.getElementById('cl-toggle-monthly');
+  wrap.style.display=clShowMonthly?'block':'none';
+  btn.textContent=clShowMonthly?'Hide Month-by-Month':'Show Month-by-Month';
+  btn.classList.toggle('active',clShowMonthly);
+  if(clShowMonthly&&document.getElementById('cl-month-tbody').innerHTML===''){
+    document.getElementById('cl-month-tbody').innerHTML=clMonthlyData.map(m=>
+      `<tr><td style="color:#64748b">${m.month}</td><td style="color:#475569">Yr ${m.yr}</td>${clHasHike?`<td class="val" style="color:#93c5fd">₹${fmt(m.emi)}</td>`:''}<td class="val" style="color:#f87171">₹${fmt(m.interest)}</td><td class="val">₹${fmt(m.prin)}</td>${clHasExtra?`<td class="val" style="color:#fbbf24">${m.extra>0?'₹'+fmt(m.extra):'—'}</td>`:''}<td class="val" style="color:${m.balance<1?'#4ade80':'#94a3b8'}">₹${fmt(m.balance)}</td></tr>`
+    ).join('');
+  }
+}
+
+function clearCarLoan() {
+  ['cl-exshow','cl-disc','cl-invoice','cl-rto','cl-ev-kwh','cl-ev-subsidy',
+   'cl-down','cl-loan','cl-onroad','cl-rate','cl-procfee','cl-starty','cl-fc-month']
+    .forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('cl-hypo').value='1500';
+  document.getElementById('cl-fastag').value='1500';
+  // Insurance reset
+  ['cl-idv','cl-od-amt','cl-tp-amt','cl-addon-amt','cl-ins-gst','cl-total-insurance'].forEach(id=>{
+    const e=document.getElementById(id); if(e) e.value='';
+  });
+  document.getElementById('cl-od-pct').value='2.5';
+  document.getElementById('cl-addon-zerodep').checked=false;
+  document.getElementById('cl-addon-rti').checked=false;
+  document.getElementById('cl-addon-engine').checked=false;
+  document.getElementById('cl-addon-cpa').checked=true;
+  document.getElementById('cl-newcar-tp').checked=true;
+  document.getElementById('cl-ins-manual').checked=true;
+  document.getElementById('cl-total-insurance').value='20000';
+  clInsManualToggle();
+  document.getElementById('cl-starty').value='2025';
+  document.getElementById('cl-tcs-display').value='';
+  document.getElementById('cl-state').value='';
+  document.getElementById('cl-bank').value='custom';
+  document.getElementById('cl-result').classList.remove('show');
+  document.getElementById('cl-loan-warn').style.display='none';
+  document.getElementById('cl-rto-hint').textContent='';
+  document.getElementById('cl-bank-hint').textContent='Select bank to auto-fill rate · Data as of May 2026';
+  document.getElementById('cl-fc-ref').textContent='';
+  document.getElementById('cl-gj-wrap').style.display='none';
+  document.getElementById('cl-fc-toggle').checked=false;
+  document.getElementById('cl-fc-panel').style.display='none';
+  document.getElementById('cl-fc-tlabel').classList.remove('on');
+  document.getElementById('cl-hike-toggle').checked=false;
+  const hInp=document.getElementById('cl-hikepct');
+  hInp.value='';hInp.style.opacity='.4';hInp.style.pointerEvents='none';
+  document.getElementById('cl-hike-label').classList.remove('on');
+  const subEl=document.getElementById('cl-ev-subsidy');
+  subEl.style.opacity='.4';subEl.style.pointerEvents='none';
+  document.getElementById('cl-ev-note').textContent='Switch to EV fuel to enable';
+  clFuelType='p';clRegType='ind';clMonthlyData=[];clHasExtra=false;clHasHike=false;clShowMonthly=false;
+  setClFuel('p');setClReg('ind');
+}
+
+function exportCLExcel() {
+  if(typeof XLSX==='undefined'){alert('Excel library not loaded.');return;}
+  if(!document.getElementById('cl-result').classList.contains('show')){alert('Run Calculate first.');return;}
+  const g=id=>document.getElementById(id);
+  const gv=(id,fb)=>parseFloat(g(id)?.value)||(fb||0);
+  const exShow=gv('cl-exshow'),disc=gv('cl-disc'),iv=gv('cl-invoice');
+  const loan=gv('cl-loan'),rate=gv('cl-rate'),tenure=parseFloat(g('cl-tenure').value)||5;
+  const extra=parseInt(g('cl-extraemi').value)||0;
+  const hikeOn=g('cl-hike-toggle').checked, hikePct=hikeOn?gv('cl-hikepct'):0;
+  const procFee=gv('cl-procfee'),rto=gv('cl-rto');
+  const insAmt=gv('cl-total-insurance'),hypo=gv('cl-hypo',1500),fastag=gv('cl-fastag',1500);
+  const odAmt=gv('cl-od-amt'),tpAmt=gv('cl-tp-amt'),addonAmt=gv('cl-addon-amt');
+  const evSub=gv('cl-ev-subsidy'),tcs=iv>1000000?iv*0.01:0;
+  const onRoad=gv('cl-onroad'),startY=parseInt(g('cl-starty').value)||2025;
+  const showExtra=extra>0, showHike=hikePct>0;
+
+  const r=rate/100/12,n=tenure*12;
+  const emi=r>0?loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1):loan/n;
+  const sim=simulateHL(loan,r,n,emi,extra,hikePct);
+
+  const wb=XLSX.utils.book_new();
+  const C=(v,t)=>({v,t:t||(typeof v==='number'?'n':'s')});
+  const F=f=>({f});
+
+  const wsI={};
+  wsI['A1']=C('CAR LOAN CALCULATOR — INPUTS');
+  wsI['A2']=C('Edit B5:B10 to recalculate. Amortization is pre-computed — re-export to refresh.');
+  wsI['A4']=C('VEHICLE DETAILS');
+  wsI['A5']=C('Ex-Showroom Price (₹)');    wsI['B5']=C(exShow);
+  wsI['A6']=C('Showroom Discount (₹)');    wsI['B6']=C(disc);
+  wsI['A7']=C('Invoice Value (₹)');        wsI['B7']=F('B5-B6');
+  wsI['A8']=C('Fuel Type');                wsI['B8']=C(clFuelType==='p'?'Petrol':clFuelType==='d'?'Diesel':clFuelType==='ev'?'EV':'CNG');
+  wsI['A9']=C('EV Subsidy (₹)');           wsI['B9']=C(evSub);
+  wsI['A10']=C('Net Vehicle Cost (₹)');    wsI['B10']=F('B7-B9');
+  wsI['A12']=C('ON-ROAD CHARGES');
+  wsI['A13']=C('RTO Road Tax (%)');             wsI['B13']=C(rto);
+  wsI['A14']=C('RTO Amount (₹)');               wsI['B14']=F('B10*B13/100');
+  wsI['A15']=C('Insurance — OD Premium (₹)');   wsI['B15']=C(odAmt);
+  wsI['A16']=C('Insurance — TP Tariff IRDAI (₹)');wsI['B16']=C(tpAmt);
+  wsI['A17']=C('Insurance — Add-ons (₹)');      wsI['B17']=C(addonAmt);
+  wsI['A18']=C('Total Insurance (incl 18% GST) (₹)'); wsI['B18']=F('(B15+B16+B17)*1.18');
+  wsI['A19']=C('TCS (1% if invoice > ₹10L)');   wsI['B19']=F('IF(B7>1000000,B7*0.01,0)');
+  wsI['A20']=C('Hypothecation (₹)');             wsI['B20']=C(hypo);
+  wsI['A21']=C('FASTag & Logistics (₹)');        wsI['B21']=C(fastag);
+  wsI['A22']=C('On-Road Price (₹)');             wsI['B22']=F('B10+B14+B18+B19+B20+B21');
+  wsI['A24']=C('LOAN DETAILS');
+  wsI['A25']=C('Down Payment (₹)');        wsI['B25']=C(gv('cl-down'));
+  wsI['A24']=C('LOAN DETAILS');
+  wsI['A25']=C('Down Payment (₹)');            wsI['B25']=C(gv('cl-down'));
+  wsI['A26']=C('Loan Principal (₹)');          wsI['B26']=F('B22-B25');
+  wsI['A27']=C('Annual Interest Rate (%)');    wsI['B27']=C(rate);
+  wsI['A28']=C('Tenure (Years)');              wsI['B28']=C(tenure);
+  wsI['A29']=C('Extra EMI / Year');            wsI['B29']=C(extra);
+  wsI['A30']=C('EMI Hike % / Year');           wsI['B30']=C(hikePct);
+  wsI['A32']=C('CALCULATED');
+  wsI['A33']=C('Base Monthly EMI (₹)');        wsI['B33']=F('PMT(B27/100/12,B28*12,-B26)');
+  wsI['A34']=C('Total Months');                wsI['B34']=F('B28*12');
+  wsI['A35']=C('Total Repayment (₹)');         wsI['B35']=F('B33*B34');
+  wsI['A36']=C('Total Interest (₹)');          wsI['B36']=F('B35-B26');
+  wsI['A38']=C('BANK CHARGES');
+  wsI['A39']=C('Processing Fee (₹)');          wsI['B39']=C(procFee);
+  wsI['A40']=C('GST on Processing (₹)');       wsI['B40']=F('B39*0.18');
+  wsI['!ref']='A1:B40'; wsI['!cols']=[{wch:36},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,wsI,'Inputs');
+
+  const yHdr=['Year',...(showHike?['EMI This Year (₹)']:[]),'Opening (₹)','EMI Paid (₹)','Interest (₹)','Principal (₹)',...(showExtra?['Extra EMI (₹)']:[]),'Closing (₹)'];
+  const wsY=XLSX.utils.aoa_to_sheet([yHdr,...sim.yearData.map(y=>[y.yr,...(showHike?[y.emi]:[]),y.open,y.emiTotal,y.interest,y.prin,...(showExtra?[y.extra]:[]),y.close])]);
+  wsY['!cols']=yHdr.map(()=>({wch:20}));
+  XLSX.utils.book_append_sheet(wb,wsY,'Year Schedule');
+
+  const mHdr=['Month','Year',...(showHike?['EMI (₹)']:[]),'Interest (₹)','Principal (₹)',...(showExtra?['Extra EMI (₹)']:[]),'Closing (₹)'];
+  const wsM=XLSX.utils.aoa_to_sheet([mHdr,...sim.monthData.map(m=>[m.month,m.yr,...(showHike?[m.emi]:[]),m.interest,m.prin,...(showExtra?[m.extra]:[]),m.balance])]);
+  wsM['!cols']=mHdr.map(()=>({wch:18}));
+  XLSX.utils.book_append_sheet(wb,wsM,'Month Schedule');
+
+  XLSX.writeFile(wb,`CarLoan_${exShow?Math.round(exShow/100000)+'L':''}_${rate}pct_${tenure}yr_${startY}.xlsx`);
+}
+
+// ─── Init (single DOMContentLoaded) ──────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  _applyThemeIcons(document.body.classList.contains('light'));
+  addAvgRow(); addAvgRow();
+  document.getElementById('ls-months').addEventListener('input', function() {
+    const m = parseFloat(this.value);
+    const lbl = document.getElementById('ls-years-label');
+    lbl.textContent = (!isNaN(m) && m > 0) ? (m/12).toFixed(1) + ' Years' : '';
+  });
+  document.getElementById('emi-amount').addEventListener('input', () => {
+    const key = document.getElementById('emi-bank').value;
+    if (key !== 'custom') onBankChange();
+  });
+  // Car loan: apply default manual-insurance state (hide breakdown)
+  if (document.getElementById('cl-ins-manual')) clInsManualToggle();
+});
+</script>
+</body>
+</html>
