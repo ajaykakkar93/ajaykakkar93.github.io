@@ -72,7 +72,8 @@
           "Credit Card EMI calculator (standard and no-cost) with GST and foreclosure",
           "CAGR calculator",
           "Home Loan EMI calculator with amortization and prepayment",
-          "Car Loan EMI calculator with on-road price, insurance and TCS"
+          "Car Loan EMI calculator with on-road price, insurance and TCS",
+          "Car Cost of Ownership calculator comparing ICE vs EV total cost, cost per km and breakeven year"
         ]
       }
     ]
@@ -653,6 +654,7 @@
     <option value="cagr">🌱 CAGR Calculator</option>
     <option value="homeloan">🏠 Home Loan</option>
     <option value="carloan">🚗 Car Loan</option>
+    <option value="tco">🔋 Cost of Ownership</option>
     <option value="swp">💸 SWP Calculator</option>
     <option value="lumpsum">🪙 Lumpsum Calculator</option>
   </select>
@@ -728,6 +730,10 @@
     <div class="nav-item" onclick="showSection('carloan')" data-section="carloan">
       <span class="icon" style="background:rgba(245,158,11,.1);color:#fbbf24"><i class="fa-solid fa-car"></i></span>
       Car Loan
+    </div>
+    <div class="nav-item" onclick="showSection('tco')" data-section="tco">
+      <span class="icon" style="background:rgba(16,185,129,.1);color:#34d399"><i class="fa-solid fa-charging-station"></i></span>
+      Cost of Ownership
     </div>
   </aside>
 
@@ -2112,6 +2118,108 @@
             <strong>FY 2026 EV Subsidy Disclaimer:</strong> Most state cash subsidy pools for private EVs have been capped or depleted. Benefits now predominantly consist of 100% road tax &amp; registration waivers. Gujarat retains a limited cash subsidy (₹10K/kWh, max ₹1.5L, min 15 kWh). Maharashtra, Delhi, Assam, West Bengal, Bihar, Odisha retain schemes subject to quota limits — verify availability at your state's transport portal before purchase. 5% GST on EV invoice remains unchanged.
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 11. CAR COST OF OWNERSHIP (ICE vs EV)     -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-tco">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-charging-station mr-2" style="color:#34d399;font-size:1.1rem"></i>Car Cost of Ownership — ICE vs EV</h2>
+        <p>Total cost over the years you own it — fuel/energy, upkeep, insurance, resale &amp; breakeven</p>
+      </div>
+
+      <div class="card">
+        <!-- Shared usage -->
+        <div class="field-grid cols-2" style="max-width:420px">
+          <div>
+            <label class="calc-label" for="tco-years">Ownership Period — <span id="tco-years-val" style="color:#34d399;font-weight:700">5</span> yr</label>
+            <input type="range" id="tco-years" min="1" max="20" value="5" step="1" style="width:100%;accent-color:#34d399"
+              oninput="document.getElementById('tco-years-val').textContent=this.value; if(document.getElementById('tco-result').classList.contains('show')) calcTCO();" />
+          </div>
+          <div>
+            <label class="calc-label" for="tco-km">Distance / Year (km)</label>
+            <input class="calc-input" type="number" id="tco-km" value="15000" min="0" step="100" />
+          </div>
+        </div>
+
+        <!-- Two vehicles -->
+        <div class="field-grid cols-2" style="gap:1rem;align-items:start">
+          <!-- ICE -->
+          <div style="border:1px solid rgba(245,158,11,.25);border-radius:.75rem;padding:1rem">
+            <div style="font-weight:700;color:#fbbf24;font-size:.85rem;margin-bottom:.75rem"><i class="fa-solid fa-gas-pump mr-1"></i>Petrol / Diesel (ICE)</div>
+            <label class="calc-label">On-Road Price (₹)</label>
+            <input class="calc-input" type="number" id="tco-i-price" value="920000" min="0" />
+            <div class="field-grid cols-2" style="margin:.55rem 0">
+              <div><label class="calc-label">Mileage (km/l)</label><input class="calc-input" type="number" id="tco-i-mileage" value="18" min="0.1" step="0.1" /></div>
+              <div><label class="calc-label">Fuel (₹/l)</label><input class="calc-input" type="number" id="tco-i-fuel" value="105" min="0" step="0.1" /></div>
+            </div>
+            <div class="field-grid cols-2" style="margin-bottom:.55rem">
+              <div><label class="calc-label">Service / Year (₹)</label><input class="calc-input" type="number" id="tco-i-maint" value="8000" min="0" /></div>
+              <div><label class="calc-label">Insurance / Year (₹)</label><input class="calc-input" type="number" id="tco-i-ins" value="25000" min="0" /></div>
+            </div>
+            <label class="calc-label">Resale Value at End (₹)</label>
+            <input class="calc-input" type="number" id="tco-i-resale" value="360000" min="0" />
+          </div>
+          <!-- EV -->
+          <div style="border:1px solid rgba(16,185,129,.25);border-radius:.75rem;padding:1rem">
+            <div style="font-weight:700;color:#34d399;font-size:.85rem;margin-bottom:.75rem"><i class="fa-solid fa-bolt mr-1"></i>Electric (EV)</div>
+            <label class="calc-label">On-Road Price (₹)</label>
+            <input class="calc-input" type="number" id="tco-e-price" value="1250000" min="0" />
+            <div class="field-grid cols-2" style="margin:.55rem 0">
+              <div><label class="calc-label">Efficiency (km/kWh)</label><input class="calc-input" type="number" id="tco-e-eff" value="6" min="0.1" step="0.1" /></div>
+              <div><label class="calc-label">Electricity (₹/kWh)</label><input class="calc-input" type="number" id="tco-e-elec" value="8" min="0" step="0.1" /></div>
+            </div>
+            <div class="field-grid cols-2" style="margin-bottom:.55rem">
+              <div><label class="calc-label">Service / Year (₹)</label><input class="calc-input" type="number" id="tco-e-maint" value="4000" min="0" /></div>
+              <div><label class="calc-label">Insurance / Year (₹)</label><input class="calc-input" type="number" id="tco-e-ins" value="35000" min="0" /></div>
+            </div>
+            <div class="field-grid cols-2">
+              <div><label class="calc-label">Battery Replace (₹)</label><input class="calc-input" type="number" id="tco-e-batt" value="0" min="0" /></div>
+              <div><label class="calc-label">Resale at End (₹)</label><input class="calc-input" type="number" id="tco-e-resale" value="480000" min="0" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:1rem">
+          <button class="btn-calc" onclick="calcTCO()"><i class="fa-solid fa-calculator mr-1"></i>Compare</button>
+          <button class="btn-clear" onclick="clearTCO()">Reset</button>
+        </div>
+
+        <div class="result-box" id="tco-result">
+          <div class="chips c4" id="tco-chips"></div>
+          <table class="result-table" style="margin-top:.5rem">
+            <thead><tr><th>Cost Component</th><th style="text-align:right">ICE (₹)</th><th style="text-align:right">EV (₹)</th></tr></thead>
+            <tbody id="tco-break-tbody"></tbody>
+          </table>
+          <h4 style="color:#94a3b8;font-size:.8rem;font-weight:600;margin:1.1rem 0 .4rem"><i class="fa-solid fa-chart-line mr-1"></i>Cumulative Cost by Year (excl. resale)</h4>
+          <table class="result-table">
+            <thead><tr><th>End of Year</th><th style="text-align:right">ICE (₹)</th><th style="text-align:right">EV (₹)</th><th style="text-align:right">EV vs ICE</th></tr></thead>
+            <tbody id="tco-year-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div style="border-bottom:1px solid rgba(71,85,105,.2);margin-bottom:.9rem;padding-bottom:.6rem">
+          <h4><i class="fa-solid fa-circle-info mr-1" style="color:#34d399"></i>About this tool</h4>
+          <p>The <strong>Car Cost of Ownership Calculator</strong> compares the real long-run cost of a petrol/diesel (ICE) car against an electric (EV) one over the years you own it — not just the sticker price. It adds up purchase, fuel or electricity, service, insurance and battery, then subtracts resale to show true total cost, cost per km, and the <strong>breakeven year</strong> when the EV's lower running cost overtakes its higher upfront price.</p>
+          <ul>
+            <li>Side-by-side ICE vs EV total cost of ownership (TCO)</li>
+            <li>Cost per km + year-by-year cumulative comparison</li>
+            <li>Breakeven year — when the cheaper option pulls ahead</li>
+            <li>Free, private — all maths runs in your browser</li>
+          </ul>
+        </div>
+        <h4><i class="fa-solid fa-gears mr-1" style="color:#34d399"></i>How it works</h4>
+        <div class="formula">Running = (Years × Km/Yr) ÷ Efficiency × Price<br>TCO = On-road + Running + Service + Insurance + Battery − Resale<br>Cost/km = TCO ÷ total km<br>Breakeven = first year EV cumulative ≤ ICE cumulative</div>
+        <ul>
+          <li><strong>ICE running</strong> uses mileage (km/l) and fuel price (₹/l)</li>
+          <li><strong>EV running</strong> uses efficiency (km/kWh) and electricity (₹/kWh)</li>
+          <li>Breakeven excludes resale &amp; battery (end/one-off items); TCO includes them</li>
+          <li>Defaults are illustrative India 2026 figures — edit to your own</li>
+        </ul>
       </div>
     </div>
 
@@ -3896,13 +4004,85 @@ function exportCLExcel() {
   XLSX.writeFile(wb,`CarLoan_${exShow?Math.round(exShow/100000)+'L':''}_${rate}pct_${tenure}yr_${startY}.xlsx`);
 }
 
+// ─── 11. Car Cost of Ownership (ICE vs EV) ────────────────────────────────
+function calcTCO() {
+  const n = id => parseFloat(document.getElementById(id).value);
+  const years = n('tco-years'), km = n('tco-km');
+  if (isNaN(years) || years <= 0 || isNaN(km) || km < 0) { alert('Enter ownership years and distance per year.'); return; }
+  const totalKm = years * km;
+
+  // ICE
+  const ip = n('tco-i-price'), im = n('tco-i-mileage'), ifu = n('tco-i-fuel');
+  const imn = n('tco-i-maint') || 0, iin = n('tco-i-ins') || 0, ir = n('tco-i-resale') || 0;
+  if ([ip, im, ifu].some(isNaN) || im <= 0) { alert('Fill ICE price, mileage and fuel price.'); return; }
+  // EV
+  const ep = n('tco-e-price'), ee = n('tco-e-eff'), el = n('tco-e-elec');
+  const emn = n('tco-e-maint') || 0, ein = n('tco-e-ins') || 0, eb = n('tco-e-batt') || 0, er = n('tco-e-resale') || 0;
+  if ([ep, ee, el].some(isNaN) || ee <= 0) { alert('Fill EV price, efficiency and electricity price.'); return; }
+
+  const iRun = totalKm / im * ifu;
+  const eRun = totalKm / ee * el;
+  const iMaintT = imn * years, iInsT = iin * years;
+  const eMaintT = emn * years, eInsT = ein * years;
+  const iTCO = ip + iRun + iMaintT + iInsT - ir;
+  const eTCO = ep + eRun + eMaintT + eInsT + eb - er;
+  const iCostKm = iTCO / totalKm, eCostKm = eTCO / totalKm;
+  const saved = Math.abs(iTCO - eTCO);
+  const cheaper = eTCO < iTCO ? 'EV' : (iTCO < eTCO ? 'ICE' : 'Tie');
+  const cheaperColor = cheaper === 'EV' ? '#34d399' : (cheaper === 'ICE' ? '#fbbf24' : '#94a3b8');
+
+  // Breakeven (cumulative, excludes resale & battery — one-off/endpoint items)
+  const iYearly = iRun / years + imn + iin;
+  const eYearly = eRun / years + emn + ein;
+  let breakeven = null;
+  for (let y = 1; y <= years; y++) {
+    const iCum = ip + iYearly * y, eCum = ep + eYearly * y;
+    if (eCum <= iCum) { breakeven = y; break; }
+  }
+  const breakLabel = (ep <= ip) ? 'Day 1' : (breakeven ? 'Year ' + breakeven : '> ' + years + ' yr');
+
+  document.getElementById('tco-chips').innerHTML = `
+    <div class="chip"><div class="cv" style="color:#fbbf24">₹${fmt(iTCO)}</div><div class="cl">ICE Total</div><div class="cs">₹${iCostKm.toFixed(2)}/km</div></div>
+    <div class="chip"><div class="cv" style="color:#34d399">₹${fmt(eTCO)}</div><div class="cl">EV Total</div><div class="cs">₹${eCostKm.toFixed(2)}/km</div></div>
+    <div class="chip"><div class="cv" style="color:${cheaperColor}">${cheaper === 'Tie' ? '—' : cheaper}</div><div class="cl">Cheaper · saves ₹${fmt(saved)}</div></div>
+    <div class="chip"><div class="cv" style="color:#93c5fd">${breakLabel}</div><div class="cl">EV Breakeven</div></div>`;
+
+  const row = (label, a, b, sub) => `<tr><td>${label}${sub ? ` <span class="muted">${sub}</span>` : ''}</td><td class="val">₹${fmt(a)}</td><td class="val">₹${fmt(b)}</td></tr>`;
+  document.getElementById('tco-break-tbody').innerHTML =
+    row('On-Road Price', ip, ep) +
+    row('Fuel / Electricity', iRun, eRun, `${totalKm.toLocaleString('en-IN')} km`) +
+    row('Service', iMaintT, eMaintT, `${years} yr`) +
+    row('Insurance', iInsT, eInsT, `${years} yr`) +
+    row('Battery Replacement', 0, eb) +
+    `<tr class="row-subtotal"><td>Resale at End</td><td class="val">−₹${fmt(ir)}</td><td class="val">−₹${fmt(er)}</td></tr>` +
+    `<tr class="row-total"><td><strong>Total Cost of Ownership</strong></td><td class="val">₹${fmt(iTCO)}</td><td class="val">₹${fmt(eTCO)}</td></tr>`;
+
+  let yr = '';
+  for (let y = 1; y <= years; y++) {
+    const iCum = ip + iYearly * y, eCum = ep + eYearly * y;
+    const diff = eCum - iCum;
+    const hit = (breakeven === y);
+    yr += `<tr${hit ? ' class="row-net-profit"' : ''}><td>${y}${hit ? ' ⚡ breakeven' : ''}</td><td class="val">₹${fmt(iCum)}</td><td class="val">₹${fmt(eCum)}</td><td class="val" style="color:${diff <= 0 ? '#34d399' : '#f87171'}">${diff <= 0 ? '−' : '+'}₹${fmt(Math.abs(diff))}</td></tr>`;
+  }
+  document.getElementById('tco-year-tbody').innerHTML = yr;
+  document.getElementById('tco-result').classList.add('show');
+}
+function clearTCO() {
+  ['tco-km','tco-i-price','tco-i-mileage','tco-i-fuel','tco-i-maint','tco-i-ins','tco-i-resale',
+   'tco-e-price','tco-e-eff','tco-e-elec','tco-e-maint','tco-e-ins','tco-e-batt','tco-e-resale']
+    .forEach(id => document.getElementById(id).value = '');
+  document.getElementById('tco-years').value = 5;
+  document.getElementById('tco-years-val').textContent = '5';
+  document.getElementById('tco-result').classList.remove('show');
+}
+
 // ─── Init (single DOMContentLoaded) ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   _applyThemeIcons(document.body.classList.contains('light'));
   addAvgRow(); addAvgRow();
   addBasketRow(); addBasketRow(); addBasketRow();
   // Deep-link: open section from URL hash (e.g. finance/#sip)
-  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan'];
+  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan','tco'];
   const _hash = (location.hash || '').replace('#','');
   if (_validSections.includes(_hash)) showSection(_hash);
   document.getElementById('ls-months').addEventListener('input', function() {
