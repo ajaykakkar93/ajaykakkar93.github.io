@@ -11,7 +11,7 @@ Author: Ajay Kakkar — Qlik expert, Udemy instructor, AI/bots product builder.
 
 ## Tools (all free, client-side, no data leaves the browser)
 - [All Tools hub](https://ajaykakkar93.github.io/tools/): Index of every tool below.
-- [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/): SIP, step-up SIP, SWP, lumpsum, stock profit/loss with brokerage and STT, credit-card EMI, CAGR, stock averaging, percentage, home and car loan EMI with amortization. India-focused.
+- [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/): SIP, step-up SIP, SWP, lumpsum, stock profit/loss with brokerage and STT, stock averaging, stock basket allocation (equal cash split into whole-share quantities), credit-card EMI, CAGR, percentage, home and car loan EMI with amortization. India-focused. Each calculator is directly linkable, e.g. /tools/finance/#basket, #sip, #homeloan.
 - [PDF Tools](https://ajaykakkar93.github.io/tools/pdf/): Convert PDF to PNG/JPG, merge PDFs, split or extract pages.
 - [Qlik Sense Guides](https://ajaykakkar93.github.io/tools/qlik/): Upgrade guide, release notes, PostgreSQL version matrix.
 - [JSON Tools](https://ajaykakkar93.github.io/tools/json/): Format, validate, minify, tree view, JSON to CSV and YAML, JSONPath.

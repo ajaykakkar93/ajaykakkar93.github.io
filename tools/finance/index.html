@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free Finance Calculators — SIP, EMI, Stock P&amp;L, CAGR, Home &amp; Car Loan | Ajay Kakkar</title>
-  <meta name="description" content="Free online finance calculators for Indian investors and borrowers — SIP &amp; step-up SIP, SWP, lumpsum, stock profit/loss with broker &amp; STT charges, credit card EMI, CAGR, stock averaging, percentage, and home &amp; car loan EMI with full amortization schedules. No signup, 100% private, runs entirely in your browser." />
-  <meta name="keywords" content="SIP calculator, step-up SIP calculator, EMI calculator, credit card EMI calculator, no-cost EMI, stock profit loss calculator, brokerage calculator, Zerodha brokerage, STT calculator, CAGR calculator, home loan EMI calculator, car loan EMI calculator, SWP calculator, lumpsum calculator, stock average calculator, percentage calculator, India finance calculator, free online calculator" />
+  <meta name="description" content="Free online finance calculators for Indian investors and borrowers — SIP &amp; step-up SIP, SWP, lumpsum, stock profit/loss with broker &amp; STT charges, stock averaging, stock basket allocation, credit card EMI, CAGR, percentage, and home &amp; car loan EMI with full amortization schedules. No signup, 100% private, runs entirely in your browser." />
+  <meta name="keywords" content="SIP calculator, step-up SIP calculator, EMI calculator, credit card EMI calculator, no-cost EMI, stock profit loss calculator, brokerage calculator, Zerodha brokerage, STT calculator, CAGR calculator, home loan EMI calculator, car loan EMI calculator, SWP calculator, lumpsum calculator, stock average calculator, stock basket allocation calculator, equal allocation calculator, percentage calculator, India finance calculator, free online calculator" />
   <meta name="author" content="Ajay Kakkar" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <link rel="canonical" href="https://ajaykakkar93.github.io/tools/finance/" />
@@ -64,6 +64,7 @@
         "featureList": [
           "Stock Profit / Loss calculator with broker, STT, GST and exchange charges",
           "Stock Average (averaging down) calculator",
+          "Stock Basket Allocation calculator — equal cash split across stocks with whole-share quantities",
           "SIP calculator with yearly step-up",
           "SWP (Systematic Withdrawal Plan) calculator",
           "Lumpsum investment calculator",
@@ -645,6 +646,7 @@
   <select class="mobile-select" onchange="showSection(this.value)">
     <option value="profit-loss">📈 Stock Profit / Loss</option>
     <option value="avg">⚖️ Stock Average</option>
+    <option value="basket">🧺 Stock Basket Allocation</option>
     <option value="sip">📊 SIP Calculator</option>
     <option value="pct">% Percentage</option>
     <option value="emi">💳 CC EMI Calculator</option>
@@ -684,6 +686,10 @@
     <div class="nav-item" onclick="showSection('avg')" data-section="avg">
       <span class="icon" style="background:rgba(139,92,246,.1);color:#c4b5fd"><i class="fa-solid fa-scale-balanced"></i></span>
       Stock Average
+    </div>
+    <div class="nav-item" onclick="showSection('basket')" data-section="basket">
+      <span class="icon" style="background:rgba(16,185,129,.1);color:#34d399"><i class="fa-solid fa-layer-group"></i></span>
+      Stock Basket Allocation
     </div>
 
     <div class="nav-group-label">Mutual Funds</div>
@@ -886,6 +892,66 @@
           <li>Add as many purchases as needed</li>
           <li>Calculator computes the weighted average price</li>
         </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 2b. BASKET ALLOCATION                     -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-basket">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-layer-group mr-2" style="color:#34d399;font-size:1.1rem"></i>Stock Basket Allocation Calculator</h2>
+        <p>Split your cash equally across stocks — get whole-share quantities &amp; leftover cash</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-2" style="max-width:480px">
+          <div>
+            <label class="calc-label" for="bk-cash">Total Cash to Invest (₹)</label>
+            <input class="calc-input" type="number" id="bk-cash" placeholder="15500" min="0" step="0.01" />
+          </div>
+          <div>
+            <label class="calc-label">Exchange (for live price)</label>
+            <div class="seg-btn-row">
+              <div class="seg-btn active-seg" id="bk-exch-nse" onclick="setBasketExch('NSE')">NSE</div>
+              <div class="seg-btn" id="bk-exch-bse" onclick="setBasketExch('BSE')">BSE</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="bk-stocks"></div>
+        <div class="btn-row" style="margin-bottom:.85rem;flex-wrap:wrap">
+          <button class="btn-add" onclick="addBasketRow()"><i class="fa-solid fa-plus mr-1"></i>Add Stock</button>
+          <button class="btn-add" style="background:rgba(59,130,246,.08);color:#93c5fd;border-color:rgba(59,130,246,.2)" onclick="fetchAllBasketPrices()"><i class="fa-solid fa-rotate mr-1"></i>Fetch All Prices</button>
+          <span id="bk-fetch-status" style="font-size:.72rem;color:#64748b;align-self:center"></span>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calcBasket()"><i class="fa-solid fa-calculator mr-1"></i>Calculate</button>
+          <button class="btn-clear" onclick="clearBasket()">Clear</button>
+        </div>
+
+        <div class="result-box" id="bk-result">
+          <div class="chips c3" id="bk-chips"></div>
+          <table class="result-table" style="margin-top:.5rem">
+            <thead><tr><th>Stock</th><th style="text-align:right">Price (₹)</th><th style="text-align:right">Allocation (₹)</th><th style="text-align:right">Qty</th><th style="text-align:right">Invested (₹)</th></tr></thead>
+            <tbody id="bk-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#34d399"></i>How equal allocation works</h4>
+        <p>Spread a fixed cash amount evenly across your chosen stocks. Since you can only buy whole shares, each quantity is rounded <em>down</em> — the unspent rupees show as leftover cash.</p>
+        <div class="formula">Allocation per stock = Total Cash ÷ Number of Stocks<br>Qty = ROUNDDOWN(Allocation ÷ Price)<br>Invested = Qty × Price<br>Cash Remaining = Total Cash − Σ Invested</div>
+        <ul>
+          <li>Add or remove stocks — allocation re-splits automatically</li>
+          <li>Mirrors the Excel <code>=ROUNDDOWN(C/B,0)</code> approach</li>
+          <li>Enter a ticker (e.g. <code>RELIANCE</code>, <code>TCS</code>) and tap <i class="fa-solid fa-rotate"></i> to auto-fill the price</li>
+        </ul>
+        <p style="margin-top:.6rem;font-size:.74rem;color:#475569;border-top:1px solid rgba(71,85,105,.2);padding-top:.6rem">
+          <i class="fa-solid fa-triangle-exclamation mr-1" style="color:#fbbf24"></i>
+          <strong>Live prices are best-effort &amp; may be ~15 min delayed.</strong> Fetching sends only the stock symbol to a public price service (Yahoo Finance via a free proxy) — no other data leaves your browser. If a fetch fails, just type the price manually. Always verify before trading.
+        </p>
       </div>
     </div>
 
@@ -1991,6 +2057,8 @@ function showSection(id) {
   // sync mobile select
   const sel = document.querySelector('.mobile-select');
   if (sel) sel.value = id;
+  // keep URL hash in sync for shareable deep-links
+  if (history.replaceState) history.replaceState(null, '', '#' + id);
 }
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -2203,6 +2271,167 @@ function clearAvg() {
   document.getElementById('avg-result').classList.remove('show');
   avgCount = 0;
   addAvgRow(); addAvgRow();
+}
+
+// ─── 2b. Basket Allocation ────────────────────────────────────────────────
+let bkCount = 0;
+let bkExch = 'NSE';
+const bkPriceCache = {}; // { 'SYM_EXCH': { price, ts } }
+
+function setBasketExch(ex) {
+  bkExch = ex;
+  document.getElementById('bk-exch-nse').classList.toggle('active-seg', ex === 'NSE');
+  document.getElementById('bk-exch-bse').classList.toggle('active-seg', ex === 'BSE');
+}
+
+function addBasketRow() {
+  bkCount++;
+  const wrap = document.getElementById('bk-stocks');
+  const row = document.createElement('div');
+  row.className = 'avg-purchase-row';
+  row.id = 'bk-row-' + bkCount;
+  row.innerHTML = `
+    <div class="field">
+      <label class="calc-label">Stock ${bkCount} — Name</label>
+      <input class="calc-input bk-name" type="text" placeholder="e.g. Reliance" />
+    </div>
+    <div class="field">
+      <label class="calc-label">Ticker <span style="text-transform:none;color:#334155;font-weight:400">(optional)</span></label>
+      <input class="calc-input bk-sym" type="text" placeholder="RELIANCE" autocapitalize="characters" />
+    </div>
+    <div class="field">
+      <label class="calc-label">Price (₹)</label>
+      <div style="display:flex;gap:.4rem">
+        <input class="calc-input bk-price" type="number" placeholder="336.10" min="0" step="0.01" />
+        <button class="btn-clear" style="padding:.5rem .7rem;flex-shrink:0" title="Fetch live price" onclick="fetchBasketRow(this)"><i class="fa-solid fa-rotate"></i></button>
+      </div>
+    </div>
+    ${bkCount > 2
+      ? `<button class="btn-remove" onclick="document.getElementById('bk-row-${bkCount}').remove()"><i class="fa-solid fa-xmark"></i></button>`
+      : '<div style="width:44px"></div>'}
+  `;
+  wrap.appendChild(row);
+}
+
+// Best-effort live quote: Yahoo Finance via public CORS proxy (no key).
+// Returns a number, or null on any failure — caller falls back to manual entry.
+async function fetchYahooPrice(symbol, exch) {
+  const key = symbol.toUpperCase() + '_' + exch;
+  const cached = bkPriceCache[key];
+  if (cached && Date.now() - cached.ts < 60000) return cached.price;
+  const suffix = exch === 'BSE' ? '.BO' : '.NS';
+  const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol + suffix)}?interval=1d&range=1d`;
+  const proxies = [
+    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`
+  ];
+  for (const wrap of proxies) {
+    try {
+      const res = await fetch(wrap(target), { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const price = data && data.chart && data.chart.result && data.chart.result[0]
+        && data.chart.result[0].meta && data.chart.result[0].meta.regularMarketPrice;
+      if (typeof price === 'number' && price > 0) {
+        bkPriceCache[key] = { price, ts: Date.now() };
+        return price;
+      }
+    } catch (e) { /* try next proxy */ }
+  }
+  return null;
+}
+
+async function fetchBasketRow(btn) {
+  const row = btn.closest('.avg-purchase-row');
+  const sym = row.querySelector('.bk-sym').value.trim();
+  const priceEl = row.querySelector('.bk-price');
+  if (!sym) { alert('Enter a ticker symbol (e.g. RELIANCE) to fetch its price.'); return; }
+  const icon = btn.querySelector('i');
+  const prev = icon.className;
+  icon.className = 'fa-solid fa-spinner fa-spin';
+  btn.disabled = true;
+  const price = await fetchYahooPrice(sym, bkExch);
+  icon.className = prev;
+  btn.disabled = false;
+  if (price === null) {
+    priceEl.style.borderColor = '#f87171';
+    setTimeout(() => priceEl.style.borderColor = '', 1600);
+    alert(`Couldn't fetch ${sym.toUpperCase()} on ${bkExch}. Check the ticker, try the other exchange, or enter the price manually.`);
+  } else {
+    priceEl.value = price.toFixed(2);
+    priceEl.style.borderColor = '#4ade80';
+    setTimeout(() => priceEl.style.borderColor = '', 1600);
+  }
+}
+
+async function fetchAllBasketPrices() {
+  const rows = document.querySelectorAll('#bk-stocks .avg-purchase-row');
+  const status = document.getElementById('bk-fetch-status');
+  let ok = 0, total = 0;
+  const tasks = [];
+  rows.forEach(row => {
+    const sym = row.querySelector('.bk-sym').value.trim();
+    if (!sym) return;
+    total++;
+    const priceEl = row.querySelector('.bk-price');
+    tasks.push(fetchYahooPrice(sym, bkExch).then(price => {
+      if (price !== null) { priceEl.value = price.toFixed(2); ok++; }
+    }));
+  });
+  if (!total) { alert('Add at least one ticker symbol (e.g. RELIANCE) to fetch prices.'); return; }
+  status.textContent = `Fetching ${total} on ${bkExch}…`;
+  await Promise.all(tasks);
+  status.textContent = `Done — ${ok}/${total} fetched${ok < total ? ' · rest: enter manually' : ''}.`;
+  setTimeout(() => { status.textContent = ''; }, 6000);
+}
+function calcBasket() {
+  const cash = parseFloat(document.getElementById('bk-cash').value);
+  if (isNaN(cash) || cash <= 0) { alert('Enter total cash to invest.'); return; }
+  const rows = document.querySelectorAll('#bk-stocks .avg-purchase-row');
+  const stocks = [];
+  let ok = true;
+  rows.forEach((row, i) => {
+    const name = row.querySelector('.bk-name').value.trim()
+      || row.querySelector('.bk-sym').value.trim().toUpperCase()
+      || ('Stock ' + (i + 1));
+    const price = parseFloat(row.querySelector('.bk-price').value);
+    if (isNaN(price) || price <= 0) { ok = false; return; }
+    stocks.push({ name, price });
+  });
+  if (!ok || stocks.length < 1) { alert('Enter a valid price for at least one stock.'); return; }
+
+  const alloc = cash / stocks.length;
+  let totalInvested = 0;
+  stocks.forEach(s => {
+    s.qty = Math.floor(alloc / s.price);
+    s.invested = s.qty * s.price;
+    totalInvested += s.invested;
+  });
+  const remaining = cash - totalInvested;
+
+  document.getElementById('bk-chips').innerHTML = `
+    <div class="chip"><div class="cv" style="color:#93c5fd">₹${fmt(totalInvested)}</div><div class="cl">Total Invested</div></div>
+    <div class="chip"><div class="cv" style="color:#34d399">₹${fmt(remaining)}</div><div class="cl">Cash Remaining</div></div>
+    <div class="chip"><div class="cv" style="color:#c4b5fd">₹${fmt(alloc)}</div><div class="cl">Allocation / Stock</div></div>`;
+
+  document.getElementById('bk-tbody').innerHTML = stocks.map(s => `
+    <tr><td>${s.name}</td><td class="val">₹${fmt(s.price)}</td><td class="val">₹${fmt(alloc)}</td><td class="val">${fmtI(s.qty)}</td><td class="val">₹${fmt(s.invested)}</td></tr>
+  `).join('') + `
+    <tr class="row-total">
+      <td><strong>Total</strong></td>
+      <td></td>
+      <td class="val">₹${fmt(cash)}</td>
+      <td></td>
+      <td class="val">₹${fmt(totalInvested)}</td>
+    </tr>`;
+  document.getElementById('bk-result').classList.add('show');
+}
+function clearBasket() {
+  document.getElementById('bk-cash').value = '';
+  document.getElementById('bk-stocks').innerHTML = '';
+  document.getElementById('bk-result').classList.remove('show');
+  bkCount = 0;
+  addBasketRow(); addBasketRow(); addBasketRow();
 }
 
 // ─── 3. SIP ──────────────────────────────────────────────────────────────
@@ -3545,6 +3774,11 @@ function exportCLExcel() {
 document.addEventListener('DOMContentLoaded', () => {
   _applyThemeIcons(document.body.classList.contains('light'));
   addAvgRow(); addAvgRow();
+  addBasketRow(); addBasketRow(); addBasketRow();
+  // Deep-link: open section from URL hash (e.g. finance/#sip)
+  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan'];
+  const _hash = (location.hash || '').replace('#','');
+  if (_validSections.includes(_hash)) showSection(_hash);
   document.getElementById('ls-months').addEventListener('input', function() {
     const m = parseFloat(this.value);
     const lbl = document.getElementById('ls-years-label');
