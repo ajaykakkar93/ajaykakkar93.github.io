@@ -2187,9 +2187,10 @@
           </div>
         </div>
 
-        <div class="btn-row" style="margin-top:1rem">
+        <div class="btn-row" style="margin-top:1rem;flex-wrap:wrap">
           <button class="btn-calc" onclick="calcTCO()"><i class="fa-solid fa-calculator mr-1"></i>Compare</button>
           <button class="btn-clear" onclick="clearTCO()">Reset</button>
+          <button class="btn-add" style="background:rgba(239,68,68,.08);color:#f87171;border-color:rgba(239,68,68,.2)" onclick="exportTCOPDF(this)"><i class="fa-solid fa-file-pdf mr-1"></i>Download PDF</button>
         </div>
 
         <div class="result-box" id="tco-result">
@@ -4010,12 +4011,14 @@ function exportCLExcel() {
 }
 
 // ─── 11. Car Cost of Ownership (ICE vs EV) ────────────────────────────────
+let _tcoData = null;
 function tcoSyncKm() {
   const day = parseFloat(document.getElementById('tco-kmday').value);
   document.getElementById('tco-km').value = isNaN(day) ? '' : Math.round(day * 365);
   if (document.getElementById('tco-result').classList.contains('show')) calcTCO();
 }
 function calcTCO() {
+  _tcoData = null;
   const n = id => parseFloat(document.getElementById(id).value);
   const years = n('tco-years'), km = n('tco-km');
   if (isNaN(years) || years <= 0 || isNaN(km) || km < 0) { alert('Enter ownership years and distance per year.'); return; }
@@ -4068,14 +4071,24 @@ function calcTCO() {
     `<tr class="row-total"><td><strong>Total Cost of Ownership</strong></td><td class="val">₹${fmt(iTCO)}</td><td class="val">₹${fmt(eTCO)}</td></tr>`;
 
   let yr = '';
+  const yearRows = [];
   for (let y = 1; y <= years; y++) {
     const iCum = ip + iYearly * y, eCum = ep + eYearly * y;
     const diff = eCum - iCum;
     const hit = (breakeven === y);
+    yearRows.push({ y, iCum, eCum, diff, hit });
     yr += `<tr${hit ? ' class="row-net-profit"' : ''}><td>${y}${hit ? ' ⚡ breakeven' : ''}</td><td class="val">₹${fmt(iCum)}</td><td class="val">₹${fmt(eCum)}</td><td class="val" style="color:${diff <= 0 ? '#34d399' : '#f87171'}">${diff <= 0 ? '−' : '+'}₹${fmt(Math.abs(diff))}</td></tr>`;
   }
   document.getElementById('tco-year-tbody').innerHTML = yr;
   document.getElementById('tco-result').classList.add('show');
+
+  const kmday = parseFloat(document.getElementById('tco-kmday').value);
+  _tcoData = {
+    years, km, totalKm, kmday: isNaN(kmday) ? Math.round(km / 365) : kmday,
+    ice: { price: ip, mileage: im, fuel: ifu, run: iRun, maint: imn, maintT: iMaintT, ins: iin, insT: iInsT, resale: ir, tco: iTCO, costKm: iCostKm },
+    ev:  { price: ep, eff: ee, elec: el, run: eRun, maint: emn, maintT: eMaintT, ins: ein, insT: eInsT, batt: eb, resale: er, tco: eTCO, costKm: eCostKm },
+    saved, cheaper, breakLabel, yearRows
+  };
 }
 function clearTCO() {
   ['tco-kmday','tco-km','tco-i-price','tco-i-mileage','tco-i-fuel','tco-i-maint','tco-i-ins','tco-i-resale',
@@ -4084,6 +4097,98 @@ function clearTCO() {
   document.getElementById('tco-years').value = 5;
   document.getElementById('tco-years-val').textContent = '5';
   document.getElementById('tco-result').classList.remove('show');
+  _tcoData = null;
+}
+
+function _loadScript(src) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error('load failed: ' + src));
+    document.head.appendChild(s);
+  });
+}
+
+async function exportTCOPDF(btn) {
+  calcTCO();                 // recompute fresh; alerts + leaves _tcoData null if invalid
+  if (!_tcoData) return;
+  const icon = btn && btn.querySelector('i');
+  const prev = icon ? icon.className : '';
+  if (icon) icon.className = 'fa-solid fa-spinner fa-spin';
+  if (btn) btn.disabled = true;
+  try {
+    await _loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    await _loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js');
+    _buildTCOPDF(_tcoData);
+  } catch (e) {
+    alert('Could not load the PDF library (offline?). Reconnect and try again.');
+  } finally {
+    if (icon) icon.className = prev;
+    if (btn) btn.disabled = false;
+  }
+}
+
+function _buildTCOPDF(d) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  const M = 40;
+  const HEAD = [27, 45, 81];
+  // jsPDF core fonts have no ₹ glyph — use "Rs" in the PDF
+  const rs = n => 'Rs ' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  const km = n => Number(n).toLocaleString('en-IN');
+
+  let y = 46;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(20, 30, 55);
+  doc.text('Car Cost of Ownership — ICE vs EV', M, y);
+  y += 17; doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(120, 130, 150);
+  doc.text(`Generated ${new Date().toISOString().slice(0, 10)}  ·  ajaykakkar93.github.io/tools/finance/#tco`, M, y);
+  y += 15; doc.setFontSize(10); doc.setTextColor(30, 40, 60);
+  const cheaperTxt = d.cheaper === 'Tie' ? 'Both equal' : `${d.cheaper} cheaper by ${rs(d.saved)}`;
+  doc.text(`Ownership ${d.years} yr  ·  ${km(d.kmday)} km/day (${km(d.totalKm)} km total)  ·  ${cheaperTxt}  ·  EV breakeven: ${d.breakLabel}`, M, y, { maxWidth: W - 2 * M });
+
+  doc.autoTable({
+    startY: y + 12,
+    head: [['Configuration', 'ICE (Petrol/Diesel)', 'EV (Electric)']],
+    body: [
+      ['On-road price', rs(d.ice.price), rs(d.ev.price)],
+      ['Running figure', `${d.ice.mileage} km/l @ ${rs(d.ice.fuel)}/l`, `${d.ev.eff} km/kWh @ ${rs(d.ev.elec)}/kWh`],
+      ['Service / year', rs(d.ice.maint), rs(d.ev.maint)],
+      ['Insurance / year', rs(d.ice.ins), rs(d.ev.ins)],
+      ['Battery replacement', '—', rs(d.ev.batt)],
+      ['Resale at end', rs(d.ice.resale), rs(d.ev.resale)],
+    ],
+    theme: 'grid', styles: { fontSize: 9, cellPadding: 4 }, headStyles: { fillColor: HEAD }, margin: { left: M, right: M }
+  });
+
+  doc.autoTable({
+    startY: doc.lastAutoTable.finalY + 16,
+    head: [['Cost Component', 'ICE', 'EV']],
+    body: [
+      ['On-road price', rs(d.ice.price), rs(d.ev.price)],
+      [`Fuel / Electricity (${km(d.totalKm)} km)`, rs(d.ice.run), rs(d.ev.run)],
+      [`Service (${d.years} yr)`, rs(d.ice.maintT), rs(d.ev.maintT)],
+      [`Insurance (${d.years} yr)`, rs(d.ice.insT), rs(d.ev.insT)],
+      ['Battery replacement', rs(0), rs(d.ev.batt)],
+      ['Resale at end', '- ' + rs(d.ice.resale), '- ' + rs(d.ev.resale)],
+      ['Total Cost of Ownership', rs(d.ice.tco), rs(d.ev.tco)],
+      ['Cost per km', rs(d.ice.costKm), rs(d.ev.costKm)],
+    ],
+    theme: 'striped', styles: { fontSize: 9, cellPadding: 4 }, headStyles: { fillColor: HEAD }, margin: { left: M, right: M },
+    didParseCell: h => { if (h.section === 'body' && (h.row.index === 6 || h.row.index === 7)) h.cell.styles.fontStyle = 'bold'; }
+  });
+
+  doc.autoTable({
+    startY: doc.lastAutoTable.finalY + 16,
+    head: [['End of Year', 'ICE cumulative', 'EV cumulative', 'EV vs ICE']],
+    body: d.yearRows.map(r => [r.y + (r.hit ? ' (breakeven)' : ''), rs(r.iCum), rs(r.eCum), (r.diff <= 0 ? '- ' : '+ ') + rs(Math.abs(r.diff))]),
+    theme: 'grid', styles: { fontSize: 8.5, cellPadding: 3 }, headStyles: { fillColor: HEAD }, margin: { left: M, right: M }
+  });
+
+  doc.setFontSize(7.5); doc.setTextColor(120, 130, 150);
+  doc.text('Cumulative figures exclude resale and battery (endpoint / one-off items); Total Cost of Ownership includes them. All figures are estimates — verify before purchase.', M, doc.lastAutoTable.finalY + 18, { maxWidth: W - 2 * M });
+
+  doc.save(`Car_TCO_ICE_vs_EV_${d.years}yr.pdf`);
 }
 
 // ─── Init (single DOMContentLoaded) ──────────────────────────────────────
