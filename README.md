@@ -168,8 +168,32 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | [Image to PDF](https://ajaykakkar93.github.io/tools/img-to-pdf/) | Combine JPG/PNG images into one PDF |
 | [Time Zone Converter](https://ajaykakkar93.github.io/tools/timezone/) | World clock & meeting planner across zones |
 | [EXIF Viewer / Remover](https://ajaykakkar93.github.io/tools/exif/) | Read photo metadata (GPS) or strip it |
+| [HTML & XML Formatter](https://ajaykakkar93.github.io/tools/html-formatter/) | Beautify and minify HTML or XML |
+| [URL Parser](https://ajaykakkar93.github.io/tools/url-parser/) | Split URL into parts, edit query strings |
+| [HTML Entity Tool](https://ajaykakkar93.github.io/tools/html-entity/) | Encode/decode HTML entities |
+| [Image to Base64](https://ajaykakkar93.github.io/tools/img-base64/) | Image ↔ Base64 / data URI |
+| [String Escape Tool](https://ajaykakkar93.github.io/tools/string-escape/) | Escape/unescape JSON, JS, HTML, SQL |
+| [Scientific Calculator](https://ajaykakkar93.github.io/tools/calc/) | Trig, log, powers, constants + memory |
+| [Percentage Calculator](https://ajaykakkar93.github.io/tools/percent/) | Percentage, discount, tip, % change |
+| [Statistics Calculator](https://ajaykakkar93.github.io/tools/stats/) | Mean, median, mode, SD, variance, quartiles |
+| [Aspect Ratio Calculator](https://ajaykakkar93.github.io/tools/aspect-ratio/) | Find missing dimension, maintain proportions |
+| [Random Generator](https://ajaykakkar93.github.io/tools/random/) | Dice, coin flip, number range, list picker |
+| [Find & Replace](https://ajaykakkar93.github.io/tools/find-replace/) | Plain text & regex replace, multi-pattern |
+| [Cipher Encoder](https://ajaykakkar93.github.io/tools/cipher/) | ROT13, Caesar, Morse code, binary |
+| [Readability Checker](https://ajaykakkar93.github.io/tools/readability/) | Flesch, grade level, Gunning Fog |
+| [Image Cropper](https://ajaykakkar93.github.io/tools/img-crop/) | Drag crop, aspect ratio, rotate, download |
+| [Placeholder Image](https://ajaykakkar93.github.io/tools/placeholder/) | Custom size, color, text → PNG or SVG |
+| [Meme Generator](https://ajaykakkar93.github.io/tools/meme/) | Add top & bottom text to any image |
+| [Border-Radius Generator](https://ajaykakkar93.github.io/tools/border-radius/) | Per-corner CSS border-radius, live preview |
+| [Glassmorphism Generator](https://ajaykakkar93.github.io/tools/glassmorphism/) | Frosted-glass CSS: blur, opacity, border |
+| [Invoice Generator](https://ajaykakkar93.github.io/tools/invoice/) | Fill details & items, download PDF |
+| [Event Countdown](https://ajaykakkar93.github.io/tools/countdown/) | Days/hours/mins/secs until any date |
+| [Week Number Calculator](https://ajaykakkar93.github.io/tools/week-number/) | ISO week, day of year, week calendar |
+| [Password Strength](https://ajaykakkar93.github.io/tools/pwd-strength/) | Entropy, variety, pattern analysis |
+| [Diceware Passphrase](https://ajaykakkar93.github.io/tools/diceware/) | Strong memorable passphrases from words |
+| [HMAC Generator](https://ajaykakkar93.github.io/tools/hmac/) | HMAC-SHA256/1/512 via Web Crypto |
 
-Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — searchable + grouped into segments (Developer & Data, Finance, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI/Qlik).
+Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 54 tools, searchable + grouped into 10 segments (Developer & Data, Finance, Finance & Math, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool).
 
 ---
 
