@@ -2132,15 +2132,20 @@
 
       <div class="card">
         <!-- Shared usage -->
-        <div class="field-grid cols-2" style="max-width:420px">
+        <div class="field-grid cols-3" style="max-width:640px">
           <div>
-            <label class="calc-label" for="tco-years">Ownership Period — <span id="tco-years-val" style="color:#34d399;font-weight:700">5</span> yr</label>
+            <label class="calc-label" for="tco-years">Ownership — <span id="tco-years-val" style="color:#34d399;font-weight:700">5</span> yr</label>
             <input type="range" id="tco-years" min="1" max="20" value="5" step="1" style="width:100%;accent-color:#34d399"
               oninput="document.getElementById('tco-years-val').textContent=this.value; if(document.getElementById('tco-result').classList.contains('show')) calcTCO();" />
           </div>
           <div>
+            <label class="calc-label" for="tco-kmday">Distance / Day (km)</label>
+            <input class="calc-input" type="number" id="tco-kmday" value="41" min="0" step="1" oninput="tcoSyncKm()" />
+          </div>
+          <div>
             <label class="calc-label" for="tco-km">Distance / Year (km)</label>
-            <input class="calc-input" type="number" id="tco-km" value="15000" min="0" step="100" />
+            <input class="calc-input" type="number" id="tco-km" value="14965" min="0" step="100" readonly style="opacity:.8;cursor:not-allowed" />
+            <div style="font-size:.62rem;color:#475569;margin-top:.2rem">auto = day × 365</div>
           </div>
         </div>
 
@@ -4005,6 +4010,11 @@ function exportCLExcel() {
 }
 
 // ─── 11. Car Cost of Ownership (ICE vs EV) ────────────────────────────────
+function tcoSyncKm() {
+  const day = parseFloat(document.getElementById('tco-kmday').value);
+  document.getElementById('tco-km').value = isNaN(day) ? '' : Math.round(day * 365);
+  if (document.getElementById('tco-result').classList.contains('show')) calcTCO();
+}
 function calcTCO() {
   const n = id => parseFloat(document.getElementById(id).value);
   const years = n('tco-years'), km = n('tco-km');
@@ -4068,7 +4078,7 @@ function calcTCO() {
   document.getElementById('tco-result').classList.add('show');
 }
 function clearTCO() {
-  ['tco-km','tco-i-price','tco-i-mileage','tco-i-fuel','tco-i-maint','tco-i-ins','tco-i-resale',
+  ['tco-kmday','tco-km','tco-i-price','tco-i-mileage','tco-i-fuel','tco-i-maint','tco-i-ins','tco-i-resale',
    'tco-e-price','tco-e-eff','tco-e-elec','tco-e-maint','tco-e-ins','tco-e-batt','tco-e-resale']
     .forEach(id => document.getElementById(id).value = '');
   document.getElementById('tco-years').value = 5;
