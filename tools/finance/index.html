@@ -64,7 +64,7 @@
         "featureList": [
           "Stock Profit / Loss calculator with broker, STT, GST and exchange charges",
           "Stock Average (averaging down) calculator",
-          "Stock Basket Allocation calculator — equal cash split across stocks with whole-share quantities",
+          "Stock Basket Allocation calculator — custom % allocation across stocks with whole-share quantities",
           "SIP calculator with yearly step-up",
           "SWP (Systematic Withdrawal Plan) calculator",
           "Lumpsum investment calculator",
@@ -925,7 +925,7 @@
     <div class="calc-section" id="section-basket">
       <div class="section-header">
         <h2><i class="fa-solid fa-layer-group mr-2" style="color:#34d399;font-size:1.1rem"></i>Stock Basket Allocation Calculator</h2>
-        <p>Split your cash equally across stocks — get whole-share quantities &amp; leftover cash</p>
+        <p>Split your cash across stocks by % allocation — get whole-share quantities &amp; leftover cash</p>
       </div>
 
       <div class="card">
@@ -944,6 +944,7 @@
         </div>
 
         <div id="bk-stocks"></div>
+        <div id="bk-pct-total" style="font-size:.78rem;font-weight:600;margin:.35rem 0 .6rem;color:#fbbf24"></div>
         <div class="btn-row" style="margin-bottom:.85rem;flex-wrap:wrap">
           <button class="btn-add" onclick="addBasketRow()"><i class="fa-solid fa-plus mr-1"></i>Add Stock</button>
           <button class="btn-add" style="background:rgba(59,130,246,.08);color:#93c5fd;border-color:rgba(59,130,246,.2)" onclick="fetchAllBasketPrices()"><i class="fa-solid fa-rotate mr-1"></i>Fetch All Prices</button>
@@ -957,7 +958,7 @@
         <div class="result-box" id="bk-result">
           <div class="chips c3" id="bk-chips"></div>
           <table class="result-table" style="margin-top:.5rem">
-            <thead><tr><th>Stock</th><th style="text-align:right">Price (₹)</th><th style="text-align:right">Allocation (₹)</th><th style="text-align:right">Qty</th><th style="text-align:right">Invested (₹)</th></tr></thead>
+            <thead><tr><th>Stock</th><th style="text-align:right">Price (₹)</th><th style="text-align:right">Allocation</th><th style="text-align:right">Qty</th><th style="text-align:right">Invested (₹)</th></tr></thead>
             <tbody id="bk-tbody"></tbody>
           </table>
         </div>
@@ -966,20 +967,20 @@
       <div class="info-box">
         <div style="border-bottom:1px solid rgba(71,85,105,.2);margin-bottom:.9rem;padding-bottom:.6rem">
           <h4><i class="fa-solid fa-circle-info mr-1" style="color:#34d399"></i>About this tool</h4>
-          <p>The <strong>Stock Basket Allocation Calculator</strong> splits a fixed cash amount equally across a list of stocks and tells you exactly how many whole shares to buy of each, plus the cash left over. Optionally pull live NSE/BSE prices by ticker so the plan uses today's market. Great for building or rebalancing a basket on a set budget.</p>
+          <p>The <strong>Stock Basket Allocation Calculator</strong> splits a fixed cash amount across a list of stocks by your chosen % allocation and tells you exactly how many whole shares to buy of each, plus the cash left over. Optionally pull live NSE/BSE prices by ticker so the plan uses today's market. Great for building or rebalancing a basket on a set budget.</p>
           <ul>
-            <li>Equal-rupee split with automatic whole-share rounding (no fractional shares)</li>
+            <li>Custom % allocation per stock — defaults to equal split, must total 100%</li>
             <li>Optional live price fetch by ticker (NSE/BSE), or enter prices manually</li>
             <li>Shows per-stock quantity, amount invested and leftover cash</li>
             <li>Free and private — only the ticker symbol is ever sent out, for the price lookup</li>
           </ul>
         </div>
-        <h4><i class="fa-solid fa-gears mr-1" style="color:#34d399"></i>How equal allocation works</h4>
-        <p>Spread a fixed cash amount evenly across your chosen stocks. Since you can only buy whole shares, each quantity is rounded <em>down</em> — the unspent rupees show as leftover cash.</p>
-        <div class="formula">Allocation per stock = Total Cash ÷ Number of Stocks<br>Qty = ROUNDDOWN(Allocation ÷ Price)<br>Invested = Qty × Price<br>Cash Remaining = Total Cash − Σ Invested</div>
+        <h4><i class="fa-solid fa-gears mr-1" style="color:#34d399"></i>How allocation works</h4>
+        <p>Assign a % weight to each stock (total must be 100%). Adding or removing a stock auto-resets to equal split. Since you can only buy whole shares, each quantity is rounded <em>down</em> — the unspent rupees show as leftover cash.</p>
+        <div class="formula">Allocation per stock = Total Cash × (Alloc % ÷ 100)<br>Qty = ROUNDDOWN(Allocation ÷ Price)<br>Invested = Qty × Price<br>Cash Remaining = Total Cash − Σ Invested</div>
         <ul>
-          <li>Add or remove stocks — allocation re-splits automatically</li>
-          <li>Mirrors the Excel <code>=ROUNDDOWN(C/B,0)</code> approach</li>
+          <li>Add or remove stocks — allocation % resets to equal split automatically</li>
+          <li>Mirrors the Excel <code>=ROUNDDOWN(C*pct/100/B,0)</code> approach</li>
           <li>Enter a ticker (e.g. <code>RELIANCE</code>, <code>TCS</code>) and tap <i class="fa-solid fa-rotate"></i> to auto-fill the price</li>
         </ul>
         <p style="margin-top:.6rem;font-size:.74rem;color:#475569;border-top:1px solid rgba(71,85,105,.2);padding-top:.6rem">
@@ -2528,11 +2529,47 @@ function addBasketRow() {
         <button class="btn-clear bk-fetch-btn" style="padding:.5rem .7rem;flex-shrink:0" title="Fetch live price &amp; name from ticker" onclick="fetchBasketRow(this,true)"><i class="fa-solid fa-rotate"></i></button>
       </div>
     </div>
+    <div class="field" style="max-width:90px">
+      <label class="calc-label">Alloc %</label>
+      <input class="calc-input bk-pct" type="number" min="0.1" max="100" step="0.1" placeholder="33.3" oninput="onBasketPctInput(this)" />
+    </div>
     ${bkCount > 2
-      ? `<button class="btn-remove" onclick="document.getElementById('bk-row-${bkCount}').remove()"><i class="fa-solid fa-xmark"></i></button>`
+      ? `<button class="btn-remove" onclick="document.getElementById('bk-row-${bkCount}').remove();rebalanceBasketPct()"><i class="fa-solid fa-xmark"></i></button>`
       : '<div style="width:44px"></div>'}
   `;
   wrap.appendChild(row);
+  rebalanceBasketPct();
+}
+
+function rebalanceBasketPct() {
+  const inputs = [...document.querySelectorAll('#bk-stocks .bk-pct')];
+  const n = inputs.length;
+  if (!n) return;
+  const base = Math.floor(1000 / n) / 10;
+  let sum = 0;
+  inputs.forEach((inp, i) => {
+    if (i < n - 1) { inp.value = base; sum += base; }
+    else inp.value = Math.round((100 - sum) * 10) / 10;
+  });
+  updateBkPctBar();
+}
+
+function onBasketPctInput(el) {
+  const inputs = [...document.querySelectorAll('#bk-stocks .bk-pct')];
+  const otherSum = inputs.filter(i => i !== el).reduce((s, i) => s + (parseFloat(i.value) || 0), 0);
+  const max = Math.round((100 - otherSum) * 100) / 100;
+  if ((parseFloat(el.value) || 0) > max) el.value = max;
+  updateBkPctBar();
+}
+
+function updateBkPctBar() {
+  const inputs = [...document.querySelectorAll('#bk-stocks .bk-pct')];
+  const total = Math.round(inputs.reduce((s, i) => s + (parseFloat(i.value) || 0), 0) * 10) / 10;
+  const bar = document.getElementById('bk-pct-total');
+  if (!bar) return;
+  const ok = Math.abs(total - 100) < 0.05;
+  bar.textContent = `Allocation total: ${total}% ${ok ? '✓' : '— must equal 100%'}`;
+  bar.style.color = ok ? '#4ade80' : '#fbbf24';
 }
 
 // Best-effort live quote: Yahoo Finance via public CORS proxy (no key).
@@ -2628,6 +2665,7 @@ function calcBasket() {
     const nameEl = row.querySelector('.bk-name');
     const name = nameEl.value.trim();
     const price = parseFloat(row.querySelector('.bk-price').value);
+    const pct = parseFloat(row.querySelector('.bk-pct').value);
     if (!name) {
       nameMissing = true; ok = false;
       nameEl.style.borderColor = '#f87171';
@@ -2635,15 +2673,22 @@ function calcBasket() {
       return;
     }
     if (isNaN(price) || price <= 0) { ok = false; return; }
-    stocks.push({ name, price });
+    if (isNaN(pct) || pct <= 0) { ok = false; return; }
+    stocks.push({ name, price, pct });
   });
   if (nameMissing) { alert('Stock Name is required for every row. Enter a ticker and fetch, or type the name.'); return; }
-  if (!ok || stocks.length < 1) { alert('Enter a valid price for at least one stock.'); return; }
+  if (!ok || stocks.length < 1) { alert('Enter a valid price and allocation % for at least one stock.'); return; }
 
-  const alloc = cash / stocks.length;
+  const totalPct = stocks.reduce((s, st) => s + st.pct, 0);
+  if (Math.abs(totalPct - 100) > 0.1) {
+    alert(`Allocation total is ${Math.round(totalPct * 10) / 10}%. Adjust the % values to exactly 100% before calculating.`);
+    return;
+  }
+
   let totalInvested = 0;
   stocks.forEach(s => {
-    s.qty = Math.floor(alloc / s.price);
+    s.alloc = (s.pct / 100) * cash;
+    s.qty = Math.floor(s.alloc / s.price);
     s.invested = s.qty * s.price;
     totalInvested += s.invested;
   });
@@ -2652,15 +2697,15 @@ function calcBasket() {
   document.getElementById('bk-chips').innerHTML = `
     <div class="chip"><div class="cv" style="color:#93c5fd">₹${fmt(totalInvested)}</div><div class="cl">Total Invested</div></div>
     <div class="chip"><div class="cv" style="color:#34d399">₹${fmt(remaining)}</div><div class="cl">Cash Remaining</div></div>
-    <div class="chip"><div class="cv" style="color:#c4b5fd">₹${fmt(alloc)}</div><div class="cl">Allocation / Stock</div></div>`;
+    <div class="chip"><div class="cv" style="color:#c4b5fd">${stocks.length}</div><div class="cl">Stocks</div></div>`;
 
   document.getElementById('bk-tbody').innerHTML = stocks.map(s => `
-    <tr><td>${s.name}</td><td class="val">₹${fmt(s.price)}</td><td class="val">₹${fmt(alloc)}</td><td class="val">${fmtI(s.qty)}</td><td class="val">₹${fmt(s.invested)}</td></tr>
+    <tr><td>${s.name}</td><td class="val">₹${fmt(s.price)}</td><td class="val">${s.pct}%&nbsp;<span style="color:#64748b;font-size:.82em">(₹${fmt(s.alloc)})</span></td><td class="val">${fmtI(s.qty)}</td><td class="val">₹${fmt(s.invested)}</td></tr>
   `).join('') + `
     <tr class="row-total">
       <td><strong>Total</strong></td>
       <td></td>
-      <td class="val">₹${fmt(cash)}</td>
+      <td class="val">100% (₹${fmt(cash)})</td>
       <td></td>
       <td class="val">₹${fmt(totalInvested)}</td>
     </tr>`;
