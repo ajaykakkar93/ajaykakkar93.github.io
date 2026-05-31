@@ -2292,18 +2292,18 @@ function addBasketRow() {
   row.id = 'bk-row-' + bkCount;
   row.innerHTML = `
     <div class="field">
-      <label class="calc-label">Stock ${bkCount} — Name</label>
-      <input class="calc-input bk-name" type="text" placeholder="e.g. Reliance" />
+      <label class="calc-label">Ticker <span style="text-transform:none;color:#334155;font-weight:400">(optional)</span></label>
+      <input class="calc-input bk-sym" type="text" placeholder="MON100" autocapitalize="characters" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){event.preventDefault();fetchBasketRow(this,true);}" onchange="fetchBasketRow(this,false)" />
     </div>
     <div class="field">
-      <label class="calc-label">Ticker <span style="text-transform:none;color:#334155;font-weight:400">(optional)</span></label>
-      <input class="calc-input bk-sym" type="text" placeholder="RELIANCE" autocapitalize="characters" />
+      <label class="calc-label">Stock ${bkCount} — Name</label>
+      <input class="calc-input bk-name" type="text" placeholder="e.g. Reliance" />
     </div>
     <div class="field">
       <label class="calc-label">Price (₹)</label>
       <div style="display:flex;gap:.4rem">
         <input class="calc-input bk-price" type="number" placeholder="336.10" min="0" step="0.01" />
-        <button class="btn-clear" style="padding:.5rem .7rem;flex-shrink:0" title="Fetch live price" onclick="fetchBasketRow(this)"><i class="fa-solid fa-rotate"></i></button>
+        <button class="btn-clear bk-fetch-btn" style="padding:.5rem .7rem;flex-shrink:0" title="Fetch live price &amp; name from ticker" onclick="fetchBasketRow(this,true)"><i class="fa-solid fa-rotate"></i></button>
       </div>
     </div>
     ${bkCount > 2
@@ -2314,11 +2314,11 @@ function addBasketRow() {
 }
 
 // Best-effort live quote: Yahoo Finance via public CORS proxy (no key).
-// Returns a number, or null on any failure — caller falls back to manual entry.
-async function fetchYahooPrice(symbol, exch) {
+// Returns { price, longName } or null on any failure — caller falls back to manual entry.
+async function fetchYahooQuote(symbol, exch) {
   const key = symbol.toUpperCase() + '_' + exch;
   const cached = bkPriceCache[key];
-  if (cached && Date.now() - cached.ts < 60000) return cached.price;
+  if (cached && Date.now() - cached.ts < 60000) return cached.quote;
   const suffix = exch === 'BSE' ? '.BO' : '.NS';
   const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol + suffix)}?interval=1d&range=1d`;
   const proxies = [
@@ -2330,35 +2330,42 @@ async function fetchYahooPrice(symbol, exch) {
       const res = await fetch(wrap(target), { signal: AbortSignal.timeout(8000) });
       if (!res.ok) continue;
       const data = await res.json();
-      const price = data && data.chart && data.chart.result && data.chart.result[0]
-        && data.chart.result[0].meta && data.chart.result[0].meta.regularMarketPrice;
+      const meta = data && data.chart && data.chart.result && data.chart.result[0]
+        && data.chart.result[0].meta;
+      const price = meta && meta.regularMarketPrice;
       if (typeof price === 'number' && price > 0) {
-        bkPriceCache[key] = { price, ts: Date.now() };
-        return price;
+        const quote = { price, longName: (meta.longName || meta.shortName || '').trim() };
+        bkPriceCache[key] = { quote, ts: Date.now() };
+        return quote;
       }
     } catch (e) { /* try next proxy */ }
   }
   return null;
 }
 
-async function fetchBasketRow(btn) {
-  const row = btn.closest('.avg-purchase-row');
+// el = the ticker input (onchange) or the ↻ button. manual=true only for the button.
+async function fetchBasketRow(el, manual) {
+  const row = el.closest('.avg-purchase-row');
   const sym = row.querySelector('.bk-sym').value.trim();
   const priceEl = row.querySelector('.bk-price');
-  if (!sym) { alert('Enter a ticker symbol (e.g. RELIANCE) to fetch its price.'); return; }
+  const nameEl = row.querySelector('.bk-name');
+  const btn = row.querySelector('.bk-fetch-btn');
+  if (!sym) { if (manual) alert('Enter a ticker symbol (e.g. MON100) to fetch its price.'); return; }
   const icon = btn.querySelector('i');
   const prev = icon.className;
   icon.className = 'fa-solid fa-spinner fa-spin';
   btn.disabled = true;
-  const price = await fetchYahooPrice(sym, bkExch);
+  const q = await fetchYahooQuote(sym, bkExch);
   icon.className = prev;
   btn.disabled = false;
-  if (price === null) {
+  if (q === null) {
+    if (!nameEl.value.trim()) nameEl.value = sym.toUpperCase();   // fall back: ticker becomes the name
     priceEl.style.borderColor = '#f87171';
     setTimeout(() => priceEl.style.borderColor = '', 1600);
-    alert(`Couldn't fetch ${sym.toUpperCase()} on ${bkExch}. Check the ticker, try the other exchange, or enter the price manually.`);
+    if (manual) alert(`Couldn't fetch ${sym.toUpperCase()} on ${bkExch}. Used the ticker as the name — enter the Price manually (or try the other exchange).`);
   } else {
-    priceEl.value = price.toFixed(2);
+    priceEl.value = q.price.toFixed(2);
+    if (q.longName) nameEl.value = q.longName;   // overwrite Name with official long name
     priceEl.style.borderColor = '#4ade80';
     setTimeout(() => priceEl.style.borderColor = '', 1600);
   }
@@ -2374,11 +2381,16 @@ async function fetchAllBasketPrices() {
     if (!sym) return;
     total++;
     const priceEl = row.querySelector('.bk-price');
-    tasks.push(fetchYahooPrice(sym, bkExch).then(price => {
-      if (price !== null) { priceEl.value = price.toFixed(2); ok++; }
+    const nameEl = row.querySelector('.bk-name');
+    tasks.push(fetchYahooQuote(sym, bkExch).then(q => {
+      if (q !== null) {
+        priceEl.value = q.price.toFixed(2);
+        if (q.longName) nameEl.value = q.longName;
+        ok++;
+      }
     }));
   });
-  if (!total) { alert('Add at least one ticker symbol (e.g. RELIANCE) to fetch prices.'); return; }
+  if (!total) { alert('Add at least one ticker symbol (e.g. MON100) to fetch prices.'); return; }
   status.textContent = `Fetching ${total} on ${bkExch}…`;
   await Promise.all(tasks);
   status.textContent = `Done — ${ok}/${total} fetched${ok < total ? ' · rest: enter manually' : ''}.`;
@@ -2389,15 +2401,21 @@ function calcBasket() {
   if (isNaN(cash) || cash <= 0) { alert('Enter total cash to invest.'); return; }
   const rows = document.querySelectorAll('#bk-stocks .avg-purchase-row');
   const stocks = [];
-  let ok = true;
-  rows.forEach((row, i) => {
-    const name = row.querySelector('.bk-name').value.trim()
-      || row.querySelector('.bk-sym').value.trim().toUpperCase()
-      || ('Stock ' + (i + 1));
+  let ok = true, nameMissing = false;
+  rows.forEach(row => {
+    const nameEl = row.querySelector('.bk-name');
+    const name = nameEl.value.trim();
     const price = parseFloat(row.querySelector('.bk-price').value);
+    if (!name) {
+      nameMissing = true; ok = false;
+      nameEl.style.borderColor = '#f87171';
+      setTimeout(() => nameEl.style.borderColor = '', 1600);
+      return;
+    }
     if (isNaN(price) || price <= 0) { ok = false; return; }
     stocks.push({ name, price });
   });
+  if (nameMissing) { alert('Stock Name is required for every row. Enter a ticker and fetch, or type the name.'); return; }
   if (!ok || stocks.length < 1) { alert('Enter a valid price for at least one stock.'); return; }
 
   const alloc = cash / stocks.length;
