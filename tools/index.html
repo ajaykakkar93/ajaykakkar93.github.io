@@ -101,6 +101,7 @@
         style="background:#111a2e;border:1px solid #1e293b;color:#e2e8f0" oninput="draw()">
     </div>
     <div id="cat-filters" class="flex flex-wrap gap-1.5 mb-6"></div>
+    <div id="result-count" class="text-xs text-slate-400 mb-4"></div>
     <div id="tool-grid"></div>
     <p class="text-slate-500 text-xs mt-10 text-center">Built by Ajay Kakkar · 100% client-side · open in any modern browser</p>
   </main>
@@ -192,10 +193,12 @@
       const q = (document.getElementById("search").value || "").toLowerCase().trim();
       const cats = CAT_ORDER.filter(c => activeCat==="All" || c===activeCat);
       let html = "";
+      let totalHits = 0;
       cats.forEach(cat => {
         const hits = tools.filter(t => t.cat===cat &&
           (t.name + " " + t.desc).toLowerCase().includes(q));
         if(!hits.length) return;
+        totalHits += hits.length;
         html += `<div class="mb-7">
           <h2 class="font-display font-semibold text-sm uppercase tracking-wider mb-3" style="color:#94a3b8">
             ${cat} <span class="text-slate-600">(${hits.length})</span>
@@ -204,6 +207,9 @@
         </div>`;
       });
       grid.innerHTML = html || '<p class="text-slate-500 text-sm text-center py-10">No tools match your search.</p>';
+      const countEl = document.getElementById("result-count");
+      if(q) countEl.textContent = `Found ${totalHits} out of ${tools.length} tools`;
+      else countEl.textContent = `${tools.length} tools available`;
     }
     buildFilters(); draw();
   </script>
