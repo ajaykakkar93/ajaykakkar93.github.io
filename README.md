@@ -193,7 +193,7 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | [Diceware Passphrase](https://ajaykakkar93.github.io/tools/diceware/) | Strong memorable passphrases from words |
 | [HMAC Generator](https://ajaykakkar93.github.io/tools/hmac/) | HMAC-SHA256/1/512 via Web Crypto |
 
-Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 54 tools, searchable + grouped into 10 segments (Developer & Data, Finance, Finance & Math, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool).
+Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 54 tools, searchable + grouped into 10 segments (Developer & Data, Finance, Calculator, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool).
 
 ---
 
