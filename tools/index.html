@@ -106,11 +106,11 @@
   </main>
 
   <script>
-    const CAT_ORDER = ["Developer & Data","Finance","Text","Images & Media","Design","Documents","Time & Productivity","Security & Privacy","Qlik"];
+    const CAT_ORDER = ["Developer & Data","Finance","Finance & Math","Text","Images & Media","Design","Documents","Time & Productivity","Security & Privacy","BI Tool"];
     const tools = [
       { name:"Finance Calculators", desc:"SIP, EMI, stock P&L, CAGR, home &amp; car loan with amortization.", href:"finance/index.html", icon:"fa-indian-rupee-sign", color:"#4ade80", cat:"Finance", live:true },
       { name:"PDF Tools", desc:"Convert PDF to image, merge, split and extract pages.", href:"pdf/index.html", icon:"fa-file-pdf", color:"#f87171", cat:"Documents", live:true },
-      { name:"Qlik Sense Guides", desc:"Upgrade guide, release notes and PostgreSQL version matrix.", href:"qlik/index.html", icon:"fa-chart-column", color:"#34d399", cat:"Qlik", live:true },
+      { name:"Qlik Sense Guides", desc:"Upgrade guide, release notes and PostgreSQL version matrix.", href:"qlik/index.html", icon:"fa-chart-column", color:"#34d399", cat:"BI Tool", live:true },
       { name:"JSON Tools", desc:"Format, validate, minify, tree view, JSON↔CSV↔YAML, JSONPath.", href:"json/index.html", icon:"fa-code", color:"#fbbf24", cat:"Developer & Data", live:true },
       { name:"Dev / Text Tools", desc:"Base64, URL encode, UUID, JWT decode, regex tester.", href:"text/index.html", icon:"fa-terminal", color:"#93c5fd", cat:"Developer & Data", live:true },
       { name:"Color Tools", desc:"Picker, palette, HEX↔RGB↔HSL, WCAG contrast checker.", href:"color/index.html", icon:"fa-palette", color:"#c4b5fd", cat:"Design", live:true },
@@ -137,7 +137,31 @@
       { name:"Favicon Generator", desc:"Image → favicon PNG set + HTML tags.", href:"favicon/index.html", icon:"fa-icons", color:"#fda4af", cat:"Images & Media", live:true },
       { name:"Image to PDF", desc:"Combine JPG/PNG images into one PDF.", href:"img-to-pdf/index.html", icon:"fa-file-pdf", color:"#f87171", cat:"Documents", live:true },
       { name:"Time Zone Converter", desc:"World clock &amp; meeting planner across zones.", href:"timezone/index.html", icon:"fa-globe", color:"#7dd3fc", cat:"Time & Productivity", live:true },
-      { name:"EXIF Viewer / Remover", desc:"Read photo metadata (GPS) or strip it.", href:"exif/index.html", icon:"fa-location-crosshairs", color:"#5eead4", live:true, cat:"Images & Media" }
+      { name:"EXIF Viewer / Remover", desc:"Read photo metadata (GPS) or strip it.", href:"exif/index.html", icon:"fa-location-crosshairs", color:"#5eead4", cat:"Images & Media", live:true },
+      { name:"HTML / XML Formatter", desc:"Beautify and minify HTML or XML.", href:"html-formatter/index.html", icon:"fa-html5", color:"#f97316", cat:"Developer & Data", live:true, brand:true },
+      { name:"URL Parser", desc:"Split a URL into parts &amp; build query strings.", href:"url-parser/index.html", icon:"fa-link", color:"#67e8f9", cat:"Developer & Data", live:true },
+      { name:"HTML Entity Tool", desc:"Encode and decode HTML entities.", href:"html-entity/index.html", icon:"fa-code", color:"#fbbf24", cat:"Developer & Data", live:true },
+      { name:"Image to Base64", desc:"Image &rarr; Base64 / data URI and back.", href:"img-base64/index.html", icon:"fa-image", color:"#a78bfa", cat:"Developer & Data", live:true },
+      { name:"String Escape", desc:"Escape/unescape for JSON, JS, HTML, SQL.", href:"string-escape/index.html", icon:"fa-quote-right", color:"#fbbf24", cat:"Developer & Data", live:true },
+      { name:"Scientific Calculator", desc:"Trig, log, powers, constants &amp; memory.", href:"calc/index.html", icon:"fa-calculator", color:"#fbbf24", cat:"Finance & Math", live:true },
+      { name:"Percentage Calculator", desc:"Percentage, discount, tip &amp; % change.", href:"percent/index.html", icon:"fa-percent", color:"#4ade80", cat:"Finance & Math", live:true },
+      { name:"Statistics Calculator", desc:"Mean, median, mode, SD, variance, quartiles.", href:"stats/index.html", icon:"fa-chart-simple", color:"#c4b5fd", cat:"Finance & Math", live:true },
+      { name:"Aspect Ratio Calculator", desc:"Find missing dimension &amp; maintain proportions.", href:"aspect-ratio/index.html", icon:"fa-crop", color:"#7dd3fc", cat:"Finance & Math", live:true },
+      { name:"Random Generator", desc:"Dice, coin, number in range &amp; list picker.", href:"random/index.html", icon:"fa-dice", color:"#fb923c", cat:"Finance & Math", live:true },
+      { name:"Find &amp; Replace", desc:"Plain text &amp; regex replace, multi-pattern.", href:"find-replace/index.html", icon:"fa-magnifying-glass", color:"#fbbf24", cat:"Text", live:true },
+      { name:"Cipher Encoder", desc:"ROT13, Caesar, Morse code, binary.", href:"cipher/index.html", icon:"fa-lock", color:"#c4b5fd", cat:"Text", live:true },
+      { name:"Readability Checker", desc:"Flesch, grade level, Gunning Fog.", href:"readability/index.html", icon:"fa-book-open", color:"#4ade80", cat:"Text", live:true },
+      { name:"Image Cropper", desc:"Drag to crop, aspect ratio, rotate &amp; download.", href:"img-crop/index.html", icon:"fa-crop-simple", color:"#fda4af", cat:"Images & Media", live:true },
+      { name:"Placeholder Image", desc:"Custom size, color &amp; text → PNG or SVG.", href:"placeholder/index.html", icon:"fa-image", color:"#94a3b8", cat:"Images & Media", live:true },
+      { name:"Meme Generator", desc:"Add top &amp; bottom text to any image.", href:"meme/index.html", icon:"fa-face-laugh", color:"#fbbf24", cat:"Images & Media", live:true },
+      { name:"Border-Radius Generator", desc:"Per-corner control, live preview, copy CSS.", href:"border-radius/index.html", icon:"fa-vector-square", color:"#5eead4", cat:"Design", live:true },
+      { name:"Glassmorphism Generator", desc:"Frosted-glass CSS: blur, opacity, border.", href:"glassmorphism/index.html", icon:"fa-droplet", color:"#93c5fd", cat:"Design", live:true },
+      { name:"Invoice Generator", desc:"Fill details &amp; line items, download PDF.", href:"invoice/index.html", icon:"fa-file-invoice", color:"#4ade80", cat:"Documents", live:true },
+      { name:"Event Countdown", desc:"Days, hours, minutes &amp; seconds until any date.", href:"countdown/index.html", icon:"fa-hourglass-half", color:"#fbbf24", cat:"Time & Productivity", live:true },
+      { name:"Week Number", desc:"ISO week, day of year &amp; week calendar.", href:"week-number/index.html", icon:"fa-calendar-week", color:"#7dd3fc", cat:"Time & Productivity", live:true },
+      { name:"Password Strength", desc:"Entropy, variety &amp; pattern analysis. Nothing uploaded.", href:"pwd-strength/index.html", icon:"fa-shield-halved", color:"#4ade80", cat:"Security & Privacy", live:true },
+      { name:"Diceware Passphrase", desc:"Strong memorable passphrases from random words.", href:"diceware/index.html", icon:"fa-dice-five", color:"#fb923c", cat:"Security & Privacy", live:true },
+      { name:"HMAC Generator", desc:"HMAC-SHA256/1/512 via Web Crypto.", href:"hmac/index.html", icon:"fa-key", color:"#fb923c", cat:"Security & Privacy", live:true }
     ];
     const grid = document.getElementById("tool-grid");
     let activeCat = "All";

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Image Cropper — Crop &amp; Rotate Images Online | Ajay Kakkar</title>
+  <meta name="description" content="Free online image cropper - drag to set a crop area, choose aspect ratio, rotate, and download the cropped result. Images never leave your browser. No signup." />
+  <meta name="keywords" content="image cropper, crop image online, crop photo, rotate image, image crop tool, free image editor" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/img-crop/" />
+  <meta property="og:title" content="Free Image Cropper" />
+  <meta property="og:description" content="Drag crop, aspect ratio, rotate, download. Images never uploaded." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/img-crop/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Image Cropper by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Image Cropper" />
+  <meta name="twitter:description" content="Drag crop, aspect ratio, rotate, download. Images never uploaded." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Image Cropper by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Image Cropper", "item": "https://ajaykakkar93.github.io/tools/img-crop/" } ] },
+      { "@type": "WebApplication", "name": "Image Cropper",
+        "url": "https://ajaykakkar93.github.io/tools/img-crop/",
+        "description": "Free online image cropper with drag crop, aspect ratio and rotation. Runs entirely in the browser.",
+        "applicationCategory": "MultimediaApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Drag crop area", "Aspect ratio lock", "Rotate", "Download" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+    #cropWrap{position:relative;display:inline-block;cursor:crosshair;user-select:none;} #overlay{position:absolute;top:0;left:0;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,.55);border:2px solid #fcd34d;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs in your browser. Images are processed locally and never uploaded. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-4xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-crop-simple mr-2" style="color:#fda4af"></i>Image Cropper</h1>
+    <p class="text-slate-400 text-sm">Drag to crop, set aspect ratio, rotate. Images never leave your device.</p>
+  </header>
+  <main class="max-w-4xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-4 space-y-3">
+      <div class="flex flex-wrap gap-2 items-center">
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="$('f').click()"><i class="fa-solid fa-file-arrow-up mr-1"></i>Open image</button>
+        <input type="file" id="f" accept="image/*" hidden onchange="load(this.files[0])">
+        <select id="ratio" class="btn rounded-lg px-3 py-1.5 text-sm" onchange="resetCrop()"><option value="free">Free</option><option value="1:1">1:1</option><option value="4:3">4:3</option><option value="16:9">16:9</option><option value="3:2">3:2</option></select>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="rotate(-90)">↺ Rotate L</button>
+        <button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="rotate(90)">↻ Rotate R</button>
+        <button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="crop()"><i class="fa-solid fa-download mr-1"></i>Crop & Download</button>
+      </div>
+      <div id="canvasArea" class="overflow-auto" style="max-height:65vh">
+        <div id="cropWrap" style="display:none">
+          <canvas id="cv"></canvas>
+          <div id="overlay" style="display:none"></div>
+        </div>
+      </div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const cv=$('cv'),ctx=cv.getContext('2d');
+    let img=new Image(),rot=0,drag=false,sx=0,sy=0,cx=0,cy=0,cw=0,ch=0,scaleX=1,scaleY=1;
+    function load(f){ const r=new FileReader(); r.onload=e=>{ img=new Image(); img.onload=()=>{ rot=0; draw(); $('cropWrap').style.display='inline-block'; }; img.src=e.target.result; }; r.readAsDataURL(f); }
+    function draw(){ const MAX=Math.min(window.innerWidth-80,900); let w=img.width,h=img.height; if(rot%180!==0)[w,h]=[h,w]; scaleX=(w>MAX?MAX/w:1); scaleY=scaleX; cv.width=Math.round(w*scaleX); cv.height=Math.round(h*scaleY); ctx.save(); ctx.translate(cv.width/2,cv.height/2); ctx.rotate(rot*Math.PI/180); ctx.drawImage(img,-img.width*scaleX/2,-img.height*scaleY/2,img.width*scaleX,img.height*scaleY); ctx.restore(); resetCrop(); }
+    function rotate(deg){ rot=(rot+deg+360)%360; draw(); }
+    function resetCrop(){ cx=0;cy=0;cw=cv.width;ch=cv.height; const r=$('ratio').value; if(r!=='free'){const[rw,rh]=r.split(':').map(Number); ch=Math.round(cw*rh/rw); if(ch>cv.height){ch=cv.height;cw=Math.round(ch*rw/rh);} cx=Math.round((cv.width-cw)/2);cy=Math.round((cv.height-ch)/2);} showOv(); }
+    function showOv(){ const ov=$('overlay'); ov.style.display='block'; ov.style.left=cx+'px';ov.style.top=cy+'px';ov.style.width=cw+'px';ov.style.height=ch+'px'; }
+    const wrap=$('cropWrap');
+    wrap.addEventListener('mousedown',e=>{ if(!img.src)return; const r=cv.getBoundingClientRect(); sx=e.clientX-r.left;sy=e.clientY-r.top; cx=sx;cy=sy;cw=0;ch=0; drag=true; });
+    wrap.addEventListener('mousemove',e=>{ if(!drag)return; const r=cv.getBoundingClientRect(); const mx=e.clientX-r.left,my=e.clientY-r.top; let w=mx-sx,h=my-sy; const rval=$('ratio').value; if(rval!=='free'){const[rw,rh]=rval.split(':').map(Number); h=w*rh/rw;} cx=Math.min(sx,sx+w);cy=Math.min(sy,sy+h);cw=Math.abs(w);ch=Math.abs(h); showOv(); });
+    wrap.addEventListener('mouseup',()=>{ drag=false; });
+    function crop(){ if(!img.src)return; const out=document.createElement('canvas'); out.width=cw/scaleX; out.height=ch/scaleY; const octx=out.getContext('2d'); octx.drawImage(cv,cx,cy,cw,ch,0,0,cw/scaleX,ch/scaleY); out.toBlob(b=>{ const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cropped.png';a.click(); },'image/png'); }
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

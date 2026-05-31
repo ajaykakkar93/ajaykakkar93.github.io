@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Event Countdown Timer — Days Until Any Date | Ajay Kakkar</title>
+  <meta name="description" content="Free online event countdown - enter a date and see the days, hours, minutes and seconds until that event. Add multiple countdowns. 100% private, browser-based." />
+  <meta name="keywords" content="countdown timer, days until, event countdown, days remaining, how many days until, countdown to date" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/countdown/" />
+  <meta property="og:title" content="Free Event Countdown Timer" />
+  <meta property="og:description" content="Days/hours/mins/secs until any date. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/countdown/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Countdown Timer by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Event Countdown Timer" />
+  <meta name="twitter:description" content="Days/hours/mins/secs until any date. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Countdown Timer by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Event Countdown Timer", "item": "https://ajaykakkar93.github.io/tools/countdown/" } ] },
+      { "@type": "WebApplication", "name": "Event Countdown Timer",
+        "url": "https://ajaykakkar93.github.io/tools/countdown/",
+        "description": "Free online event countdown showing time until any future date. Runs entirely in the browser.",
+        "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Days/hours/minutes/seconds", "Multiple events", "Live tick" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+    .cd-block{text-align:center;background:#0b1220;border:1px solid #1e293b;border-radius:.5rem;padding:.5rem .75rem;min-width:64px;} .cd-val{font-family:"Space Grotesk";font-size:1.8rem;font-weight:700;color:#fbbf24;display:block;} .cd-lbl{font-size:.65rem;color:#64748b;text-transform:uppercase;letter-spacing:.05em;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs in your browser. Nothing is uploaded. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-2xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-hourglass-half mr-2" style="color:#fbbf24"></i>Event Countdown</h1>
+    <p class="text-slate-400 text-sm">Days, hours, minutes &amp; seconds until any date. Private &amp; in-browser.</p>
+  </header>
+  <main class="max-w-2xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-5 space-y-3 mb-4">
+      <div class="flex flex-wrap gap-2 items-end">
+        <div><label class="text-xs text-slate-400 block mb-1">Event name</label><input id="ename" class="w-40" placeholder="e.g. New Year"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Date & time</label><input id="edate" type="datetime-local"></div>
+        <button class="btn btn-primary rounded-lg px-3 py-2 text-sm" onclick="addEvent()"><i class="fa-solid fa-plus mr-1"></i>Add</button>
+      </div>
+    </section>
+    <div id="events" class="space-y-4"></div>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    let events=[]; let iv=null;
+    function addEvent(){ const name=$('ename').value.trim()||'Event', date=$('edate').value; if(!date)return;
+      events.push({name,date}); $('ename').value=''; render(); }
+    function render(){ $('events').innerHTML=events.map((e,i)=>`<div class="panel rounded-2xl p-5" id="ev${i}">
+      <div class="flex justify-between items-start mb-3"><div><div class="font-display font-semibold">${e.name}</div><div class="text-xs text-slate-500">${new Date(e.date).toLocaleString()}</div></div>
+      <button class="btn rounded px-2 py-1 text-xs" onclick="events.splice(${i},1);render()"><i class="fa-solid fa-xmark"></i></button></div>
+      <div id="cd${i}" class="flex gap-2 flex-wrap"></div></div>`).join('');
+      tick(); if(!iv) iv=setInterval(tick,1000); }
+    function tick(){ events.forEach((e,i)=>{
+      const diff=new Date(e.date)-new Date(); const el=$('cd'+i); if(!el)return;
+      if(diff<=0){el.innerHTML='<span class="text-lg" style="color:#4ade80">Event reached!</span>';return;}
+      const d=Math.floor(diff/864e5),h=Math.floor((diff%864e5)/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3);
+      const blk=(v,l)=>`<div class="cd-block"><span class="cd-val">${String(v).padStart(2,'0')}</span><span class="cd-lbl">${l}</span></div>`;
+      el.innerHTML=blk(d,'days')+blk(h,'hours')+blk(m,'mins')+blk(s,'secs'); }); }
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

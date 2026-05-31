@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Placeholder Image Generator | Ajay Kakkar</title>
+  <meta name="description" content="Free online placeholder image generator - create custom sized placeholder images with custom colors and text for mockups and wireframes. Download as PNG or SVG. Browser-based." />
+  <meta name="keywords" content="placeholder image, dummy image generator, placeholder png, image placeholder, lorem picsum alternative" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/placeholder/" />
+  <meta property="og:title" content="Free Placeholder Image Generator" />
+  <meta property="og:description" content="Custom size, color, text → PNG or SVG. Private, browser-based." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/placeholder/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Placeholder Image Generator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Placeholder Image Generator" />
+  <meta name="twitter:description" content="Custom size, color, text → PNG or SVG. Private, browser-based." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Placeholder Image Generator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Placeholder Image Generator", "item": "https://ajaykakkar93.github.io/tools/placeholder/" } ] },
+      { "@type": "WebApplication", "name": "Placeholder Image Generator",
+        "url": "https://ajaykakkar93.github.io/tools/placeholder/",
+        "description": "Free online placeholder image generator producing custom PNG and SVG images. Runs entirely in the browser.",
+        "applicationCategory": "DesignApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Custom dimensions", "Custom colors", "Custom text", "PNG and SVG download" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Everything runs in your browser. Nothing is uploaded. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-2xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-image mr-2" style="color:#94a3b8"></i>Placeholder Image</h1>
+    <p class="text-slate-400 text-sm">Custom size, color &amp; text placeholder → PNG or SVG. In-browser.</p>
+  </header>
+  <main class="max-w-2xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-5 space-y-4">
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-xs text-slate-400 block mb-1">Width</label><input id="pw" type="number" value="800" class="w-full mono" oninput="gen()"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Height</label><input id="ph" type="number" value="600" class="w-full mono" oninput="gen()"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Background</label><input type="color" id="pbg" value="#1e293b" class="w-full h-10 p-0.5" oninput="gen()"></div>
+        <div><label class="text-xs text-slate-400 block mb-1">Text color</label><input type="color" id="ptc" value="#94a3b8" class="w-full h-10 p-0.5" oninput="gen()"></div>
+      </div>
+      <div><label class="text-xs text-slate-400 block mb-1">Label text (leave blank for dimensions)</label><input id="plbl" class="w-full" placeholder="" oninput="gen()"></div>
+      <canvas id="pcv" style="max-width:100%;border:1px solid #1e293b;border-radius:.5rem"></canvas>
+      <div class="flex gap-2"><button class="btn btn-primary rounded-lg px-3 py-1.5 text-sm" onclick="dlPng()"><i class="fa-solid fa-download mr-1"></i>PNG</button><button class="btn rounded-lg px-3 py-1.5 text-sm" onclick="dlSvg()">SVG</button></div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    function gen(){ const w=+$('pw').value||800,h=+$('ph').value||600,bg=$('pbg').value,tc=$('ptc').value; const lbl=$('plbl').value.trim()||w+'×'+h;
+      const cv=$('pcv'); cv.width=w; cv.height=h; const ctx=cv.getContext('2d');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle=tc; ctx.globalAlpha=.3; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(0,0);ctx.lineTo(w,h);ctx.moveTo(w,0);ctx.lineTo(0,h); ctx.stroke(); ctx.globalAlpha=1;
+      ctx.fillStyle=tc; ctx.font='bold '+Math.min(w/10,48)+'px Inter,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(lbl,w/2,h/2); }
+    function dlPng(){ $('pcv').toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='placeholder.png';a.click();},'image/png'); }
+    function dlSvg(){ const w=+$('pw').value||800,h=+$('ph').value||600,bg=$('pbg').value,tc=$('ptc').value,lbl=$('plbl').value.trim()||w+'×'+h;
+      const s=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="${bg}"/><line x1="0" y1="0" x2="${w}" y2="${h}" stroke="${tc}" stroke-width="2" opacity=".3"/><line x1="${w}" y1="0" x2="0" y2="${h}" stroke="${tc}" stroke-width="2" opacity=".3"/><text x="${w/2}" y="${h/2}" font-size="${Math.min(w/10,48)}" font-family="sans-serif" font-weight="bold" fill="${tc}" text-anchor="middle" dominant-baseline="middle">${lbl}</text></svg>`;
+      const b=new Blob([s],{type:'image/svg+xml'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='placeholder.svg';a.click(); }
+    gen();
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

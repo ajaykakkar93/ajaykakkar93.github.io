@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free HMAC Generator — SHA-256, SHA-1, SHA-512 | Ajay Kakkar</title>
+  <meta name="description" content="Free online HMAC generator - create HMAC-SHA256, HMAC-SHA1 or HMAC-SHA512 message authentication codes using the Web Crypto API. 100% private, browser-based." />
+  <meta name="keywords" content="hmac generator, hmac sha256, hmac sha512, message authentication code, web crypto hmac" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/hmac/" />
+  <meta property="og:title" content="Free HMAC Generator" />
+  <meta property="og:description" content="HMAC-SHA256/1/512 with Web Crypto. Nothing uploaded. Private." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/hmac/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="HMAC Generator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free HMAC Generator" />
+  <meta name="twitter:description" content="HMAC-SHA256/1/512 with Web Crypto. Nothing uploaded. Private." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="HMAC Generator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "HMAC Generator", "item": "https://ajaykakkar93.github.io/tools/hmac/" } ] },
+      { "@type": "WebApplication", "name": "HMAC Generator",
+        "url": "https://ajaykakkar93.github.io/tools/hmac/",
+        "description": "Free online HMAC generator using the Web Crypto API. Runs entirely in the browser.",
+        "applicationCategory": "SecurityApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "HMAC-SHA256", "HMAC-SHA1", "HMAC-SHA512" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">HMAC computation happens entirely in your browser via the Web Crypto API. Keys and messages are never uploaded. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-3xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-key mr-2" style="color:#fb923c"></i>HMAC Generator</h1>
+    <p class="text-slate-400 text-sm">HMAC-SHA256/1/512 via Web Crypto. Keys never leave your browser.</p>
+  </header>
+  <main class="max-w-3xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-6 space-y-4">
+      <div><label class="text-xs text-slate-400 block mb-1">Secret key</label><input id="key" type="password" class="w-full mono text-sm" placeholder="your-secret-key"></div>
+      <div><label class="text-xs text-slate-400 block mb-1">Message</label><textarea id="msg" class="w-full h-28 rounded-xl p-3 mono text-sm outline-none resize-none" placeholder="Message to sign…"></textarea></div>
+      <div class="flex gap-2 items-center">
+        <select id="alg" class="btn rounded-lg px-3 py-1.5 text-sm"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="SHA-512">SHA-512</option></select>
+        <button class="btn btn-primary rounded-lg px-4 py-2 text-sm" onclick="gen()"><i class="fa-solid fa-lock mr-1"></i>Generate HMAC</button>
+      </div>
+      <div id="out" class="panel rounded-xl p-4 space-y-2" style="background:#0b1220;display:none">
+        <div class="text-xs text-slate-400">HMAC (<span id="outalg"></span>)</div>
+        <div id="hex" class="mono text-sm break-all" style="color:#4ade80"></div>
+        <div class="flex gap-2"><button class="btn rounded px-2 py-1 text-xs" onclick="navigator.clipboard.writeText($('hex').textContent)"><i class="fa-solid fa-copy mr-1"></i>Copy hex</button></div>
+      </div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    async function gen(){ const key=$('key').value,msg=$('msg').value,alg=$('alg').value;
+      if(!key||!msg)return; const enc=new TextEncoder();
+      const k=await crypto.subtle.importKey('raw',enc.encode(key),{name:'HMAC',hash:alg},false,['sign']);
+      const sig=await crypto.subtle.sign('HMAC',k,enc.encode(msg));
+      const hex=[...new Uint8Array(sig)].map(b=>b.toString(16).padStart(2,'0')).join('');
+      $('outalg').textContent='HMAC-'+alg; $('hex').textContent=hex; $('out').style.display='block'; }
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

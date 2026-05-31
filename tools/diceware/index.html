@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Diceware Passphrase Generator | Ajay Kakkar</title>
+  <meta name="description" content="Free online diceware passphrase generator - create strong, memorable passphrases from random words using EFF wordlist. 100% private, browser-based, nothing uploaded." />
+  <meta name="keywords" content="diceware, passphrase generator, random passphrase, EFF wordlist, strong password words" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/diceware/" />
+  <meta property="og:title" content="Free Diceware Passphrase Generator" />
+  <meta property="og:description" content="Strong memorable passphrases from random words. Nothing uploaded. Private." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/diceware/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Diceware Generator by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Diceware Passphrase Generator" />
+  <meta name="twitter:description" content="Strong memorable passphrases from random words. Nothing uploaded. Private." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Diceware Generator by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Diceware Passphrase Generator", "item": "https://ajaykakkar93.github.io/tools/diceware/" } ] },
+      { "@type": "WebApplication", "name": "Diceware Passphrase Generator",
+        "url": "https://ajaykakkar93.github.io/tools/diceware/",
+        "description": "Free online diceware passphrase generator using a built-in wordlist. Runs entirely in the browser.",
+        "applicationCategory": "SecurityApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Random word passphrases", "Configurable length", "Entropy display" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Passphrases are generated entirely in your browser using cryptographic randomness. Nothing is uploaded. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-2xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-dice-five mr-2" style="color:#fb923c"></i>Diceware Passphrase</h1>
+    <p class="text-slate-400 text-sm">Strong memorable passphrases from random words. Nothing uploaded.</p>
+  </header>
+  <main class="max-w-2xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-6 space-y-4">
+      <div class="flex items-center gap-3"><label class="text-sm text-slate-400">Words</label><input type="range" id="wn" min="3" max="10" value="6" class="flex-1" oninput="$('wv').textContent=this.value;gen()"><span id="wv" class="text-sm w-4">6</span></div>
+      <select id="sep" onchange="gen()" class="btn rounded-lg px-3 py-1.5 text-sm"><option value=" ">Space</option><option value="-">Hyphen</option><option value=".">Dot</option><option value="">No separator</option></select>
+      <div class="flex gap-2 items-center">
+        <div id="out" class="flex-1 panel rounded-xl px-4 py-3 text-lg font-display" style="background:#0b1220;word-break:break-word"></div>
+        <button class="btn rounded-lg px-3 py-2" onclick="navigator.clipboard.writeText($('out').textContent)"><i class="fa-solid fa-copy"></i></button>
+      </div>
+      <button class="btn btn-primary rounded-lg px-4 py-2 text-sm" onclick="gen()"><i class="fa-solid fa-rotate mr-1"></i>New passphrase</button>
+      <div id="info" class="text-xs text-slate-500"></div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const W="abandon ability able about above absent absorb abstract absurd abuse access accident account accuse achieve acid acoustic acquire across action actual adapt addicted adjust admit adult advance advice aerobic afford afraid again age agent agree ahead aim air airport aisle alarm album alert alien all alley allow almost alone alpha already also alter always amateur amazing among amount amuse analyst anchor ancient anger angle angry animal ankle announce annual answer antenna antique anxiety any apart apology appear apple approve april arch arctic area arena argue arm armor army around arrange arrest arrive arrow art artefact artist artwork ask aspect assault asset assist assume asthma athlete atom attack attend attitude attract auction audit august aunt author auto autumn average avocado avoid awake aware away awesome awful awkward axis baby balance bamboo banana banner bargain barrel base basic basket battle beach bean beauty because become beef before begin behave behind believe below bench benefit best betray better between beyond bicycle bid bike bind biology bird birth bitter black blade blame blanket blast bleak bless blind blood blossom blur board boil bomb bone bonus book border boring borrow boss bottom bounce box brain brand brave breeze brick bridge brief bright bring broken brother brown brush buddy budget bulb bundle burden burger burst busy buyer buzz cabbage cabin cable call calm came camera capital captain carbon carpet case cash casino casual cave ceiling census chair chaos charge chat cheap check cheese chest chief child chimney choose chronic civil claim clean clever click client climb clinic clip clock clog close cloth cloud clown clue cluster coil color column combine come comfort comic common company concert conduct confirm congress connect consider control convince copy coral cost country couple course cover coyote craft crash cream credit crime crisp critic cross crowd cruel cruise crumble crunch crush cry crystal cube culture cup curious current curtain curve custom cute cycle dad damage damp dance danger daring dash daughter deal debate debris decade december decide decline decorate deer defense define defy degree delay deliver demand demise denial deny depart depend deposit depth deputy derive describe desert design desk despair destroy detail detect develop device devote diagram dial diamond diary diesel differ digital dilemma diner dinner direct dirt disagree discover disease dish dismiss disorder display distance divert divide dizzy doctor dog domain donate donkey door dose double dove draft dragon drama drastic draw dream dress drift drink drip drive drop drum dry duck dumb dune during dust dutch duty dwarf dynamic eager eagle early earn earth easily east easy echo edge educate effort eight elbow elder electric elegant element elite else embark embody embrace emerge emotion employ empower empty enable enact endless endorse enemy engage engine enhance enjoy enlist enough enrich enroll ensure enter entire entry envelope episode equal equip erase erode erosion error erupt escape essay essence estate eternal ethics evidence evil evolve exact example excess exchange excite exclude excuse execute exhaust exhibit exile exist expand expect experience expose express extend extra eye fable fabric face faculty fade faint faith fall fame family fantasy far fashion fat fatal father fatigue fault favorite feature federal feel feline fence festival fetch fever field figure file film filter final find fine finger fish fist fitness fix flag flame flash flat flavor flee flight flip float flock floor flower fluid flush foam focus foil follow food force forest forget fork fortune forum fossil foster found fox fragile frame frequent fresh friend front frost frown frozen fruit fuel fun funny furnace fury future gadget gain galaxy gallery game gap garbage garden garlic garment gas gasp gate gather gauge gaze general genius genre gentle genuine gesture ghost ginger giraffe give glad glance glare glass glide gloom glue goat goddess gold good goose gorilla gospel grace grain grant gravity great green grid grief grit grocery group grow grunt guard guide guilt guitar gun habit hair half hamster hand happy harsh harvest hat have hawk hazard head health heart heavy hedgehog height hello hero hidden high hill hint hip hire history hobby hockey hollow home honey hood hope horn hospital hotel hover huge humble humor hundred hunt hurdle hurry hurt husband hybrid ice icon idle ignore ill image imitate immense immune impact impose improve impulse inbox include income index indicate indoor industry infant inflict inform inhale inject inner innocent input inquiry insane insect inside inspire install intact interest invest invite involve iron island isolate issue item ivory jacket jaguar jar jazz jealous jeans jelly jewel job join joke journey joy judge juice jump jungle junior junk just kangaroo keen keep ketchup key kick kind kingdom kiss kit kitchen kiwi knee knife knock know lab ladder lamp language laptop large later laugh laundry lava law layer lazy leader learn leave lecture left leg legal legend leisure lemon lend length lens leopard lesson level liar liberty license life lift light like limit link lion liquid list little live lizard load loan lobster local logic lonely long loop lottery loud lounge love loyal lucky luggage lumber lunar lunch luxury lyrics machine mad magic magnet maid main major make mammal mango mansion manual maple marble march margin marine master match maze meadow media melody melt member memory mention menu mercy merge merit method middle midnight milk million mimic mind minimum mirror misery miss mistake mix mixed mobile model modify mom monitor month moon moral more morning mosquito mother motion motor mountain mouse move movie much muffin mule multiply muscle museum mushroom music must myself mystery naive name napkin narrow nasty nature near neck need negative neglect neither nephew nerve nest network news next nice night noble noise nominee noodle normal notable note nothing notice novel now nuclear number nurse object oblige obscure obtain ocean october odor off often oil okay old olive olympic omit once onion open option orange orbit orchard order ordinary organ orient original orphan ostrich other outdoor outside oval over own oyster ozone pain paint pair palm panda panic panther paper parade parent park parrot party pass patch patrol pause pave payment peace peanut peasant pelican pen penalty pencil people pepper perfect permit person pet phone photo phrase piano picnic piece pillar pink pioneer pipe pistol pitch pizza place planet plastic plate play please pledge pluck plug plunge poem poet point polar pole police pond pony pool popular portion position possible post potato poverty powder power practice praise predict prefer prepare present pretty prevent pride primary print priority prison private prize problem process produce profit program project promote proof property prosper protect proud provide public pudding pull pulp pulse pumpkin pupil purchase purity push put puzzle pyramid quality quantum quarter question quick quit quiz quote rabbit raccoon race rack radar radio rain raise rally ramp ranch random range rapid rare rate rather raven reach ready real reason rebel rebuild recall receive recipe record recycle reduce reflect reform refuse region regret regular reject relax release rely remain remember remind remove render renew rent reopen repair repeat replace report require rescue resemble resist resource response result retire retreat return reunion reveal review reward rhythm ribbon rice rich ride rifle ring riot ripple risk ritual rival river road roast robot robust rocket romance roof rookie rotate rough round route royal rubber rude rug rule run runway rural sad saddle sadness safe sail salad salmon salon salt salute same sand satisfy satoshi sauce sausage save say scale scan scare scatter scene scheme school science scissors scorpion scout scrap screen script scrub sea search season seat second secret section security seek segment select sell seminar senior sense sentence series service session settle setup seven shadow shaft shallow share shed shell sheriff shift shine ship shiver shock shoe shoot shop short shoulder shove shrimp shrug shuffle shy sibling siege sight signal silent silk silly silver similar simple since sing siren sister situate six size sketch skill skin skirt skull slab slam sleep slender slice slide slight slim slogan slot slow slush small smart smile smoke smooth snack snake snap sniff snow soap soccer social sock solar soldier solid solution solve someone song soon sorry soul sound soup source south space spare spatial spawn speak special speed sphere spice spider spike spin spirit split spoil sponsor spoon spray spread spring spy square squeeze squirrel stable stadium staff stage stairs stamp stand start state stay steak steel stem step stereo stick still sting stock stomach stone stop store story stove strategy street strike strong struggle student stuff stumble style subject submit subway success such sudden suffer sugar suggest suit summer sun sunny sunset super supply supreme sure surface surge surprise sustain swallow swamp swear sweet swift swim sword symbol symptom syrup table tackle tag tail talent tamper tank tape target task tattoo taxi teach team tell ten tenant tennis tent term test text thank that theme then theory there they thing this thought three thrive throw thumb thunder ticket tide tiger tilt timber time tiny tip tired title toast today together toilet token tomato tomorrow tone tongue tooth top topic topple torch tornado tortoise toss total tourist toward tower town toy track trade traffic tragic train transfer trap trash travel tray treat tree trend trial tribe trick trigger trim trip trophy trouble truck truly trumpet trust truth tube tuition tumble tuna tunnel turkey turn turtle twelve twenty twice twin twist two ugly umbrella unable uncle unfair unfold unhappy uniform unique universe unknown unlock until unusual unveil update upgrade uphold upon upper upset urban useful useless usual utility vacant vacuum vague valid valley valve van vanish vapor various vast vault vehicle velvet vendor venture verb verify version very veteran viable vibrant vicious victory video view village vintage violin virus visa visit visual vital vivid vocal voice void volcano volume vote voyage wage wagon wait walk wall walnut want warfare warm warrior waste water wave wealth weapon wear weasel wedding weekend weird welcome west wet whale wheat wheel where whip whisper wide width wife wild will win window wine wing wink winner winter wire wisdom wise wish witness wolf woman wonder wood wool word world worry worth wrap wreck wrestle wrist write wrong yard year yellow you young youth zebra zero zone zoo".split(' ');
+    function gen(){ const n=+$('wn').value,sep=$('sep').value; const arr=new Uint32Array(n);
+      crypto.getRandomValues(arr); const words=Array.from(arr,v=>W[v%W.length]);
+      $('out').textContent=words.join(sep);
+      const bits=Math.log2(W.length)*n; $('info').textContent='~'+Math.round(bits)+' bits of entropy · '+W.length.toLocaleString()+' words in pool'; }
+    gen();
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

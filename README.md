@@ -153,6 +153,23 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | [Image Tools](https://ajaykakkar93.github.io/tools/image/) | Resize, compress, convert PNG/JPG/WebP |
 | [Date & Time Calculator](https://ajaykakkar93.github.io/tools/datetime/) | Age, duration, working days, epoch converter, cron parser |
 | [Image to Text (OCR)](https://ajaykakkar93.github.io/tools/ocr/) | Extract text from images, in-browser, multi-language |
+| [Mock Data Generator](https://ajaykakkar93.github.io/tools/mock-data/) | Fake names, emails, dates, IDs → CSV / JSON / SQL |
+| [Number Base Converter](https://ajaykakkar93.github.io/tools/base/) | Binary, octal, decimal, hex + bitwise ops |
+| [chmod Calculator](https://ajaykakkar93.github.io/tools/chmod/) | Linux permissions → octal, symbolic & chmod command |
+| [Text Diff Checker](https://ajaykakkar93.github.io/tools/diff/) | Compare two texts line by line |
+| [Cron Builder](https://ajaykakkar93.github.io/tools/cron/) | Explain a cron expression + next run times |
+| [CSV Viewer & Converter](https://ajaykakkar93.github.io/tools/csv/) | View, sort, per-column filter, CSV → JSON |
+| [File Checksum](https://ajaykakkar93.github.io/tools/checksum/) | SHA-256/1/512 a file & verify against expected |
+| [Number to Words](https://ajaykakkar93.github.io/tools/num-to-words/) | Indian (lakh/crore) & International + cheque mode |
+| [GST Calculator](https://ajaykakkar93.github.io/tools/gst/) | Add/remove GST, CGST/SGST/IGST split (India) |
+| [CSS Generator](https://ajaykakkar93.github.io/tools/css/) | Gradient & box-shadow makers with live preview |
+| [Timer](https://ajaykakkar93.github.io/tools/timer/) | Pomodoro, stopwatch & countdown |
+| [Favicon Generator](https://ajaykakkar93.github.io/tools/favicon/) | Image → favicon PNG set + HTML tags |
+| [Image to PDF](https://ajaykakkar93.github.io/tools/img-to-pdf/) | Combine JPG/PNG images into one PDF |
+| [Time Zone Converter](https://ajaykakkar93.github.io/tools/timezone/) | World clock & meeting planner across zones |
+| [EXIF Viewer / Remover](https://ajaykakkar93.github.io/tools/exif/) | Read photo metadata (GPS) or strip it |
+
+Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — searchable + grouped into segments (Developer & Data, Finance, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI/Qlik).
 
 ---
 

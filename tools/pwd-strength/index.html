@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Password Strength Checker | Ajay Kakkar</title>
+  <meta name="description" content="Free online password strength checker - analyse your password for entropy, character variety, common patterns and get actionable improvement tips. Nothing is uploaded. 100% private." />
+  <meta name="keywords" content="password strength checker, password security, password tester, check password strength, entropy calculator" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/pwd-strength/" />
+  <meta property="og:title" content="Free Password Strength Checker" />
+  <meta property="og:description" content="Entropy, variety, patterns, tips. Nothing uploaded. 100% private." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/pwd-strength/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Password Strength Checker by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Password Strength Checker" />
+  <meta name="twitter:description" content="Entropy, variety, patterns, tips. Nothing uploaded. 100% private." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta name="twitter:image:alt" content="Password Strength Checker by Ajay Kakkar" />
+  <meta name="theme-color" content="#1b2d51" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ajaykakkar93.github.io/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Password Strength Checker", "item": "https://ajaykakkar93.github.io/tools/pwd-strength/" } ] },
+      { "@type": "WebApplication", "name": "Password Strength Checker",
+        "url": "https://ajaykakkar93.github.io/tools/pwd-strength/",
+        "description": "Free online password strength checker analysing entropy and patterns. Runs entirely in the browser.",
+        "applicationCategory": "SecurityApplication", "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript.", "inLanguage": "en",
+        "isAccessibleForFree": true, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "publisher": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "featureList": [ "Entropy calculation", "Character variety", "Pattern detection", "Improvement tips" ] }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Space Grotesk','sans-serif']}}}}</script>
+  <style>
+    body{background:#0b1220;color:#e2e8f0;font-family:'Inter',sans-serif;}
+    .panel{background:#111a2e;border:1px solid #1e293b;}
+    input,select,textarea{background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.55rem .7rem;}
+    .btn{background:#1e293b;color:#e2e8f0;border:1px solid #334155;cursor:pointer;} .btn:hover{background:#334155;}
+    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;} .btn-primary:hover{background:#1d4ed8;}
+    .tab{padding:.4rem .85rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;color:#94a3b8;} .tab.active{background:#1e293b;color:#e2e8f0;}
+    .err{color:#f87171;} .ok{color:#4ade80;}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease;}
+    .modal-content{background:rgba(17,26,46,.97);border:1px solid #1e293b;border-radius:1rem;padding:2rem;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    .modal-btn{padding:.5rem 1.1rem;border-radius:.5rem;font-size:.85rem;cursor:pointer;border:1px solid #334155;background:#2563eb;color:#fff;}
+    input:not([type=color]):not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{padding-left:.7rem;}
+    .meter{height:10px;border-radius:5px;background:#1e293b;overflow:hidden;} .meter>div{height:100%;transition:width .3s,background .3s;}
+  </style>
+</head>
+<body>
+<div id="disclaimer-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+      <img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:40px;height:40px;border-radius:.5rem;">
+      <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:#e2e8f0;"><i class="fa-solid fa-lock" style="color:#4ade80;margin-right:.5rem"></i>Your Privacy Matters</h2>
+    </div>
+    <p style="margin:0 0 1.5rem 0;font-size:.9rem;line-height:1.8;color:#cbd5e1;">Your password is analysed entirely in your browser and is NEVER sent anywhere. 100% private.</p>
+    <div style="display:flex;justify-content:flex-end;"><button onclick="closeDisclaimer()" class="modal-btn" style="min-width:120px;">I Understand</button></div>
+  </div>
+</div>
+  <header class="max-w-2xl mx-auto px-5 pt-7 pb-3">
+    <div class="flex items-center justify-between">
+      <a href="../index.html" class="text-slate-400 hover:text-slate-200 text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>All Tools</a>
+      <a href="../../index.html" title="Ajay Kakkar"><img src="../../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem" /></a>
+    </div>
+    <h1 class="font-display font-extrabold text-2xl md:text-3xl mt-4 mb-1" style="color:#f1f5f9"><i class="fa-solid fa-shield-halved mr-2" style="color:#4ade80"></i>Password Strength Checker</h1>
+    <p class="text-slate-400 text-sm">Entropy, variety &amp; pattern analysis. Nothing uploaded — ever.</p>
+  </header>
+  <main class="max-w-2xl mx-auto px-5 pb-12">
+    <section class="panel rounded-2xl p-6 space-y-4">
+      <div class="relative"><input id="pwd" type="password" class="w-full pr-10 text-lg mono" placeholder="Enter a password…" oninput="check()">
+        <button onclick="const f=$('pwd');f.type=f.type==='password'?'text':'password'" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 btn" style="border:none;background:none"><i class="fa-solid fa-eye text-sm"></i></button></div>
+      <div class="meter"><div id="bar" style="width:0%"></div></div>
+      <div id="label" class="font-display font-semibold text-lg"></div>
+      <div id="detail" class="grid grid-cols-2 gap-2 text-sm"></div>
+      <div id="tips" class="text-sm space-y-1"></div>
+    </section>
+    <p class="text-slate-500 text-xs mt-8 text-center">100% client-side &middot; nothing uploaded &middot; by Ajay Kakkar</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    function check(){ const p=$('pwd').value; if(!p){$('bar').style.width='0%';$('label').textContent='';$('detail').innerHTML='';$('tips').innerHTML='';return;}
+      let pool=0; if(/[a-z]/.test(p))pool+=26; if(/[A-Z]/.test(p))pool+=26; if(/\d/.test(p))pool+=10; if(/[^a-zA-Z0-9]/.test(p))pool+=32;
+      const bits=p.length*Math.log2(pool||1); const pct=Math.min(100,bits/128*100);
+      const [col,lbl]=bits<30?['#f87171','Very Weak']:bits<50?['#fbbf24','Weak']:bits<80?['#facc15','Fair']:bits<100?['#4ade80','Strong']:['#22d3ee','Very Strong'];
+      $('bar').style.width=pct+'%'; $('bar').style.background=col; $('label').textContent=lbl; $('label').style.color=col;
+      const stat=(k,v,ok)=>`<div class="panel rounded-lg p-2" style="background:#0b1220"><span class="text-xs text-slate-400">${k}</span><div class="mono text-sm mt-0.5" style="color:${ok?'#4ade80':'#f87171'}">${v}</div></div>`;
+      $('detail').innerHTML=stat('Length',p.length,p.length>=12)+stat('Entropy',Math.round(bits)+' bits',bits>=60)+stat('Lowercase',/[a-z]/.test(p)?'✓':'✗',/[a-z]/.test(p))+stat('Uppercase',/[A-Z]/.test(p)?'✓':'✗',/[A-Z]/.test(p))+stat('Numbers',/\d/.test(p)?'✓':'✗',/\d/.test(p))+stat('Symbols',/[^a-zA-Z0-9]/.test(p)?'✓':'✗',/[^a-zA-Z0-9]/.test(p));
+      const tips=[]; if(p.length<12)tips.push('Use at least 12 characters'); if(!/[A-Z]/.test(p))tips.push('Add uppercase letters'); if(!/\d/.test(p))tips.push('Add numbers'); if(!/[^a-zA-Z0-9]/.test(p))tips.push('Add symbols (!@#$)'); if(/(.)\1{2,}/.test(p))tips.push('Avoid repeated characters'); if(/^[a-zA-Z]+$/.test(p))tips.push('Mix in numbers and symbols');
+      $('tips').innerHTML=tips.map(t=>'<div class="text-slate-400"><i class="fa-solid fa-circle-info mr-1 text-xs" style="color:#fbbf24"></i>'+t+'</div>').join(''); }
+  </script>
+  <script>function closeDisclaimer(){var m=document.getElementById("disclaimer-modal");if(!m)return;m.style.opacity="0";setTimeout(function(){m.style.display="none";},300);}</script>
+</body>
+</html>

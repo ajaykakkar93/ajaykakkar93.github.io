@@ -64,7 +64,9 @@
         "featureList": [
           "Convert PDF pages to PNG or JPG images at selectable DPI",
           "Merge multiple PDF files into one with drag-to-reorder",
-          "Split PDF or extract page ranges"
+          "Split PDF or extract page ranges",
+          "Extract text from PDF (PDF to Text)",
+          "Edit PDF pages: delete, rotate and reorder"
         ]
       }
     ]
@@ -544,6 +546,8 @@
     <option value="split-pdf">✂️ Split PDF</option>
     <option value="pdf-to-html">📄 PDF to HTML</option>
     <option value="pdf-to-ppt">📊 PDF to PowerPoint</option>
+    <option value="pdf-to-text">📝 PDF to Text</option>
+    <option value="pdf-pages">🗂️ Page Editor</option>
   </select>
   <button class="theme-btn" id="theme-btn-mobile" onclick="toggleTheme()">
     <i id="theme-icon-mobile" class="fa-solid fa-sun"></i>
@@ -586,6 +590,14 @@
     <div class="nav-item" onclick="showSection('pdf-to-ppt')" data-section="pdf-to-ppt">
       <span class="icon" style="background:rgba(245,158,11,.1);color:#fbbf24"><i class="fa-solid fa-presentation"></i></span>
       PDF to PPT
+    </div>
+    <div class="nav-item" onclick="showSection('pdf-to-text')" data-section="pdf-to-text">
+      <span class="icon" style="background:rgba(20,184,166,.1);color:#2dd4bf"><i class="fa-solid fa-align-left"></i></span>
+      PDF to Text
+    </div>
+    <div class="nav-item" onclick="showSection('pdf-pages')" data-section="pdf-pages">
+      <span class="icon" style="background:rgba(168,85,247,.1);color:#c084fc"><i class="fa-solid fa-layer-group"></i></span>
+      Page Editor
     </div>
   </aside>
 
@@ -859,6 +871,90 @@
           <li>Slides sized for standard presentations</li>
           <li>Text in slides is <strong>not editable</strong> (image-based)</li>
           <li>Ideal for archiving or quick presentations</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 6. PDF TO TEXT                            -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tool-section" id="section-pdf-to-text">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-align-left mr-2" style="color:#2dd4bf;font-size:1.1rem"></i>PDF to Text</h2>
+        <p>Extract all text from a PDF file — copy or download as .txt</p>
+      </div>
+      <div class="card">
+        <label class="calc-label">Select PDF File</label>
+        <div class="file-input-wrapper">
+          <input type="file" id="txt-file" accept=".pdf" onchange="handleTxtFileSelect()" />
+          <label for="txt-file" class="file-input-label">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Click to upload PDF
+          </label>
+        </div>
+        <div class="btn-row">
+          <button class="btn-calc" onclick="extractText()" id="txt-btn" disabled><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Extract Text</button>
+          <button class="btn-clear" onclick="clearTxt()">Clear</button>
+        </div>
+        <div id="txt-status" class="status-msg"></div>
+        <div class="progress-bar" id="txt-progress" style="display:none;"><div class="progress-bar-fill"></div></div>
+        <div id="txt-result" style="display:none">
+          <div class="chips c2" style="margin-bottom:.75rem">
+            <div class="chip"><div class="cv" id="txt-pages" style="color:#2dd4bf">—</div><div class="cl">Pages</div></div>
+            <div class="chip"><div class="cv" id="txt-words" style="color:#93c5fd">—</div><div class="cl">Words</div></div>
+          </div>
+          <textarea id="txt-out" style="width:100%;min-height:220px;background:#0b1220;color:#e2e8f0;border:1px solid #1e293b;border-radius:.5rem;padding:.75rem;font-size:.82rem;font-family:'JetBrains Mono',monospace;resize:vertical" readonly></textarea>
+          <div class="btn-row" style="margin-top:.75rem">
+            <button class="btn-calc" onclick="navigator.clipboard.writeText(document.getElementById('txt-out').value)"><i class="fa-solid fa-copy mr-1"></i>Copy</button>
+            <button class="btn-clear" onclick="dlTxt()"><i class="fa-solid fa-download mr-1"></i>Download .txt</button>
+          </div>
+        </div>
+      </div>
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#2dd4bf"></i>How it works</h4>
+        <ul>
+          <li>Extracts text layer from each page using pdf.js</li>
+          <li>Scanned PDFs (image-only) produce no text — use OCR instead</li>
+          <li>Text order follows the PDF layout stream</li>
+          <li>Files never leave your browser</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 7. PDF PAGE EDITOR                        -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="tool-section" id="section-pdf-pages">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-layer-group mr-2" style="color:#c084fc;font-size:1.1rem"></i>PDF Page Editor</h2>
+        <p>Delete, rotate and reorder pages — download the edited PDF</p>
+      </div>
+      <div class="card">
+        <label class="calc-label">Select PDF File</label>
+        <div class="file-input-wrapper">
+          <input type="file" id="pe-file" accept=".pdf" onchange="handlePeFileSelect()" />
+          <label for="pe-file" class="file-input-label">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Click to upload PDF
+          </label>
+        </div>
+        <div id="pe-status" class="status-msg"></div>
+        <div id="pe-pages" style="display:none">
+          <div style="font-size:.8rem;color:#94a3b8;margin-bottom:.6rem">Drag to reorder · click icons to rotate or delete · unchecked pages are excluded</div>
+          <div id="pe-grid" style="display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem"></div>
+          <div class="btn-row">
+            <button class="btn-calc" onclick="buildEditedPdf()"><i class="fa-solid fa-file-export mr-1"></i>Download edited PDF</button>
+            <button class="btn-clear" onclick="clearPe()">Clear</button>
+          </div>
+          <div id="pe-dl-status" class="status-msg" style="margin-top:.5rem"></div>
+        </div>
+      </div>
+      <div class="info-box">
+        <h4><i class="fa-solid fa-circle-info mr-1" style="color:#c084fc"></i>How it works</h4>
+        <ul>
+          <li>Renders thumbnail previews via pdf.js</li>
+          <li>Rotate applies 90° CW per click (stored, applied on export)</li>
+          <li>Drag thumbnails to reorder — order is what gets exported</li>
+          <li>Uncheck a page to exclude it from the output</li>
+          <li>Export uses pdf-lib — all in-browser, nothing uploaded</li>
         </ul>
       </div>
     </div>
@@ -1447,6 +1543,136 @@ function clearPPTSection() {
 // Drag & drop
 document.addEventListener('dragover', (e) => e.preventDefault());
 document.addEventListener('drop', (e) => e.preventDefault());
+
+// ── PDF TO TEXT ──────────────────────────────────────────────────────────────
+let txtPdfDoc = null;
+function handleTxtFileSelect() {
+  const f = document.getElementById('txt-file').files[0]; if (!f) return;
+  const lbl = document.querySelector('label[for="txt-file"]');
+  lbl.innerHTML = '<i class="fa-solid fa-file-pdf"></i> ' + f.name;
+  document.getElementById('txt-btn').disabled = false;
+  document.getElementById('txt-status').textContent = '';
+  document.getElementById('txt-result').style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = async e => {
+    txtPdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
+  };
+  reader.readAsArrayBuffer(f);
+}
+async function extractText() {
+  if (!txtPdfDoc) return;
+  const btn = document.getElementById('txt-btn');
+  const status = document.getElementById('txt-status');
+  const prog = document.getElementById('txt-progress');
+  btn.disabled = true; prog.style.display = 'block'; status.textContent = 'Extracting…';
+  let full = '', words = 0;
+  for (let i = 1; i <= txtPdfDoc.numPages; i++) {
+    const page = await txtPdfDoc.getPage(i);
+    const tc = await page.getTextContent();
+    const pageText = tc.items.map(it => it.str).join(' ');
+    full += '--- Page ' + i + ' ---\n' + pageText + '\n\n';
+    words += pageText.split(/\s+/).filter(Boolean).length;
+    prog.querySelector('.progress-bar-fill').style.width = (i / txtPdfDoc.numPages * 100) + '%';
+  }
+  prog.style.display = 'none'; btn.disabled = false;
+  document.getElementById('txt-pages').textContent = txtPdfDoc.numPages;
+  document.getElementById('txt-words').textContent = words.toLocaleString();
+  document.getElementById('txt-out').value = full.trim();
+  document.getElementById('txt-result').style.display = 'block';
+  status.textContent = '';
+}
+function dlTxt() {
+  const t = document.getElementById('txt-out').value; if (!t) return;
+  const b = new Blob([t], { type: 'text/plain' }); const a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = 'extracted-text.txt'; a.click();
+}
+function clearTxt() {
+  txtPdfDoc = null;
+  document.getElementById('txt-file').value = '';
+  document.getElementById('txt-btn').disabled = true;
+  document.getElementById('txt-result').style.display = 'none';
+  document.getElementById('txt-status').textContent = '';
+  const lbl = document.querySelector('label[for="txt-file"]');
+  lbl.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Click to upload PDF';
+}
+
+// ── PDF PAGE EDITOR ──────────────────────────────────────────────────────────
+let peRawBytes = null, peMeta = []; // peMeta: [{pageIndex, rotation, included}]
+const peCanvas = document.createElement('canvas');
+
+function handlePeFileSelect() {
+  const f = document.getElementById('pe-file').files[0]; if (!f) return;
+  document.getElementById('pe-status').textContent = 'Loading…';
+  document.getElementById('pe-pages').style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = async e => {
+    peRawBytes = new Uint8Array(e.target.result);
+    const pdfDoc = await pdfjsLib.getDocument({ data: peRawBytes }).promise;
+    peMeta = Array.from({ length: pdfDoc.numPages }, (_, i) => ({ pageIndex: i, rotation: 0, included: true }));
+    await renderPeThumbs(pdfDoc);
+    document.getElementById('pe-status').textContent = '';
+    document.getElementById('pe-pages').style.display = 'block';
+  };
+  reader.readAsArrayBuffer(f);
+}
+
+async function renderPeThumbs(pdfDoc) {
+  const grid = document.getElementById('pe-grid'); grid.innerHTML = '';
+  for (let idx = 0; idx < peMeta.length; idx++) {
+    const m = peMeta[idx];
+    const page = await pdfDoc.getPage(m.pageIndex + 1);
+    const vp = page.getViewport({ scale: 0.25, rotation: m.rotation });
+    const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+    const wrap = document.createElement('div');
+    wrap.dataset.idx = idx;
+    wrap.draggable = true;
+    wrap.style.cssText = 'border:2px solid #334155;border-radius:.5rem;padding:4px;cursor:grab;text-align:center;background:#0b1220;opacity:' + (m.included ? '1' : '.35');
+    wrap.innerHTML = `<img src="${c.toDataURL()}" style="max-width:80px;border-radius:3px"><br>
+      <span style="font-size:.65rem;color:#94a3b8">p.${m.pageIndex + 1}</span>
+      <div style="display:flex;gap:3px;justify-content:center;margin-top:3px">
+        <button title="Rotate 90°CW" onclick="peRotate(${idx})" style="background:#1e293b;border:none;color:#fcd34d;border-radius:3px;padding:1px 5px;cursor:pointer;font-size:.7rem">↻</button>
+        <button title="Toggle include" onclick="peToggle(${idx})" style="background:#1e293b;border:none;color:${m.included ? '#4ade80' : '#f87171'};border-radius:3px;padding:1px 5px;cursor:pointer;font-size:.7rem">${m.included ? '✓' : '✗'}</button>
+      </div>`;
+    wrap.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', idx));
+    wrap.addEventListener('dragover', e => e.preventDefault());
+    wrap.addEventListener('drop', e => { e.preventDefault(); const from = +e.dataTransfer.getData('text/plain'), to = idx;
+      if (from === to) return; const [m] = peMeta.splice(from, 1); peMeta.splice(to, 0, m);
+      renderPeThumbs(pdfDoc); });
+    grid.appendChild(wrap);
+  }
+}
+
+function peRotate(idx) { peMeta[idx].rotation = (peMeta[idx].rotation + 90) % 360;
+  handlePeFileSelect(); }
+function peToggle(idx) { peMeta[idx].included = !peMeta[idx].included; handlePeFileSelect(); }
+
+async function buildEditedPdf() {
+  if (!peRawBytes) return;
+  const status = document.getElementById('pe-dl-status'); status.textContent = 'Building PDF…';
+  try {
+    const { PDFDocument, degrees } = PDFLib;
+    const src = await PDFDocument.load(peRawBytes);
+    const out = await PDFDocument.create();
+    for (const m of peMeta) {
+      if (!m.included) continue;
+      const [copied] = await out.copyPages(src, [m.pageIndex]);
+      if (m.rotation) copied.setRotation(degrees(m.rotation));
+      out.addPage(copied);
+    }
+    const bytes = await out.save();
+    const b = new Blob([bytes], { type: 'application/pdf' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'edited.pdf'; a.click();
+    status.innerHTML = '<span style="color:#4ade80">Done — ' + peMeta.filter(m => m.included).length + ' pages exported.</span>';
+  } catch(e) { status.innerHTML = '<span style="color:#f87171">Error: ' + e.message + '</span>'; }
+}
+function clearPe() {
+  peRawBytes = null; peMeta = [];
+  document.getElementById('pe-file').value = '';
+  document.getElementById('pe-pages').style.display = 'none';
+  document.getElementById('pe-status').textContent = '';
+  document.getElementById('pe-dl-status').textContent = '';
+}
 </script>
 
 </body>

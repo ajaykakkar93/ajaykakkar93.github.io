@@ -41,6 +41,30 @@ Author: Ajay Kakkar — Qlik expert, Udemy instructor, AI/bots product builder.
 - [Image to PDF](https://ajaykakkar93.github.io/tools/img-to-pdf/): combine JPG/PNG images into one PDF.
 - [Time Zone Converter](https://ajaykakkar93.github.io/tools/timezone/): world clock and meeting planner across zones.
 - [EXIF Viewer and Remover](https://ajaykakkar93.github.io/tools/exif/): view photo metadata (GPS) or strip it.
+- [HTML & XML Formatter](https://ajaykakkar93.github.io/tools/html-formatter/): beautify and minify HTML or XML.
+- [URL Parser](https://ajaykakkar93.github.io/tools/url-parser/): split a URL into parts and build query strings.
+- [HTML Entity Tool](https://ajaykakkar93.github.io/tools/html-entity/): encode and decode HTML entities.
+- [Image to Base64](https://ajaykakkar93.github.io/tools/img-base64/): image to Base64 data URI and back.
+- [String Escape Tool](https://ajaykakkar93.github.io/tools/string-escape/): escape and unescape JSON, JS, HTML, SQL.
+- [Scientific Calculator](https://ajaykakkar93.github.io/tools/calc/): trig, log, powers, constants and memory.
+- [Percentage Calculator](https://ajaykakkar93.github.io/tools/percent/): percentage, discount, tip and change.
+- [Statistics Calculator](https://ajaykakkar93.github.io/tools/stats/): mean, median, mode, SD, variance, quartiles.
+- [Aspect Ratio Calculator](https://ajaykakkar93.github.io/tools/aspect-ratio/): find missing dimension, maintain proportions.
+- [Random Generator](https://ajaykakkar93.github.io/tools/random/): dice, coin, number in range and list picker.
+- [Find and Replace](https://ajaykakkar93.github.io/tools/find-replace/): plain text and regex replace, multi-pattern.
+- [Cipher Encoder](https://ajaykakkar93.github.io/tools/cipher/): ROT13, Caesar, Morse code, binary.
+- [Readability Checker](https://ajaykakkar93.github.io/tools/readability/): Flesch, grade level, Gunning Fog.
+- [Border-Radius Generator](https://ajaykakkar93.github.io/tools/border-radius/): per-corner CSS border-radius with live preview.
+- [Event Countdown](https://ajaykakkar93.github.io/tools/countdown/): days hours minutes seconds until any date.
+- [Password Strength Checker](https://ajaykakkar93.github.io/tools/pwd-strength/): entropy, variety and pattern analysis.
+- [Diceware Passphrase Generator](https://ajaykakkar93.github.io/tools/diceware/): strong memorable passphrases from random words.
+- [Image Cropper](https://ajaykakkar93.github.io/tools/img-crop/): drag to crop, aspect ratio, rotate and download.
+- [Placeholder Image Generator](https://ajaykakkar93.github.io/tools/placeholder/): custom size, color and text to PNG or SVG.
+- [Meme Generator](https://ajaykakkar93.github.io/tools/meme/): add top and bottom text to any image.
+- [Glassmorphism Generator](https://ajaykakkar93.github.io/tools/glassmorphism/): frosted-glass CSS with blur, opacity, border.
+- [Invoice Generator](https://ajaykakkar93.github.io/tools/invoice/): fill details and line items, download PDF.
+- [Week Number Calculator](https://ajaykakkar93.github.io/tools/week-number/): ISO week, day of year and week calendar.
+- [HMAC Generator](https://ajaykakkar93.github.io/tools/hmac/): HMAC-SHA256, SHA-1, SHA-512 via Web Crypto.
 
 ## Notes
 - All tools run entirely in the browser. No accounts, no uploads, no tracking.
