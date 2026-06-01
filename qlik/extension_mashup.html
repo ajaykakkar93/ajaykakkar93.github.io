@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qlik Extension &amp; Mashup Dev — HTML, CSS, jQuery Training Ground — Ajay Kakkar</title>
+  <meta name="description" content="Interactive training ground for Qlik Sense Extension and Mashup development. Full Capability API, Field, Variable, Bookmark, Visualization, Enigma.js and QRS reference plus HTML, CSS and jQuery from fresher to advanced. Built by Ajay Kakkar, Qlik Solutions Architect." />
+  <meta name="keywords" content="Qlik Extension, Qlik Mashup, Capability API, enigma.js, QRS API, Qlik Sense Developer, jQuery, HTML, CSS, Ajay Kakkar" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/qlik/extension_mashup.html" />
+  <meta property="og:title" content="Qlik Extension &amp; Mashup Dev Training Ground — Ajay Kakkar" />
+  <meta property="og:description" content="Full Qlik Sense Extension &amp; Mashup API reference plus HTML, CSS, jQuery fresher-to-advanced. Searchable, copy-paste ready." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/qlik/extension_mashup.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:alt" content="Qlik Extension &amp; Mashup Dev by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en_IN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Qlik Extension &amp; Mashup Dev Training Ground — Ajay Kakkar" />
+  <meta name="twitter:description" content="Searchable Qlik dev reference: Extension, Mashup, Capability API, Enigma.js, QRS + HTML/CSS/jQuery fresher to advanced." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1b2d51" />
+  <meta name="color-scheme" content="dark" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Prism for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    }
+  </script>
+
+  <style>
+    body { background-color:#080e1a; color:#f1f5f9; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+    .card { background:rgba(30,41,59,.55); backdrop-filter:blur(10px); border:1px solid rgba(148,163,184,.1); transition:border-color .25s; }
+    .card:hover { border-color:rgba(59,130,246,.22); }
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; font-weight:600; }
+    .tag-blue   { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-amber  { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-red    { background:rgba(239,68,68,.1);   border:1px solid rgba(239,68,68,.2);   color:#fca5a5; }
+    .tag-green  { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-purple { background:rgba(168,85,247,.1);  border:1px solid rgba(168,85,247,.2);  color:#d8b4fe; }
+    .tag-slate  { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+    .rule { height:1px; background:linear-gradient(to right,transparent,rgba(148,163,184,.12),transparent); }
+
+    /* mode toggle */
+    .mode-btn { padding:.55rem 1.2rem; border-radius:.75rem; font-size:.85rem; font-weight:600; border:1px solid rgba(71,85,105,.4); color:#94a3b8; background:rgba(30,41,59,.4); cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:.5rem; }
+    .mode-btn:hover { border-color:rgba(59,130,246,.3); color:#e2e8f0; }
+    .mode-btn.active { background:rgba(59,130,246,.15); border-color:rgba(59,130,246,.5); color:#93c5fd; box-shadow:0 0 0 1px rgba(59,130,246,.15); }
+
+    /* level pills */
+    .lvl { font-size:.62rem; padding:.1rem .5rem; border-radius:999px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+    .lvl-f { background:rgba(34,197,94,.12); color:#6ee7b7; border:1px solid rgba(34,197,94,.25); }
+    .lvl-i { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.25); }
+    .lvl-a { background:rgba(239,68,68,.12); color:#fca5a5; border:1px solid rgba(239,68,68,.25); }
+
+    /* sidebar */
+    .toc-link { display:block; padding:.4rem .75rem; border-radius:.5rem; font-size:.82rem; color:#94a3b8; transition:all .15s; border-left:2px solid transparent; }
+    .toc-link:hover { color:#e2e8f0; background:rgba(59,130,246,.07); }
+    .toc-link.active { color:#93c5fd; background:rgba(59,130,246,.1); border-left-color:#3b82f6; font-weight:600; }
+
+    /* code block */
+    pre[class*="language-"] { margin:0; border-radius:0 0 .75rem .75rem; font-size:.82rem; font-family:'JetBrains Mono',monospace; max-height:560px; }
+    code[class*="language-"] { font-family:'JetBrains Mono',monospace; }
+    .code-wrap { border-radius:.75rem; border:1px solid rgba(71,85,105,.3); overflow:hidden; margin:.75rem 0; background:#1d1f21; }
+    .code-head { display:flex; justify-content:space-between; align-items:center; padding:.4rem .75rem; background:rgba(15,23,42,.6); border-bottom:1px solid rgba(71,85,105,.3); }
+    .code-lang { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:#64748b; font-family:'JetBrains Mono',monospace; }
+    .copy-btn { font-size:.7rem; color:#94a3b8; background:rgba(30,41,59,.6); border:1px solid rgba(71,85,105,.4); border-radius:.4rem; padding:.2rem .6rem; cursor:pointer; transition:all .15s; display:inline-flex; gap:.35rem; align-items:center; }
+    .copy-btn:hover { color:#93c5fd; border-color:rgba(59,130,246,.4); }
+    .copy-btn.done { color:#6ee7b7; border-color:rgba(34,197,94,.4); }
+
+    /* tables */
+    .ref-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    .ref-table th { text-align:left; padding:.55rem .7rem; color:#64748b; font-weight:600; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid rgba(71,85,105,.3); }
+    .ref-table td { padding:.55rem .7rem; color:#cbd5e1; border-bottom:1px solid rgba(71,85,105,.15); vertical-align:top; }
+    .ref-table tr:hover td { background:rgba(59,130,246,.04); }
+    .ref-table code { color:#93c5fd; font-family:'JetBrains Mono',monospace; font-size:.78rem; }
+
+    /* inline code */
+    .ic { color:#93c5fd; background:rgba(30,41,59,.7); padding:.1rem .4rem; border-radius:.3rem; font-family:'JetBrains Mono',monospace; font-size:.82em; }
+
+    /* search */
+    #searchBox { background:rgba(15,23,42,.8); border:1px solid rgba(71,85,105,.4); border-radius:.85rem; padding:.85rem 1rem .85rem 2.8rem; color:#e2e8f0; font-size:.95rem; outline:none; width:100%; transition:border-color .2s; }
+    #searchBox:focus { border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.12); }
+    #suggestBox { position:absolute; top:calc(100% + .4rem); left:0; right:0; background:rgba(15,23,42,.98); backdrop-filter:blur(14px); border:1px solid rgba(71,85,105,.4); border-radius:.85rem; box-shadow:0 20px 50px rgba(0,0,0,.5); z-index:60; overflow:hidden; max-height:60vh; overflow-y:auto; }
+    .sug-item { padding:.7rem 1rem; cursor:pointer; display:flex; align-items:center; gap:.75rem; border-bottom:1px solid rgba(71,85,105,.12); transition:background .12s; }
+    .sug-item:last-child { border-bottom:none; }
+    .sug-item:hover, .sug-item.sel { background:rgba(59,130,246,.12); }
+    .sug-icon { width:30px; height:30px; border-radius:.5rem; display:grid; place-items:center; font-size:.8rem; flex-shrink:0; }
+    .kbd { font-family:'JetBrains Mono',monospace; font-size:.68rem; background:rgba(30,41,59,.8); border:1px solid rgba(71,85,105,.5); border-bottom-width:2px; border-radius:.35rem; padding:.1rem .4rem; color:#94a3b8; }
+
+    /* highlight pulse when jumped to */
+    @keyframes pulseGlow { 0%{box-shadow:0 0 0 0 rgba(59,130,246,.4)} 70%{box-shadow:0 0 0 10px rgba(59,130,246,0)} 100%{box-shadow:0 0 0 0 rgba(59,130,246,0)} }
+    .pulse { animation:pulseGlow 1.4s ease-out 1; border-color:rgba(59,130,246,.5)!important; }
+
+    .secNote { background:rgba(59,130,246,.06); border-left:3px solid rgba(59,130,246,.5); padding:.65rem .9rem; border-radius:.4rem; font-size:.82rem; color:#cbd5e1; margin:.75rem 0; }
+    .secNote.warn { background:rgba(245,158,11,.06); border-left-color:rgba(245,158,11,.5); }
+    .secNote.tip  { background:rgba(34,197,94,.06);  border-left-color:rgba(34,197,94,.5); }
+
+    ::-webkit-scrollbar { width:7px; height:7px; } ::-webkit-scrollbar-track { background:#080e1a; } ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:4px; } ::-webkit-scrollbar-thumb:hover { background:#334155; }
+
+    .mode-pane { display:none; }
+    .mode-pane.active { display:block; }
+    .topic-card { scroll-margin-top:140px; }
+    #backTop { opacity:0; pointer-events:none; transition:opacity .25s; }
+    #backTop.show { opacity:1; pointer-events:auto; }
+  </style>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://ajaykakkar93.github.io/"},
+        {"@type":"ListItem","position":2,"name":"Qlik Extension & Mashup Dev","item":"https://ajaykakkar93.github.io/qlik/extension_mashup.html"}
+      ]},
+      {"@type":"LearningResource","name":"Qlik Extension & Mashup Development Training Ground",
+        "description":"Interactive reference for Qlik Sense Extension and Mashup development covering Capability API, Field, Variable, Bookmark, Visualization, Enigma.js and QRS, plus HTML, CSS and jQuery from fresher to advanced.",
+        "url":"https://ajaykakkar93.github.io/qlik/extension_mashup.html",
+        "inLanguage":"en","isAccessibleForFree":true,
+        "educationalLevel":"Beginner to Advanced",
+        "teaches":["Qlik Sense Extension development","Qlik Sense Mashup development","Capability API","Enigma.js","QRS API","jQuery","HTML","CSS"],
+        "author":{"@type":"Person","name":"Ajay Kakkar","url":"https://ajaykakkar93.github.io"},
+        "publisher":{"@type":"Person","name":"Ajay Kakkar","url":"https://ajaykakkar93.github.io"}}
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 py-3 border-b border-slate-800/60" style="background:rgba(8,14,26,.93);backdrop-filter:blur(14px)">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a href="../index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity" title="Back to Home">
+        <i class="fas fa-arrow-left text-slate-400"></i>
+        <img src="../img/logo_dark.png" alt="Ajay Kakkar logo" style="width:32px;height:32px;border-radius:.4rem;">
+      </a>
+      <span class="text-slate-600 hidden sm:block">|</span>
+      <span class="text-slate-300 font-semibold text-sm hidden sm:block">Qlik Dev Training Ground</span>
+    </div>
+    <div class="flex items-center gap-1 text-xs">
+      <a href="../tools/qlik/index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors hidden md:block">Upgrade Tool</a>
+      <a href="../tools/qlik/QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors hidden md:block">Release Notes</a>
+      <a href="https://qlik.dev/" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors"><i class="fas fa-book mr-1"></i>qlik.dev</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-24 pb-8 px-5" style="background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(59,130,246,.12),transparent)">
+  <div class="max-w-5xl mx-auto text-center">
+    <span class="tag tag-blue mb-4 inline-block">Training Ground · Built by Ajay Kakkar</span>
+    <h1 class="font-display font-extrabold text-3xl sm:text-5xl mb-4">Qlik <span style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Extension &amp; Mashup</span> Dev</h1>
+    <p class="text-slate-400 text-base sm:text-lg max-w-3xl mx-auto">
+      Complete, searchable reference for building Qlik Sense Extensions and Mashups — every Capability API, Enigma.js, QRS — plus <strong class="text-slate-200">HTML, CSS &amp; jQuery from fresher to advanced</strong>. Copy-paste ready.
+    </p>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="max-w-3xl mx-auto px-5 mb-7">
+  <div class="relative">
+    <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+    <input id="searchBox" type="text" autocomplete="off" spellcheck="false"
+      placeholder="Search APIs, methods, tags, code… (press / )" aria-label="Search content" />
+    <span class="absolute right-4 top-1/2 -translate-y-1/2 kbd hidden sm:inline">/</span>
+    <div id="suggestBox" class="hidden"></div>
+  </div>
+</div>
+
+<!-- MODE TOGGLE -->
+<div class="max-w-5xl mx-auto px-5 mb-6">
+  <div class="flex flex-wrap gap-2.5 justify-center" id="modeBar">
+    <button class="mode-btn active" data-mode="html"><i class="fab fa-html5"></i>HTML</button>
+    <button class="mode-btn" data-mode="css"><i class="fab fa-css3-alt"></i>CSS</button>
+    <button class="mode-btn" data-mode="javascript"><i class="fas fa-code"></i>JavaScript</button>
+    <button class="mode-btn" data-mode="jquery"><i class="fab fa-js"></i>jQuery</button>
+    <button class="mode-btn" data-mode="mashup"><i class="fas fa-layer-group"></i>Mashup</button>
+    <button class="mode-btn" data-mode="extension"><i class="fas fa-puzzle-piece"></i>Extension</button>
+  </div>
+  <div class="flex justify-center gap-3 mt-3 text-xs text-slate-500">
+    <span class="flex items-center gap-1.5"><span class="lvl lvl-f">Fresher</span></span>
+    <span class="flex items-center gap-1.5"><span class="lvl lvl-i">Intermediate</span></span>
+    <span class="flex items-center gap-1.5"><span class="lvl lvl-a">Advanced</span></span>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="max-w-7xl mx-auto px-5 pb-24 grid grid-cols-1 lg:grid-cols-[230px_1fr] gap-7">
+
+  <!-- SIDEBAR TOC -->
+  <aside class="hidden lg:block">
+    <div class="sticky top-24">
+      <p class="text-slate-500 text-xs uppercase tracking-widest mb-2 px-2" id="tocTitle">HTML</p>
+      <nav id="tocNav" class="space-y-0.5 max-h-[78vh] overflow-y-auto pr-1"></nav>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main id="content">
+    <!-- panes injected by JS -->
+    <div id="loading" class="text-center text-slate-500 py-20"><i class="fas fa-spinner fa-spin mr-2"></i>Loading…</div>
+  </main>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backTop" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-300 hover:bg-blue-500/30 transition-colors" title="Back to top" aria-label="Back to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800/60 py-8 px-5 text-center">
+  <p class="text-slate-500 text-sm">Qlik Dev Training Ground — built by <a href="../index.html" class="text-blue-400 hover:underline">Ajay Kakkar</a>, Qlik Solutions Architect.</p>
+  <p class="text-slate-600 text-xs mt-1.5">Reference only. Verify against official <a href="https://qlik.dev/" target="_blank" rel="noopener" class="text-slate-400 hover:underline">qlik.dev</a> docs for your Qlik Sense version.</p>
+</footer>
+
+<!-- Prism core + languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+<script src="./extension_mashup.data.js"></script>
+<script src="./extension_mashup.app.js"></script>
+</body>
+</html>

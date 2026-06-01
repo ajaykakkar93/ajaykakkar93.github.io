@@ -193,7 +193,7 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | [Diceware Passphrase](https://ajaykakkar93.github.io/tools/diceware/) | Strong memorable passphrases from words |
 | [HMAC Generator](https://ajaykakkar93.github.io/tools/hmac/) | HMAC-SHA256/1/512 via Web Crypto |
 
-Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 63 entries, searchable + grouped into 13 segments (Developer & Data, Finance, Stocks, Mutual Funds, Loans, Calculator, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool). The 10 finance calculators are listed individually under Stocks / Mutual Funds / Loans as deep-links into `/tools/finance/` (e.g. `#basket`, `#sip`, `#homeloan`); they share that one indexable URL, so the sitemap still holds 59 URLs.
+Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 64 entries, searchable + grouped into 13 segments (Developer & Data, Finance, Stocks, Mutual Funds, Loans, Calculator, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool). The 12 finance calculators are listed individually under Stocks / Mutual Funds / Loans as deep-links into `/tools/finance/` (e.g. `#basket`, `#sip`, `#homeloan`); they share that one indexable URL, so the sitemap still holds 59 URLs.
 
 ---
 
