@@ -181,6 +181,127 @@ define([], function() {
 }</code></pre>
     <div class="secNote">Full Enigma method list lives in the <strong>Mashup → Enigma.js</strong> section — identical API in both contexts.</div>` },
 
+  { id:"ext-paging", title:"Multi-Dimension &amp; Paging Past 10k Cells", level:"a", tag:"Data", body:`
+    <p class="text-slate-300 text-sm">A single data page is capped at <strong>10,000 cells</strong> (<code>qWidth &times; qHeight</code>). With multiple dimensions/measures the column count grows, so the row count per page shrinks. For large tables, fetch extra pages with <span class="ic">backendApi.getData()</span>.</p>
+    <p class="text-slate-400 text-sm mt-2">Column count = number of dimensions + number of measures. Read it from <code>qHyperCube.qSize.qcx</code>; total rows from <code>qcy</code>.</p>
+    <pre><code class="language-javascript">initialProperties: {
+    version: 1.0,
+    qHyperCubeDef: {
+        qDimensions: [],
+        qMeasures: [],
+        // 10 cols * 1000 rows = 10000 cells (the per-page max)
+        qInitialDataFetch: [{ qTop: 0, qLeft: 0, qWidth: 10, qHeight: 1000 }]
+    }
+}</code></pre>
+    <pre><code class="language-javascript">paint: function($element, layout) {
+    var self      = this;
+    var cube      = layout.qHyperCube;
+    var colCount  = cube.qSize.qcx;                       // dims + measures
+    var totalRows = cube.qSize.qcy;
+    var pageRows  = Math.floor(10000 / colCount);         // max rows per fetch
+    var allRows   = cube.qDataPages[0].qMatrix.slice();   // first page already loaded
+
+    function fetchNext() {
+        if (allRows.length &gt;= totalRows) return qlik.Promise.resolve();
+        var req = [{
+            qTop:    allRows.length,
+            qLeft:   0,
+            qWidth:  colCount,
+            qHeight: Math.min(pageRows, totalRows - allRows.length)
+        }];
+        return self.backendApi.getData(req).then(function(dataPages) {
+            allRows = allRows.concat(dataPages[0].qMatrix);
+            return fetchNext();                           // recurse until complete
+        });
+    }
+
+    return fetchNext().then(function() {
+        // allRows now holds every row — render here
+        var nDims = cube.qDimensionInfo.length;           // first nDims cells = dimensions
+        allRows.forEach(function(row) {
+            var dims     = row.slice(0, nDims);
+            var measures = row.slice(nDims);
+        });
+    });
+}</code></pre>
+    <div class="secNote warn">Never request more than 10,000 cells in one page — the engine rejects it. Always loop with <code>qTop</code> offsets.</div>
+    <div class="secNote tip"><code>backendApi.getData()</code> handles offsets for you; <code>backendApi.getRowCount()</code> returns total rows.</div>` },
+
+  { id:"ext-export", title:"Export &amp; Snapshot Support Flags", level:"a", tag:"Ops", body:`
+    <p class="text-slate-300 text-sm">Declare what your extension supports so Qlik shows the right context-menu actions (export, snapshot for stories, export data to Excel).</p>
+    <pre><code class="language-javascript">return {
+    initialProperties: { /* ... */ },
+    definition: properties,
+    support: {
+        snapshot:   true,    // can be used in Storytelling snapshots
+        export:     true,    // export to image / PDF
+        exportData: true     // export underlying data to .xlsx / .csv
+    },
+    paint: function($element, layout) { /* ... */ }
+};</code></pre>
+    <p class="text-slate-400 text-sm mt-2">When <code>snapshot:true</code>, render from <code>layout.snapshotData</code> if present (frozen data) instead of live data:</p>
+    <pre><code class="language-javascript">paint: function($element, layout) {
+    var isSnapshot = !!layout.snapshotData;
+    var matrix = isSnapshot
+        ? layout.snapshotData.content.qHyperCube.qDataPages[0].qMatrix
+        : layout.qHyperCube.qDataPages[0].qMatrix;
+    // reduced data keeps snapshots light — see getHyperCubeReducedData
+}</code></pre>
+    <pre><code class="language-javascript">// Trigger data export programmatically
+this.backendApi.exportData("OOXML", "/qHyperCubeDef", "MyExtensionData")
+    .then(function(url) { window.open(url); });</code></pre>
+    <table class="ref-table mt-3"><thead><tr><th>Flag</th><th>Effect</th></tr></thead><tbody>
+      <tr><td><code>snapshot</code></td><td>Allows use inside Storytelling; pass frozen <code>snapshotData</code></td></tr>
+      <tr><td><code>export</code></td><td>Adds "Export to image/PDF" to the context menu</td></tr>
+      <tr><td><code>exportData</code></td><td>Adds "Export data" — needs a valid HyperCube path</td></tr>
+    </tbody></table>` },
+
+  { id:"ext-theme", title:"Theming — qlik-styles &amp; Theme API", level:"i", tag:"UI", body:`
+    <p class="text-slate-300 text-sm">Read the active Qlik theme so your custom UI matches sheet colors and fonts, and re-paint when the user switches theme.</p>
+    <pre><code class="language-javascript">define(["qlik", "client.property-panel/components/buttongroup/buttongroup",
+        "css!./styles.css"], function(qlik) {
+
+    return {
+        paint: function($element, layout) {
+            var self = this;
+            qlik.theme.getApplied().then(function(theme) {
+                // pull resolved values from the active theme
+                var fg = theme.getStyle("object", "", "color");
+                var bg = theme.getStyle("object", "", "backgroundColor");
+                var ff = theme.getStyle("object", "", "fontFamily");
+                $element.css({ color: fg, background: bg, fontFamily: ff });
+            });
+        }
+    };
+});</code></pre>
+    <p class="text-slate-400 text-sm mt-2">Use Qlik's own <strong>qlik-styles</strong> CSS classes instead of hard-coded colors so the extension inherits theme variables:</p>
+    <pre><code class="language-markup">&lt;!-- inherits theme typography / spacing --&gt;
+&lt;div class="qv-object lui-list"&gt;
+  &lt;span class="lui-list__text"&gt;Themed text&lt;/span&gt;
+  &lt;button class="lui-button"&gt;Themed button&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    <div class="secNote tip">Chart color palettes belong in a Qlik <strong>custom theme</strong> JSON, not in extension CSS — that keeps storytelling/export consistent. See <strong>Mashup &rarr; Theme Switching</strong> for runtime swaps.</div>` },
+
+  { id:"ext-debug", title:"Debugging — Dev-Hub &amp; DevTools", level:"f", tag:"Ops", body:`
+    <table class="ref-table"><thead><tr><th>Technique</th><th>How</th></tr></thead><tbody>
+      <tr><td>Single Configurator</td><td>Dev-Hub &rarr; build &amp; preview extension live at <span class="ic">localhost:4848/dev-hub/</span></td></tr>
+      <tr><td>Source maps</td><td>Chrome F12 &rarr; Sources &rarr; <code>localhost:4848</code> &rarr; <code>extensions/&lt;name&gt;/</code></td></tr>
+      <tr><td>Inspect layout</td><td><code>console.log(JSON.stringify(layout.qHyperCube, null, 2))</code> inside <code>paint</code></td></tr>
+      <tr><td>Live engine calls</td><td>F12 &rarr; Network &rarr; WS &rarr; watch <code>app.openDoc</code> / <code>GetLayout</code> frames</td></tr>
+      <tr><td>Engine API explorer</td><td><span class="ic">localhost:4848/dev-hub/engine-data/</span> — test calls against your app</td></tr>
+      <tr><td>Force reload</td><td>Hard refresh (Ctrl+Shift+R) — Qlik caches extension JS aggressively</td></tr>
+    </tbody></table>
+    <pre><code class="language-javascript">paint: function($element, layout) {
+    console.group("Ext debug");
+    console.log("rows", layout.qHyperCube.qSize.qcy);
+    console.log("props", layout.props);
+    console.table(layout.qHyperCube.qDataPages[0].qMatrix.map(function(r) {
+        return { dim: r[0].qText, measure: r[1] &amp;&amp; r[1].qNum };
+    }));
+    console.groupEnd();
+}</code></pre>
+    <div class="secNote warn">Extension JS is cached hard. After edits, hard-refresh or bump the <code>.qext</code> version to bust the cache.</div>` },
+
   { id:"ext-deploy", title:"Deployment", level:"i", tag:"Ops", body:`
     <table class="ref-table"><thead><tr><th>Environment</th><th>Path / Method</th></tr></thead><tbody>
       <tr><td>Desktop (Windows)</td><td><code>%USERPROFILE%\\Documents\\Qlik\\Sense\\Extensions\\&lt;Ext&gt;\\</code></td></tr>
@@ -470,6 +591,227 @@ $.ajax({ method:"GET",  url:"/"+VirtualProxy+"/qrs/task/full?xrfkey="+random,   
   frameborder="0" width="600" height="400"&gt;
 &lt;/iframe&gt;</code></pre>
     <div class="secNote">Not very customizable — use the full mashup approach for custom UI.</div>` },
+
+  { id:"mash-capability", title:"Capability API — Object Map", level:"f", tag:"Capability API", body:`
+    <p class="text-slate-300 text-sm">The <strong>Capability API</strong> is the high-level mashup interface loaded from <code>require(["js/qlik"])</code>. Everything hangs off the global <code>qlik</code> object and the per-app <code>app</code> handle.</p>
+    <pre><code class="language-javascript">require(["js/qlik"], function(qlik) {
+    var app = qlik.openApp("APP-ID", config);
+});</code></pre>
+    <table class="ref-table"><thead><tr><th>Handle</th><th>What it gives you</th></tr></thead><tbody>
+      <tr><td><code>qlik</code></td><td>Global root — <code>openApp</code>, <code>theme</code>, <code>setOnError</code>, <code>getAppList</code></td></tr>
+      <tr><td><code>app</code></td><td>One open app — <code>getObject</code>, <code>getList</code>, <code>clearAll</code>, <code>doSave</code></td></tr>
+      <tr><td><code>app.field(name)</code></td><td>Selections on a field — <code>selectValues</code>, <code>clear</code>, <code>getData</code></td></tr>
+      <tr><td><code>app.variable</code></td><td>Read/write variables — <code>setStringValue</code>, <code>getByName</code></td></tr>
+      <tr><td><code>app.bookmark</code></td><td>Bookmarks — <code>apply</code>, <code>create</code>, <code>getList</code></td></tr>
+      <tr><td><code>app.selectionState()</code></td><td>Current selections object + clear/back/forward</td></tr>
+      <tr><td><code>app.theme</code> / <code>qlik.theme</code></td><td>Apply &amp; read themes at runtime</td></tr>
+      <tr><td><code>app.model.enigmaModel</code></td><td>Drop to low-level Enigma engine</td></tr>
+    </tbody></table>
+    <div class="secNote tip">Capability API is the classic Client-Managed path. For Qlik Cloud, prefer <strong>qlik-embed</strong> (next section).</div>` },
+
+  { id:"mash-embed-compare", title:"qlik-embed vs Capability API", level:"i", tag:"Embed", body:`
+    <p class="text-slate-300 text-sm"><strong>qlik-embed</strong> is the modern web-component / iframe approach for Qlik Cloud. The <strong>Capability API</strong> is the older mashup framework. Pick based on platform and control needed.</p>
+    <table class="ref-table"><thead><tr><th>Aspect</th><th>qlik-embed</th><th>Capability API</th></tr></thead><tbody>
+      <tr><td>Platform</td><td>Qlik Cloud (recommended)</td><td>Client-Managed + Cloud (legacy)</td></tr>
+      <tr><td>Load</td><td><code>&lt;script&gt;</code> + <code>&lt;qlik-embed&gt;</code> web component</td><td><code>require(["js/qlik"])</code> RequireJS</td></tr>
+      <tr><td>Auth</td><td>OAuth2 / API keys (modern)</td><td>Session cookie / ticket / JWT</td></tr>
+      <tr><td>Isolation</td><td>Sandboxed iframe — no CSS leak</td><td>Runs in page DOM — CSS can clash</td></tr>
+      <tr><td>Customization</td><td>Attributes + qlik-embed APIs</td><td>Full programmatic control</td></tr>
+      <tr><td>Future</td><td>Actively developed</td><td>Maintenance only on Cloud</td></tr>
+    </tbody></table>
+    <pre><code class="language-markup">&lt;!-- Modern qlik-embed: declarative, sandboxed --&gt;
+&lt;script crossorigin="anonymous" type="application/javascript"
+  src="https://cdn.qlikcloud.com/qlik-embed/v1/qlik-embed.js"&gt;&lt;/script&gt;
+
+&lt;qlik-embed
+  ui="analytics/chart"
+  app-id="APP-ID"
+  object-id="OBJECT-ID"&gt;
+&lt;/qlik-embed&gt;</code></pre>
+    <div class="secNote tip">New Cloud projects: start with qlik-embed. Existing Client-Managed mashups: stay on Capability API.</div>` },
+
+  { id:"mash-altstate", title:"Alternate States API", level:"a", tag:"Capability API", body:`
+    <p class="text-slate-300 text-sm">Alternate states let one app hold independent selection sets — e.g. compare Region A vs Region B in the same sheet. Create a state, then bind objects or selections to it via <code>qStateName</code>.</p>
+    <pre><code class="language-javascript">// 1. Create the state
+app.addAlternateState("CompareA");
+app.addAlternateState("CompareB");
+
+// 2. Select within a state (independent of default $ state)
+app.field("Region", "CompareA").selectValues([{ qText: "EMEA" }], false, true);
+app.field("Region", "CompareB").selectValues([{ qText: "APAC" }], false, true);
+
+// 3. Render an object in a given state
+app.visualization.get("OBJECT-ID").then(function(viz) {
+    viz.setProperties({ qStateName: "CompareA" });
+    viz.show("placeholderDiv");
+});
+
+// 4. Clean up
+app.removeAlternateState("CompareA");</code></pre>
+    <table class="ref-table mt-3"><thead><tr><th>Method</th><th>Purpose</th></tr></thead><tbody>
+      <tr><td><code>app.addAlternateState(name)</code></td><td>Create a new selection state</td></tr>
+      <tr><td><code>app.removeAlternateState(name)</code></td><td>Delete a state</td></tr>
+      <tr><td><code>field(name, state)</code></td><td>Target selections at a specific state</td></tr>
+      <tr><td><code>qStateName</code></td><td>Property that binds an object to a state</td></tr>
+    </tbody></table>
+    <div class="secNote">Default state is <code>"$"</code>. Objects with no <code>qStateName</code> follow it.</div>` },
+
+  { id:"mash-selbar", title:"Selection Toolbar &amp; Current Selections", level:"i", tag:"Capability API", body:`
+    <p class="text-slate-300 text-sm">Qlik ships two built-in objects you can drop into a mashup: a <strong>current selections</strong> box and a <strong>selection toolbar</strong> (back / forward / clear). No app object IDs needed — use the reserved IDs.</p>
+    <pre><code class="language-javascript">// Built-in current selections bar
+app.getObject(document.getElementById("currSel"), "CurrentSelections");
+
+// Built-in selection toolbar (back / forward / clear / lock)
+app.getObject(document.getElementById("selToolbar"), "SelectionToolbar");</code></pre>
+    <pre><code class="language-javascript">// Programmatic equivalents
+app.clearAll();      // clear every selection
+app.back();          // step selection history back
+app.forward();       // step forward
+app.lockAll();       // lock current selections
+
+// Read live selections
+app.selectionState().selections.forEach(function(sel) {
+    console.log(sel.fieldName, sel.selectedCount, sel.qSelected);
+});
+
+// React to selection changes
+app.selectionState().OnData.bind(function() {
+    console.log("selections changed");
+});</code></pre>
+    <table class="ref-table mt-3"><thead><tr><th>Reserved ID</th><th>Renders</th></tr></thead><tbody>
+      <tr><td><code>CurrentSelections</code></td><td>Active selections, per field, with clear buttons</td></tr>
+      <tr><td><code>SelectionToolbar</code></td><td>Back / forward / clear-all / lock controls</td></tr>
+    </tbody></table>` },
+
+  { id:"mash-errors", title:"Error Handling &amp; Session Reconnect", level:"a", tag:"Engine", body:`
+    <p class="text-slate-300 text-sm">Mashups talk to the engine over a WebSocket. Networks drop, sessions time out, and the engine throws. Handle both the Capability-API error hook and the Enigma session lifecycle.</p>
+    <pre><code class="language-javascript">// Global Capability API error handler
+qlik.setOnError(function(error) {
+    console.error("Qlik error", error.code, error.message);
+    showBanner("Connection issue: " + error.message);
+});
+
+// Watch the engine connection state
+app.global.isPersonalMode(function() { /* ... */ });
+app.global.session.on("suspended", function() { showBanner("Reconnecting…"); });
+app.global.session.on("resumed",   function() { hideBanner(); });
+app.global.session.on("closed",    function() { showBanner("Session closed — reload"); });</code></pre>
+    <pre><code class="language-javascript">// Enigma.js: auto-reconnect with retry window
+var session = enigma.create({
+    schema: qixSchema,
+    url: "wss://server/app/APP-ID",
+    createSocket: function(url) { return new WebSocket(url); },
+    suspendOnClose: true,                 // don't kill on transient drop
+    responseInterceptors: [{
+        onRejected: function(sessionRef, request, error) {
+            if (error.code === 15 &amp;&amp; request.tries &lt; 3) {   // ABORTED
+                request.tries = (request.tries || 0) + 1;
+                return request.retry();
+            }
+            return this.Promise.reject(error);
+        }
+    }]
+});
+session.on("suspended", function() { /* show offline UI */ });
+session.on("closed",    function() { /* full reconnect */ });</code></pre>
+    <div class="secNote warn"><strong>Workbench</strong> dev pages mask errors — always test reconnect on a real deployed mashup, not just Dev-Hub.</div>` },
+
+  { id:"mash-theme-runtime", title:"Theme Switching at Runtime", level:"i", tag:"Capability API", body:`
+    <p class="text-slate-300 text-sm">Swap the Qlik chart theme live — e.g. a light/dark toggle that re-colors every embedded object without reload.</p>
+    <pre><code class="language-javascript">// Apply a theme by ID (built-in or custom uploaded theme)
+qlik.theme.apply("horizon").then(function() {
+    console.log("theme applied — charts recolor automatically");
+});
+
+// Read the current theme and its resolved styles
+qlik.theme.getApplied().then(function(theme) {
+    var accent = theme.getStyle("object", "", "color");
+    var palette = theme.properties.scales;        // color scales
+});
+
+// Simple dark/light toggle
+function toggleTheme(dark) {
+    return qlik.theme.apply(dark ? "sense" : "horizon");
+}</code></pre>
+    <table class="ref-table mt-3"><thead><tr><th>Built-in theme ID</th><th>Look</th></tr></thead><tbody>
+      <tr><td><code>horizon</code></td><td>Default modern light theme</td></tr>
+      <tr><td><code>sense</code></td><td>Classic Qlik Sense theme</td></tr>
+      <tr><td><code>breeze</code> / <code>card</code></td><td>Alternate built-ins</td></tr>
+      <tr><td>custom ID</td><td>Your uploaded theme extension</td></tr>
+    </tbody></table>
+    <div class="secNote tip">Theme changes apply to Qlik objects only. Style your own mashup chrome separately (CSS variables sync nicely with a class toggle on <code>&lt;body&gt;</code>).</div>` },
+
+  { id:"mash-enigma-lifecycle", title:"Enigma.js — Generic Object Lifecycle", level:"a", tag:"Engine", body:`
+    <p class="text-slate-300 text-sm">Below the Capability API, the engine speaks <strong>generic objects</strong>. The lifecycle: create a session object with a definition &rarr; subscribe to <code>changed</code> &rarr; pull <code>getLayout</code> &rarr; destroy when done. Enigma needs the QIX <strong>schema</strong> JSON for your engine version.</p>
+    <pre><code class="language-javascript">// Schema is version-specific — load the matching enigma.js schema
+var qixSchema = require("enigma.js/schemas/12.612.0.json");
+
+var session = enigma.create({
+    schema: qixSchema,
+    url: "wss://server/app/APP-ID"
+});
+
+session.open()
+    .then(function(global) { return global.openDoc("APP-ID"); })
+    .then(function(doc) {
+        // 1. CREATE a session object with a hypercube definition
+        return doc.createSessionObject({
+            qInfo: { qType: "my-cube" },
+            qHyperCubeDef: {
+                qDimensions: [{ qDef: { qFieldDefs: ["Country"] } }],
+                qMeasures:   [{ qDef: { qDef: "Sum(Sales)" } }],
+                qInitialDataFetch: [{ qWidth: 2, qHeight: 50 }]
+            }
+        });
+    })
+    .then(function(model) {
+        // 2. SUBSCRIBE — fires on every data/selection change
+        model.on("changed", function() {
+            model.getLayout().then(function(layout) {
+                render(layout.qHyperCube.qDataPages[0].qMatrix);
+            });
+        });
+        // 3. INITIAL pull
+        model.getLayout().then(function(layout) {
+            render(layout.qHyperCube.qDataPages[0].qMatrix);
+        });
+        // 4. DESTROY when the view unmounts
+        // doc.destroySessionObject(model.id);
+    });</code></pre>
+    <table class="ref-table mt-3"><thead><tr><th>Step</th><th>Call</th></tr></thead><tbody>
+      <tr><td>Create</td><td><code>doc.createSessionObject(def)</code> (transient) / <code>createObject</code> (saved)</td></tr>
+      <tr><td>Subscribe</td><td><code>model.on("changed", fn)</code> — invalidation signal only</td></tr>
+      <tr><td>Read</td><td><code>model.getLayout()</code> or <code>getHyperCubeData</code></td></tr>
+      <tr><td>Destroy</td><td><code>doc.destroySessionObject(id)</code> — prevents leaks</td></tr>
+    </tbody></table>
+    <div class="secNote warn">The <code>changed</code> event carries no data — it just says "re-fetch". Always call <code>getLayout</code>/<code>getHyperCubeData</code> after it. Match the schema JSON to your engine version or calls fail.</div>` },
+
+  { id:"mash-security", title:"Security — CORS, CSP &amp; Content Security", level:"a", tag:"Enterprise", body:`
+    <p class="text-slate-300 text-sm">A mashup hosted on a different origin than Qlik must clear cross-origin, websocket, cookie, and framing rules. Most "blank chart / 401 / websocket failed" issues are config, not code.</p>
+    <table class="ref-table"><thead><tr><th>Concern</th><th>Fix</th></tr></thead><tbody>
+      <tr><td><strong>CORS</strong> (Client-Managed)</td><td>QMC &rarr; Virtual Proxy &rarr; add mashup origin to <em>whitelist host names</em></td></tr>
+      <tr><td><strong>CORS</strong> (Cloud)</td><td>Management Console &rarr; Web &rarr; add web-integration origin + use a web-integration ID</td></tr>
+      <tr><td><strong>WebSocket origin</strong></td><td>Engine checks <code>Origin</code> header — must match the whitelisted host</td></tr>
+      <tr><td><strong>Third-party cookies</strong></td><td>Cross-site session cookie needs <code>SameSite=None; Secure</code> (HTTPS)</td></tr>
+      <tr><td><strong>iframe embedding</strong></td><td>Server must allow framing — relax <code>X-Frame-Options</code> / set <code>frame-ancestors</code></td></tr>
+    </tbody></table>
+    <pre><code class="language-markup">&lt;!-- CSP allowing Qlik engine websocket + scripts --&gt;
+&lt;meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src  'self' https://your-qlik-server 'unsafe-inline';
+  connect-src 'self' https://your-qlik-server wss://your-qlik-server;
+  frame-src   https://your-qlik-server;
+  frame-ancestors https://your-portal;
+"&gt;</code></pre>
+    <pre><code class="language-javascript">// Qlik Cloud: pass the web-integration ID + credentials
+var app = qlik.openApp("APP-ID", {
+    host: "your-tenant.qlikcloud.com",
+    prefix: "/",
+    port: 443,
+    isSecure: true,
+    identity: "web-integration-id"   // from Management Console
+});</code></pre>
+    <div class="secNote warn">Never embed long-lived API keys in client JS. Use OAuth2 (Cloud) or session tickets (Client-Managed) brokered by a backend.</div>` },
 ]},
 
 /* ============================================================ JAVASCRIPT */

@@ -64,6 +64,10 @@
     .lvl-f { background:rgba(34,197,94,.12); color:#6ee7b7; border:1px solid rgba(34,197,94,.25); }
     .lvl-i { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.25); }
     .lvl-a { background:rgba(239,68,68,.12); color:#fca5a5; border:1px solid rgba(239,68,68,.25); }
+    .lvl-btn { padding:.3rem .7rem; border-radius:999px; border:1px solid rgba(71,85,105,.4); background:rgba(30,41,59,.4); color:#94a3b8; font-weight:600; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:.4rem; line-height:1; }
+    .lvl-btn:hover { border-color:rgba(59,130,246,.3); color:#e2e8f0; }
+    .lvl-btn.active { border-color:rgba(59,130,246,.5); background:rgba(59,130,246,.12); color:#e2e8f0; box-shadow:0 0 0 1px rgba(59,130,246,.12); }
+    .lvl-hidden { display:none !important; }
 
     /* sidebar */
     .toc-link { display:block; padding:.4rem .75rem; border-radius:.5rem; font-size:.82rem; color:#94a3b8; transition:all .15s; border-left:2px solid transparent; }
@@ -154,6 +158,7 @@
     <div class="flex items-center gap-1 text-xs">
       <a href="../tools/qlik/index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors hidden md:block">Upgrade Tool</a>
       <a href="../tools/qlik/QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors hidden md:block">Release Notes</a>
+      <a href="./extension_mashup.html" class="px-3 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 font-semibold hidden md:block">Extension &amp; Mashup Dev</a>
       <a href="https://qlik.dev/" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors"><i class="fas fa-book mr-1"></i>qlik.dev</a>
     </div>
   </div>
@@ -191,10 +196,11 @@
     <button class="mode-btn" data-mode="mashup"><i class="fas fa-layer-group"></i>Mashup</button>
     <button class="mode-btn" data-mode="extension"><i class="fas fa-puzzle-piece"></i>Extension</button>
   </div>
-  <div class="flex justify-center gap-3 mt-3 text-xs text-slate-500">
-    <span class="flex items-center gap-1.5"><span class="lvl lvl-f">Fresher</span></span>
-    <span class="flex items-center gap-1.5"><span class="lvl lvl-i">Intermediate</span></span>
-    <span class="flex items-center gap-1.5"><span class="lvl lvl-a">Advanced</span></span>
+  <div class="flex flex-wrap justify-center gap-2 mt-3 text-xs" id="levelFilter">
+    <button class="lvl-btn active" data-level="all" type="button">All</button>
+    <button class="lvl-btn" data-level="f" type="button"><span class="lvl lvl-f">Fresher</span></button>
+    <button class="lvl-btn" data-level="i" type="button"><span class="lvl lvl-i">Intermediate</span></button>
+    <button class="lvl-btn" data-level="a" type="button"><span class="lvl lvl-a">Advanced</span></button>
   </div>
 </div>
 

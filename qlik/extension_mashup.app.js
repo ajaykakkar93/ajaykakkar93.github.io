@@ -28,6 +28,8 @@
   };
 
   var currentMode = "html";
+  var currentLevel = "all";   // difficulty filter: all | f | i | a
+  var levelFilter = document.getElementById("levelFilter");
   var searchIndex = [];   // flat index for search
 
   /* ---------- escape for attribute use ---------- */
@@ -44,7 +46,7 @@
         var lvl = s.level && LVL[s.level]
           ? '<span class="lvl ' + LVL[s.level][0] + '">' + LVL[s.level][1] + '</span>' : "";
         html +=
-          '<section id="' + s.id + '" class="card rounded-2xl p-6 mb-5 topic-card" data-mode="' + mode + '">' +
+          '<section id="' + s.id + '" class="card rounded-2xl p-6 mb-5 topic-card" data-mode="' + mode + '" data-level="' + (s.level || "") + '">' +
             '<div class="flex items-center justify-between gap-3 mb-2 flex-wrap">' +
               '<h2 class="font-display font-bold text-lg sm:text-xl flex items-center gap-2">' +
                 '<a href="#' + s.id + '" class="text-slate-600 hover:text-blue-400 text-sm" title="Link to section">#</a>' +
@@ -114,8 +116,35 @@
     tocNav.innerHTML = m.sections.map(function (s) {
       var dot = s.level && LVL[s.level]
         ? '<span class="lvl ' + LVL[s.level][0] + '" style="margin-right:.4rem;padding:.05rem .35rem;font-size:.55rem">' + s.level.toUpperCase() + '</span>' : "";
-      return '<a class="toc-link" href="#' + s.id + '" data-id="' + s.id + '">' + dot + esc(s.title) + '</a>';
+      return '<a class="toc-link" href="#' + s.id + '" data-id="' + s.id + '" data-level="' + (s.level || "") + '">' + dot + esc(s.title) + '</a>';
     }).join("");
+  }
+
+  /* ---------- difficulty filter ---------- */
+  function applyLevelFilter() {
+    // sections in the active pane
+    content.querySelectorAll(".topic-card").forEach(function (s) {
+      var show = currentLevel === "all" || s.dataset.level === currentLevel;
+      s.classList.toggle("lvl-hidden", !show);
+    });
+    // matching TOC links
+    tocNav.querySelectorAll(".toc-link").forEach(function (l) {
+      var show = currentLevel === "all" || l.dataset.level === currentLevel;
+      l.classList.toggle("lvl-hidden", !show);
+    });
+  }
+
+  if (levelFilter) {
+    levelFilter.addEventListener("click", function (e) {
+      var b = e.target.closest(".lvl-btn");
+      if (!b) return;
+      currentLevel = b.dataset.level;
+      Array.prototype.forEach.call(levelFilter.children, function (x) {
+        x.classList.toggle("active", x === b);
+      });
+      applyLevelFilter();
+      syncSpy();
+    });
   }
 
   /* ---------- switch mode ---------- */
@@ -130,6 +159,7 @@
       p.classList.toggle("active", p.dataset.mode === mode);
     });
     buildToc(mode);
+    applyLevelFilter();
     updateHash(mode, scrollTo || "");
     if (scrollTo) {
       setTimeout(function () { jumpTo(scrollTo, false); }, 30);
@@ -146,6 +176,14 @@
     if (entry.mode !== currentMode) { setMode(entry.mode, id); return; }
     var el = document.getElementById(id);
     if (!el) return;
+    // if the target is hidden by the difficulty filter, reset to "All"
+    if (el.classList.contains("lvl-hidden") && levelFilter) {
+      currentLevel = "all";
+      Array.prototype.forEach.call(levelFilter.children, function (x) {
+        x.classList.toggle("active", x.dataset.level === "all");
+      });
+      applyLevelFilter();
+    }
     var y = el.getBoundingClientRect().top + window.pageYOffset - 120;
     window.scrollTo({ top: y, behavior: "smooth" });
     updateHash(currentMode, id);
