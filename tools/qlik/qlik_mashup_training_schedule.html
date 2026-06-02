@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qlik Mashup &amp; Extension Developer Training — 5-Day Schedule — Ajay Kakkar</title>
+  <meta name="description" content="Free 5-day Qlik mashup & extension developer training schedule. Fresher to advanced: HTML/CSS/JS, jQuery, Capability API, Enigma.js, Extension API, QRS API and qlik-embed. Built by Ajay Kakkar, Qlik Solutions Architect." />
+  <meta name="keywords" content="Qlik Mashup Training, Qlik Extension Development, Capability API, Enigma.js, qlik-embed, QRS API, Qlik Sense Developer, Ajay Kakkar" />
+  <meta name="author" content="Ajay Kakkar" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://ajaykakkar93.github.io/tools/qlik/qlik_mashup_training_schedule.html" />
+  <meta property="og:title" content="Qlik Mashup &amp; Extension Developer Training — 5-Day Schedule" />
+  <meta property="og:description" content="Free 5-day Qlik mashup & extension developer training schedule. Fresher to advanced — Capability API, Enigma.js, Extension API, QRS API, qlik-embed. By Qlik Solutions Architect Ajay Kakkar." />
+  <meta property="og:url" content="https://ajaykakkar93.github.io/tools/qlik/qlik_mashup_training_schedule.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <meta property="og:image:alt" content="Qlik Mashup & Extension Developer Training by Ajay Kakkar" />
+  <meta property="og:site_name" content="Ajay Kakkar" />
+  <meta property="og:locale" content="en_IN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Qlik Mashup &amp; Extension Developer Training — 5-Day Schedule" />
+  <meta name="twitter:description" content="Free 5-day Qlik mashup & extension developer training — Capability API, Enigma.js, Extension API, QRS API, qlik-embed. By Ajay Kakkar." />
+  <meta name="twitter:image" content="https://ajaykakkar93.github.io/img/AjayKakkarProfileImages/ajay_kakkar2.png" />
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1b2d51" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    body { background-color:#080e1a; color:#f1f5f9; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+    .card { background:rgba(30,41,59,.55); backdrop-filter:blur(10px); border:1px solid rgba(148,163,184,.1); transition:border-color .25s; }
+    .card:hover { border-color:rgba(59,130,246,.25); }
+    .tag { border-radius:999px; font-size:.7rem; padding:.2rem .75rem; display:inline-block; }
+    .tag-blue   { background:rgba(59,130,246,.1);  border:1px solid rgba(59,130,246,.2);  color:#93c5fd; }
+    .tag-amber  { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.2);  color:#fcd34d; }
+    .tag-red    { background:rgba(239,68,68,.1);   border:1px solid rgba(239,68,68,.2);   color:#fca5a5; }
+    .tag-green  { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#6ee7b7; }
+    .tag-purple { background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.25); color:#c4b5fd; }
+    .tag-slate  { background:rgba(71,85,105,.35);  border:1px solid rgba(71,85,105,.4);   color:#94a3b8; }
+    .rule { height:1px; background:linear-gradient(to right,transparent,rgba(148,163,184,.1),transparent); }
+    .acc-btn { width:100%; text-align:left; padding:1.25rem 1.5rem; background:rgba(30,41,59,.6); border:1px solid rgba(71,85,105,.3); border-radius:1rem; color:#e2e8f0; cursor:pointer; display:flex; align-items:center; gap:1rem; transition:border-color .2s; }
+    .acc-btn:hover { border-color:rgba(59,130,246,.3); }
+    .acc-body { display:none; padding:1.25rem 1.5rem 1.5rem; }
+    .acc-body.open { display:block; }
+    .day-num { width:48px; height:48px; border-radius:.85rem; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk'; font-weight:700; font-size:.9rem; flex-shrink:0; color:#fff; }
+    .d1 { background:linear-gradient(135deg,#1e40af,#3b82f6); }
+    .d2 { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
+    .d3 { background:linear-gradient(135deg,#065f46,#10b981); }
+    .d4 { background:linear-gradient(135deg,#92400e,#f59e0b); }
+    .d5 { background:linear-gradient(135deg,#9f1239,#f43f5e); }
+    .d6 { background:linear-gradient(135deg,#0e7490,#06b6d4); }
+    .d7 { background:linear-gradient(135deg,#4338ca,#6366f1); }
+    .var-btn { color:#94a3b8; }
+    .var-btn:hover { color:#e2e8f0; }
+    .var-btn.active { background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.5); color:#93c5fd; }
+    .day.extended { display:none; }
+    body.v7 .day.extended { display:block; }
+    .chev { transition:transform .3s ease; }
+    .acc-open .chev { transform:rotate(180deg); }
+    .topic-list li { display:flex; gap:.5rem; align-items:flex-start; }
+    .topic-list li::before { content:'›'; color:#60a5fa; font-weight:700; flex-shrink:0; }
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:#080e1a; } ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:3px; }
+    @media print { nav, .no-print { display:none !important; } body { padding-top:0 !important; } }
+  </style>
+
+  <!-- Structured Data: BreadcrumbList + Course -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ajaykakkar93.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Qlik Tools", "item": "https://ajaykakkar93.github.io/tools/qlik/" },
+          { "@type": "ListItem", "position": 3, "name": "Qlik Mashup & Extension Developer Training", "item": "https://ajaykakkar93.github.io/tools/qlik/qlik_mashup_training_schedule.html" }
+        ]
+      },
+      {
+        "@type": "Course",
+        "name": "Qlik Mashup & Extension Developer Training",
+        "description": "A 5-day, 2-hour-per-day developer training taking learners from fresher to advanced level across HTML/CSS/JavaScript, jQuery, the Qlik Capability API, Enigma.js, the Extension API, the QRS REST API, and modern qlik-embed web components, ending in a full mashup dashboard capstone.",
+        "url": "https://ajaykakkar93.github.io/tools/qlik/qlik_mashup_training_schedule.html",
+        "inLanguage": "en-IN",
+        "isAccessibleForFree": true,
+        "provider": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "author": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" },
+        "teaches": [
+          "HTML & CSS for mashup layouts",
+          "JavaScript & jQuery for Qlik",
+          "Qlik Capability API",
+          "Enigma.js Engine API",
+          "Qlik Extension API & property panels",
+          "QRS REST API automation",
+          "qlik-embed web components & OAuth"
+        ],
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "online",
+          "courseWorkload": "PT10H",
+          "instructor": { "@type": "Person", "name": "Ajay Kakkar", "url": "https://ajaykakkar93.github.io" }
+        },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "category": "Free" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 py-3 border-b border-slate-800/60" style="background:rgba(8,14,26,.93);backdrop-filter:blur(14px)">
+  <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <a href="../index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity" title="Back to Tools">
+        <i class="fas fa-arrow-left text-slate-400"></i>
+        <img src="../../img/logo_dark.png" alt="Logo" style="width: 32px; height: 32px; border-radius: .4rem;">
+      </a>
+      <span class="text-slate-600 hidden sm:block">|</span>
+      <span class="text-slate-300 font-semibold text-sm hidden sm:block">Qlik Mashup Training</span>
+    </div>
+    <div class="flex items-center gap-1 text-xs">
+      <a href="./index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Upgrade Tool</a>
+      <a href="./QS_Release_Notes.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Release Notes</a>
+      <a href="./QS_Postgres_Upgrade_List.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">Postgres Versions</a>
+      <a href="./qlik_mashup_training_schedule.html" class="px-3 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 font-semibold">Mashup Training</a>
+      <a href="https://qlik.dev" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors">qlik.dev</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-28 pb-10 px-5" style="background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(59,130,246,.1),transparent)">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="tag tag-blue mb-4 inline-block">Training Schedule · Built by Ajay Kakkar</span>
+    <h1 class="font-display font-extrabold text-4xl sm:text-5xl mb-4 leading-tight">Qlik Mashup &amp; Extension <span style="background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Developer Training</span></h1>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-6">
+      Fresher → advanced, 5 days × 2 hours. From HTML/CSS/JS foundations to the Capability API, Enigma.js, custom extensions, the QRS API and modern qlik-embed.
+    </p>
+    <div class="flex flex-wrap gap-3 justify-center text-sm">
+      <div class="card rounded-xl px-4 py-2 font-medium"><i class="fas fa-calendar-days text-blue-400 mr-2"></i><span id="chip-days">5 Days</span></div>
+      <div class="card rounded-xl px-4 py-2 font-medium"><i class="fas fa-clock text-blue-400 mr-2"></i><span id="chip-hours">2 Hours / Day</span></div>
+      <div class="card rounded-xl px-4 py-2 font-medium"><i class="fas fa-bullseye text-blue-400 mr-2"></i>Fresher → Advanced</div>
+      <div class="card rounded-xl px-4 py-2 font-medium"><i class="fas fa-link text-blue-400 mr-2"></i>Capability API · Enigma.js · QRS</div>
+    </div>
+
+    <!-- Variant toggle -->
+    <div class="inline-flex mt-7 p-1 rounded-xl gap-1" style="background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.4)">
+      <button id="var-5d" onclick="setVariant('5d')" class="var-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors">5-Day <span class="opacity-70 font-normal">· 2h/day</span></button>
+      <button id="var-7d" onclick="setVariant('7d')" class="var-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors">7-Day <span class="opacity-70 font-normal">· Extended</span></button>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-4xl mx-auto px-5 pb-24">
+
+  <!-- Controls + Legend -->
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-6 no-print">
+    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+      <span class="uppercase tracking-widest text-slate-500 font-semibold">Type</span>
+      <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm" style="background:#8b5cf6"></span>Theory</span>
+      <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm" style="background:#3b82f6"></span>Hands-On</span>
+      <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm" style="background:#10b981"></span>Lab</span>
+      <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm" style="background:#f59e0b"></span>Ref / Q&amp;A</span>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="setAll(true)" class="text-xs px-3 py-1.5 rounded-lg text-slate-400 hover:text-white border border-slate-700/50 transition-colors">Expand all</button>
+      <button onclick="setAll(false)" class="text-xs px-3 py-1.5 rounded-lg text-slate-400 hover:text-white border border-slate-700/50 transition-colors">Collapse all</button>
+      <button onclick="window.print()" class="text-xs px-3 py-1.5 rounded-lg text-slate-400 hover:text-white border border-slate-700/50 transition-colors"><i class="fas fa-print mr-1"></i>PDF</button>
+    </div>
+  </div>
+
+  <div class="space-y-4">
+
+    <!-- Day 1 -->
+    <div class="day acc-open">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d1">D1</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">Foundations — HTML, CSS &amp; Web Basics</span>
+          <span class="text-slate-400 text-sm">Building blocks every Qlik developer must know</span>
+        </span>
+        <span class="tag tag-blue hidden sm:inline-block">Fresher Level</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body open">
+        <div class="space-y-3">
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:00 – 0:30</span>
+              <span class="font-semibold text-sm">HTML Essentials for Mashup Developers</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Document structure: DOCTYPE, head, body, semantic tags</li>
+              <li>Div-based layouts — containers, wrappers, grid placeholders</li>
+              <li>Linking external CSS &amp; JS — where Qlik's require.js and Capability API scripts hook in</li>
+              <li>HTML attributes used by Qlik mashups: id, class, data-* attributes</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#html" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → HTML section</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-blue">Hands-On</span>
+              <span class="text-slate-500 text-xs font-mono">0:30 – 1:00</span>
+              <span class="font-semibold text-sm">CSS for Qlik Mashup Layouts</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Flexbox and Grid — arranging chart containers side by side</li>
+              <li>CSS variables and theming — mirroring Qlik's sense-theme colors</li>
+              <li>Responsive breakpoints: making mashup iframes work on tablets</li>
+              <li>Overriding Qlik default styles with custom CSS selectors</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#css" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → CSS section</a></p>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs text-slate-600 font-mono uppercase tracking-widest"><span class="rule flex-1"></span>10-min break<span class="rule flex-1"></span></div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-green">Lab</span>
+              <span class="text-slate-500 text-xs font-mono">1:10 – 1:50</span>
+              <span class="font-semibold text-sm">Build Your First Mashup Shell Page</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Create an index.html with 4 empty chart divs in a 2×2 grid</li>
+              <li>Style the page with a dark Qlik-like theme using CSS variables</li>
+              <li>Add a header bar with logo placeholder and filter area stub</li>
+              <li>Validate layout renders correctly on both 1080p and 1366×768</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-amber">Q&amp;A / Ref</span>
+              <span class="text-slate-500 text-xs font-mono">1:50 – 2:00</span>
+              <span class="font-semibold text-sm">Recap &amp; Reference Walk-through</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Live Q&amp;A on HTML/CSS concepts</li>
+              <li>Walk through your training ground reference at ajaykakkar93.github.io</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="mt-4 rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 1 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Confident building a responsive HTML shell ready to receive Qlik objects</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Understand how CSS themes map to Qlik's visual language</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Have a working mashup skeleton to build on through the week</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d2">D2</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">JavaScript &amp; jQuery for Qlik</span>
+          <span class="text-slate-400 text-sm">DOM manipulation, events, and Qlik-ready scripting</span>
+        </span>
+        <span class="tag tag-blue hidden sm:inline-block">Fresher → Intermediate</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <div class="space-y-3">
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:00 – 0:30</span>
+              <span class="font-semibold text-sm">JavaScript Fundamentals for Mashup Dev</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Callbacks, Promises, and async/await — the backbone of Qlik API calls</li>
+              <li>ES6+: arrow functions, destructuring, template literals used in Enigma.js</li>
+              <li>Require.js &amp; AMD modules — how Qlik loads its Capability API</li>
+              <li>Event-driven programming: click, change, select — triggering Qlik selections</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#javascript" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → JavaScript section</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:30 – 0:55</span>
+              <span class="font-semibold text-sm">jQuery for Qlik Mashups</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>$(document).ready vs DOMContentLoaded in mashup context</li>
+              <li>Selecting Qlik chart containers with jQuery: $("#objId")</li>
+              <li>AJAX calls — fetching external data to merge with Qlik visuals</li>
+              <li>jQuery UI widgets: dropdowns, sliders used as Qlik filter controls</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#jquery" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → jQuery section</a></p>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs text-slate-600 font-mono uppercase tracking-widest"><span class="rule flex-1"></span>10-min break<span class="rule flex-1"></span></div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-blue">Hands-On</span>
+              <span class="text-slate-500 text-xs font-mono">1:05 – 1:50</span>
+              <span class="font-semibold text-sm">JS + jQuery Lab — Interactive Filter Controls</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Add a jQuery-powered dropdown that will later drive a Qlik field selection</li>
+              <li>Build a "Clear Selections" button using vanilla JS DOM manipulation</li>
+              <li>Write a Promise-based mock data loader — prepare for real Qlik API calls tomorrow</li>
+              <li>Attach click events to KPI tiles; simulate state changes with CSS classes</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-amber">Q&amp;A / Ref</span>
+              <span class="text-slate-500 text-xs font-mono">1:50 – 2:00</span>
+              <span class="font-semibold text-sm">Recap</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Common async pitfalls in Qlik mashups and how to debug them</li>
+              <li>Preview: how today's JS patterns map to Capability API calls</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="mt-4 rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 2 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Write async JS confidently — the same pattern used in all Capability API calls</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Use jQuery to wire up UI controls that will drive Qlik selections</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Understand require.js module loading — critical for next day's Qlik connection</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d3">D3</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">Capability API — Connect, Embed &amp; Interact</span>
+          <span class="text-slate-400 text-sm">Fields, Variables, Bookmarks, Visualizations</span>
+        </span>
+        <span class="tag tag-blue hidden sm:inline-block">Intermediate</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <div class="space-y-3">
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:00 – 0:25</span>
+              <span class="font-semibold text-sm">Capability API Architecture &amp; Connection</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>What the Capability API is: qlik.js, require.js config, qlikConfig object</li>
+              <li>qlik.openApp() — connecting to a Qlik Sense app from a mashup page</li>
+              <li>Authentication modes: ticket, header, Windows (client-managed) vs OAuth (Cloud)</li>
+              <li>Understanding the Qlik Analytics application model: hypercube, generic object, session objects</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#mashup" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → Mashup</a> &nbsp;·&nbsp; <a href="https://qlik.dev/embed/foundational-knowledge/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Foundational Knowledge</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-blue">Hands-On</span>
+              <span class="text-slate-500 text-xs font-mono">0:25 – 1:00</span>
+              <span class="font-semibold text-sm">Embed Visualizations + Field &amp; Variable API</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>app.getObject() — render existing Qlik chart into a div by object ID</li>
+              <li>app.visualization.create() — create a bar/KPI chart on the fly in a mashup</li>
+              <li>Field API: app.field("FieldName").selectValues() — programmatic selections</li>
+              <li>Variable API: app.variable.setStringValue() — toggle KPI modes via variable</li>
+              <li>Bookmark API: app.bookmark.apply() / create() — save &amp; restore selection states</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://qlik.dev/embed/foundational-knowledge/app-anatomy/analytics-selection-model/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Selection Models</a> &nbsp;·&nbsp; <a href="https://qlik.dev/embed/foundational-knowledge/visualizations/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Visualizations</a></p>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs text-slate-600 font-mono uppercase tracking-widest"><span class="rule flex-1"></span>10-min break<span class="rule flex-1"></span></div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-green">Lab</span>
+              <span class="text-slate-500 text-xs font-mono">1:10 – 1:50</span>
+              <span class="font-semibold text-sm">Build a Live Mashup Dashboard</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Connect mashup shell (Day 1) to a real Qlik Sense app via Capability API</li>
+              <li>Render 3 objects: a KPI, a bar chart, and a filter list box</li>
+              <li>Wire the jQuery dropdown (Day 2) to Field API selections</li>
+              <li>Add a "Reset Selections" button using app.clearAll()</li>
+              <li>Test with qlik.dev troubleshooting guide if CORS or auth issues arise</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://qlik.dev/embed/foundational-knowledge/troubleshooting-developer-mashups-cloud/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Troubleshoot Mashups</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-amber">Q&amp;A / Ref</span>
+              <span class="text-slate-500 text-xs font-mono">1:50 – 2:00</span>
+              <span class="font-semibold text-sm">Debugging &amp; Recap</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Common errors: 403, WebSocket failures, require not defined</li>
+              <li>How to use browser DevTools to inspect Qlik API calls</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="mt-4 rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 3 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>A fully working mashup dashboard connected to a real Qlik Sense app</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Programmatic control of fields, variables, and bookmarks from HTML controls</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Confidence to create on-the-fly visualizations without pre-building in Qlik</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d4">D4</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">Enigma.js &amp; Building Extensions</span>
+          <span class="text-slate-400 text-sm">Engine API, custom visualizations, property panels</span>
+        </span>
+        <span class="tag tag-amber hidden sm:inline-block">Advanced</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <div class="space-y-3">
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:00 – 0:30</span>
+              <span class="font-semibold text-sm">Enigma.js — The Low-Level Engine API</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>What Enigma.js is: WebSocket-based connection directly to Qlik Engine</li>
+              <li>enigma.create() → session → openDoc → app object</li>
+              <li>createSessionObject() with a hypercube definition — fetching raw data</li>
+              <li>getLayout() and getData() — extracting hypercube rows for custom rendering</li>
+              <li>When to use Enigma.js vs Capability API (headless, server-side, Node.js)</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#mashup" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → Enigma.js</a> &nbsp;·&nbsp; <a href="https://qlik.dev/toolkits/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Toolkits (enigma.js)</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:30 – 0:55</span>
+              <span class="font-semibold text-sm">Extension API — Structure &amp; Property Panels</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>.qext file: name, type, version metadata</li>
+              <li>Extension object: definition, paint(), initialProperties, support</li>
+              <li>Building a property panel: adding custom string, dropdown, checkbox, slider controls</li>
+              <li>Consuming hypercube data in paint() — looping qMatrix rows to render HTML/D3</li>
+              <li>Packaging and deploying: QMC upload vs Qlik Cloud extension zip</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#extension" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → Extension</a> &nbsp;·&nbsp; <a href="https://qlik.dev/extend/create-with-extension-api/extension-get-started/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Extension API</a> &nbsp;·&nbsp; <a href="https://qlik.dev/extend/property-panel-basics/" target="_blank" class="text-blue-400 hover:underline">Property Panel Basics</a></p>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs text-slate-600 font-mono uppercase tracking-widest"><span class="rule flex-1"></span>10-min break<span class="rule flex-1"></span></div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-green">Lab</span>
+              <span class="text-slate-500 text-xs font-mono">1:05 – 1:50</span>
+              <span class="font-semibold text-sm">Build a Custom Bar Chart Extension</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Scaffold the extension folder: main.js, .qext, style.css</li>
+              <li>Define a hypercube with 1 dimension and 1 measure in initialProperties</li>
+              <li>In paint(): read qMatrix, render horizontal bars using pure CSS/HTML</li>
+              <li>Add a property panel toggle to switch bar color (color-picker property)</li>
+              <li>Package and import into Qlik Sense — place on a sheet and verify data-binding</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://qlik.dev/extend/build-extension/consuming-data/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → Consume Data in Extensions</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-amber">Q&amp;A / Ref</span>
+              <span class="text-slate-500 text-xs font-mono">1:50 – 2:00</span>
+              <span class="font-semibold text-sm">Extension vs Mashup — When to Use What</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Decision framework: custom viz inside Qlik → Extension; standalone web app → Mashup</li>
+              <li>Q&amp;A on paint() lifecycle, resize handling, and export support</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="mt-4 rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 4 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Use Enigma.js to fetch raw hypercube data outside the Capability API</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Build, configure, and deploy a custom visualization extension end-to-end</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Design property panels with typed controls (color-picker, dropdown, slider)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d5">D5</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">QRS API, qlik-embed &amp; Capstone Project</span>
+          <span class="text-slate-400 text-sm">Admin automation, modern embedding, full build</span>
+        </span>
+        <span class="tag tag-red hidden sm:inline-block">Advanced + Capstone</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <div class="space-y-3">
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:00 – 0:20</span>
+              <span class="font-semibold text-sm">QRS API — Repository Service for Admin Tasks</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>QRS REST API: managing apps, streams, users, data connections via HTTP</li>
+              <li>GET /qrs/app, POST /qrs/task/start — automating reloads from a mashup</li>
+              <li>xrfkey header and certificate auth (client-managed) vs API keys (Qlik Cloud)</li>
+              <li>Practical use: trigger a reload button in your mashup using QRS</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html#mashup" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html → QRS</a> &nbsp;·&nbsp; <a href="https://qlik.dev/apis/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → APIs Reference</a></p>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-purple">Theory</span>
+              <span class="text-slate-500 text-xs font-mono">0:20 – 0:45</span>
+              <span class="font-semibold text-sm">Modern Embedding with qlik-embed Web Components</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>qlik-embed vs Capability API: why Qlik recommends the new web component approach for Cloud</li>
+              <li>&lt;qlik-embed ui="analytics/chart"&gt; — declarative chart embedding, zero JS required</li>
+              <li>OAuth configuration for qlik-embed: SPA flow, impersonation, anonymous access</li>
+              <li>Selections, variables, bookmarks via refApi in qlik-embed context</li>
+              <li>Offline snapshots — embedding static chart images with qlik-embed + M2M OAuth</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-arrow-up-right-from-square text-blue-400 mr-1"></i><a href="https://qlik.dev/embed/qlik-embed/" target="_blank" class="text-blue-400 hover:underline">qlik.dev → qlik-embed overview</a> &nbsp;·&nbsp; <a href="https://qlik.dev/embed/qlik-embed/quickstart/qlik-embed-webcomponent-quickstart/" target="_blank" class="text-blue-400 hover:underline">qlik-embed Quick Start</a></p>
+          </div>
+
+          <div class="flex items-center gap-3 text-xs text-slate-600 font-mono uppercase tracking-widest"><span class="rule flex-1"></span>10-min break<span class="rule flex-1"></span></div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-green">Capstone Lab</span>
+              <span class="text-slate-500 text-xs font-mono">1:00 – 1:45</span>
+              <span class="font-semibold text-sm">Full Mashup Dashboard — End-to-End Build</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Combine the HTML shell (Day 1) + JS/jQuery controls (Day 2) + Capability API objects (Day 3)</li>
+              <li>Embed your custom extension (Day 4) alongside native Qlik charts on the same page</li>
+              <li>Add a QRS-triggered "Reload Data" button with loading state feedback</li>
+              <li>Optionally replace one chart with a qlik-embed web component to compare approaches</li>
+              <li>Apply responsive CSS so dashboard works at 1366×768 and 1920×1080</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-xl p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="tag tag-amber">Showcase / Q&amp;A</span>
+              <span class="text-slate-500 text-xs font-mono">1:45 – 2:00</span>
+              <span class="font-semibold text-sm">Student Demos &amp; Next Steps</span>
+            </div>
+            <ul class="topic-list space-y-1.5 text-sm text-slate-400">
+              <li>Each student does a 2-min screen share of their capstone dashboard</li>
+              <li>Resources for continuing: qlik.dev changelog, Qlik Community, Qlik Developer Slack</li>
+              <li>Recommended next topics: Nebula.js, Qlik Answers AI embedding, M2M OAuth flows</li>
+            </ul>
+            <p class="mt-3 text-xs text-slate-500"><i class="fas fa-users text-blue-400 mr-1"></i><a href="https://community.qlik.com/" target="_blank" class="text-blue-400 hover:underline">community.qlik.com</a> &nbsp;·&nbsp; <a href="https://join.slack.com/t/qlikdeveloper/shared_invite/zt-3wrdlkhog-Dcq9LuCbjNQVN2XaPlgGqQ" target="_blank" class="text-blue-400 hover:underline">Qlik Developer Slack</a></p>
+          </div>
+
+        </div>
+        <div class="mt-4 rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 5 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Automate Qlik admin tasks using QRS API from a mashup interface</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Embed Qlik Cloud analytics using modern qlik-embed web components with OAuth</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>A complete, portfolio-ready mashup dashboard combining all week's skills</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 6 (extended) -->
+    <div class="day extended">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d6">D6</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">Live Dashboard Build</span>
+          <span class="text-slate-400 text-sm">Guided, end-to-end build of a production-style mashup dashboard</span>
+        </span>
+        <span class="tag tag-green hidden sm:inline-block">Extended · 3 Hours</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <p class="text-slate-400 text-sm mb-4">A focused 3-hour build session — start from a blank shell and ship a complete, connected dashboard, applying everything from Days 1–5 in one continuous flow.</p>
+        <div class="rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 6 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Build a full multi-object mashup dashboard live, from shell to connected charts</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Wire filters, KPIs, selections and a reload control into a single cohesive layout</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Apply responsive styling and basic performance tuning for real deployment</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Walk away with a finished dashboard ready to demo to stakeholders</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 7 (extended) -->
+    <div class="day extended">
+      <button class="acc-btn" onclick="toggleDay(this)">
+        <span class="day-num d7">D7</span>
+        <span class="flex-1">
+          <span class="font-display font-bold text-lg block">Using AI to Create Mashups &amp; Problem Solving</span>
+          <span class="text-slate-400 text-sm">AI-assisted scaffolding, debugging and real-world troubleshooting</span>
+        </span>
+        <span class="tag tag-purple hidden sm:inline-block">Extended · 2 Hours</span>
+        <i class="fas fa-chevron-down text-slate-500 chev"></i>
+      </button>
+      <div class="acc-body">
+        <p class="text-slate-400 text-sm mb-4">Use AI assistants (Copilot, Claude, ChatGPT) to accelerate mashup and extension development — generating boilerplate, debugging API errors, and solving common real-world problems faster.</p>
+        <div class="rounded-xl p-4" style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-mono font-bold mb-2">Day 7 Outcomes</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Prompt AI tools to scaffold mashup pages, extension boilerplate and property panels</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Use AI to read Qlik API errors and propose fixes (403, WebSocket, require issues)</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Solve common real-world mashup problems with an AI-assisted debugging workflow</li>
+            <li class="flex gap-2"><i class="fas fa-check text-green-400 text-xs mt-1 shrink-0"></i>Know the limits — what to verify manually and where AI output can mislead</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Reference strip -->
+  <div class="card rounded-2xl p-5 mt-8 text-center text-sm text-slate-400">
+    <i class="fas fa-graduation-cap text-blue-400 mr-1"></i>
+    Training Ground Reference: <a href="https://ajaykakkar93.github.io/qlik/extension_mashup.html" target="_blank" class="text-blue-400 hover:underline">extension_mashup.html</a>
+    &nbsp;·&nbsp; Official Docs: <a href="https://qlik.dev" target="_blank" class="text-blue-400 hover:underline">qlik.dev</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 py-6 text-center text-slate-600 text-sm">
+  Built by <a href="../../index.html" class="text-blue-400 hover:underline">Ajay Kakkar</a> — Qlik Solutions Architect · Mumbai, India
+</footer>
+
+<script>
+  function toggleDay(btn) {
+    const day = btn.closest('.day');
+    day.classList.toggle('acc-open');
+    day.querySelector('.acc-body').classList.toggle('open');
+  }
+  function setAll(open) {
+    document.querySelectorAll('.day').forEach(d => {
+      // skip hidden extended days in 5-day mode
+      if (d.classList.contains('extended') && !document.body.classList.contains('v7')) return;
+      d.classList.toggle('acc-open', open);
+      d.querySelector('.acc-body').classList.toggle('open', open);
+    });
+  }
+  function setVariant(v) {
+    const seven = v === '7d';
+    document.body.classList.toggle('v7', seven);
+    document.getElementById('var-5d').classList.toggle('active', !seven);
+    document.getElementById('var-7d').classList.toggle('active', seven);
+    document.getElementById('chip-days').textContent = seven ? '7 Days' : '5 Days';
+    document.getElementById('chip-hours').textContent = seven ? '2–3 Hours / Day' : '2 Hours / Day';
+  }
+  setVariant('5d');
+  window.addEventListener('beforeprint', () => setAll(true));
+</script>
+
+</body>
+</html>
