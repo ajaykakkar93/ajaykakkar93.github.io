@@ -448,6 +448,45 @@
     }
     .theme-btn:hover { color: #fbbf24; border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.07); }
 
+    /* ── US Wealth (FX-adjusted) ── */
+    .usfx-badge {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: rgba(59,130,246,.1); color: #93c5fd;
+      font-size: .72rem; padding: .35rem .8rem; border-radius: 999px;
+      margin-bottom: 1.1rem; border: 1px solid rgba(59,130,246,.18);
+    }
+    .usfx-cardtitle {
+      font-size: .8rem; font-weight: 600; color: #94a3b8;
+      margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif;
+    }
+    .usfx-slider-card {
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(71,85,105,.25);
+      border-radius: .65rem; padding: .8rem .9rem;
+    }
+    .usfx-val {
+      display: block; font-size: 1.05rem; font-weight: 700;
+      color: #e2e8f0; margin: .25rem 0 .6rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .usfx-ends { display: flex; justify-content: space-between; font-size: .62rem; color: #475569; margin-top: .35rem; }
+    .usfx-fxnote { font-size: .68rem; color: #64748b; margin-top: .5rem; font-style: italic; line-height: 1.5; }
+    .usfx-slider {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 5px;
+      background: rgba(71,85,105,.4); border-radius: 999px; outline: none; cursor: pointer;
+    }
+    .usfx-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%;
+      background: linear-gradient(135deg,#3b82f6,#8b5cf6); cursor: pointer; border: 2px solid #0f172a;
+    }
+    .usfx-slider::-moz-range-thumb {
+      width: 16px; height: 16px; border-radius: 50%; border: 2px solid #0f172a;
+      background: linear-gradient(135deg,#3b82f6,#8b5cf6); cursor: pointer;
+    }
+    .usfx-leg { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .usfx-li { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: #64748b; }
+    .usfx-ld { width: 10px; height: 10px; border-radius: 2px; }
+
     /* ══════════════════════════════════════
        LIGHT MODE OVERRIDES
     ══════════════════════════════════════ */
@@ -530,6 +569,15 @@
     body.light .broker-panel { background: #f8fafc; border-color: rgba(59,130,246,.15); }
     body.light #emi-nocost-note { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.2); }
     body.light #bse-penny-wrap label { color: #ef4444; }
+
+    /* US Wealth (FX-adjusted) — light */
+    body.light .usfx-slider-card { background: #f8fafc; border-color: rgba(0,0,0,.08); }
+    body.light .usfx-val { color: #1e293b; }
+    body.light .usfx-slider { background: rgba(0,0,0,.1); }
+    body.light .usfx-slider::-webkit-slider-thumb { border-color: #ffffff; }
+    body.light .usfx-slider::-moz-range-thumb { border-color: #ffffff; }
+    body.light .usfx-cardtitle { color: #334155; }
+    body.light .usfx-badge { background: rgba(59,130,246,.08); color: #1d4ed8; }
 
     /* Toggle switch */
     body.light .toggle-slider { background: rgba(0,0,0,.15); }
@@ -657,6 +705,7 @@
     <option value="tco">🔋 Cost of Ownership</option>
     <option value="swp">💸 SWP Calculator</option>
     <option value="lumpsum">🪙 Lumpsum Calculator</option>
+    <option value="usfx">💵 US Wealth (FX-adjusted)</option>
   </select>
   <button class="theme-btn" id="theme-btn-mobile" onclick="toggleTheme()" title="Toggle light / dark">
     <i id="theme-icon-mobile" class="fa-solid fa-sun"></i>
@@ -706,6 +755,12 @@
     <div class="nav-item" onclick="showSection('lumpsum')" data-section="lumpsum">
       <span class="icon" style="background:rgba(99,102,241,.1);color:#a5b4fc"><i class="fa-solid fa-coins"></i></span>
       Lumpsum
+    </div>
+
+    <div class="nav-group-label">US Investing</div>
+    <div class="nav-item" onclick="showSection('usfx')" data-section="usfx">
+      <span class="icon" style="background:rgba(59,130,246,.1);color:#93c5fd"><i class="fa-solid fa-dollar-sign"></i></span>
+      US Wealth (FX-adjusted)
     </div>
 
     <div class="nav-group-label">General</div>
@@ -2228,6 +2283,93 @@
           <li>Defaults are illustrative India 2026 figures — edit to your own</li>
         </ul>
       </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 13. US WEALTH (FX-ADJUSTED)               -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-usfx">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-dollar-sign mr-2" style="color:#93c5fd;font-size:1.1rem"></i>US Wealth Analyser — FX-adjusted</h2>
+        <p>Pure US ETF investing from India — corpus in ₹ &amp; $ with INR depreciation, TCS &amp; LTCG notes</p>
+      </div>
+
+      <div class="card">
+        <div class="usfx-badge"><i class="fa-solid fa-arrow-trend-up"></i> INR/USD starts at the live rate below and depreciates by the % you set, compounding each year</div>
+        <div class="field-grid cols-3">
+          <div class="usfx-slider-card">
+            <div class="calc-label">Monthly US investment (₹)</div>
+            <span class="usfx-val" id="usfx-v1">₹10,000</span>
+            <input type="range" class="usfx-slider" min="1000" max="500000" step="1000" value="10000" id="usfx-s1" oninput="usfxUpdate()">
+            <div class="usfx-ends"><span>₹1K</span><span>₹5L</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <div class="calc-label">US ETF CAGR</div>
+            <span class="usfx-val" id="usfx-v2">12%</span>
+            <input type="range" class="usfx-slider" min="4" max="20" step="1" value="12" id="usfx-s2" oninput="usfxUpdate()">
+            <div class="usfx-ends"><span>4%</span><span>20%</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <div class="calc-label">Investment horizon</div>
+            <span class="usfx-val" id="usfx-v3">5 years</span>
+            <input type="range" class="usfx-slider" min="1" max="15" step="1" value="5" id="usfx-s3" oninput="usfxUpdate()">
+            <div class="usfx-ends"><span>1 yr</span><span>15 yrs</span></div>
+          </div>
+        </div>
+        <div class="field-grid cols-2" style="margin-bottom:0">
+          <div class="usfx-slider-card">
+            <div class="calc-label" style="text-transform:none;letter-spacing:0">Starting INR/USD rate <span class="usfx-val" style="display:inline;font-size:.9rem" id="usfx-v4">₹83.0</span> <span id="usfx-liverate" style="font-size:.6rem;color:#64748b"></span></div>
+            <input type="range" class="usfx-slider" min="70" max="200" step="0.1" value="83" id="usfx-s4" oninput="usfxUpdate()">
+            <div class="usfx-ends"><span>₹70</span><span>₹200</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <div class="calc-label" style="text-transform:none;letter-spacing:0">Annual INR depreciation <span class="usfx-val" style="display:inline;font-size:.9rem" id="usfx-v5">2.5%</span></div>
+            <input type="range" class="usfx-slider" min="1" max="10" step="0.1" value="2.5" id="usfx-s5" oninput="usfxUpdate()">
+            <div class="usfx-ends"><span>1%</span><span>10%</span></div>
+          </div>
+        </div>
+        <div class="usfx-fxnote" id="usfx-fxProjected" style="margin-top:.65rem"></div>
+      </div>
+
+      <div class="card">
+        <div class="usfx-cardtitle">Summary</div>
+        <div class="chips c4" id="usfx-metrics"></div>
+      </div>
+
+      <div class="card">
+        <div class="usfx-cardtitle">Wealth curve</div>
+        <div class="usfx-leg">
+          <div class="usfx-li"><span class="usfx-ld" style="background:#4ade80"></span>US corpus in ₹ (INR)</div>
+          <div class="usfx-li"><span class="usfx-ld" style="background:#3b82f6"></span>Cash invested (₹)</div>
+          <div class="usfx-li"><span class="usfx-ld" style="background:#a5b4fc;border:1px dashed #a5b4fc"></span>US corpus in $ (USD)</div>
+        </div>
+        <div style="position:relative;width:100%;height:270px;">
+          <canvas id="usfx-gc" role="img" aria-label="US portfolio wealth curve in INR and USD over selected years"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="usfx-cardtitle">Year-by-year breakdown</div>
+        <div style="overflow-x:auto;">
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Monthly (₹)</th>
+                <th>Corpus (₹)</th>
+                <th>Cash in (₹)</th>
+                <th>Gain %</th>
+                <th>INR/USD that yr</th>
+                <th>Corpus ($)</th>
+                <th>TCS status</th>
+              </tr>
+            </thead>
+            <tbody id="usfx-yt"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box" id="usfx-nb" style="line-height:1.7"></div>
     </div>
 
   </main><!-- /main-panel -->
@@ -4242,7 +4384,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addAvgRow(); addAvgRow();
   addBasketRow(); addBasketRow(); addBasketRow();
   // Deep-link: open section from URL hash (e.g. finance/#sip)
-  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan','tco'];
+  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan','tco','usfx'];
   const _hash = (location.hash || '').replace('#','');
   if (_validSections.includes(_hash)) showSection(_hash);
   document.getElementById('ls-months').addEventListener('input', function() {
@@ -4257,6 +4399,169 @@ document.addEventListener('DOMContentLoaded', () => {
   // Car loan: apply default manual-insurance state (hide breakdown)
   if (document.getElementById('cl-ins-manual')) clInsManualToggle();
 });
+</script>
+
+<!-- ─── US Wealth (FX-adjusted) ─────────────────────────────────────────── -->
+<script>
+let usfxChart;
+let _usfxChartLib;
+
+function _usfxLoadChart() {
+  if (window.Chart) return Promise.resolve();
+  if (_usfxChartLib) return _usfxChartLib;
+  _usfxChartLib = new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
+    s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+  return _usfxChartLib;
+}
+
+function usfxFmt(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + 'L';
+  return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+function usfxFmtUSD(n) {
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function usfxUpdate() {
+  const mo = +document.getElementById('usfx-s1').value;
+  const cagr = +document.getElementById('usfx-s2').value / 100;
+  const yrs = +document.getElementById('usfx-s3').value;
+  const fx0 = +document.getElementById('usfx-s4').value;
+  const fxGrow = +document.getElementById('usfx-s5').value / 100;
+  const totalMonths = yrs * 12;
+  const rUs = cagr / 12;
+
+  document.getElementById('usfx-v1').textContent = '₹' + mo.toLocaleString('en-IN');
+  document.getElementById('usfx-v2').textContent = Math.round(cagr*100) + '%';
+  document.getElementById('usfx-v3').textContent = yrs + ' year' + (yrs>1?'s':'');
+  document.getElementById('usfx-v4').textContent = '₹' + fx0.toFixed(1);
+  document.getElementById('usfx-v5').textContent = (fxGrow*100).toFixed(1).replace(/\.0$/,'') + '%';
+
+  const fxEnd = fx0 * Math.pow(1 + fxGrow, yrs);
+  document.getElementById('usfx-fxProjected').textContent =
+    'At ' + (fxGrow*100).toFixed(1).replace(/\.0$/,'') + '% annual INR depreciation: Year 1 = ₹' + (fx0*(1+fxGrow)).toFixed(1) +
+    ' · Year ' + Math.round(yrs/2) + ' = ₹' + (fx0*Math.pow(1+fxGrow,Math.round(yrs/2))).toFixed(1) +
+    ' · Year ' + yrs + ' = ₹' + fxEnd.toFixed(1);
+
+  const usfxMon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const startDate = new Date();
+  const usfxYearRange = n => usfxMon[startDate.getMonth()] + ' ' + (startDate.getFullYear() + n - 1) + ' to ' + (startDate.getFullYear() + n);
+
+  let corpus = 0, totalInv = 0;
+  const labels = [], corpusINR = [], cashInv = [], corpusUSD = [];
+  const yearSnaps = [];
+
+  for (let m = 1; m <= totalMonths; m++) {
+    corpus = corpus * (1 + rUs) + mo;
+    totalInv += mo;
+    const yr = m / 12;
+    const fxNow = fx0 * Math.pow(1 + fxGrow, yr);
+    const label = m < 12 ? 'M'+m : 'Y'+(yr).toFixed(1).replace('.0','');
+    labels.push(label);
+    corpusINR.push(Math.round(corpus));
+    cashInv.push(Math.round(totalInv));
+    corpusUSD.push(Math.round(corpus / fxNow));
+
+    if (m % 12 === 0) {
+      const yrInt = m / 12;
+      const fxYr = fx0 * Math.pow(1+fxGrow, yrInt);
+      const gp = totalInv > 0 ? Math.round(((corpus/totalInv)-1)*100) : 0;
+      const annualRemit = mo * 12;
+      const tcs = annualRemit > 700000 ? 'TCS applies' : 'Safe';
+      yearSnaps.push({ yr: yrInt, corpus: Math.round(corpus), inv: Math.round(totalInv), gp, fxYr: fxYr.toFixed(1), usd: Math.round(corpus/fxYr), tcs });
+    }
+  }
+
+  const fxFinal = fx0 * Math.pow(1+fxGrow, yrs);
+  const finalUSD = corpus / fxFinal;
+  const finalGain = totalInv > 0 ? Math.round(((corpus/totalInv)-1)*100) : 0;
+  const annualRemit = mo * 12;
+  const tcsFlag = annualRemit > 700000;
+
+  document.getElementById('usfx-metrics').innerHTML = `
+    <div class="chip"><div class="cv" style="color:#e2e8f0">${usfxFmt(totalInv)}</div><div class="cl">Total invested (₹)</div></div>
+    <div class="chip"><div class="cv" style="color:#4ade80">${usfxFmt(corpus)}</div><div class="cl">Final corpus (₹)</div></div>
+    <div class="chip"><div class="cv" style="color:#4ade80">${usfxFmtUSD(finalUSD)}</div><div class="cl">Final corpus ($)</div><div class="cs">≈ ${usfxFmt(corpus)} at ₹${fxFinal.toFixed(1)}/USD · Yr ${yrs}</div></div>
+    <div class="chip"><div class="cv" style="color:#a5b4fc">${finalGain}%</div><div class="cl">Total gain</div></div>
+  `;
+
+  document.getElementById('usfx-yt').innerHTML = yearSnaps.map(r => {
+    const gc = r.gp >= 0 ? 'color:#4ade80;font-weight:600' : 'color:#f87171;font-weight:600';
+    const tcsStyle = r.tcs === 'TCS applies' ? 'color:#fbbf24;font-weight:600' : 'color:#4ade80;font-weight:600';
+    return `<tr>
+      <td>Yr ${r.yr}<div style="font-size:.62rem;color:#475569;font-weight:400">${usfxYearRange(r.yr)}</div></td>
+      <td class="val">${usfxFmt(mo)}</td>
+      <td class="val">${usfxFmt(r.corpus)}</td>
+      <td class="val">${usfxFmt(r.inv)}</td>
+      <td class="val" style="${gc}">${r.gp>0?'+':''}${r.gp}%</td>
+      <td class="val">₹${r.fxYr}</td>
+      <td class="val">${usfxFmtUSD(r.usd)}</td>
+      <td style="${tcsStyle}">${r.tcs}</td>
+    </tr>`;
+  }).join('');
+
+  const ltcg = yrs >= 2 ? 'Holdings ≥2 yrs: LTCG at 12.5% (no indexation).' : 'Holdings <2 yrs: taxed at income slab (STCG).';
+  const tcsMsg = tcsFlag
+    ? `TCS alert: ₹${(annualRemit/100000).toFixed(1)}L/yr remittance exceeds ₹7L — 20% TCS on excess (refundable via ITR).`
+    : `TCS safe: ₹${(annualRemit/100000).toFixed(1)}L/yr remittance is under ₹7L threshold.`;
+
+  document.getElementById('usfx-nb').textContent =
+    `Pure US DCA · ₹${mo.toLocaleString()}/month · ${yrs} years · ${Math.round(cagr*100)}% CAGR · INR/USD: ₹${fx0} → ₹${fxFinal.toFixed(1)} (+2.5%/yr). ` +
+    `Corpus: ${usfxFmt(corpus)} INR / ${usfxFmtUSD(finalUSD)} USD. Gain on invested capital: ${finalGain}%. ${tcsMsg} ${ltcg}`;
+
+  const step = Math.max(1, Math.floor(totalMonths/15));
+  const xlabels = labels.map((l,i) => ((i+1) % (step*3) === 0 || i===0 || i===totalMonths-1) ? l : '');
+
+  _usfxLoadChart().then(() => {
+    if (usfxChart) usfxChart.destroy();
+    usfxChart = new Chart(document.getElementById('usfx-gc'), {
+      type: 'line',
+      data: {
+        labels: xlabels,
+        datasets: [
+          { label: 'Corpus INR', data: corpusINR, borderColor: '#4ade80', backgroundColor: 'rgba(74,222,128,.08)', fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2, yAxisID: 'yINR' },
+          { label: 'Cash invested', data: cashInv, borderColor: '#3b82f6', borderDash: [5,4], backgroundColor: 'transparent', tension: 0.4, pointRadius: 0, borderWidth: 1.5, yAxisID: 'yINR' },
+          { label: 'Corpus USD', data: corpusUSD, borderColor: '#a5b4fc', borderDash: [3,3], backgroundColor: 'transparent', tension: 0.4, pointRadius: 0, borderWidth: 1.5, yAxisID: 'yUSD' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: {
+          label: ctx => ctx.dataset.yAxisID === 'yUSD' ? 'Corpus USD: ' + usfxFmtUSD(ctx.raw) : ctx.dataset.label + ': ' + usfxFmt(ctx.raw)
+        }}},
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#888', maxRotation: 0 } },
+          yINR: { position: 'left', grid: { color: 'rgba(130,130,130,0.1)' }, ticks: { font: { size: 10 }, color: '#888', callback: v => usfxFmt(v) } },
+          yUSD: { position: 'right', grid: { display: false }, ticks: { font: { size: 10 }, color: '#a5b4fc', callback: v => usfxFmtUSD(v) } }
+        }
+      }
+    });
+  });
+}
+
+// Auto-fill starting INR/USD from live rate (same source as /tools/converter)
+function usfxLoadRate() {
+  fetch('https://api.frankfurter.dev/v1/latest?base=USD')
+    .then(r => r.json())
+    .then(d => {
+      const r = d && d.rates && d.rates.INR;
+      if (!r) return;
+      const s = document.getElementById('usfx-s4');
+      s.value = Math.min(200, Math.max(70, r)).toFixed(1);
+      const lr = document.getElementById('usfx-liverate');
+      if (lr) lr.textContent = '· live ₹' + r.toFixed(2);
+      usfxUpdate();
+    })
+    .catch(() => {});
+}
+
+document.addEventListener('DOMContentLoaded', () => { usfxUpdate(); usfxLoadRate(); });
 </script>
 </body>
 </html>
