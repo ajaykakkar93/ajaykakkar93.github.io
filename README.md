@@ -136,7 +136,7 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | Tool | Description |
 |------|-------------|
 | [All Tools hub](https://ajaykakkar93.github.io/tools/) | Index of every tool below |
-| [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/) | SIP, EMI, stock P&L with brokerage, CAGR, SWP, home & car loan with amortization |
+| [Finance Calculators](https://ajaykakkar93.github.io/tools/finance/) | SIP, EMI, stock P&L with brokerage, CAGR, SWP, home & car loan with amortization, US wealth FX-adjusted analyser (live INR/USD, TCS & LTCG) |
 | [PDF Tools](https://ajaykakkar93.github.io/tools/pdf/) | Convert PDF to image, merge, split, extract pages |
 | [Qlik Sense Upgrade Guide](https://ajaykakkar93.github.io/tools/qlik/) | Interactive upgrade path calculator for all 33 QS Enterprise versions |
 | [Qlik Sense Release Notes](https://ajaykakkar93.github.io/tools/qlik/QS_Release_Notes.html) | Release notes index — v3.0 (2016) onwards with EOS dates |
@@ -193,7 +193,7 @@ All free, 100% client-side (nothing uploaded), under [`/tools/`](https://ajaykak
 | [Diceware Passphrase](https://ajaykakkar93.github.io/tools/diceware/) | Strong memorable passphrases from words |
 | [HMAC Generator](https://ajaykakkar93.github.io/tools/hmac/) | HMAC-SHA256/1/512 via Web Crypto |
 
-Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 64 entries, searchable + grouped into 13 segments (Developer & Data, Finance, Stocks, Mutual Funds, Loans, Calculator, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool). The 12 finance calculators are listed individually under Stocks / Mutual Funds / Loans as deep-links into `/tools/finance/` (e.g. `#basket`, `#sip`, `#homeloan`); they share that one indexable URL, so the sitemap still holds 59 URLs.
+Hub at [`/tools/`](https://ajaykakkar93.github.io/tools/) — 64 entries, searchable + grouped into 13 segments (Developer & Data, Finance, Stocks, Mutual Funds, Loans, Calculator, Text, Images & Media, Design, Documents, Time & Productivity, Security & Privacy, BI Tool). The finance hub holds 13 calculators (incl. the US Wealth FX-adjusted analyser under a US Investing group), listed individually under Stocks / Mutual Funds / Loans as deep-links into `/tools/finance/` (e.g. `#basket`, `#sip`, `#homeloan`, `#usfx`); they share that one indexable URL, so the sitemap still holds 59 URLs.
 
 ---
 
