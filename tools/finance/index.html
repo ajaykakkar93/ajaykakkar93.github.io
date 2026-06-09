@@ -66,6 +66,7 @@
           "Stock Average (averaging down) calculator",
           "Stock Basket Allocation calculator — custom % allocation across stocks with whole-share quantities",
           "SIP calculator with yearly step-up",
+          "Step-Up SIP (multi-fund) calculator with per-fund split and year-by-year breakdown",
           "SWP (Systematic Withdrawal Plan) calculator",
           "Lumpsum investment calculator",
           "Percentage calculator (4 modes)",
@@ -697,6 +698,7 @@
     <option value="avg">⚖️ Stock Average</option>
     <option value="basket">🧺 Stock Basket Allocation</option>
     <option value="sip">📊 SIP Calculator</option>
+    <option value="asip">📚 Step-Up SIP (Multi-Fund)</option>
     <option value="pct">% Percentage</option>
     <option value="emi">💳 CC EMI Calculator</option>
     <option value="cagr">🌱 CAGR Calculator</option>
@@ -747,6 +749,10 @@
     <div class="nav-item" onclick="showSection('sip')" data-section="sip">
       <span class="icon" style="background:rgba(59,130,246,.1);color:#93c5fd"><i class="fa-solid fa-arrow-trend-up"></i></span>
       SIP Calculator
+    </div>
+    <div class="nav-item" onclick="showSection('asip')" data-section="asip">
+      <span class="icon" style="background:rgba(165,180,252,.1);color:#a5b4fc"><i class="fa-solid fa-layer-group"></i></span>
+      Step-Up SIP (Multi-Fund)
     </div>
     <div class="nav-item" onclick="showSection('swp')" data-section="swp">
       <span class="icon" style="background:rgba(251,146,60,.1);color:#fb923c"><i class="fa-solid fa-hand-holding-dollar"></i></span>
@@ -1100,6 +1106,137 @@
         <h4><i class="fa-solid fa-gears mr-1" style="color:#93c5fd"></i>What is SIP?</h4>
         <p>Invest a fixed amount monthly in a mutual fund. Benefits: rupee cost averaging, power of compounding, step-up SIP boosts corpus significantly.</p>
         <div class="formula">Monthly Rate r = Annual% / 12 / 100<br>FV = P × [((1+r)^n − 1) / r] × (1+r)<br>Step-up: monthly amount increases by step-up% each year</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- 3b. STEP-UP SIP (MULTI-FUND)              -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="calc-section" id="section-asip">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-layer-group mr-2" style="color:#a5b4fc;font-size:1.1rem"></i>Step-Up SIP Calculator</h2>
+        <p>Monthly SIP with annual step-up, compounding &amp; per-fund split</p>
+      </div>
+
+      <div class="card">
+        <div class="field-grid cols-2" id="asip-sliders">
+          <div class="usfx-slider-card">
+            <label class="calc-label">Monthly SIP (₹)</label>
+            <span class="usfx-val" id="asip-monthly-val">₹24,500</span>
+            <input class="usfx-slider" type="range" id="asip-monthly" min="500" max="500000" step="500" value="24500" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>₹500</span><span>₹5,00,000</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <label class="calc-label">No. of Funds</label>
+            <span class="usfx-val" id="asip-funds-val">7</span>
+            <input class="usfx-slider" type="range" id="asip-funds" min="1" max="20" step="1" value="7" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>1</span><span>20</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <label class="calc-label">Step-Up (% / yr)</label>
+            <span class="usfx-val" id="asip-stepup-val">5%</span>
+            <input class="usfx-slider" type="range" id="asip-stepup" min="0" max="100" step="1" value="5" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>0%</span><span>100%</span></div>
+          </div>
+          <div class="usfx-slider-card">
+            <label class="calc-label">Expected Return (%)</label>
+            <span class="usfx-val" id="asip-return-val">12%</span>
+            <input class="usfx-slider" type="range" id="asip-return" min="1" max="30" step="0.5" value="12" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>1%</span><span>30%</span></div>
+          </div>
+          <div class="usfx-slider-card" style="grid-column:1 / -1">
+            <label class="calc-label">Investment Period (Years)</label>
+            <span class="usfx-val" id="asip-years-val">5 yrs</span>
+            <input class="usfx-slider" type="range" id="asip-years" min="1" max="40" step="1" value="5" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>1 yr</span><span>40 yrs</span></div>
+          </div>
+          <div class="usfx-slider-card" style="grid-column:1 / -1" id="asip-infl-card">
+            <div class="toggle-wrap" style="margin-bottom:.85rem">
+              <label class="toggle-switch">
+                <input type="checkbox" id="asip-infl-on" onchange="calcASIP()" />
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="asip-infl-label" onclick="document.getElementById('asip-infl-on').click()">
+                Adjust for Inflation (show today's value)
+              </span>
+            </div>
+            <label class="calc-label">Inflation Rate (% / yr)</label>
+            <span class="usfx-val" id="asip-infl-val">6%</span>
+            <input class="usfx-slider" type="range" id="asip-infl" min="0" max="15" step="0.5" value="6" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>0%</span><span>15%</span></div>
+          </div>
+        </div>
+
+        <div class="chips c3" style="margin-top:1.1rem">
+          <div class="chip" style="border-color:rgba(99,102,241,.25)">
+            <div class="cv" id="asip-corpus" style="color:#a5b4fc">—</div>
+            <div class="cs" id="asip-corpus-cr"></div>
+            <div class="cl">Total Corpus</div>
+          </div>
+          <div class="chip" style="border-color:rgba(14,165,233,.25)">
+            <div class="cv" id="asip-invested" style="color:#38bdf8">—</div>
+            <div class="cs" id="asip-invested-cr"></div>
+            <div class="cl">Invested</div>
+          </div>
+          <div class="chip" style="border-color:rgba(16,185,129,.25)">
+            <div class="cv" id="asip-gains" style="color:#4ade80">—</div>
+            <div class="cs" id="asip-growth"></div>
+            <div class="cl">Gains</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIP per fund highlight -->
+      <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+        <div>
+          <div class="calc-label" style="margin-bottom:.3rem">SIP / Fund — Year 1</div>
+          <div style="font-size:1.25rem;font-weight:700;color:#a5b4fc;font-family:'Space Grotesk',sans-serif" id="asip-perfund-first">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="calc-label" style="margin-bottom:.3rem">SIP / Fund — Final Year</div>
+          <div style="font-size:1.25rem;font-weight:700;color:#c4b5fd;font-family:'Space Grotesk',sans-serif" id="asip-perfund-last">—</div>
+        </div>
+      </div>
+
+      <!-- Year-by-year table -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid rgba(71,85,105,.18)">
+          <h4 style="margin:0;font-size:.8rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em">Year-by-Year Breakdown</h4>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="result-table" style="min-width:560px">
+            <thead>
+              <tr>
+                <th style="text-align:center">Yr</th>
+                <th style="text-align:right">Monthly SIP</th>
+                <th style="text-align:right">/ Fund</th>
+                <th style="text-align:right">Yr Invested</th>
+                <th style="text-align:right">Total Put In</th>
+                <th style="text-align:right" id="asip-th-real">Corpus (Real)</th>
+              </tr>
+            </thead>
+            <tbody id="asip-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div style="border-bottom:1px solid rgba(71,85,105,.2);margin-bottom:.9rem;padding-bottom:.6rem">
+          <h4><i class="fa-solid fa-circle-info mr-1" style="color:#a5b4fc"></i>About this tool</h4>
+          <p>The <strong>Step-Up SIP Calculator</strong> models a monthly SIP that rises by a fixed percentage every year, compounded monthly — and splits each month's contribution across multiple funds so you know exactly how much goes into each one.</p>
+          <ul>
+            <li>Annual step-up from 0% up to 100% per year</li>
+            <li>Investment period up to 40 years</li>
+            <li>Per-fund SIP split across 1–20 funds</li>
+            <li>Optional inflation adjustment — see corpus in today's money</li>
+            <li>Full year-by-year contribution + corpus breakdown</li>
+            <li>Free, browser-only — no signup, nothing stored</li>
+          </ul>
+        </div>
+        <h4><i class="fa-solid fa-gears mr-1" style="color:#a5b4fc"></i>How it works</h4>
+        <p>Each year the monthly SIP grows by the step-up %. Every contribution compounds at the expected monthly return until the end of the period. Per-fund split = monthly SIP ÷ number of funds.</p>
+        <div class="formula">monthlyRate r = Return% / 12 / 100<br>FV = Σ contributionᵢ × (1 + r)^(monthsLeftᵢ)<br>Step-up: SIP × (1 + stepUp%) each new year</div>
+        <p style="margin-top:.6rem;font-size:.72rem;color:#475569">Illustrative only. Actual MF returns vary. Not financial advice.</p>
       </div>
     </div>
 
@@ -2894,6 +3031,98 @@ function clearSIP() {
   document.getElementById('sip-result').classList.remove('show');
 }
 
+// ─── 3b. Step-Up SIP (Multi-Fund) ─────────────────────────────────────────
+function asipINR(v) { return Number(Math.round(v)).toLocaleString('en-IN', { maximumFractionDigits: 0 }); }
+function asipToL(v)  { return (v / 100000).toFixed(2); }
+function asipToCr(v) { return (v / 10000000).toFixed(3); }
+
+function calcASIP() {
+  const monthly  = +document.getElementById('asip-monthly').value;
+  const funds    = +document.getElementById('asip-funds').value;
+  const stepUp   = +document.getElementById('asip-stepup').value;
+  const returns  = +document.getElementById('asip-return').value;
+  const years    = +document.getElementById('asip-years').value;
+  const inflRate = +document.getElementById('asip-infl').value;
+  const inflOn   = document.getElementById('asip-infl-on').checked;
+
+  // slider value labels
+  document.getElementById('asip-monthly-val').textContent = '₹' + asipINR(monthly);
+  document.getElementById('asip-funds-val').textContent   = funds;
+  document.getElementById('asip-stepup-val').textContent  = stepUp + '%';
+  document.getElementById('asip-return-val').textContent  = returns + '%';
+  document.getElementById('asip-years-val').textContent   = years + (years === 1 ? ' yr' : ' yrs');
+  document.getElementById('asip-infl-val').textContent    = inflRate + '%';
+  document.getElementById('asip-infl-label').classList.toggle('on', inflOn);
+
+  const monthlyRate = returns / 100 / 12;
+  const deflate = (val, yr) => inflOn ? val / Math.pow(1 + inflRate / 100, yr) : val;
+
+  // walk month-by-month: running balance gives corpus at each year-end
+  let sip = monthly, balance = 0, totalInvested = 0, investedReal = 0;
+  const breakdown = [];
+  for (let y = 1; y <= years; y++) {
+    if (y > 1) sip = sip * (1 + stepUp / 100);
+    for (let m = 1; m <= 12; m++) {
+      balance = (balance + sip) * (1 + monthlyRate);
+      totalInvested += sip;
+      const monthsElapsed = (y - 1) * 12 + m;
+      investedReal += sip / Math.pow(1 + inflRate / 100, monthsElapsed / 12);
+    }
+    breakdown.push({
+      year: y,
+      sip: Math.round(sip),
+      sipPerFund: Math.round(sip / funds),
+      yearInvested: Math.round(sip * 12),
+      totalInvested: Math.round(totalInvested),
+      corpus: Math.round(balance),
+      corpusReal: Math.round(deflate(balance, y)),
+    });
+  }
+
+  const corpus = Math.round(balance);
+  totalInvested = Math.round(totalInvested);
+  const dispCorpus   = Math.round(deflate(corpus, years));
+  const dispInvested = inflOn ? Math.round(investedReal) : totalInvested;
+  const dispGains    = dispCorpus - dispInvested;
+  const growth = dispInvested > 0 ? ((dispCorpus / dispInvested - 1) * 100).toFixed(1) : '0';
+
+  document.getElementById('asip-corpus').textContent      = '₹' + asipToL(dispCorpus) + 'L';
+  document.getElementById('asip-invested').textContent    = '₹' + asipToL(dispInvested) + 'L';
+  document.getElementById('asip-invested-cr').textContent = inflOn
+    ? "today's ₹ (real)"
+    : asipToCr(dispInvested) + ' Cr';
+  const gainPos = dispGains >= 0;
+  const gainColor = gainPos ? '#4ade80' : '#f87171';
+  const gEl = document.getElementById('asip-gains');
+  gEl.textContent = (gainPos ? '₹' : '−₹') + asipToL(Math.abs(dispGains)) + 'L';
+  gEl.style.color = gainColor;
+  document.getElementById('asip-growth').textContent = growth + '% growth';
+  document.getElementById('asip-growth').style.color = gainColor;
+  document.getElementById('asip-corpus-cr').textContent   = inflOn
+    ? "today's ₹ (real)"
+    : asipToCr(dispCorpus) + ' Cr';
+
+  document.getElementById('asip-th-real').textContent = inflOn ? 'Corpus (Real)' : 'Corpus';
+
+  document.getElementById('asip-perfund-first').textContent = '₹' + asipINR(monthly / funds);
+  const lastSip = monthly * Math.pow(1 + stepUp / 100, years - 1);
+  document.getElementById('asip-perfund-last').textContent  = '₹' + asipINR(lastSip / funds);
+
+  document.getElementById('asip-tbody').innerHTML = breakdown.map((r, i) => {
+    const cVal = inflOn ? r.corpusReal : r.corpus;
+    const cColor = cVal >= r.totalInvested ? '#4ade80' : '#f87171';
+    return `
+    <tr${i % 2 ? ' style="background:rgba(15,23,42,.35)"' : ''}>
+      <td style="text-align:center;color:#a5b4fc;font-weight:700">${r.year}</td>
+      <td class="val">₹${asipINR(r.sip)}</td>
+      <td style="text-align:right;color:#94a3b8">₹${asipINR(r.sipPerFund)}</td>
+      <td style="text-align:right">₹${asipToL(r.yearInvested)}L</td>
+      <td style="text-align:right;color:#cbd5e1">₹${asipToL(r.totalInvested)}L</td>
+      <td style="text-align:right;color:${cColor};font-weight:600">₹${asipToL(cVal)}L</td>
+    </tr>`;
+  }).join('');
+}
+
 // ─── 4. Percentage ───────────────────────────────────────────────────────
 let pctMode = 0;
 function switchPct(mode, btn) {
@@ -4384,9 +4613,10 @@ document.addEventListener('DOMContentLoaded', () => {
   addAvgRow(); addAvgRow();
   addBasketRow(); addBasketRow(); addBasketRow();
   // Deep-link: open section from URL hash (e.g. finance/#sip)
-  const _validSections = ['profit-loss','avg','basket','sip','swp','lumpsum','pct','emi','cagr','homeloan','carloan','tco','usfx'];
+  const _validSections = ['profit-loss','avg','basket','sip','asip','swp','lumpsum','pct','emi','cagr','homeloan','carloan','tco','usfx'];
   const _hash = (location.hash || '').replace('#','');
   if (_validSections.includes(_hash)) showSection(_hash);
+  calcASIP();
   document.getElementById('ls-months').addEventListener('input', function() {
     const m = parseFloat(this.value);
     const lbl = document.getElementById('ls-years-label');
