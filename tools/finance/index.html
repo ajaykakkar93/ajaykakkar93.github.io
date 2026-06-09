@@ -1145,6 +1145,12 @@
             <div class="usfx-ends"><span>1%</span><span>30%</span></div>
           </div>
           <div class="usfx-slider-card" style="grid-column:1 / -1">
+            <label class="calc-label">Current Invested Value (₹)</label>
+            <span class="usfx-val" id="asip-current-val">₹0</span>
+            <input class="usfx-slider" type="range" id="asip-current" min="0" max="10000000" step="50000" value="0" oninput="calcASIP()" />
+            <div class="usfx-ends"><span>₹0</span><span>₹1 Cr</span></div>
+          </div>
+          <div class="usfx-slider-card" style="grid-column:1 / -1">
             <label class="calc-label">Investment Period (Years)</label>
             <span class="usfx-val" id="asip-years-val">5 yrs</span>
             <input class="usfx-slider" type="range" id="asip-years" min="1" max="40" step="1" value="5" oninput="calcASIP()" />
@@ -3042,6 +3048,7 @@ function calcASIP() {
   const stepUp   = +document.getElementById('asip-stepup').value;
   const returns  = +document.getElementById('asip-return').value;
   const years    = +document.getElementById('asip-years').value;
+  const current  = +document.getElementById('asip-current').value;
   const inflRate = +document.getElementById('asip-infl').value;
   const inflOn   = document.getElementById('asip-infl-on').checked;
 
@@ -3050,6 +3057,7 @@ function calcASIP() {
   document.getElementById('asip-funds-val').textContent   = funds;
   document.getElementById('asip-stepup-val').textContent  = stepUp + '%';
   document.getElementById('asip-return-val').textContent  = returns + '%';
+  document.getElementById('asip-current-val').textContent = '₹' + asipINR(current);
   document.getElementById('asip-years-val').textContent   = years + (years === 1 ? ' yr' : ' yrs');
   document.getElementById('asip-infl-val').textContent    = inflRate + '%';
   document.getElementById('asip-infl-label').classList.toggle('on', inflOn);
@@ -3057,8 +3065,10 @@ function calcASIP() {
   const monthlyRate = returns / 100 / 12;
   const deflate = (val, yr) => inflOn ? val / Math.pow(1 + inflRate / 100, yr) : val;
 
-  // walk month-by-month: running balance gives corpus at each year-end
-  let sip = monthly, balance = 0, totalInvested = 0, investedReal = 0;
+  // walk month-by-month: running balance gives corpus at each year-end.
+  // Current invested value is an existing lumpsum (invested today) that
+  // compounds at the expected return for the full period.
+  let sip = monthly, balance = current, totalInvested = current, investedReal = current;
   const breakdown = [];
   for (let y = 1; y <= years; y++) {
     if (y > 1) sip = sip * (1 + stepUp / 100);
